@@ -5,12 +5,14 @@ import './Navbar.css';
 const Navbar = () => {
   return (
     <nav className="navbar">
-      <div className="navTitle">
-        <p>CORNWALL</p>
-      </div>
-      <div className="navLinks">
-        <Link to="/">Home</Link>
-        <Link to="/">About</Link>
+      <div className="nav-flex">
+        <div className="nav-logo">
+          <p>CORNWALL LOGO</p>
+        </div>
+        <div className="nav-links">
+          <Link to="/">Home</Link>
+          <Link to="/">About</Link>
+        </div>
       </div>
     </nav>
   );

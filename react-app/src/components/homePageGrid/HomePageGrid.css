@@ -1,16 +1,37 @@
-.homePageContent {
+.home-grid-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+.home-grid {
     display: grid;
-    grid-template-columns: 2fr 1fr;
-    gap: 20px;
-    max-width: 1200px; 
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+    max-width: 1440px; 
     margin: 0 auto;
-    padding: 50px 0 200px 0;
     width: 100%;
     color: #fff;
 }
 
-.homePageContentLeft, .homePageContentRight {
-    border: 1px solid white;
-    background-color: #35363a; 
+.home-grid-element-var2 {
     padding: 20px; 
+    background-color: #2f3034;
+}
+
+.home-grid-element-var1 {
+    padding: 20px; 
+    background-color: #27282b;
+}
+
+.home-grid h2 {
+    margin-bottom: 10px;
+    font-size: 1.5rem;
+    font-weight: 500;
+}
+
+.home-grid p {
+    font-size: 1.0rem;
+    line-height: 2.0;
+    font-weight: 400;
 }
