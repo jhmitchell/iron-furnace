@@ -1,9 +1,5 @@
 .navbar {
-<<<<<<< HEAD
     background-color: #2F3E46;
-=======
-    background-color: #1f2022;
->>>>>>> 3168aec96e6b783dd9410d23fc56b8ea0fb5bd36
     color: #fff;
     height: 60px;
     position: sticky;
@@ -15,30 +11,15 @@
 }
 
 .nav-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.navbar .nav-flex {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-<<<<<<< HEAD
     height: 100%;
     max-width: 1512px;
     margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .navbar .nav-title {
-=======
-    width: 100%;
-    height: 100%;
-    max-width: 1440px;
-}
-
-.navbar .nav-logo {
->>>>>>> 3168aec96e6b783dd9410d23fc56b8ea0fb5bd36
     font-size: 1.2rem;
     font-weight: 700;
 }
@@ -50,15 +31,11 @@
     gap: 20px;
 }
 
-<<<<<<< HEAD
 .navbar .nav-profile {
     padding: 0px;
 }
 
 .navbar a {
-=======
-.navbar .nav-links a {
->>>>>>> 3168aec96e6b783dd9410d23fc56b8ea0fb5bd36
     color: #fff;
     text-decoration: none;
     font-size: 1rem;
