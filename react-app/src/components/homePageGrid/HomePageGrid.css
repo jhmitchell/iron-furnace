@@ -3,11 +3,13 @@
     display: flex;
     justify-content: center;
     align-items: flex-start;
+    background-color: #26272c;
+    padding: 20px 0px;
 }
 
 .home-grid {
     display: grid;
-    grid-template-columns: 2fr 1fr;
+    grid-template-columns: 2fr 1fr 1fr;
     gap: 20px;
     max-width: 1512px; 
     margin: 0 auto;
@@ -15,25 +17,18 @@
     color: #fff;
 }
 
-.homePageContentLeft, .homePageContentRight {
-    border: 1px solid #7e7e7e;
-    background-color: #35363a; 
+.home-grid-element {
+    background-color: #333437; 
     padding: 20px; 
-    background-color: #2f3034;
 }
 
-.home-grid-element-var1 {
-    padding: 20px; 
-    background-color: #27282b;
-}
-
-.home-grid h2 {
+.home-grid-element h2 {
     margin-bottom: 10px;
-    font-size: 1.5rem;
+    font-size: 2.0rem;
     font-weight: 500;
 }
 
-.home-grid p {
+.home-grid-element p {
     font-size: 1.0rem;
     line-height: 2.0;
     font-weight: 400;

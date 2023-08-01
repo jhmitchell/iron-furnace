@@ -1,12 +1,12 @@
 .navbar {
-    background-color: #2F3E46;
+    background-color: #333437;
     color: #fff;
     height: 60px;
     position: sticky;
     top: 0px;
     width: 100%;
     z-index: 1;
-    border-bottom: 1px solid #7e7e7e;
+    border-bottom: 0px solid #7e7e7e;
     box-shadow: 0 0 20px #000;
 }
 

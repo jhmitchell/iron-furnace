@@ -14,6 +14,7 @@ const Navbar = () => {
           <Link to="/">About</Link>
         </div>
         <div className="nav-profile">
+          <Link to="/">Membership</Link>
         </div>
       </div>
     </nav>
