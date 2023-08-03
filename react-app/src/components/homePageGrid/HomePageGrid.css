@@ -11,7 +11,7 @@
 .home-grid {
   display: grid;
   grid-template-columns: 2fr 1fr;
-  gap: 50px;
+  gap: 100px;
   max-width: 1512px;
   width: 100%;
   color: #fff;

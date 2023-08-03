@@ -31,9 +31,9 @@ const HomePageGrid = () => {
             of American ironmaking at the Cornwall Iron Furnace.
           </p>
           <div className="cta-buttons">
-            <Button text="LEARN MORE" color="orange" onClick={onClickCTA} />
+            <Button text="PLAN YOUR VISIT" color="orange" onClick={onClickCTA} />
             <Button
-              text="PLAN YOUR VISIT"
+              text="LEARN MORE"
               color="transparent"
               onClick={onClickCTA}
             />
