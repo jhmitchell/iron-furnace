@@ -36,8 +36,8 @@
     color: var(text-off-white);
     text-align: center;
     letter-spacing: 3px;
-    padding-top: 40px;
-    padding-bottom: 20px;
+    padding-top: 50px;
+    padding-bottom: 0px;
 }
 
 .hero h2 {

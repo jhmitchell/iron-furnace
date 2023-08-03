@@ -25,12 +25,16 @@
 
 .home-grid-element p {
   font-size: 1rem;
-  line-height: 2;
+  line-height: 1.5;
   font-weight: 300;
 }
 
 .home-grid-element.welcome {
     padding: 20px;
+}
+
+.home-grid-element.welcome p {
+    margin-bottom: 10px;
 }
 
 .home-grid-element.hours {
@@ -52,4 +56,12 @@
     margin-right: 10px;
     font-size: 0.9rem;
     font-weight: 300;
+}
+
+.cta-buttons {
+    /* May not need a flex container */
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    gap: 30px;
 }

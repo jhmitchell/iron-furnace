@@ -11,7 +11,7 @@ const HomePageGrid = () => {
     <div className="home-grid-container">
       <div className="home-grid">
         {/*
-        <div className="home-grid-element welcome">
+        <div className="home-grid-element events">
         <h2>Calendar</h2>
           <p>
             <strong>June 19, 2021</strong>
@@ -22,20 +22,22 @@ const HomePageGrid = () => {
           </p>
         </div>
         */}
-        <div className="home-grid-element events">
+        <div className="home-grid-element welcome">
           <h2>Welcome</h2>
           <p>
-            Welcome to Cornwall Iron Furnace - the jewel in America's industrial
-            heritage crown. Our site is a testament to the country's rich past,
-            representing the most intact and complete charcoal-fueled ironmaking
-            complex found in the nation.
-          </p>
-          <p>
-            Whether you're a history enthusiast or a casual visitor, we invite
+            Welcome to Cornwall Iron Furnace - the most intact and complete charcoal-fueled ironmaking
+            complex found in the nation. Whether you're a history enthusiast or a casual visitor, we invite
             you to step back in time with us, exploring the fascinating legacy
             of American ironmaking at the Cornwall Iron Furnace.
           </p>
-          <Button text="LEARN MORE" onClick={onClickCTA} />
+          <div className="cta-buttons">
+            <Button text="LEARN MORE" color="orange" onClick={onClickCTA} />
+            <Button
+              text="PLAN YOUR VISIT"
+              color="transparent"
+              onClick={onClickCTA}
+            />
+          </div>
         </div>
         <div className="home-grid-element hours">
           <h2>Hours</h2>
