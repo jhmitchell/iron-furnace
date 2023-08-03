@@ -1,26 +1,18 @@
 import React from "react";
+import Button from "../button/Button";
 import "./HomePageGrid.css";
 
 const HomePageGrid = () => {
+  const onClickCTA = () => {
+    console.log("CTA button clicked");
+  };
+
   return (
     <div className="home-grid-container">
       <div className="home-grid">
+        {/*
         <div className="home-grid-element welcome">
-          <h2>Welcome</h2>
-          <p>
-            Welcome to the Cornwall Iron Furnace, America’s most complete
-            charcoal fueled ironmaking complex. The furnace operated from 1742
-            to 1883 producing nearly 300 tons of iron each week at its peak in
-            the late 18th century.
-          </p>
-          <p>
-            Today, the Furnace stands as a symbol of Pennsylvania's industrial
-            heritage and a tribute to the workers who helped make America a
-            great industrial nation.
-          </p>
-        </div>
-        <div className="home-grid-element events">
-          <h2>Calendar</h2>
+        <h2>Calendar</h2>
           <p>
             <strong>June 19, 2021</strong>
             <br />
@@ -29,17 +21,49 @@ const HomePageGrid = () => {
             11:00 a.m. to 3:00 p.m.
           </p>
         </div>
-        <div className="home-grid-element hours">
-          <h2>Hours</h2>
+        */}
+        <div className="home-grid-element events">
+          <h2>Welcome</h2>
           <p>
-            <strong>June 1 to August 31</strong>
-            <br />
-            Tuesday through Saturday
-            <br />
-            9:00 a.m. to 4:00 p.m.
+            Welcome to Cornwall Iron Furnace - the jewel in America's industrial
+            heritage crown. Our site is a testament to the country's rich past,
+            representing the most intact and complete charcoal-fueled ironmaking
+            complex found in the nation.
           </p>
           <p>
-            Guided tours are offered at 10:00 a.m., 12:00 p.m., and 2:00 p.m.
+            Whether you're a history enthusiast or a casual visitor, we invite
+            you to step back in time with us, exploring the fascinating legacy
+            of American ironmaking at the Cornwall Iron Furnace.
+          </p>
+          <Button text="LEARN MORE" onClick={onClickCTA} />
+        </div>
+        <div className="home-grid-element hours">
+          <h2>Hours</h2>
+          <div className="hours-content">
+            <div className="hours-column">
+              <strong>June - August</strong>
+              <br />
+              Wednesday to Saturday,
+              <br />
+              9 a.m. to 5 p.m.
+              <br />
+              Sunday, noon to 5 p.m.
+              <br />
+            </div>
+            <div className="hours-column">
+              <strong>September - May</strong>
+              <br />
+              Thursday to Saturday,
+              <br />
+              9 a.m. to 5 p.m.
+              <br />
+              Sunday, noon to 5 p.m.
+              <br />
+            </div>
+          </div>
+          <p>Last tour leaves the Visitor’s Center at 3:15 p.m. each day</p>
+          <p>
+            <strong>CLOSED</strong> Mondays, Tuesdays, and all holidays
           </p>
         </div>
       </div>

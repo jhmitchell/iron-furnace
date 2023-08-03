@@ -5,7 +5,7 @@ import './HomePage.css';
 
 const HomePage = () => {
   return (
-    <div className="homePage">
+    <div className="home-page">
       <Hero />
       <HomePageGrid />
     </div>

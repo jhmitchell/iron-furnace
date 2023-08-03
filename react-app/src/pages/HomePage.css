@@ -1,7 +1,4 @@
-.homePage {
-<<<<<<< HEAD
-    background-color: #2F3E46;
-=======
-    background-color: #1f2022;
->>>>>>> 3168aec96e6b783dd9410d23fc56b8ea0fb5bd36
+.home-page {
+    height: calc(100vh - 70px);
+    margin: 0;
 }

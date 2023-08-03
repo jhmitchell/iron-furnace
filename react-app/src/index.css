@@ -1,8 +1,13 @@
+:root {
+    --text-off-white: #efefef;
+    --orange-accent: #bf8045;
+}
+
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
     font-family: 'Inter';
     line-height: 1.5;
-    color: #efefef
+    color: var(--text-off-white);
 }

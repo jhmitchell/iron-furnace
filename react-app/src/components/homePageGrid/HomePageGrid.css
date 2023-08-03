@@ -1,35 +1,55 @@
 .home-grid-container {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: flex-start;
-    background-color: #26272c;
-    padding: 20px 0px;
+  width: 100%;
+  height: 40%;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  background-color: #26272c;
+  padding: 20px 0px;
 }
 
 .home-grid {
-    display: grid;
-    grid-template-columns: 4fr 2fr 1fr;
-    gap: 20px;
-    max-width: 1512px; 
-    margin: 0 auto;
-    width: 100%;
-    color: #fff;
-}
-
-.home-grid-element {
-    background-color: #333437; 
-    padding: 20px; 
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 50px;
+  max-width: 1512px;
+  width: 100%;
+  color: #fff;
 }
 
 .home-grid-element h2 {
-    margin-bottom: 10px;
-    font-size: 2.0rem;
-    font-weight: 400;
+  margin-bottom: 10px;
+  font-size: 2rem;
+  font-weight: 400;
 }
 
 .home-grid-element p {
-    font-size: 1.0rem;
-    line-height: 2.0;
-    font-weight: 400;
+  font-size: 1rem;
+  line-height: 2;
+  font-weight: 300;
+}
+
+.home-grid-element.welcome {
+    padding: 20px;
+}
+
+.home-grid-element.hours {
+    background-color: #333437;
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 20px;
+}
+
+.hours-content {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+.hours-column {
+    flex: 1 1 auto;
+    margin-right: 10px;
+    font-size: 0.9rem;
+    font-weight: 300;
 }
