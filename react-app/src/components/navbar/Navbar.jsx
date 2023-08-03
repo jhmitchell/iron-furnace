@@ -6,8 +6,8 @@ const Navbar = () => {
   return (
     <nav className="navbar">
       <div className="nav-container">
-        <div className="nav-title">
-          <p>CORNWALL</p>
+        <div className="nav-logo">
+          <Link to="/">CORNWALL</Link>
         </div>
         <div className="nav-links">
           <Link to="/">VISIT</Link>
