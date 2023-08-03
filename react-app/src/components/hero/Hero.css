@@ -1,20 +1,34 @@
 .hero {
-    /*background: linear-gradient(180deg, rgba(0, 0, 0, 0.7) 0%, rgba(255,255,255,0) 15%, rgba(255, 255, 255, 0) 85%, rgba(0,0,0,0.7) 100%), url('../../assets/hero_demo_2.png');*/
-    background: linear-gradient(90deg, rgba(0, 0, 0, 0.7) 0%, rgba(0,0,0,0.7) 27%, rgba(0,0,0,0) 30%, rgba(0, 0, 0, 0) 70%, rgba(0,0,0,0.7) 73%, rgba(0, 0, 0, 0.7) 100%), url('../../assets/hero_demo_2.png');
+    position: relative;
+    height: 60vh;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+.hero-image {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background: linear-gradient(90deg, rgba(0, 0, 0, 0.7) 0%, rgba(0,0,0,0.7) 30%, rgba(0,0,0,0) 32%, rgba(0, 0, 0, 0) 68%, rgba(0,0,0,0.7) 70%, rgba(0, 0, 0, 0.7) 100%), url('../../assets/hero_demo_2.png');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-    height: 60vh;
-    width: 100%;
     filter: contrast(0.85);
+    z-index: 1;
 }
 
-.hero .hero-text {
+.hero-text {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     height: 50%;
+    width: 100%;
+    z-index: 2;
 }
 
 .hero h1 {
