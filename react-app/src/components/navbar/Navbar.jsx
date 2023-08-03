@@ -16,7 +16,7 @@ const Navbar = () => {
           <Link to="/">EVENTS</Link>
         </div>
         <div className="nav-profile">
-          <Link to="/">Membership</Link>
+          <Link to="/">MEMBERSHIP</Link>
         </div>
       </div>
     </nav>
