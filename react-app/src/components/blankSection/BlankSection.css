@@ -1,0 +1,8 @@
+.blank-section {
+    height: calc(100vh - 70px);
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: black;
+}

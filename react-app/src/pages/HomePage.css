@@ -1,4 +1,8 @@
 .home-page {
-    height: calc(100vh - 70px);
     margin: 0;
+}
+
+.home-page .hero-section {
+    height: calc(100vh - 70px);
+    width: 100%;
 }
