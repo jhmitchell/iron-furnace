@@ -10,8 +10,10 @@ const Navbar = () => {
           <p>CORNWALL</p>
         </div>
         <div className="nav-links">
-          <Link to="/">Home</Link>
-          <Link to="/">About</Link>
+          <Link to="/">VISIT</Link>
+          <Link to="/">ABOUT</Link>
+          <Link to="/">HISTORY</Link>
+          <Link to="/">EVENTS</Link>
         </div>
         <div className="nav-profile">
           <Link to="/">Membership</Link>

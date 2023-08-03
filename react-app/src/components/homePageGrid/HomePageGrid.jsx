@@ -30,13 +30,17 @@ const HomePageGrid = () => {
           </p>
         </div>
         <div className="home-grid-element hours">
-          <h2>Hours of Operation</h2>
-          <p>Open Wednesday through Sunday, 9:00 a.m. to 4:00 p.m.</p>
+          <h2>Hours</h2>
+          <p>
+            <strong>June 1 to August 31</strong>
+            <br />
+            Tuesday through Saturday
+            <br />
+            9:00 a.m. to 4:00 p.m.
+          </p>
           <p>
             Guided tours are offered at 10:00 a.m., 12:00 p.m., and 2:00 p.m.
           </p>
-          <p>Self-guided tours are available during regular business hours.</p>
-          <p>For more information, please call 717-272-9711.</p>
         </div>
       </div>
     </div>

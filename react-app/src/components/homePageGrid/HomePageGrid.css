@@ -9,7 +9,7 @@
 
 .home-grid {
     display: grid;
-    grid-template-columns: 2fr 1fr 1fr;
+    grid-template-columns: 4fr 2fr 1fr;
     gap: 20px;
     max-width: 1512px; 
     margin: 0 auto;
