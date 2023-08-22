@@ -3,7 +3,7 @@ import "./Button.css";
 
 const Button = ({ text, color, onClick }) => {
   return (
-    <button className={`cta-button ${color}`} onClick={onClick}>
+    <button className={`button ${color}`} onClick={onClick}>
       {text}
     </button>
   );

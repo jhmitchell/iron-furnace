@@ -1,12 +1,9 @@
 import React, { useContext } from "react";
 import { Link } from "react-router-dom";
-import { useAuth } from "../../features/authentication";
+import MembershipActions from './membershipActions/MembershipActions';
 import "./Navbar.css";
 
 const Navbar = () => {
-  // Retrieve the user object from the AuthContext
-  const { user } = useAuth();
-
   return (
     <nav className="navbar">
       <div className="nav-container">
@@ -20,13 +17,7 @@ const Navbar = () => {
           <Link to="/">EVENTS</Link>
           <Link to="/">SUPPORT</Link>
         </div>
-        <div className="nav-profile">
-          {user ? (
-            <Link to="/profile">{user.username}</Link>
-          ) : (
-            <Link to="/login">MEMBERSHIP | DONATE</Link>
-          )}
-        </div>
+        < MembershipActions />
       </div>
     </nav>
   );
