@@ -1,18 +1,20 @@
 import React from 'react';
-import Hero from '../components/hero/Hero';
-import HomePageGrid from '../components/homePageGrid/HomePageGrid';
+import { Hero, WelcomeFlex } from '../features/home';
 import BlankSection from '../components/blankSection/BlankSection';
+import MainLayout from '../layouts/MainLayout';
 import './HomePage.css';
 
 const HomePage = () => {
   return (
-    <div className="home-page">
-      <div className="hero-section">
-        <Hero />
-        <HomePageGrid />
+    <MainLayout>
+      <div className="home-page">
+        <div className="hero-section">
+          <Hero />
+          <WelcomeFlex />
+        </div>
+        <BlankSection />
       </div>
-      <BlankSection />
-    </div>
+    </MainLayout>
   );
 }
 

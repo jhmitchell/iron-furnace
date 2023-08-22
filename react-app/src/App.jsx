@@ -1,21 +1,27 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Navbar from './components/navbar/Navbar';
-import Footer from './components/footer/Footer';
+import { BrowserRouter as Router, Routes, Route, Outlet } from 'react-router-dom';
+import { AuthProvider } from './features/authentication';
 import HomePage from './pages/HomePage';
+import TestPage from './pages/TestPage';
+import LoginPage from './pages/LoginPage';
+import ProtectedRoute from './components/protectedRoute/ProtectedRoute';
 import './App.css';
 
 const App = () => {
   return (
-    <Router>
-      <Navbar />
-      <Routes>
-        <Route path="/" element={<HomePage />} />
-        {/* More routes here */}
-      </Routes>
-      <Footer />
-    </Router>
+    <AuthProvider>
+      <Router>
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="login" element={<LoginPage />} />
+          <Route element={<ProtectedRoute />}>
+            <Route path="test" element={<TestPage />} />
+            {/* More protected routes can be nested here */}
+          </Route>
+        </Routes>
+      </Router>
+    </AuthProvider>
   );
-}
+};
 
 export default App;

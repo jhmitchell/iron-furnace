@@ -10,22 +10,22 @@ from passlib.context import CryptContext
 fake_users_db = {
     "john": {
         "username": "john",
-        "full_name": "John Doe",
-        "email": "johndoe@example.com",
+        "full_name": "John Mitchell",
+        "email": "john@example.com",
         "hashed_password": "$2b$12$EixZaYVK1fsbw1ZfbX3OXePaWxn96p36WQoeG6Lruj3vjPGga31lW",
         "disabled": False,
     },
     "tyler": {
         "username": "tyler",
-        "full_name": "Tyler Durden",
+        "full_name": "Tyler Greer",
         "email": "tyler@example.com",
         "hashed_password": "$2b$12$EixZaYVK1fsbw1ZfbX3OXePaWxn96p36WQoeG6Lruj3vjPGga31lW",
         "disabled": False,
     },
     "brad": {
         "username": "brad",
-        "full_name": "Bradly Powell",
-        "email": "bpowell@example.com",
+        "full_name": "Bradley Powell",
+        "email": "brad@example.com",
         "hashed_password": "plaintextpassword",
     }
 }

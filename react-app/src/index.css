@@ -3,11 +3,23 @@
     --orange-accent: #bf8045;
 }
 
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+/* Reset CSS */
+
+body,
+h1, h2, h3, h4, h5, h6,
+p, ul, ol, div {
+  margin: 0;
+  padding: 0;
+}
+
+body {
     font-family: 'Inter';
     line-height: 1.5;
     color: var(--text-off-white);
+}
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
 }
