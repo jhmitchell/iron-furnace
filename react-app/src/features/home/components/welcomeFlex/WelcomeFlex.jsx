@@ -19,7 +19,7 @@ const WelcomeFlex = () => {
             of American ironmaking at the Cornwall Iron Furnace.
           </p>
           <div className="cta-buttons">
-            <Button text="PLAN YOUR VISIT" color="orange" onClick={onClickCTA} />
+            <Button text="PLAN YOUR VISIT" color="blue" onClick={onClickCTA} />
             <Button
               text="LEARN MORE"
               color="transparent"
