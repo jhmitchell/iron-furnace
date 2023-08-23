@@ -21,13 +21,13 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  gap: 30px;
+  gap: 10px;
 }
 
 .welcome-flex-element h2 {
   font-size: 3rem;
   font-weight: 400;
-  line-height: 1rem;
+  line-height: 3rem;
 }
 
 .welcome-flex-element h3 {

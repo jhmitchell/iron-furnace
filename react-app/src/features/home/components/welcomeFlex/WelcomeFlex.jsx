@@ -1,6 +1,7 @@
 import React from "react";
 import { Button } from "../../../../components/ui";
-import Hours from '../hours/Hours';
+import { ArrowTextLink } from "../../../../components/ui";
+import Hours from "../hours/Hours";
 import "./WelcomeFlex.css";
 
 const WelcomeFlex = () => {
@@ -14,8 +15,9 @@ const WelcomeFlex = () => {
         <div className="welcome-flex-element welcome">
           <h2>Welcome</h2>
           <h3>
-            Welcome to Cornwall Iron Furnace - the most intact and complete charcoal-fueled ironmaking
-            complex found in the nation.
+            Welcome to Cornwall Iron Furnace - the most intact and complete
+            charcoal-fueled ironmaking complex found in the nation.
+            <ArrowTextLink text="PLAN YOUR VISIT" path="/test" />
           </h3>
           {/*
           <div className="cta-buttons">
