@@ -1,6 +1,10 @@
+import React from "react";
+import { Link } from "react-router-dom";
+import { Button } from "../../../../components/ui";
 import "./Hours.css";
 
 const Hours = () => {
+  /*
   return (
     <div className="welcome-flex-element hours">
       <h2>Hours</h2>
@@ -24,6 +28,19 @@ const Hours = () => {
           <strong>CLOSED</strong> Mondays, Tuesdays, and all holidays
         </p>
       </div>
+    </div>
+  );
+  */
+
+  return (
+    <div className="welcome-flex-element hours">
+      <div className="status">
+        <p>The museum is now closed</p>
+      </div>
+      <div className="visitor-info">
+        <p>See our Visitor Information</p>
+      </div>
+      <Button text="BOOK A TOUR" color="orange" />
     </div>
   );
 };

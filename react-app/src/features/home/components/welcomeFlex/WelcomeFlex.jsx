@@ -13,12 +13,11 @@ const WelcomeFlex = () => {
       <div className="welcome-flex">
         <div className="welcome-flex-element welcome">
           <h2>Welcome</h2>
-          <p>
+          <h3>
             Welcome to Cornwall Iron Furnace - the most intact and complete charcoal-fueled ironmaking
-            complex found in the nation. Whether you're a history enthusiast or a casual visitor, we invite
-            you to step back in time with us, exploring the fascinating legacy
-            of American ironmaking at the Cornwall Iron Furnace.
-          </p>
+            complex found in the nation.
+          </h3>
+          {/*
           <div className="cta-buttons">
             <Button text="PLAN YOUR VISIT" color="orange" onClick={onClickCTA} />
             <Button
@@ -27,6 +26,7 @@ const WelcomeFlex = () => {
               onClick={onClickCTA}
             />
           </div>
+        */}
         </div>
         <Hours />
       </div>

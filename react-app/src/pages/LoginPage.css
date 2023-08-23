@@ -1,0 +1,29 @@
+.login-page {
+    height: 100vh;
+    width: 100%;
+}
+
+.login-page .login-flex {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+}
+
+.login-panel {
+    height: 100%;
+}
+
+.login-panel.left {
+    flex: 2;
+    background-color: var(--dark-background);
+}
+
+.login-panel.right {
+    flex: 1;
+    /* use an image for the background */
+    background-image: url("../assets/images/entrance.jpg");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;   
+}

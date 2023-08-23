@@ -1,46 +1,16 @@
-/* Main container for the hours, including a separator */
+/* Main container for the hours */
 .hours {
+  height: 100%;
   flex: 1;
-  border-left: 2px solid var(--text-off-white); /* Grey line separator */
-  padding: 10px 30px;
-  color: var(--text-off-white); 
-}
-
-.hours h2 {
-  font-size: 1.5rem;
-  font-weight: 400;
-  line-height: 1rem;
-  margin-bottom: 20px;
-}
-
-/* Styling for the content layout */
-.hours-content {
   display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  margin: 15px 0;
-  /*border-bottom: 1px solid #d4d4d4; /* Separator line between sections */
-  /*padding-bottom: 20px;*/
-}
-
-/* Styling for each column of hours */
-.hours-column {
-  flex: 1 1 auto;
-  margin-right: 10px;
-  font-size: 0.9rem;
-  font-weight: 300;
-}
-
-/* Styling for last tour information */
-.last-tour {
-  font-size: 0.8rem;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  padding: 20px;
   color: var(--text-off-white);
-  /*margin: 15px 0;*/
 }
 
-/* Styling for closed information */
-.closed {
-  font-size: 0.9rem;
-  font-weight: bold;
-  color: #d9534f; /* Red color to highlight closed days */
+.hours .button {
+  margin-top: 10px;
 }
