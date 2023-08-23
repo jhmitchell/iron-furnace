@@ -7,29 +7,23 @@ const Hours = () => {
       <div className="hours-content">
         <div className="hours-column">
           <strong>June - August</strong>
-          <br />
-          Wednesday to Saturday,
-          <br />
-          9 a.m. to 5 p.m.
-          <br />
-          Sunday, noon to 5 p.m.
-          <br />
+          <p>Wednesday to Saturday: 9 a.m. to 5 p.m.</p>
+          <p>Sunday: noon to 5 p.m.</p>
         </div>
         <div className="hours-column">
           <strong>September - May</strong>
-          <br />
-          Thursday to Saturday,
-          <br />
-          9 a.m. to 5 p.m.
-          <br />
-          Sunday, noon to 5 p.m.
-          <br />
+          <p>Thursday to Saturday: 9 a.m. to 5 p.m.</p>
+          <p>Sunday: noon to 5 p.m.</p>
         </div>
       </div>
-      <p>Last tour leaves the Visitor’s Center at 3:15 p.m. each day</p>
-      <p>
-        <strong>CLOSED</strong> Mondays, Tuesdays, and all holidays
-      </p>
+      <div className="last-tour">
+        <p>Last tour leaves the Visitor’s Center at 3:15 p.m. each day</p>
+      </div>
+      <div className="closed">
+        <p>
+          <strong>CLOSED</strong> Mondays, Tuesdays, and all holidays
+        </p>
+      </div>
     </div>
   );
 };
