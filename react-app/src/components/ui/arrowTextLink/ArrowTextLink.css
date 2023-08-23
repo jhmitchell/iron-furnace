@@ -17,7 +17,6 @@
 /* The Arrow */
 .the-arrow {
   width: var(--shaft-width);
-  transition: all 0.2s;
 }
 
 .the-arrow.-left {
@@ -51,14 +50,13 @@
 
 .the-arrow.-right > .shaft {
   width: var(--shaft-width);
-  transition-delay: 0.2s;
+  transition-delay: 0.15s;
 }
 
 .the-arrow.-right > .shaft:before,
 .the-arrow.-right > .shaft:after {
   width: var(--arrow-head-width);
-  transition-delay: 0.3s;
-  transition: all 0.5s;
+  transition: all 0.3s;
 }
 
 .the-arrow.-right > .shaft:before {
@@ -74,7 +72,7 @@
   display: block;
   height: var(--shaft-thickness);
   position: relative;
-  transition: all 0.2s;
+  transition: all 0.15s;
   transition-delay: 0;
 }
 
@@ -87,8 +85,6 @@
   position: absolute;
   top: 0;
   right: 0;
-  transition: all 0.2s;
-  transition-delay: 0;
 }
 
 .the-arrow > .shaft:before {
@@ -106,7 +102,6 @@
 
 .animated-arrow:hover > .the-arrow.-left > .shaft {
   width: var(--shaft-width);
-  transition-delay: 0.1s;
   background-color: var(--text-off-white);
 }
 
@@ -140,8 +135,6 @@
 .animated-arrow:hover > .main > .the-arrow.-right > .shaft:before,
 .animated-arrow:hover > .main > .the-arrow.-right > .shaft:after {
   width: 0;
-  transition-delay: 0;
-  transition: all 0.1s;
 }
 
 .animated-arrow:hover > .main > .the-arrow.-right > .shaft:before {
@@ -155,7 +148,7 @@
 .animated-arrow > .main {
   display: flex;
   align-items: center;
-  transition: all 0.2s;
+  transition: all 0.15s;
 }
 
 .animated-arrow > .main > .text {
