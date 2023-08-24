@@ -1,0 +1,28 @@
+.quote-section {
+    height: calc(50vh - 70px);
+    width: 100%;
+    background-color: var(--dark-background);
+}
+
+.quote-container {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.quote-text {
+    font-size: 3.0rem;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 1rem;
+    font-style: italic;
+}
+
+.below-text {
+    font-size: 1.5rem;
+    font-weight: 300;
+    text-align: center;
+}
