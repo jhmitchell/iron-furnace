@@ -2,6 +2,23 @@
     height: calc(70vh - 70px);
     width: 100%;
     background-color: var(--dark-background);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.content-container {
+    width: 1512px;
+    max-width: 100%;
+}
+
+.section-title {
+    font-size: 2.5rem;
+    font-weight: 500;
+    color: var(--text-off-white);
+    text-align: center;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+    margin-bottom: 50px;
 }
 
 .events-flex {
