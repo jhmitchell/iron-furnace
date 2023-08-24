@@ -19,7 +19,7 @@ const Hero = () => {
             {isOpen ? "OPEN" : "CLOSED"}
           </span>
           <span className="separator">|</span>
-          The museum is open today from 9:00 AM to 6:00 PM
+          The museum is open today from 9:00 AM to 5:00 PM
         </div>
       </div>
     </div>
