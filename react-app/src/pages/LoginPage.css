@@ -15,14 +15,14 @@
 }
 
 .login-panel.left {
-    flex: 2;
+    flex: 1;
     background-color: var(--dark-background);
 }
 
 .login-panel.right {
     flex: 1;
     /* use an image for the background */
-    background-image: url("../assets/images/entrance.jpg");
+    background-image: url("../assets/images/big_wheel.jpg");
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;   
