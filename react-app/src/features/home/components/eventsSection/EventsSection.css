@@ -1,0 +1,15 @@
+.events-section {
+    height: calc(70vh - 70px);
+    width: 100%;
+    background-color: var(--dark-background);
+}
+
+.events-flex {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    gap: 50px;
+    justify-content: center;
+    align-items: center;
+}
