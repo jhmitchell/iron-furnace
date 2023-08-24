@@ -8,12 +8,14 @@ const Navbar = () => {
     <nav className="navbar">
       <div className="nav-container">
         <div className="nav-logo">
-          <Link to="/">CORNWALL</Link>
+          <Link to="/">
+            <div>CORNWALL</div>
+            <div>IRON FURNACE</div>
+          </Link>
         </div>
         <div className="nav-links">
           <Link to="/">VISIT</Link>
           <Link to="/">ABOUT</Link>
-          <Link to="/">HISTORY</Link>
           <Link to="/">EVENTS</Link>
           <Link to="/">SUPPORT</Link>
         </div>

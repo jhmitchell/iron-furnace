@@ -35,12 +35,12 @@ const Hours = () => {
   return (
     <div className="welcome-flex-element hours">
       <div className="status">
-        <p>The museum is now closed</p>
+        <p>The museum is now CLOSED</p>
       </div>
       <div className="visitor-info">
-        <p>See our Visitor Information</p>
+        <p>Open Friday through Sunday</p>
       </div>
-      <Button text="BOOK A TOUR" color="orange" />
+      <Button text="PLAN YOUR VISIT" color="orange" />
     </div>
   );
 };

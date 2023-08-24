@@ -1,0 +1,8 @@
+/* src/fonts.css */
+@font-face {
+    font-family: 'Ruwudu';
+    src: url('./assets/fonts/Ruwudu-500.ttf') format('truetype');
+    font-weight: 500;
+    font-style: normal;
+ }
+ 

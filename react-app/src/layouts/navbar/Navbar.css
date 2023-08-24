@@ -29,8 +29,17 @@
 }
 
 .navbar .nav-logo a {
+    height: 100%;
+    margin-top: 12px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    line-height: 1.5rem;
+    letter-spacing: -1px;
+    font-family: 'Ruwudu';
     font-size: 1.5rem;
-    font-weight: 700;
+    font-weight: 500;
 }
 
 .navbar .nav-links {

@@ -33,3 +33,38 @@
     text-align: center;
     margin-bottom: 10px;
 }
+
+.hero .hours-container {
+    position: absolute;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 1512px;
+    padding: 5px 0;
+    z-index: 2;
+}
+
+.hero .hours-text {
+    color: white;
+    font-weight: normal;
+    display: inline-flex;
+    align-items: center;
+}
+
+.hero .status {
+    font-weight: 700;
+}
+
+.hero .status.open {
+    color: #51c200;
+}
+
+.hero .status.closed {
+    color: #ff0000;
+}
+
+.hero .separator {
+    margin-left: 20px;
+    margin-right: 20px;
+    color: white;
+}

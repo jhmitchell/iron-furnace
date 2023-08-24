@@ -5,19 +5,15 @@ import Hours from "../hours/Hours";
 import "./WelcomeFlex.css";
 
 const WelcomeFlex = () => {
-  const onClickCTA = () => {
-    console.log("CTA button clicked");
-  };
-
   return (
     <div className="welcome-flex-container">
       <div className="welcome-flex">
         <div className="welcome-flex-element welcome">
-          <h2>Welcome</h2>
+          {/*<h2>Welcome</h2>*/}
           <h3>
-            Welcome to Cornwall Iron Furnace - the most intact and complete
-            charcoal-fueled ironmaking complex found in the nation.
-            <ArrowTextLink text="PLAN YOUR VISIT" path="/test" />
+            Welcome to the historic Cornwall Iron Furnace - the most intact and complete
+            charcoal-fueled ironmaking complex found in America.
+            <ArrowTextLink text="LEARN MORE" path="/test" />
           </h3>
           {/*
           <div className="cta-buttons">

@@ -14,8 +14,8 @@ const MembershipActions = () => {
         <Link to="/profile">Welcome, {user.username}</Link>
       ) : (
         <span className="membership-links">
-          <Link to="/membership">SIGN IN</Link>
-          <Link to="/membership"><Button text="BECOME A MEMBER" color="orange"/></Link>
+          <Link to="/membership">SHOP</Link>
+          <Link to="/membership"><Button text="DONATE" color="orange"/></Link>
         </span>
       )}
     </div>
