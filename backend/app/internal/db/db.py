@@ -1,3 +1,4 @@
+'''
 """
 Database Module
 
@@ -9,7 +10,7 @@ import datetime
 import pymysql
 import os
 from typing import Union
-from .models import UserInDB
+from ..models import UserInDB
 from passlib.context import CryptContext
 from dotenv import load_dotenv
 
@@ -26,32 +27,6 @@ def connect_to_db():
         database=os.getenv('DB_NAME')
     )
     return connection
-
-
-def get_operating_hours():
-    connection = connect_to_db()
-    cursor = connection.cursor()
-    cursor.execute(
-        "SELECT day_of_week, open_time, close_time FROM operating_hours")
-    hours = cursor.fetchall()
-
-    cursor.execute("SELECT holiday_date, description FROM holidays")
-    holidays = cursor.fetchall()
-
-    connection.close()
-
-    # MySQL TIME objects are returned as datetime.timedelta objects
-    # Convert them to datetime.time objects via a lambda function
-    def to_time(value): return (datetime.datetime.min + value).time()
-
-    # Define hours and holidays as dictionaries
-    hours_dict = [{"day_of_week": day, "open_time": to_time(
-        open_time), "close_time": to_time(close_time)} for day, open_time, close_time in hours]
-    holidays_dict = [{"holiday_date": date, "description": desc}
-                     for date, desc in holidays]
-
-    return hours_dict, holidays_dict
-
 
 def create_user(member_id: str, email: str, hashed_password: str, first_name: str, last_name: str, disabled: bool = False):
     connection = connect_to_db()
@@ -127,3 +102,4 @@ def authenticate_user(member_id: str, password: str) -> Union[UserInDB, None]:
     if not user or not pwd_context.verify(password, user.hashed_password):
         return False
     return user
+'''

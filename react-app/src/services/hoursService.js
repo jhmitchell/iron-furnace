@@ -14,7 +14,7 @@ export const getHours = async () => {
 
     const { status, message } = await response.json();
     return {
-      isOpen: status === 'open',
+      isOpen: status === 'OPEN',
       message
     };
   } catch (error) {

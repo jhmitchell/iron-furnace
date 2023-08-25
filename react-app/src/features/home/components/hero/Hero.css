@@ -46,7 +46,7 @@
 
 .hero .hours-text {
     color: white;
-    font-weight: normal;
+    font-weight: 400;
     display: inline-flex;
     align-items: center;
 }

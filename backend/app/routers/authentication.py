@@ -1,3 +1,4 @@
+'''
 from fastapi import APIRouter, Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordRequestForm
 from fastapi.responses import JSONResponse
@@ -8,7 +9,7 @@ from ..internal.token import (
     verify_refresh_token,
     hash_password,
 )
-from ..internal.db import (
+from ..internal.db.db import (
     authenticate_user,
     create_user,
     get_user,
@@ -186,3 +187,4 @@ async def register_and_login(user: UserCreate, form_data: OAuth2PasswordRequestF
         )
 
     return await login_for_access_token(form_data)
+'''

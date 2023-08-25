@@ -1,7 +1,11 @@
 import pytz
-from fastapi import APIRouter, HTTPException
-from datetime import datetime, timedelta
-from ..internal.db import get_operating_hours
+from fastapi import APIRouter, HTTPException, Depends
+from datetime import time, datetime, timedelta
+from sqlalchemy.orm import Session
+from typing import Optional
+from app.internal.db.hours import get_operating_hours
+from app.internal.db import hours as db_hours
+from app.internal.db.session import get_db
 
 router = APIRouter()
 
@@ -24,7 +28,7 @@ def format_time(time_obj: datetime.time) -> str:
 
 
 @router.get("/hours/status")
-def get_status():
+def get_status(db: Session = Depends(get_db)):
     """
     Retrieves the current status and operating hours of a service based on the current date and time.
 
@@ -45,7 +49,7 @@ def get_status():
                 - "Closed until further notice" if no upcoming opening hours are available.
     """
     # Retrieve operating hours and holidays
-    hours, holidays = get_operating_hours()
+    hours, holidays = get_operating_hours(db)
 
     # Get the current EST time and date
     current_date_est = datetime.now(est_timezone).date()
@@ -96,3 +100,42 @@ def get_status():
                 return {"status": "CLOSED", "message": f"Open {next_opening_day} from {format_time(next_open)} to {format_time(next_close)}"}
 
     return {"status": "CLOSED", "message": "Closed until further notice"}
+
+
+@router.post("/hours/set")
+def set_operating_hours(day: str, start_time: Optional[time] = None, end_time: Optional[time] = None, db: Session = Depends(get_db)):
+    # Validate the day
+    if day not in ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]:
+        raise HTTPException(status_code=400, detail="Invalid day specified.")
+
+    if start_time is None and end_time is None:
+        # Delete the entry if both times are None
+        db_hours.set_operating_hours(db, day)
+        return {"message": "Operating hours deleted successfully."}
+    elif start_time is None or end_time is None:
+        # Raise an error if only one of the times is None
+        raise HTTPException(
+            status_code=400, detail="Both start and end times must be provided or set to None.")
+
+    # Call the database function
+    db_hours.set_operating_hours(db, day, start_time, end_time)
+    return {"message": "Operating hours updated successfully."}
+
+
+@router.post("/holidays/set")
+def set_holiday(date: str, description: str = None, db: Session = Depends(get_db)):
+    # Convert the date from string to datetime.date
+    try:
+        holiday_date = datetime.strptime(date, "%Y-%m-%d").date()
+    except ValueError:
+        raise HTTPException(
+            status_code=400, detail="Invalid date format. Use YYYY-MM-DD.")
+
+    # Call the database function
+    db_hours.set_holiday(db, holiday_date, description)
+
+    # Return a success message or a deletion message based on the description
+    if description:
+        return {"message": "Holiday set successfully."}
+    else:
+        return {"message": "Holiday deleted successfully."}

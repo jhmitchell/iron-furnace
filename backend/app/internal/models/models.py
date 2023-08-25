@@ -1,3 +1,4 @@
+'''
 from pydantic import BaseModel
 from typing import Union
 
@@ -25,3 +26,4 @@ class UserCreate(BaseModel):
 class UserInDB(User):
     hashed_password: str
     refresh_token: Union[str, None] = None
+'''

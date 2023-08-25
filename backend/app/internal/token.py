@@ -1,3 +1,4 @@
+'''
 import os
 from dotenv import load_dotenv
 
@@ -10,7 +11,7 @@ from fastapi.security import OAuth2PasswordBearer
 from typing_extensions import Annotated
 
 from .models import TokenData, UserInDB
-from .db import get_user
+from .db.db import get_user
 
 # Load environment variables
 load_dotenv()
@@ -139,3 +140,4 @@ async def get_current_active_user(current_user: Annotated[UserInDB, Depends(get_
     if current_user.disabled:
         raise HTTPException(status_code=400, detail="Inactive user")
     return current_user
+'''
