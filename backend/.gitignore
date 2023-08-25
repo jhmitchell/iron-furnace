@@ -35,6 +35,7 @@ MANIFEST
 .env
 
 # Database files (if any local database files are used)
+queries.txt
 *.db
 
 # Log files

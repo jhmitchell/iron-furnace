@@ -1,84 +1,119 @@
 """
-This is a fake database for development purposes. Do not place real user data in this file.
-This database demonstrates how a user's data is stored and retrieved for authentication.
+Database Module
+
+This module contains functions to interact with the MySQL database.
+It includes functions to create, retrieve, update, delete, and authenticate users.
 """
 
+import datetime
+import pymysql
+import os
 from typing import Union
 from .models import UserInDB
 from passlib.context import CryptContext
-
-fake_users_db = {
-    "john": {
-        "username": "john",
-        "full_name": "John Mitchell",
-        "email": "john@example.com",
-        "hashed_password": "$2b$12$EixZaYVK1fsbw1ZfbX3OXePaWxn96p36WQoeG6Lruj3vjPGga31lW",
-        "disabled": False,
-    },
-    "tyler": {
-        "username": "tyler",
-        "full_name": "Tyler Greer",
-        "email": "tyler@example.com",
-        "hashed_password": "$2b$12$EixZaYVK1fsbw1ZfbX3OXePaWxn96p36WQoeG6Lruj3vjPGga31lW",
-        "disabled": False,
-    },
-    "brad": {
-        "username": "brad",
-        "full_name": "Bradley Powell",
-        "email": "brad@example.com",
-        "hashed_password": "plaintextpassword",
-    }
-}
+from dotenv import load_dotenv
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
+load_dotenv()
 
-def create_user(username: str, email: str, hashed_password: str, first_name: str, last_name: str, disabled: bool = False):
-    """Creates a new user in the fake database."""
-    if username in fake_users_db:
-        return None  # Username already exists
+def connect_to_db():
+    """Connects to the MySQL database and returns the connection object."""
+    connection = pymysql.connect(
+        host=os.getenv('DB_HOST'),
+        user=os.getenv('DB_USER'),
+        password=os.getenv('DB_PASSWORD'),
+        database=os.getenv('DB_NAME')
+    )
+    return connection
 
-    fake_users_db[username] = {
-        "username": username,
-        "first_name": first_name,
-        "last_name": last_name,
-        "email": email,
-        "hashed_password": hashed_password,
-        "disabled": disabled,
-    }
-    return fake_users_db[username]
+def get_operating_hours():
+    connection = connect_to_db()
+    cursor = connection.cursor()
+    cursor.execute("SELECT day_of_week, open_time, close_time FROM operating_hours")
+    hours = cursor.fetchall()
+    
+    cursor.execute("SELECT holiday_date, description FROM holidays")
+    holidays = cursor.fetchall()
 
-def get_user(username: str) -> Union[UserInDB, None]:
-    """Retrieves a user by username from the fake database."""
-    if username in fake_users_db:
-        user_dict = fake_users_db[username]
-        return UserInDB(**user_dict)
+    connection.close()
+    
+    # MySQL TIME objects are returned as datetime.timedelta objects
+    # Convert them to datetime.time objects via a lambda function
+    to_time = lambda value: (datetime.datetime.min + value).time()
 
-def update_user(username: str, email=None, first_name=None, last_name=None, hashed_password=None, disabled=None):
-    """Updates an existing user's information in the fake database."""
-    user = fake_users_db.get(username, None)
-    if not user:
-        return None  # User not found
+    # Define hours and holidays as dictionaries
+    hours_dict = [{"day_of_week": day, "open_time": to_time(open_time), "close_time": to_time(close_time)} for day, open_time, close_time in hours]
+    holidays_dict = [{"holiday_date": date, "description": desc} for date, desc in holidays]
 
-    if email:
-        user["email"] = email
-    if first_name:
-        user["first_name"] = first_name
-    if last_name:
-        user["last_name"] = last_name
-    if hashed_password:
-        user["hashed_password"] = hashed_password
-    if disabled is not None:
-        user["disabled"] = disabled
+    return hours_dict, holidays_dict
 
-    return user
+def create_user(member_id: str, email: str, hashed_password: str, first_name: str, last_name: str, disabled: bool = False):
+    connection = connect_to_db()
+    cursor = connection.cursor()
+    try:
+        cursor.execute("INSERT INTO users (member_id, first_name, last_name, email, hashed_password, disabled) VALUES (%s, %s, %s, %s, %s, %s)",
+                       (member_id, first_name, last_name, email, hashed_password, disabled))
+        connection.commit()
+        return get_user(member_id)
+    except pymysql.MySQLError:
+        return None
+    finally:
+        connection.close()
 
-def delete_user(username: str):
-    """Deletes a user from the fake database."""
-    return fake_users_db.pop(username, None)
+def get_user(member_id: str) -> Union[UserInDB, None]:
+    connection = connect_to_db()
+    cursor = connection.cursor()
+    cursor.execute("SELECT * FROM users WHERE member_id = %s", (member_id,))
+    user = cursor.fetchone()
+    connection.close()
+    if user:
+        return UserInDB(**user)
 
-def authenticate_user(username: str, password: str) -> Union[UserInDB, None]:
-    """Authenticates a user using the username and password. Returns user data if successful, None otherwise."""
-    user = get_user(username)
+def update_user(member_id: str, email=None, first_name=None, last_name=None, hashed_password=None, disabled=None):
+    connection = connect_to_db()
+    cursor = connection.cursor()
+    try:
+        query = "UPDATE users SET "
+        params = []
+
+        # Update fields if provided
+        if email:
+            query += "email = %s, "
+            params.append(email)
+        if first_name:
+            query += "first_name = %s, "
+            params.append(first_name)
+        if last_name:
+            query += "last_name = %s, "
+            params.append(last_name)
+        if hashed_password:
+            query += "hashed_password = %s, "
+            params.append(hashed_password)
+        if disabled is not None:
+            query += "disabled = %s, "
+            params.append(disabled)
+
+        # Remove trailing comma and add WHERE clause
+        query = query.rstrip(', ') + " WHERE member_id = %s"
+        params.append(member_id)
+
+        cursor.execute(query, params)
+        connection.commit()
+        return get_user(member_id)
+    except pymysql.MySQLError:
+        return None
+    finally:
+        connection.close()
+
+def delete_user(member_id: str):
+    connection = connect_to_db()
+    cursor = connection.cursor()
+    cursor.execute("DELETE FROM users WHERE member_id = %s", (member_id,))
+    connection.commit()
+    connection.close()
+
+def authenticate_user(member_id: str, password: str) -> Union[UserInDB, None]:
+    user = get_user(member_id)
     if not user or not pwd_context.verify(password, user.hashed_password):
         return False
     return user

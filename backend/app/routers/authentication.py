@@ -9,7 +9,6 @@ from ..internal.token import (
     hash_password,
 )
 from ..internal.db import (
-    fake_users_db,
     authenticate_user,
     create_user,
     get_user,
