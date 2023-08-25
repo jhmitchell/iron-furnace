@@ -16,6 +16,7 @@ from dotenv import load_dotenv
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 load_dotenv()
 
+
 def connect_to_db():
     """Connects to the MySQL database and returns the connection object."""
     connection = pymysql.connect(
@@ -26,26 +27,31 @@ def connect_to_db():
     )
     return connection
 
+
 def get_operating_hours():
     connection = connect_to_db()
     cursor = connection.cursor()
-    cursor.execute("SELECT day_of_week, open_time, close_time FROM operating_hours")
+    cursor.execute(
+        "SELECT day_of_week, open_time, close_time FROM operating_hours")
     hours = cursor.fetchall()
-    
+
     cursor.execute("SELECT holiday_date, description FROM holidays")
     holidays = cursor.fetchall()
 
     connection.close()
-    
+
     # MySQL TIME objects are returned as datetime.timedelta objects
     # Convert them to datetime.time objects via a lambda function
-    to_time = lambda value: (datetime.datetime.min + value).time()
+    def to_time(value): return (datetime.datetime.min + value).time()
 
     # Define hours and holidays as dictionaries
-    hours_dict = [{"day_of_week": day, "open_time": to_time(open_time), "close_time": to_time(close_time)} for day, open_time, close_time in hours]
-    holidays_dict = [{"holiday_date": date, "description": desc} for date, desc in holidays]
+    hours_dict = [{"day_of_week": day, "open_time": to_time(
+        open_time), "close_time": to_time(close_time)} for day, open_time, close_time in hours]
+    holidays_dict = [{"holiday_date": date, "description": desc}
+                     for date, desc in holidays]
 
     return hours_dict, holidays_dict
+
 
 def create_user(member_id: str, email: str, hashed_password: str, first_name: str, last_name: str, disabled: bool = False):
     connection = connect_to_db()
@@ -60,6 +66,7 @@ def create_user(member_id: str, email: str, hashed_password: str, first_name: st
     finally:
         connection.close()
 
+
 def get_user(member_id: str) -> Union[UserInDB, None]:
     connection = connect_to_db()
     cursor = connection.cursor()
@@ -68,6 +75,7 @@ def get_user(member_id: str) -> Union[UserInDB, None]:
     connection.close()
     if user:
         return UserInDB(**user)
+
 
 def update_user(member_id: str, email=None, first_name=None, last_name=None, hashed_password=None, disabled=None):
     connection = connect_to_db()
@@ -105,12 +113,14 @@ def update_user(member_id: str, email=None, first_name=None, last_name=None, has
     finally:
         connection.close()
 
+
 def delete_user(member_id: str):
     connection = connect_to_db()
     cursor = connection.cursor()
     cursor.execute("DELETE FROM users WHERE member_id = %s", (member_id,))
     connection.commit()
     connection.close()
+
 
 def authenticate_user(member_id: str, password: str) -> Union[UserInDB, None]:
     user = get_user(member_id)
