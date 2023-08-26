@@ -4,15 +4,17 @@ from dotenv import load_dotenv
 from datetime import datetime, timedelta
 from jose import JWTError, jwt
 from passlib.context import CryptContext
-from typing import Union
+from typing import Union, Dict
 from fastapi import Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordBearer
 from typing_extensions import Annotated
+from sqlalchemy.orm import Session
 
 # Modify to import from app.internal.models
 from app.internal.models.users import User
 from app.internal.models.token import TokenData
-from .db.users import get_user
+from app.internal.db.session import get_db
+from app.internal.db.users import get_user
 
 # Load environment variables
 load_dotenv()
@@ -24,7 +26,9 @@ AUTH_PREFIX = os.getenv("AUTH_PREFIX")
 
 # Password context for hashing and verifying passwords
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
-oauth2_scheme = OAuth2PasswordBearer(tokenUrl=f'{API_V1_PREFIX}{AUTH_PREFIX}/token')
+oauth2_scheme = OAuth2PasswordBearer(
+    tokenUrl=f'{API_V1_PREFIX}{AUTH_PREFIX}/token')
+
 
 def hash_password(password: str) -> str:
     """
@@ -34,6 +38,7 @@ def hash_password(password: str) -> str:
     :return: Hashed password
     """
     return pwd_context.hash(password)
+
 
 def verify_password(plain_password: str, hashed_password: str) -> bool:
     """
@@ -45,22 +50,26 @@ def verify_password(plain_password: str, hashed_password: str) -> bool:
     """
     return pwd_context.verify(plain_password, hashed_password)
 
-def get_user_refresh_token(username: str) -> Union[str, None]:
+
+def get_user_refresh_token(username: str, db: Session) -> Union[str, None]:
     """
     Get the refresh token for a given user.
 
     :param username: Username
     :return: Refresh token if it exists, None otherwise
     """
-    user = get_user(username)
-    if user:
-        return user.refresh_token
-    return None
+    result = get_user(db, username)
+    if result['status'] != 'success':
+        return None
 
-def verify_refresh_token(refresh_token: str) -> str:
+    user = result['user']
+    return user['refresh_token']
+
+
+def verify_refresh_token(refresh_token: str, db: Session) -> str:
     """
     Verifies the provided refresh token, checks if it's expired, and returns the username.
-    
+
     :param refresh_token: Refresh token to verify
     :return: Username if the token is valid, None otherwise
     """
@@ -68,15 +77,16 @@ def verify_refresh_token(refresh_token: str) -> str:
         # Decode the JWT to get the payload
         payload = jwt.decode(refresh_token, SECRET_KEY, algorithms=[ALGORITHM])
         username = payload.get("sub")
-        
+
         # Verify if the token exists in the database
-        stored_refresh_token = get_user_refresh_token(username)
+        stored_refresh_token = get_user_refresh_token(username=username, db=db)
         if refresh_token != stored_refresh_token:
             return None
 
         return username
     except JWTError:
         return None
+
 
 def get_password_hash(password: str) -> str:
     """
@@ -86,6 +96,7 @@ def get_password_hash(password: str) -> str:
     :return: Hashed password
     """
     return pwd_context.hash(password)
+
 
 def create_token(data: dict, expires_delta: Union[timedelta, None] = None) -> str:
     """
@@ -104,7 +115,8 @@ def create_token(data: dict, expires_delta: Union[timedelta, None] = None) -> st
     encoded_jwt = jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)
     return encoded_jwt
 
-async def get_current_user(token: Annotated[str, Depends(oauth2_scheme)]) -> User:
+
+async def get_current_user(token: Annotated[str, Depends(oauth2_scheme)], db: Session) -> Dict[str, Union[Dict, str]]:
     """
     Get the current user from a token.
 
@@ -125,12 +137,13 @@ async def get_current_user(token: Annotated[str, Depends(oauth2_scheme)]) -> Use
         token_data = TokenData(username=username)
     except JWTError:
         raise credentials_exception
-    user = get_user(username=token_data.username)
+    user = get_user(db, username=token_data.username)
     if user is None:
         raise credentials_exception
     return user
 
-async def get_current_active_user(current_user: Annotated[User, Depends(get_current_user)]) -> User:
+
+async def get_current_active_user(current_user: Annotated[User, Depends(get_current_user)]) -> Dict[str, Union[Dict, str]]:
     """
     Get the current active user.
 

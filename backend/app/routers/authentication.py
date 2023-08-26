@@ -48,7 +48,7 @@ async def login_for_access_token(
     :raises HTTPException: If authentication fails or if other errors occur
     """
     # Authenticate the user using the provided username and password
-    result = authenticate_user(db, form_data.username, form_data.password)
+    result = authenticate_user(db, member_id=form_data.username, password=form_data.password)
     if result['status'] != 'success':
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
@@ -61,7 +61,7 @@ async def login_for_access_token(
     # Create an access token with a specified expiration time
     access_token_expires = timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
     access_token = create_token(
-        data={"sub": user.member_id}, expires_delta=access_token_expires
+        data={"sub": user['member_id']}, expires_delta=access_token_expires
     )
 
     # Create a refresh token with a specified expiration time
@@ -70,12 +70,12 @@ async def login_for_access_token(
     refresh_token_expires_at = refresh_token_expires_at.replace(
         tzinfo=timezone.utc)
     refresh_token = create_token(
-        data={"sub": user.member_id}, expires_delta=refresh_token_expires
+        data={"sub": user['member_id']}, expires_delta=refresh_token_expires
     )
 
     # Store the refresh token in the database
     result = store_refresh_token(
-        db, user.member_id, refresh_token, refresh_token_expires_at)
+        db, user['member_id'], refresh_token, refresh_token_expires_at)
     if result['status'] != 'success':
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
@@ -122,8 +122,8 @@ async def refresh_access_token(refresh_token: str = Cookie(None), db: Session = 
             headers={"WWW-Authenticate": "Bearer"},
         )
 
-    # Verify the refresh token and get the username
-    username = verify_refresh_token(refresh_token)
+    # Verify the refresh token and get the username (member_id)
+    username = verify_refresh_token(refresh_token, db)
     if not username:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
@@ -132,22 +132,19 @@ async def refresh_access_token(refresh_token: str = Cookie(None), db: Session = 
         )
 
     # Retrieve user from the database
-    user = get_user(username)
-    if not user:
+    result = get_user(db, username)
+    if result['status'] != 'success':
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
-            detail="User not found",
+            detail=result['detail'],
         )
-
-    # Invalidate the old refresh token
-    # TODO: Replace with database function
-    user_data = fake_users_db[username]
-    user_data["refresh_token"] = None
+    
+    user = result['user']
 
     # Create a new access token
     access_token_expires = timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
     access_token = create_token(
-        data={"sub": user.username}, expires_delta=access_token_expires
+        data={"sub": user['member_id']}, expires_delta=access_token_expires
     )
 
     # Create a new refresh token
@@ -156,13 +153,17 @@ async def refresh_access_token(refresh_token: str = Cookie(None), db: Session = 
     refresh_token_expires_at = refresh_token_expires_at.replace(
         tzinfo=timezone.utc)
     new_refresh_token = create_token(
-        data={"sub": user.username}, expires_delta=refresh_token_expires
+        data={"sub": user['member_id']}, expires_delta=refresh_token_expires
     )
 
     # Update the new refresh token in the database
-    # TODO: Replace with database function
-    user_data["refresh_token"] = new_refresh_token
-    user_data["refresh_token_expires_at"] = refresh_token_expires_at
+    result = store_refresh_token(
+        db, user['member_id'], new_refresh_token, refresh_token_expires_at)
+    if result['status'] != 'success':
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=result['detail'],
+        )
 
     # Create the response
     response = JSONResponse(
