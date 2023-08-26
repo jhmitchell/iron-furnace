@@ -37,7 +37,7 @@ def create_user(db: Session, member_id: str, email: str, hashed_password: str, f
         }
 
         # Unpack the new_user dict into a User object
-        user = User(**user)
+        user = User(**new_user)
         db.add(user)
         db.commit()
         db.refresh(user)
