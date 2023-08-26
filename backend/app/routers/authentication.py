@@ -1,18 +1,23 @@
-'''
 from fastapi import APIRouter, Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordRequestForm
 from fastapi.responses import JSONResponse
 from fastapi import Cookie
-from ..internal.models import Token, UserCreate
+
+from sqlalchemy.orm import Session
+
+from app.internal.db.session import get_db
+from app.internal.models.users import UserSchema, UserCreateSchema
+from app.internal.models.token import TokenSchema
 from ..internal.token import (
     create_token,
     verify_refresh_token,
     hash_password,
 )
-from ..internal.db.db import (
+from ..internal.db.users import (
     authenticate_user,
     create_user,
     get_user,
+    store_refresh_token,
 )
 from datetime import datetime, timedelta, timezone
 from dotenv import load_dotenv
@@ -27,8 +32,11 @@ REFRESH_TOKEN_EXPIRE_DAYS = int(os.getenv("REFRESH_TOKEN_EXPIRE_DAYS"))
 
 router = APIRouter()
 
-@router.post("/token", response_model=Token)
-async def login_for_access_token(form_data: OAuth2PasswordRequestForm = Depends()) -> Token:
+
+@router.post("/token", response_model=TokenSchema)
+async def login_for_access_token(
+        form_data: OAuth2PasswordRequestForm = Depends(),
+        db: Session = Depends(get_db)):
     """
     This endpoint authenticates the user using the provided username and password.
     If authentication is successful, it generates an access token and a refresh token.
@@ -40,33 +48,39 @@ async def login_for_access_token(form_data: OAuth2PasswordRequestForm = Depends(
     :raises HTTPException: If authentication fails or if other errors occur
     """
     # Authenticate the user using the provided username and password
-    user = authenticate_user(form_data.username, form_data.password)
-    if not user:
+    result = authenticate_user(db, form_data.username, form_data.password)
+    if result['status'] != 'success':
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
-            detail="Incorrect username or password",
+            detail=result['detail'],
             headers={"WWW-Authenticate": "Bearer"},
         )
+    
+    user = result['user']
 
     # Create an access token with a specified expiration time
     access_token_expires = timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
     access_token = create_token(
-        data={"sub": user.username}, expires_delta=access_token_expires
+        data={"sub": user.member_id}, expires_delta=access_token_expires
     )
 
     # Create a refresh token with a specified expiration time
     refresh_token_expires = timedelta(days=REFRESH_TOKEN_EXPIRE_DAYS)
     refresh_token_expires_at = datetime.utcnow() + refresh_token_expires
-    refresh_token_expires_at = refresh_token_expires_at.replace(tzinfo=timezone.utc)
+    refresh_token_expires_at = refresh_token_expires_at.replace(
+        tzinfo=timezone.utc)
     refresh_token = create_token(
-        data={"sub": user.username}, expires_delta=refresh_token_expires
+        data={"sub": user.member_id}, expires_delta=refresh_token_expires
     )
 
     # Store the refresh token in the database
-    # TODO: Replace with database function
-    user_data = fake_users_db[form_data.username]
-    user_data["refresh_token"] = refresh_token
-    user_data["refresh_token_expires_at"] = refresh_token_expires_at
+    result = store_refresh_token(
+        db, user.member_id, refresh_token, refresh_token_expires_at)
+    if result['status'] != 'success':
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=result['detail'],
+        )
 
     # Create the response which includes the access token in the body
     # and the refresh token in an http-only cookie
@@ -84,8 +98,9 @@ async def login_for_access_token(form_data: OAuth2PasswordRequestForm = Depends(
 
     return response
 
-@router.post("/token/refresh", response_model=Token)
-async def refresh_access_token(refresh_token: str = Cookie(None)) -> Token:
+
+@router.post("/token/refresh", response_model=TokenSchema)
+async def refresh_access_token(refresh_token: str = Cookie(None), db: Session = Depends(get_db)):
     """
     This endpoint takes a refresh token from an HttpOnly cookie and uses it to
     generate a new access token. If the refresh token is valid and not expired,
@@ -138,7 +153,8 @@ async def refresh_access_token(refresh_token: str = Cookie(None)) -> Token:
     # Create a new refresh token
     refresh_token_expires = timedelta(days=REFRESH_TOKEN_EXPIRE_DAYS)
     refresh_token_expires_at = datetime.utcnow() + refresh_token_expires
-    refresh_token_expires_at = refresh_token_expires_at.replace(tzinfo=timezone.utc)
+    refresh_token_expires_at = refresh_token_expires_at.replace(
+        tzinfo=timezone.utc)
     new_refresh_token = create_token(
         data={"sub": user.username}, expires_delta=refresh_token_expires
     )
@@ -163,28 +179,49 @@ async def refresh_access_token(refresh_token: str = Cookie(None)) -> Token:
 
     return response
 
-@router.post("/register", response_model=Token)
-async def register_and_login(user: UserCreate, form_data: OAuth2PasswordRequestForm = Depends()) -> Token:
+
+@router.post("/register", response_model=TokenSchema)
+async def register_and_login(
+        user: UserCreateSchema,
+        db: Session = Depends(get_db)):
     """
     This endpoint registers a new user with the provided username, password, 
-    email, and first and last names. If registration is successful, the user 
-    is also logged in using the login endpoint, which returns an access token
-    and sets a refresh token as an HttpOnly cookie.
+    email, first name, last name, and optional disabled flag. If registration 
+    is successful, the user is also logged in using the login_for_access_token 
+    function, which returns an access token.
 
-    :param user: User creation object containing username, email, and password
-    :return: JSON response containing the access token and token type
-    :raises HTTPException: If registration fails or if other errors occur
+    :param user: User creation object containing member_id, email, password, 
+                 first_name, last_name, and optional disabled flag.
+    :param form_data: OAuth2PasswordRequestForm object containing the user's 
+                      username and password for the OAuth2 flow.
+    :param db: SQLAlchemy Session object for database interaction.
+    :return: JSON response containing the access token and token type.
+    :raises HTTPException: If registration fails or if other errors occur.
     """
+    # Hash the user password
+    hashed_password = hash_password(user.password)
+
     # Create the user in the database
-    # We will use a hashed password for storage
-    password_hash = hash_password(user.password)
-    created_user = create_user(username=user.username, email=user.email, hashed_password=password_hash)
-    
-    if not created_user:
+    created_user_result = create_user(
+        db,
+        member_id=user.member_id,
+        email=user.email,
+        hashed_password=hashed_password,
+        first_name=user.first_name,
+        last_name=user.last_name,
+        disabled=user.disabled
+    )
+
+    if created_user_result['status'] != 'success':
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
-            detail="Registration failed. Username or email might be already taken.",
+            detail=created_user_result.get(
+                'detail', 'An error occurred during registration.')
         )
 
-    return await login_for_access_token(form_data)
-'''
+    # Construct the OAuth2PasswordRequestForm object
+    form_data = OAuth2PasswordRequestForm(
+        username=user.member_id, password=user.password, scope="", grant_type="password")
+
+    # Log the user in and return the access token
+    return await login_for_access_token(form_data=form_data, db=db)

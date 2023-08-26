@@ -88,7 +88,7 @@ def get_status(db: Session = Depends(get_db)):
             elif i == 1:
                 # Check if holiday
                 for holiday in holidays:
-                    print(holiday['holiday_date'], next_date_est)
+                    #print(holiday['holiday_date'], next_date_est)
                     if holiday['holiday_date'] == next_date_est:
                         return {"status": "CLOSED", "message": f"Closed for {holiday['description']}"}
                 return {"status": "CLOSED", "message": f"Open tomorrow from {format_time(next_open)} to {format_time(next_close)}"}

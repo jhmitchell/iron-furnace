@@ -1,4 +1,3 @@
-'''
 import os
 from dotenv import load_dotenv
 
@@ -10,8 +9,10 @@ from fastapi import Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordBearer
 from typing_extensions import Annotated
 
-from .models import TokenData, UserInDB
-from .db.db import get_user
+# Modify to import from app.internal.models
+from app.internal.models.users import User
+from app.internal.models.token import TokenData
+from .db.users import get_user
 
 # Load environment variables
 load_dotenv()
@@ -103,7 +104,7 @@ def create_token(data: dict, expires_delta: Union[timedelta, None] = None) -> st
     encoded_jwt = jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)
     return encoded_jwt
 
-async def get_current_user(token: Annotated[str, Depends(oauth2_scheme)]) -> UserInDB:
+async def get_current_user(token: Annotated[str, Depends(oauth2_scheme)]) -> User:
     """
     Get the current user from a token.
 
@@ -129,7 +130,7 @@ async def get_current_user(token: Annotated[str, Depends(oauth2_scheme)]) -> Use
         raise credentials_exception
     return user
 
-async def get_current_active_user(current_user: Annotated[UserInDB, Depends(get_current_user)]) -> UserInDB:
+async def get_current_active_user(current_user: Annotated[User, Depends(get_current_user)]) -> User:
     """
     Get the current active user.
 
@@ -140,4 +141,3 @@ async def get_current_active_user(current_user: Annotated[UserInDB, Depends(get_
     if current_user.disabled:
         raise HTTPException(status_code=400, detail="Inactive user")
     return current_user
-'''
