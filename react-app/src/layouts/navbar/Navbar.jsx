@@ -1,6 +1,8 @@
 import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import MembershipActions from './membershipActions/MembershipActions';
+
+
 import "./Navbar.css";
 
 const Navbar = () => {
@@ -8,9 +10,10 @@ const Navbar = () => {
     <nav className="navbar">
       <div className="nav-container">
         <div className="nav-logo">
+          <div className="logo-image"/>
           <Link to="/">
-            <div>CORNWALL</div>
-            <div>IRON FURNACE</div>
+            <div className="logo-text-cornwall">CORNWALL</div>
+            <div className="logo-text-ironfurnace">IRON FURNACE</div>
           </Link>
         </div>
         <div className="nav-links">

@@ -35,10 +35,30 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    line-height: 1.5rem;
+    line-height: 1.2rem;
     letter-spacing: -1px;
     font-family: 'Ruwudu';
+    /*font-size: 1.5rem;
+    font-weight: 500;*/
+}
+
+.navbar .nav-logo .logo-image {
+    width: 80px;
+    height: 50px;
+    background-image: url('src/assets/images/window-logo.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    margin-right: 10px;
+}
+
+.navbar .nav-logo .logo-text-cornwall {
     font-size: 1.5rem;
+    font-weight: 500;
+}
+
+.navbar .nav-logo .logo-text-ironfurnace {
+    font-size: 1.2rem;
     font-weight: 500;
 }
 
