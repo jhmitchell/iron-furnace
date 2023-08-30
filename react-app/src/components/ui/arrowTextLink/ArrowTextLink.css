@@ -87,13 +87,13 @@
 }
 
 /* Animated Arrow Button Effects */
-.animated-arrow .main {
+.animated-arrow .arrow-main {
   display: flex;
   align-items: center;
   transition: all 0.15s;
 }
 
-.animated-arrow .main .text {
+.animated-arrow .arrow-main .text {
   margin: 0 var(--text-arrow-space) 0 0;
   line-height: 1;
   display: inline-block;
@@ -120,20 +120,20 @@
   transform: rotate(-40deg);
 }
 
-.animated-arrow:hover .main {
+.animated-arrow:hover .arrow-main {
   transform: translateX(calc(var(--shaft-width) + var(--text-arrow-space)));
 }
 
-.animated-arrow:hover .main .the-arrow.-right .shaft {
+.animated-arrow:hover .arrow-main .the-arrow.-right .shaft {
   width: 0;
 }
 
-.animated-arrow:hover .main .the-arrow.-right {
+.animated-arrow:hover .arrow-main .the-arrow.-right {
   transform: translateX(var(--shaft-width) + var(--text-arrow-space));
 }
 
-.animated-arrow:hover .main .the-arrow.-right .shaft::before,
-.animated-arrow:hover .main .the-arrow.-right .shaft::after {
+.animated-arrow:hover .arrow-main .the-arrow.-right .shaft::before,
+.animated-arrow:hover .arrow-main .the-arrow.-right .shaft::after {
   width: 0;
   transform: rotate(0);
 }

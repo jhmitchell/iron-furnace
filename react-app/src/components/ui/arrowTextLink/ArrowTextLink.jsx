@@ -5,7 +5,7 @@ import './ArrowTextLink.css';
 const ArrowTextLink = ({ text, path }) => (
   <Link to={path} className="animated-arrow">
     <span className="the-arrow -left"><span className="shaft"></span></span>
-    <span className="main">
+    <span className="arrow-main">
       <span className="text">{text}</span>
       <span className="the-arrow -right"><span className="shaft"></span></span>
     </span>

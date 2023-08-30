@@ -1,6 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { Button } from "../../../../components/ui";
+import { useHours } from "../../hooks/useHours";
+
 import "./Hours.css";
 
 const Hours = () => {
@@ -32,10 +34,12 @@ const Hours = () => {
   );
   */
 
+  const { isOpen, message, loading } = useHours();
+
   return (
     <div className="welcome-flex-element hours">
       <div className="status">
-        <p>The museum is now CLOSED</p>
+        <p>The museum is now {isOpen ? "OPEN" : "CLOSED"}</p>
       </div>
       <div className="visitor-info">
         <p>Open Friday through Sunday</p>
