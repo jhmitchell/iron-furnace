@@ -43,12 +43,13 @@
 }
 
 .navbar .nav-logo .logo-image {
-    width: 80px;
     height: 50px;
-    background-image: url('src/assets/images/window-logo.png');
-    background-size: cover;
+    width: 50px;
+    background-image: url('src/assets/images/window-logo.svg');
+    background-size: contain;
     background-position: center;
     background-repeat: no-repeat;
+    margin-top: 0px;
     margin-right: 10px;
 }
 
