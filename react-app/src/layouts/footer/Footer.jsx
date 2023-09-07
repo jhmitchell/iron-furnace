@@ -1,5 +1,5 @@
 import React from "react";
-import { FaFacebookF, FaInstagram, FaYoutube } from "react-icons/fa";
+import { FaFacebookSquare, FaInstagram, FaYoutube } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { Button } from "../../components/ui";
 import "./Footer.css";
@@ -10,10 +10,12 @@ const Footer = () => {
       <div className="footer-container">
         <div className="footer-top">
           <div className="footer-left">
-            <div className="footer-logo-image" />
-            <div className="footer-logo-text">
-              <div className="logo-text-cornwall">CORNWALL</div>
-              <div className="logo-text-ironfurnace">IRON FURNACE</div>
+            <div className="footer-logo">
+              <div className="footer-logo-image" />
+              <div className="footer-logo-text">
+                <div className="logo-text-cornwall">CORNWALL</div>
+                <div className="logo-text-ironfurnace">IRON FURNACE</div>
+              </div>
             </div>
             <div className="footer-address">
               94 Rexmont Rd
@@ -33,7 +35,7 @@ const Footer = () => {
                 href="https://www.facebook.com/CornwallIronFurnace/"
                 className="footer-link socials"
               >
-                <FaFacebookF />
+                <FaFacebookSquare />
               </a>
               <a
                 href="https://www.instagram.com/cornwall_iron_furnace/?hl=en"
