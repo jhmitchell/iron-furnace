@@ -2,27 +2,63 @@
     height: calc(50vh - 70px);
     width: 100%;
     background-color: var(--dark-background);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem;
 }
 
 .quote-container {
-    height: 100%;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+    text-align: center;
+    max-width: 1100px;
+}
+
+.quote {
+    position: relative;
+}
+
+.quote::before,
+.quote::after {
+    content: "“";
+    font-size: 6rem;
+    line-height: 0.6;
+    color: #fff;
+    position: absolute;
+}
+
+/* The following values should be adjusted to fit the quote */
+
+.quote::before {
+    top: 0;
+    left: 0px;
+}
+
+.quote::after {
+    content: "”";
+    bottom: 0;
+    right: -50px;
 }
 
 .quote-text {
-    font-size: 3.0rem;
+    font-size: 3.5rem;
+    line-height: 3.5rem;
     font-weight: 700;
     text-align: center;
-    margin-bottom: 1rem;
-    font-style: italic;
+    margin-bottom: 2rem;
+    color: #fff;
 }
 
-.below-text {
+.quote-continuation {
     font-size: 1.5rem;
     font-weight: 300;
+    text-align: justify;
+    color: #bbb;
+    margin-bottom: 2rem;
     text-align: center;
+}
+
+.quote-author {
+    font-size: 1.2rem;
+    font-weight: 400;
+    color: #ccc;
 }
