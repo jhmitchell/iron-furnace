@@ -10,7 +10,7 @@ const Footer = () => {
       <div className="footer-container">
         <div className="footer-top">
           <div className="footer-left">
-            <div className="footer-logo-image"/>
+            <div className="footer-logo-image" />
             <div className="footer-logo-text">
               <div className="logo-text-cornwall">CORNWALL</div>
               <div className="logo-text-ironfurnace">IRON FURNACE</div>
@@ -29,13 +29,22 @@ const Footer = () => {
               Cornwall, PA 17016
             </div>
             <div className="footer-socials">
-              <a href="https://www.facebook.com/CornwallIronFurnace/" className="footer-link socials">
+              <a
+                href="https://www.facebook.com/CornwallIronFurnace/"
+                className="footer-link socials"
+              >
                 <FaFacebookF />
               </a>
-              <a href="https://www.instagram.com/cornwall_iron_furnace/?hl=en" className="footer-link socials">
+              <a
+                href="https://www.instagram.com/cornwall_iron_furnace/?hl=en"
+                className="footer-link socials"
+              >
                 <FaInstagram />
               </a>
-              <a href="https://www.youtube.com/@cornwallironfurnace6291" className="footer-link socials">
+              <a
+                href="https://www.youtube.com/@cornwallironfurnace6291"
+                className="footer-link socials"
+              >
                 <FaYoutube />
               </a>
             </div>
@@ -43,30 +52,49 @@ const Footer = () => {
           <div className="footer-right">
             <div className="footer-right-title">
               <p>
-                You can help preserve the beauty and history of the Cornwall Iron
-                Furnace by supporting us with your tax-deductible donations.
+                You can help preserve the beauty and history of the Cornwall
+                Iron Furnace by supporting us with your tax-deductible
+                donations.
               </p>
-              <Button text="DONATE TODAY" color="orange"/>
+              <Button text="DONATE TODAY" color="orange" />
             </div>
             <div className="horizontal-line" />
             <div className="footer-right-links">
               <div>
                 <Link className="footer-link">Visitor Information</Link>
-                {/* Additional info */}
+                <div className="footer-sublinks">
+                  <Link className="footer-sublink">Hours & Admission</Link>
+                  <Link className="footer-sublink">Special Events</Link>
+                  <Link className="footer-sublink">Museum Map</Link>
+                  <Link className="footer-sublink">Accessibility</Link>
+                </div>
               </div>
               <div>
                 <Link className="footer-link">Support Us</Link>
-                {/* Additional info */}
+                <div className="footer-sublinks">
+                  <Link className="footer-sublink">Membership</Link>
+                  <Link className="footer-sublink">Donate</Link>
+                  <Link className="footer-sublink">Corporate Sponsorship</Link>
+                  <Link className="footer-sublink">Volunteer</Link>
+                </div>
               </div>
               <div>
                 <Link className="footer-link">Shop</Link>
-                {/* Additional info */}
+                <div className="footer-sublinks">
+                  <Link className="footer-sublink">Books</Link>
+                  <Link className="footer-sublink">Apparel</Link>
+                </div>
               </div>
               <div>
                 <Link className="footer-link">Contact Us</Link>
-                {/* Additional info */}
+                <div className="footer-sublinks">
+                  <Link className="footer-sublink">Private Events</Link>
+                  <Link className="footer-sublink">Group Tours</Link>
+                  <Link className="footer-sublink">School Tours</Link>
+                </div>
               </div>
             </div>
+
             <div className="footer-right-bottom">
               <p className="footer-right-bottom-element">
                 Cornwall Iron Furnace is administered by the Pennsylvania
