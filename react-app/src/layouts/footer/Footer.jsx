@@ -48,6 +48,12 @@ const Footer = () => {
                 <FaYoutube />
               </a>
             </div>
+            <div className="PHMC-logo">
+              <div className="PHMC-logo-image"/>
+              <div className="PHMC-logo-text">
+                Pennsylvania Historical & Museum Commission
+              </div>
+            </div>
           </div>
           <div className="footer-right">
             <div className="footer-right-title">
@@ -101,8 +107,6 @@ const Footer = () => {
                 Historical & Museum Commission: <br />
                 Josh Shapiro, Governor | Hayley Haldeman, Chair | Andrea Lowery,
                 Executive Director
-                <br />
-                Pennsylvania Historical & Museum Commission
               </p>
               <p className="footer-right-bottom-element">
                 The Cornwall Iron Furnace Associates, Inc. is a non-profit

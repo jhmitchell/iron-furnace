@@ -8,6 +8,15 @@ import '@fontsource/inter/700.css';
 import '@fontsource/ruwudu/500.css';
 import './index.css'
 
+const addAdobeGaramondPro = () => {
+  const link = document.createElement('link')
+  link.rel = 'stylesheet'
+  link.href = 'https://use.typekit.net/kra7lnn.css';
+  document.head.appendChild(link)
+};
+
+addAdobeGaramondPro()
+
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <App />
