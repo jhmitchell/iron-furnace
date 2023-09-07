@@ -16,18 +16,21 @@
   justify-content: space-between;
 }
 
-.footer .column1 {
+.footer .footer-left {
   flex: 1;
 }
 
-.footer .column2 {
+.footer .footer-right {
   flex: 2;
 }
 
 .footer .footer-logo {
-  height: 50px;
-  width: 50px;
+  height: 100px;
+  width: 100px;
   background-image: url('src/assets/images/window-logo.svg');
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
 }
 
 .footer-address,
@@ -37,7 +40,21 @@
   /* You may want to add specific styles for each of these */
 }
 
-.footer .column2-links {
+.footer .footer-right-title {
+  font-size: 1.2rem;
+  font-weight: 500;
+  line-height: 1.5rem;
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.footer .footer-right-title .button {
+  width: 250px;
+}
+
+.footer .footer-right-links {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -45,10 +62,14 @@
 
 .footer .footer-right-bottom {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  text-align: justify
+  text-align: center;
+}
+
+.footer .footer-right-bottom-element {
+  flex: 1;
 }
 
 .footer .horizontal-line {
