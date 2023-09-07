@@ -1,4 +1,5 @@
 import React from "react";
+import { FaFacebookF, FaInstagram, FaYoutube } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { Button } from "../../components/ui";
 import "./Footer.css";
@@ -9,7 +10,11 @@ const Footer = () => {
       <div className="footer-container">
         <div className="footer-top">
           <div className="footer-left">
-            <div className="footer-logo">{/* Insert logo here */}</div>
+            <div className="footer-logo-image"/>
+            <div className="footer-logo-text">
+              <div className="logo-text-cornwall">CORNWALL</div>
+              <div className="logo-text-ironfurnace">IRON FURNACE</div>
+            </div>
             <div className="footer-address">
               94 Rexmont Rd
               <br />
@@ -24,7 +29,15 @@ const Footer = () => {
               Cornwall, PA 17016
             </div>
             <div className="footer-socials">
-              {/* Social Media Icons for Facebook, Instagram, YouTube */}
+              <a href="https://www.facebook.com/CornwallIronFurnace/" className="footer-link socials">
+                <FaFacebookF />
+              </a>
+              <a href="https://www.instagram.com/cornwall_iron_furnace/?hl=en" className="footer-link socials">
+                <FaInstagram />
+              </a>
+              <a href="https://www.youtube.com/@cornwallironfurnace6291" className="footer-link socials">
+                <FaYoutube />
+              </a>
             </div>
           </div>
           <div className="footer-right">
@@ -38,19 +51,19 @@ const Footer = () => {
             <div className="horizontal-line" />
             <div className="footer-right-links">
               <div>
-                <Link>Visitor Information</Link>
+                <Link className="footer-link">Visitor Information</Link>
                 {/* Additional info */}
               </div>
               <div>
-                <Link>Support Us</Link>
+                <Link className="footer-link">Support Us</Link>
                 {/* Additional info */}
               </div>
               <div>
-                <Link>Shop</Link>
+                <Link className="footer-link">Shop</Link>
                 {/* Additional info */}
               </div>
               <div>
-                <Link>Contact Us</Link>
+                <Link className="footer-link">Contact Us</Link>
                 {/* Additional info */}
               </div>
             </div>
