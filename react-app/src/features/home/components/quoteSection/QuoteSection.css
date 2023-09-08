@@ -1,5 +1,5 @@
 .quote-section {
-    height: calc(50vh - 70px);
+    height: calc(75vh - 70px);
     width: 100%;
     background-color: var(--dark-background);
     display: flex;
@@ -22,7 +22,7 @@
     content: "“";
     font-size: 6rem;
     line-height: 0.6;
-    color: #fff;
+    color: var(--text-off-white);
     position: absolute;
 }
 
@@ -45,14 +45,14 @@
     font-weight: 700;
     text-align: center;
     margin-bottom: 2rem;
-    color: #fff;
+    color: var(--text-off-white);
 }
 
 .quote-continuation {
     font-size: 1.5rem;
     font-weight: 300;
     text-align: justify;
-    color: #bbb;
+    color: var(--text-off-white);
     margin-bottom: 2rem;
     text-align: center;
 }
@@ -60,5 +60,5 @@
 .quote-author {
     font-size: 1.2rem;
     font-weight: 400;
-    color: #ccc;
+    color: var(--text-link-grey)
 }
