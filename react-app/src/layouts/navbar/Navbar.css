@@ -1,6 +1,6 @@
 .navbar {
     background-color: #333437;
-    color: #fff;
+    color: var(--text-off-white);
     height: 70px;
     position: sticky;
     top: 0px;
@@ -28,7 +28,7 @@
     display: flex;
 }
 
-.navbar .nav-logo a {
+.navbar .nav-logo .logo-text {
     height: 100%;
     margin-top: 12px;
     display: flex;
@@ -75,8 +75,13 @@
     justify-content: flex-end;
 }
 
-.navbar a {
-    color: #fff;
+.navbar .nav-logo {
+    color: var(--text-off-white);
+    text-decoration: none;
+}
+
+.navbar .nav-link {
+    color: var(--text-off-white);
     text-decoration: none;
     font-size: 1rem;
     font-weight: 300;
@@ -87,17 +92,18 @@
     justify-content: center;
 }
 
-.navbar a:hover {
+.navbar .nav-link:hover,
+.navbar .nav-logo:hover {
     opacity: 0.8;
 }
 
-.navbar .nav-links a,
-.navbar .nav-links a:before,
-.navbar .nav-links a:after {
+.navbar .nav-links .nav-link,
+.navbar .nav-links .nav-link:before,
+.navbar .nav-links .nav-link:after {
     transition: all 0.15s ease;
 }
 
-.navbar .nav-links a:after {
+.navbar .nav-links .nav-link:after {
     position: absolute;
     top: 30px;
     margin: auto;
@@ -108,6 +114,6 @@
     height: 1px;
 }
 
-.navbar a:hover:after {
+.navbar .nav-link:hover:after {
     width: 120%;
 }
