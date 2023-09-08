@@ -42,19 +42,19 @@ const Footer = () => {
                     href="https://www.facebook.com/CornwallIronFurnace/"
                     className="footer-link socials"
                   >
-                    <FaFacebookSquare />
+                    <FaFacebookSquare size={32}/>
                   </a>
                   <a
                     href="https://www.instagram.com/cornwall_iron_furnace/?hl=en"
                     className="footer-link socials"
                   >
-                    <FaInstagram />
+                    <FaInstagram size={32}/>
                   </a>
                   <a
                     href="https://www.youtube.com/@cornwallironfurnace6291"
                     className="footer-link socials"
                   >
-                    <FaYoutube />
+                    <FaYoutube size={32}/>
                   </a>
                 </div>
               </div>
