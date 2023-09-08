@@ -42,19 +42,19 @@ const Footer = () => {
                     href="https://www.facebook.com/CornwallIronFurnace/"
                     className="footer-link socials"
                   >
-                    <FaFacebookSquare size={32}/>
+                    <FaFacebookSquare size={32} />
                   </a>
                   <a
                     href="https://www.instagram.com/cornwall_iron_furnace/?hl=en"
                     className="footer-link socials"
                   >
-                    <FaInstagram size={32}/>
+                    <FaInstagram size={32} />
                   </a>
                   <a
                     href="https://www.youtube.com/@cornwallironfurnace6291"
                     className="footer-link socials"
                   >
-                    <FaYoutube size={32}/>
+                    <FaYoutube size={32} />
                   </a>
                 </div>
               </div>
@@ -108,10 +108,17 @@ const Footer = () => {
           </div>
         </div>
         <div className="footer-ack">
+          {/* 
+            Note: The PHMC logo is a GIF with a transparent background.
+            The file and configuration are specified in the PHMC style
+            guide. Please consult the guide if changing the layout. 
+          */}
           <div className="PHMC-logo footer-ack-element">
             <div className="PHMC-logo-image" />
             <div className="PHMC-logo-text">
-              Pennsylvania Historical & Museum Commission
+              Pennsylvania <br />
+              Historical & Museum <br />
+              Commission
             </div>
           </div>
           <p className="footer-ack-element">
