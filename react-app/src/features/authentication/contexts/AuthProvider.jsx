@@ -7,7 +7,7 @@ const AuthProvider = ({ children }) => {
 
   const login = (credentials) => {
     // Implement login logic
-    console.log('login');
+    console.log('login with credentials: ', credentials);
   };
 
   const logout = () => {

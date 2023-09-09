@@ -13,9 +13,9 @@ const App = () => {
       <Router>
         <Routes>
           <Route path="/" element={<HomePage />} />
-          <Route path="login" element={<LoginPage />} />
+          <Route path="/login" element={<LoginPage />} />
           <Route element={<ProtectedRoute />}>
-            <Route path="test" element={<TestPage />} />
+            <Route path="/test" element={<TestPage />} />
             {/* More protected routes can be nested here */}
           </Route>
         </Routes>
