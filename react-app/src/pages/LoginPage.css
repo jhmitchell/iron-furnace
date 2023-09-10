@@ -8,22 +8,12 @@
     width: 100%;
     display: flex;
     flex-direction: row;
-}
-
-.login-panel {
-    height: 100%;
-}
-
-.login-panel.left {
-    flex: 1;
+    justify-content: center;
+    align-items: center;
     background-color: var(--dark-background);
 }
 
-.login-panel.right {
-    flex: 1;
-    /* use an image for the background */
-    background-image: url("../assets/images/big_wheel.jpg");
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;   
+.login-form-container {
+    height: 500px;
+    width: 500px;
 }
