@@ -7,7 +7,7 @@
   align-items: center;
 }
 
-.text-flex {
+.not-found-page .text-flex {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -16,26 +16,18 @@
   color: var(--text-off-white);
 }
 
-h1 {
+.not-found-page h1 {
   font-size: 6rem;
   margin-bottom: 1rem;
 }
 
-h2 {
+.not-found-page h2 {
   font-size: 2rem;
-  margin-bottom: 1rem;
+  margin-bottom: 0rem;
 }
 
-p {
+.not-found-page p {
   font-size: 1.5rem;
   margin-bottom: 1rem;
 }
 
-.home-link {
-  margin-top: 20px;
-  background-color: var(--text-off-white);
-  color: var(--dark-background);
-  padding: 10px 20px;
-  border-radius: 5px;
-  text-decoration: none;
-}
