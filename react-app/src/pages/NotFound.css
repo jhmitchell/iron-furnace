@@ -1,0 +1,14 @@
+.not-found-page {
+  height: 100vh;
+  width: 100%;
+}
+
+.not-found-page .not-found-flex {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--dark-background);
+}
