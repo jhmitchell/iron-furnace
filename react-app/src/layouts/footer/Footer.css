@@ -38,7 +38,7 @@
 .footer .footer-logo-image {
   height: 250px;
   width: 200px;
-  background-image: url('src/assets/images/full-logo-white.svg');
+  background-image: url('/src/assets/images/full-logo-white.svg');
   background-size: contain;
   background-position: center;
   background-repeat: no-repeat;
@@ -109,7 +109,7 @@
 .footer .PHMC-logo-image {
   height: 75px;
   width: 75px;
-  background-image: url('src/assets/images/phmc-logo-75.gif');
+  background-image: url('/src/assets/images/phmc-logo-75.gif');
   background-size: contain;
   background-position: center;
   background-repeat: no-repeat;
