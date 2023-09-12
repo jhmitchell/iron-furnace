@@ -1,12 +1,7 @@
 .animated-arrow {
-  --text-arrow-space: 8px;
-  --shaft-width: 32px;
-  --shaft-thickness: 1px;
-  --arrow-head-width: 8px;
-  --arrow-head-thickness: var(--shaft-thickness);
   display: inline-flex;
   color: var(--text-link-grey);
-  font-size: 1.5rem;
+  font-size: var(--fontSize);
   font-style: italic;
   text-decoration: none;
   position: relative;
@@ -73,10 +68,16 @@
 }
 
 .the-arrow.-right .shaft::before {
+  width: var(--arrow-head-width);
+  height: var(--arrow-head-thickness);
+  transform-origin: 100% 50%;
   transform: rotate(40deg);
 }
 
 .the-arrow.-right .shaft::after {
+  width: var(--arrow-head-width);
+  height: var(--arrow-head-thickness);
+  transform-origin: 100% 50%;
   transform: rotate(-40deg);
 }
 
