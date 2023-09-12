@@ -1,6 +1,6 @@
 import React from "react";
 //import heroImage from '../../../../../assets/images/hero_demo_2.png';
-import heroImage from "../../../../../assets/images/entrance.jpg";
+import heroImage from "../../../../../assets/images/entrance.webp";
 import "./HeroImage.css";
 
 const HeroImage = () => {
