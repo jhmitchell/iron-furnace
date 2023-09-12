@@ -45,7 +45,7 @@
 .navbar .nav-logo .logo-image {
     height: 50px;
     width: 50px;
-    background-image: url('src/assets/images/window-logo.svg');
+    background-image: url('/src/assets/images/window-logo.svg');
     background-size: contain;
     background-position: center;
     background-repeat: no-repeat;
