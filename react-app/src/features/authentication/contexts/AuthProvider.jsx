@@ -1,5 +1,5 @@
 import React, { createContext, useState, useEffect } from 'react';
-import { loginService } from '../services/authService';
+import { loginService, validateTokenService } from '../services/authService';
 
 export const AuthContext = createContext();
 
@@ -9,11 +9,36 @@ const AuthProvider = ({ children }) => {
 
   // Check for user data in local storage upon initialization
   useEffect(() => {
-    const storedUser = localStorage.getItem('user');
-    if (storedUser) {
-      setUser(JSON.parse(storedUser));
-    }
-    setLoading(false);
+    const initAndValidateUser = async () => {
+      const storedUser = localStorage.getItem('user');
+
+      if (storedUser) {
+        try {
+          const parsedUser = JSON.parse(storedUser);
+
+          // Validation here also checks for essential fields
+          const validation = await validateTokenService(parsedUser.accessToken);
+
+          if (validation && validation.member_id && validation.email) {
+            setUser(parsedUser);
+          } else {
+            localStorage.removeItem('user');
+            setUser(null);
+          }
+        } catch (error) {
+          // Error during validation, assume token is invalid
+          console.log('Validation error:', error);
+          localStorage.removeItem('user');
+          setUser(null);
+        }
+      } else {
+        setUser(null);
+      }
+
+      setLoading(false);
+    };
+
+    initAndValidateUser();
   }, []);
 
   const login = async (credentials) => {

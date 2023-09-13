@@ -5,7 +5,7 @@ import { LoginForm } from '/src/components/forms';
 import './LoginPage.css';
 
 const LoginPage = () => {
-  const { user, loginUser } = useAuth();
+  const { user, loginUser,  } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
   

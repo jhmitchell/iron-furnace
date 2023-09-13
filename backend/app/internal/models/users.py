@@ -1,5 +1,6 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 from sqlalchemy import Boolean, Column, String, DateTime
+from typing import Union
 from .base import Base
 
 # SqlAlchemy User model
@@ -34,3 +35,10 @@ class UserCreateSchema(BaseModel):
     first_name: str
     last_name: str
     disabled: bool = False  # Optional; default to False
+
+class PublicUserSchema(BaseModel):
+    member_id: str
+    email: str
+    first_name: str
+    last_name: str
+    

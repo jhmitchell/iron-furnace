@@ -1,7 +1,7 @@
 import os
 from dotenv import load_dotenv
 
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 from jose import JWTError, jwt
 from passlib.context import CryptContext
 from typing import Union, Dict
@@ -116,6 +116,22 @@ def create_token(data: dict, expires_delta: Union[timedelta, None] = None) -> st
     return encoded_jwt
 
 
+async def authorize(db: Session = Depends(get_db), token: str = Depends(oauth2_scheme)):
+    """
+    Authorize the user by extracting the token from the Authorization header and obtaining user information.
+    """
+    response = await get_current_user(token, db)
+    
+    if response['status'] == 'success':
+        return response
+    else:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail=response['detail'],
+            headers={"WWW-Authenticate": "Bearer"},
+        )
+
+
 async def get_current_user(token: Annotated[str, Depends(oauth2_scheme)], db: Session) -> Dict[str, Union[Dict, str]]:
     """
     Get the current user from a token.
@@ -132,15 +148,25 @@ async def get_current_user(token: Annotated[str, Depends(oauth2_scheme)], db: Se
     try:
         payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
         username: str = payload.get("sub")
+        expires: int = payload.get("exp")
+
+        # Check if the token has a username
         if username is None:
             raise credentials_exception
-        token_data = TokenData(username=username)
+
+        # Check if the token is expired
+        current_utc_timestamp = datetime.now(timezone.utc).timestamp()
+        if current_utc_timestamp > expires:
+            raise credentials_exception
+ 
+        user = get_user(db, member_id=username)
+        if user is None:
+            raise credentials_exception
+        
+        return user
+
     except JWTError:
         raise credentials_exception
-    user = get_user(db, username=token_data.username)
-    if user is None:
-        raise credentials_exception
-    return user
 
 
 async def get_current_active_user(current_user: Annotated[User, Depends(get_current_user)]) -> Dict[str, Union[Dict, str]]:

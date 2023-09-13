@@ -28,3 +28,43 @@ export const loginService = async (username, password) => {
     throw error;
   }
 };
+
+export const logoutService = async () => {
+  console.log('logoutService');
+};
+
+export const validateTokenService = async () => {
+  try {
+    const userString = localStorage.getItem('user');
+    if (!userString) {
+      throw new Error('No user information found in local storage');
+    }
+
+    const user = JSON.parse(userString);
+    const token = user['accessToken'];
+    if (!token) {
+      throw new Error('No access token found in local storage');
+    }
+
+    const response = await fetch(`${API_V1_PREFIX}/users/me`, {
+      method: 'GET',
+      headers: {
+        'Authorization': `Bearer ${token}`,
+      },
+    });
+    
+    if (!response.ok) {
+      throw new Error(`Token validation error: ${response.status}`);
+    }
+
+    const userResp = await response.json();
+    if (!userResp || !userResp['member_id']) {
+      throw new Error('Invalid response from authentication server');
+    }
+
+    return userResp;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+};
