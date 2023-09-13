@@ -1,16 +1,18 @@
 import React from 'react';
-import { Formik, Form, Field, ErrorMessage } from 'formik';
+import { Formik, Form } from 'formik';
+import TextInput from '../ui/formikTextInput/FormikTextInput'
+import Submit from '../ui/formikSubmit/FormikSubmit'
 
 const validate = values => {
   const errors = {};
   if (!values.username) {
     errors.username = 'Required';
   }
-  
+
   if (!values.password) {
     errors.password = 'Required';
   }
-  
+
   return errors;
 };
 
@@ -27,18 +29,24 @@ const LoginForm = ({ onSubmit }) => {
       {() => (
         <Form>
           <div>
-            <label htmlFor="username">Username</label>
-            <Field type="text" id="username" name="username" />
-            <ErrorMessage name="username" component="div" />
+            <TextInput 
+              id="username" 
+              name="username" 
+              type="text" 
+              label="Username" 
+            />
           </div>
 
           <div>
-            <label htmlFor="password">Password</label>
-            <Field type="password" id="password" name="password" />
-            <ErrorMessage name="password" component="div" />
+            <TextInput 
+              id="password" 
+              name="password" 
+              type="password" 
+              label="Password" 
+            />
           </div>
 
-          <button type="submit">Log In</button>
+          <Submit text="Sign in" color="orange" size="small" />
         </Form>
       )}
     </Formik>

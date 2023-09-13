@@ -1,6 +1,5 @@
 .button {
   display: inline-block;
-  padding: 10px 20px;
   margin-top: 20px;
   border: none;
   border-radius: 5px;
@@ -28,4 +27,23 @@
 .button.transparent:hover {
   background-color: rgba(255, 255, 255, 0.8);
   color: black;
+}
+
+/* Size variations */
+.button.small {
+  height: 30px;
+  padding: 0 20px;
+  font-size: 0.8rem;
+  font-weight: 300;
+}
+
+.button.medium {
+  height: 50px;
+  padding: 10px 20px;
+  font-size: 1rem;
+}
+
+.button.large {
+  padding: 12px 24px;
+  font-size: 1.2rem;
 }

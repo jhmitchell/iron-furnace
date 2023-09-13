@@ -7,7 +7,7 @@ const ProtectedRoute = () => {
 
   if (loading) {
     // Render nothing while loading results from auth provider
-    // Could be replaced with a loading indicator
+    // If not included, the user may see a flash of the login screen
     return null;
   }
 
