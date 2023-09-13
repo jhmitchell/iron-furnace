@@ -2,6 +2,7 @@ import React from 'react';
 import { Formik, Form } from 'formik';
 import TextInput from '../ui/formikTextInput/FormikTextInput'
 import Submit from '../ui/formikSubmit/FormikSubmit'
+import './LoginForm.css';
 
 const validate = values => {
   const errors = {};

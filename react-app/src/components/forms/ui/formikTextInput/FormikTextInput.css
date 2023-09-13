@@ -1,7 +1,8 @@
 .formik-text-input {
-  width: 100%; /* Takes the full width of the parent container */
-  max-width: 300px; /* Maximum width */
-  min-width: 200px; /* Minimum width */
+  width: 100%;
+  max-width: 300px;
+  min-width: 200px;
+  margin-bottom: 4px;
 }
 
 
@@ -12,12 +13,12 @@
 
 .formik-text-input input {
   width: 100%;
-  height: 30px;
-  padding: 8px;
-  margin-bottom: 4px;
+  height: 40px;
+  padding: 12px;
+  background-color: #fff;
   border: 1px solid #ccc;
   border-radius: 4px;
-  font-family: inherit
+  font-family: inherit;
 }
 
 .formik-text-input .error-container {
