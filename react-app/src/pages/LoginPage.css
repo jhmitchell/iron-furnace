@@ -12,8 +12,3 @@
     align-items: center;
     background-color: var(--dark-background);
 }
-
-.login-form-container {
-    height: 500px;
-    width: 500px;
-}
