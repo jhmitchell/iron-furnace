@@ -1,0 +1,11 @@
+.login-form h1 {
+    font-size: 2.5rem;
+    font-weight: 500;
+    margin-bottom: 20px;
+}
+
+.login-form .button {
+    margin-top: 20px;
+    min-width: 300px;
+    max-width: 400px;
+}

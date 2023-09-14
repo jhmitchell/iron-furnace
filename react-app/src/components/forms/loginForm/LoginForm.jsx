@@ -28,27 +28,30 @@ const LoginForm = ({ onSubmit }) => {
       }}
     >
       {() => (
-        <Form>
-          <div>
-            <TextInput 
-              id="username" 
-              name="username" 
-              type="text" 
-              label="Username" 
-            />
-          </div>
+        <div className="login-form">
+          <h1>Sign in</h1>
+          <Form>
+            <div>
+              <TextInput 
+                id="username" 
+                name="username" 
+                type="text" 
+                label="Username" 
+              />
+            </div>
 
-          <div>
-            <TextInput 
-              id="password" 
-              name="password" 
-              type="password" 
-              label="Password" 
-            />
-          </div>
+            <div>
+              <TextInput 
+                id="password" 
+                name="password" 
+                type="password" 
+                label="Password" 
+              />
+            </div>
 
-          <Submit text="Sign in" color="orange" size="small" />
-        </Form>
+            <Submit text="Sign in" color="orange" size="small" />
+          </Form>
+        </div>
       )}
     </Formik>
   );
