@@ -15,7 +15,7 @@ const LoginPage = () => {
     // If the user is already logged in, redirect them
     console.log('user', user);
     if (user) {
-      navigate(from, { replace: location.state?.replace || false });
+      navigate(from, { replace: true });
     }
   }, [user, navigate, from, location.state]);
 
