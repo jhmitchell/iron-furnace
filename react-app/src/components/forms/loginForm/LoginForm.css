@@ -9,3 +9,10 @@
     min-width: 300px;
     max-width: 400px;
 }
+
+.login-form .login-error {
+    color: red;
+    font-weight: 500;
+    margin-top: 10px;
+    margin-bottom: 20px;
+}
