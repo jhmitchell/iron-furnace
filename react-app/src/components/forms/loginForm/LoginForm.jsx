@@ -17,7 +17,7 @@ const validate = values => {
 };
 
 const LoginForm = () => {
-  const { loginUser, user } = useAuth();
+  const { loginUser, user, isProcessing } = useAuth(); // Include isProcessing from useAuth
   const [loginError, setLoginError] = useState(null);
 
   const handleSubmit = async (credentials, { setSubmitting }) => {
@@ -54,8 +54,11 @@ const LoginForm = () => {
                 label="Password" 
               />
             </div>
-            {loginError && !isSubmitting && <div className="login-error">{loginError}</div>}
-            <Submit text="Sign in" color="orange" size="small" disabled={isSubmitting} />
+
+            {/* Disable submit button if isProcessing is true */}
+            <Submit text="Sign in" color="orange" size="small" disabled={isSubmitting || isProcessing} />
+
+            {loginError && !isSubmitting && !isProcessing && <div className="login-error">{loginError}</div>}
           </Form>
         </div>
       )}
