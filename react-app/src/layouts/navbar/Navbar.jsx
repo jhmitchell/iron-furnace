@@ -10,7 +10,7 @@ const Navbar = () => {
     <nav className="navbar">
       <div className="nav-container">
         <div className="nav-logo-container">
-          <Link className="nav-logo">
+          <Link to="/" className="nav-logo">
             <div className="logo-image"/>
             <div className="logo-text">
               <div className="logo-text-cornwall">CORNWALL</div>
