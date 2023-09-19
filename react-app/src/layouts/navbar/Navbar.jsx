@@ -9,13 +9,15 @@ const Navbar = () => {
   return (
     <nav className="navbar">
       <div className="nav-container">
-        <Link className="nav-logo">
-          <div className="logo-image"/>
-          <div className="logo-text">
-            <div className="logo-text-cornwall">CORNWALL</div>
-            <div className="logo-text-ironfurnace">IRON FURNACE</div>
-          </div>
-        </Link>
+        <div className="nav-logo-container">
+          <Link className="nav-logo">
+            <div className="logo-image"/>
+            <div className="logo-text">
+              <div className="logo-text-cornwall">CORNWALL</div>
+              <div className="logo-text-ironfurnace">IRON FURNACE</div>
+            </div>
+          </Link>
+        </div>
         <div className="nav-links">
           <Link to="/" className="nav-link">VISIT</Link>
           <Link to="/" className="nav-link">ABOUT</Link>

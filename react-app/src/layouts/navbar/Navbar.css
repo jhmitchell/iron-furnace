@@ -22,9 +22,14 @@
     align-items: center;
 }
 
-.navbar .nav-logo,
+.navbar .nav-logo-container,
 .navbar .nav-profile {
     flex: 1;
+    display: flex;
+}
+
+.navbar .nav-logo {
+    height: 100%;
     display: flex;
 }
 
