@@ -9,3 +9,18 @@
     margin: 0 auto;
     height: 50px;
 }
+
+.profile-links a {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--text-off-white);
+    font-size: 1rem;
+    font-weight: 300;
+    text-decoration: none;
+    transition: color 0.2s;
+}
+
+.profile-links a:hover {
+    color: var(--text-link-grey);
+}

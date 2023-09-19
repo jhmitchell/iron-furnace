@@ -13,7 +13,7 @@ const WelcomeFlex = () => {
           <h3>
             Welcome to the historic Cornwall Iron Furnace - the most intact and complete
             charcoal-fueled ironmaking complex found in America.
-            <ArrowTextLink text="LEARN MORE" path="/test" />
+            <ArrowTextLink text="LEARN MORE" path="/visit" />
           </h3>
           {/*
           <div className="cta-buttons">

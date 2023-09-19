@@ -11,7 +11,9 @@ const MembershipActions = () => {
   return (
     <div className="nav-profile">
       {user ? (
-        <Link to="/profile">Welcome, {user.username}</Link>
+        <div className="profile-links">
+          <Link to="/profile">Welcome, {user.username}</Link>
+        </div>
       ) : (
         <span className="membership-links">
           <Link to="/membership" className="nav-link">MEMBERSHIP</Link>
