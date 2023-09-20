@@ -25,6 +25,8 @@ const Footer = () => {
               </div>
               <div className="footer-contact-right">
                 <div className="footer-address">
+                  Physical Address:
+                  <br />
                   94 Rexmont Rd
                   <br />
                   Cornwall, PA 17016
