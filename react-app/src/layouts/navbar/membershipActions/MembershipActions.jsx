@@ -16,8 +16,8 @@ const MembershipActions = () => {
         </div>
       ) : (
         <span className="membership-links">
-          <Link to="/membership" className="nav-link">MEMBERSHIP</Link>
-          <Link to="/membership"><Button text="DONATE" color="orange"/></Link>
+          <Link to="/support" className="nav-link">MEMBERSHIP</Link>
+          <Link to="/support"><Button text="DONATE" color="orange"/></Link>
         </span>
       )}
     </div>

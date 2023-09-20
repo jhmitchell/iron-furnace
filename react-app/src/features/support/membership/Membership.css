@@ -1,0 +1,8 @@
+.membership-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--dark-background);
+    padding: 20px 0;
+}
