@@ -1,0 +1,36 @@
+.secondary-navbar {
+  background-color: #333437;
+  color: var(--text-off-white);
+  height: 80px;
+  width: 100%;
+}
+
+.secondary-nav-container {
+  height: 100%;
+  max-width: 1512px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.secondary-navbar .nav-item {
+  color: var(--text-off-white);
+  text-decoration: none;
+  font-size: 1rem;
+  font-weight: 300;
+  letter-spacing: 0.5px;
+  padding: 10px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.secondary-navbar .nav-item:hover {
+  opacity: 0.8;
+}
+
+.secondary-navbar .nav-item.active {
+  font-weight: 500;
+  border-bottom: 2px solid var(--text-off-white);
+}
