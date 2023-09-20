@@ -3,7 +3,7 @@ import "./Membership.css";
 
 const Membership = () => {
   return (
-    <div className="membership-section">
+    <div className="membership-section" id="membership-section">
       <h2>Why Become a Member?</h2>
       <p>Discover the benefits and perks of different membership tiers.</p>
       <div className="tiers">
