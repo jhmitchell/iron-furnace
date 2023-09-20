@@ -4,11 +4,39 @@
   align-items: center;
   justify-content: center;
   background-color: var(--dark-background);
-  padding: 20px 0;
+  padding: 60px 60px;
 }
 
-/* MembershipTiers.css */
-.membership-section .tiers {
+.membership-section .membership-description {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.membership-section .left-aligned-title {
+  text-align: left;
+  font-size: 3rem;
+  font-weight: 400;
+}
+
+.membership-section .description-content {
+  display: flex;
+  justify-content: space-between;
+  text-align: justify;
+  font-size: 1.5rem;
+  line-height: 1.3;
+  font-weight: 300;
+}
+
+.membership-section .text-content {
+  flex: 2;
+}
+
+.membership-section .right-side-content {
+  flex: 1;
+}
+
+.membership-section .membership-tiers {
   display: flex;
   justify-content: space-between;
   width: 100%;
