@@ -1,8 +1,32 @@
 .membership-section {
-    display: flex;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--dark-background);
+  padding: 20px 0;
+}
+
+/* MembershipTiers.css */
+.membership-section .tiers {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  padding: 20px;
+}
+
+.membership-section .tier {
+  flex: 1;
+  border: 1px solid var(--light-text);
+  border-radius: 8px;
+  padding: 16px;
+  margin: 16px;
+  text-align: center;
+  background-color: var(--light-background);
+}
+
+@media (max-width: 768px) {
+  .membership-section .tiers {
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    background-color: var(--dark-background);
-    padding: 20px 0;
+  }
 }
