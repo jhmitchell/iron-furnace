@@ -13,14 +13,9 @@ const Footer = () => {
             <div className="footer-contact">
               <div className="footer-contact-left">
                 <div className="footer-logo">
-                  <div className="footer-logo-image" />
-                  {/*
-                  <div className="footer-logo-text">
-                    <div className="logo-text-historic">THE HISTORIC</div>
-                    <div className="logo-text-cornwall">CORNWALL</div>
-                    <div className="logo-text-ironfurnace">IRON FURNACE</div>
-                  </div>
-                  */}
+                  <Link to="/">
+                    <div className="footer-logo-image" />
+                  </Link>
                 </div>
               </div>
               <div className="footer-contact-right">
@@ -42,18 +37,24 @@ const Footer = () => {
                 <div className="footer-socials">
                   <a
                     href="https://www.facebook.com/CornwallIronFurnace/"
+                    target="_blank"
+                    rel="noreferrer noopener"
                     className="footer-link socials"
                   >
                     <FaFacebookSquare size={32} />
                   </a>
                   <a
                     href="https://www.instagram.com/cornwall_iron_furnace/?hl=en"
+                    target="_blank"
+                    rel="noreferrer noopener"
                     className="footer-link socials"
                   >
                     <FaInstagram size={32} />
                   </a>
                   <a
                     href="https://www.youtube.com/@cornwallironfurnace6291"
+                    target="_blank"
+                    rel="noreferrer noopener"
                     className="footer-link socials"
                   >
                     <FaYoutube size={32} />
@@ -116,7 +117,12 @@ const Footer = () => {
             guide. Please consult the guide if changing the layout. 
           */}
           <div className="PHMC-logo footer-ack-element">
-            <div className="PHMC-logo-image" />
+            <a
+              href="https://www.phmc.pa.gov/"
+              target="_blank"
+              rel="noopener"
+              className="PHMC-logo-image"
+            />
             <div className="PHMC-logo-text">
               Pennsylvania <br />
               Historical & Museum <br />
