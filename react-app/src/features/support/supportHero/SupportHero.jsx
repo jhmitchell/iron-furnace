@@ -5,7 +5,7 @@ const SupportHero = () => {
   return (
     <div className="support-hero">
       <div className="support-hero-text">
-        <h1>SUPPORT</h1>
+        <h1>SUPPORT US</h1>
       </div>
     </div>
   );
