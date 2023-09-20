@@ -1,34 +1,27 @@
-import React, { useEffect } from "react";
-import { Link, useLocation } from "react-router-dom";
-import MainLayout from "/src/layouts/MainLayout";
-import SecondaryNavbar from "/src/layouts/secondaryNavbar/SecondaryNavbar";
-import { SupportHero, Membership } from "/src/features/support";
-import "./SupportPage.css";
+import React from 'react';
+import MainLayout from '/src/layouts/MainLayout';
+import SectionNavigator from '/src/layouts/sectionNavigator/SectionNavigator';
+import { SupportHero, Membership } from '/src/features/support';
+import './SupportPage.css';
 
+/**
+ * The SupportPage component renders the content and navigation for the support page.
+ * It makes use of the SectionNavigator for handling section scrolling and displaying the secondary navbar.
+ * 
+ * @returns {React.Element} JSX element
+ */
 const SupportPage = () => {
-  const location = useLocation();
-  
-  // Scroll to the appropriate section when the path changes
-  useEffect(() => {
-    if (location.pathname === "/support") {
-      window.scrollTo(0, 0);
-    } else if (location.pathname === "/support/membership") {
-      // Scroll to the respective section
-      const membershipSection = document.getElementById("membership-section");
-      if (membershipSection) {
-        membershipSection.scrollIntoView({ behavior: "smooth" });
-      }
-    }
-  }, [location]);
+  const sections = [
+    { name: 'MEMBERSHIP', subroute: 'membership', id: 'membership-section' },
+    { name: 'DONATE', subroute: 'donate', id: 'donate-section' }
+  ];
 
   return (
     <MainLayout>
       <SupportHero />
-      <SecondaryNavbar >
-        <Link to="/support/membership" className="nav-item">MEMBERSHIP</Link>
-        <Link to="/support/donate" className="nav-item">DONATE</Link>
-      </SecondaryNavbar>
-      <Membership />
+      <SectionNavigator basePath="support" sections={sections}>
+        <Membership id="membership-section" />
+      </SectionNavigator>
     </MainLayout>
   );
 };
