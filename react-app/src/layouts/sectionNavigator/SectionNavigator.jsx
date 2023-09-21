@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { useLocation, Link } from "react-router-dom";
 import SecondaryNavbar from "/src/layouts/secondaryNavbar/SecondaryNavbar";
 
@@ -13,6 +13,8 @@ import SecondaryNavbar from "/src/layouts/secondaryNavbar/SecondaryNavbar";
  * @returns {React.Element} JSX element
  */
 const SectionNavigator = ({ basePath, sections, children }) => {
+  const [isSticky, setIsSticky] = useState(false);
+  const navRef = useRef(null);
   const location = useLocation();
 
   // Creates a map of subroute to section id for quick lookup
@@ -25,7 +27,7 @@ const SectionNavigator = ({ basePath, sections, children }) => {
    * useEffect to handle the navigation and scrolling behavior.
    *
    * This effect checks the current URL path and scrolls to the
-   * appropriate section in the page. If the last part of the path matches 
+   * appropriate section in the page. If the last part of the path matches
    * the basePath, it scrolls to the top.
    *
    * @param {Object} location - The `useLocation` object from `react-router-dom`.
@@ -57,9 +59,25 @@ const SectionNavigator = ({ basePath, sections, children }) => {
     }
   }, [location, basePath, sectionMap]);
 
+  /**
+   * useEffect to handle the sticky navbar behavior.
+   */
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollPosition = window.scrollY;
+      setIsSticky(scrollPosition >= 0);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+
   return (
     <>
-      <SecondaryNavbar>
+      <SecondaryNavbar ref={navRef} className={isSticky ? "sticky" : ""}>
         {sections.map((section) => (
           <Link
             to={`/${basePath}/${section.subroute}`}

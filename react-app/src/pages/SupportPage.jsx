@@ -1,9 +1,7 @@
 import React from 'react';
 import MainLayout from '/src/layouts/MainLayout';
 import SectionNavigator from '/src/layouts/sectionNavigator/SectionNavigator';
-import NotFound from '/src/pages/NotFound'; // Import NotFound component
 import { SupportHero, Membership } from '/src/features/support';
-import { useLocation } from 'react-router-dom';
 import './SupportPage.css';
 /**
  * The SupportPage component renders the content and navigation for the support page.
@@ -23,7 +21,11 @@ const SupportPage = () => {
     <MainLayout>
       <SupportHero />
       <SectionNavigator basePath="support" sections={sections}>
-        <Membership id="membership-section" />
+        <div className="support-page">
+          <div className="content-container">
+            <Membership id="membership-section" />
+          </div>
+        </div>
       </SectionNavigator>
     </MainLayout>
   );

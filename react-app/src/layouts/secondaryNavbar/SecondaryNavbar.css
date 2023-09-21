@@ -34,3 +34,8 @@
   font-weight: 500;
   border-bottom: 2px solid var(--text-off-white);
 }
+
+.secondary-navbar.sticky {
+  position: sticky;
+  top: 70px;
+}
