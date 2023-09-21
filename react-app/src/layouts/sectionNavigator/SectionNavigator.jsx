@@ -59,25 +59,9 @@ const SectionNavigator = ({ basePath, sections, children }) => {
     }
   }, [location, basePath, sectionMap]);
 
-  /**
-   * useEffect to handle the sticky navbar behavior.
-   */
-  useEffect(() => {
-    const handleScroll = () => {
-      const scrollPosition = window.scrollY;
-      setIsSticky(scrollPosition >= 0);
-    };
-
-    window.addEventListener("scroll", handleScroll);
-
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, []);
-
   return (
     <>
-      <SecondaryNavbar ref={navRef} className={isSticky ? "sticky" : ""}>
+      <SecondaryNavbar ref={navRef} className={"sticky"}>
         {sections.map((section) => (
           <Link
             to={`/${basePath}/${section.subroute}`}
