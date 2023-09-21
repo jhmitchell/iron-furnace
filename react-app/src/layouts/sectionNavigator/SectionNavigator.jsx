@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { useLocation, Link } from "react-router-dom";
-import NotFound from "/src/pages/NotFound";
 import SecondaryNavbar from "/src/layouts/secondaryNavbar/SecondaryNavbar";
 
 /**
@@ -14,7 +13,6 @@ import SecondaryNavbar from "/src/layouts/secondaryNavbar/SecondaryNavbar";
  * @returns {React.Element} JSX element
  */
 const SectionNavigator = ({ basePath, sections, children }) => {
-  const [isValidPath, setIsValidPath] = useState(true);
   const location = useLocation();
 
   // Creates a map of subroute to section id for quick lookup
@@ -27,44 +25,33 @@ const SectionNavigator = ({ basePath, sections, children }) => {
     const pathParts = location.pathname.split("/");
     const lastPart = pathParts[pathParts.length - 1];
 
-    // Scroll to top if it is the base path
-    if (lastPart === basePath) {
-      window.scrollTo(0, 0);
-      setIsValidPath(true);
-    } else if (sectionMap[lastPart]) {
+    if (sectionMap[lastPart]) {
       // Scroll to the respective section
       const sectionId = sectionMap[lastPart];
       const sectionElement = document.getElementById(sectionId);
       if (sectionElement) {
         sectionElement.scrollIntoView({ behavior: "smooth" });
       }
-      setIsValidPath(true);
-    } else {
-      // If path is not valid, set isValidPath to false
-      setIsValidPath(false);
+    } else if (lastPart === basePath) {
+      // Scroll to top if it is the base path
+      window.scrollTo(0, 0);
     }
-  }, [location]);
+  }, [location, basePath, sectionMap]);
 
   return (
     <>
-      {isValidPath ? (
-        <>
-          <SecondaryNavbar>
-            {sections.map((section) => (
-              <Link
-                to={`/${basePath}/${section.subroute}`}
-                className="nav-item"
-                key={section.subroute}
-              >
-                {section.name}
-              </Link>
-            ))}
-          </SecondaryNavbar>
-          {children}
-        </>
-      ) : (
-        <NotFound />
-      )}
+      <SecondaryNavbar>
+        {sections.map((section) => (
+          <Link
+            to={`/${basePath}/${section.subroute}`}
+            className="nav-item"
+            key={section.subroute}
+          >
+            {section.name}
+          </Link>
+        ))}
+      </SecondaryNavbar>
+      {children}
     </>
   );
 };

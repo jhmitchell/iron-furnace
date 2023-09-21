@@ -1,10 +1,5 @@
-import React, { useEffect, useState } from "react";
-import {
-  useLocation,
-  BrowserRouter as Router,
-  Routes,
-  Route,
-} from "react-router-dom";
+import React from "react";
+import { BrowserRouter as Router, useRoutes } from "react-router-dom";
 import HomePage from "./pages/HomePage";
 import LoginPage from "./pages/LoginPage";
 import SupportPage from "./pages/SupportPage";
@@ -15,58 +10,59 @@ import { AuthProvider } from "./features/authentication";
 import "./App.css";
 
 /**
- * AppRoutes is responsible for managing and rendering the application routes.
- * It includes logic to determine whether to display a 404 Not Found page
- * based on the current location.
- * 
- * NB: All routes are passed to React through apache.
+ * RoutesComponent is responsible for defining the routes. If a route
+ * cannot be matched, the NotFound component is rendered.
  *
  * @returns {React.Element} - The rendered JSX element
  */
-const AppRoutes = () => {
-  const [isNotFound, setIsNotFound] = useState(false);
-  const location = useLocation();
+const RoutesComponent = () => {
+  // Define your routes here
+  const routes = useRoutes([
+    { path: "/", element: <HomePage /> },
+    { path: "/login", element: <LoginPage /> },
 
-  /**
-   * validSubRoutes contains a mapping of base routes to their valid sub-routes.
-   * For example, /support/membership will be matched, but /support/invalid will not.
-   */
-  const validSubRoutes = {
-    support: ["membership", "donate"],
-  };
+    // Secondary pages
+    {
+      path: "/support",
+      element: <SupportPage />,
+      children: [
+        { index: true, element: <SupportPage /> },
+        { path: "membership", element: <SupportPage /> },
+        { path: "donate", element: <SupportPage /> },
+        { path: "*", element: <NotFound /> },
+      ],
+    },
 
-  useEffect(() => {
-    const pathParts = location.pathname.split("/").filter(Boolean);
-    const [baseRoute, subRoute] = pathParts;
+    // Don't match undefined subroutes
+    {
+      path: "support/:subroute/*",
+      element: <NotFound />
+    },
 
-    if (validSubRoutes[baseRoute]) {
-      setIsNotFound(subRoute && !validSubRoutes[baseRoute].includes(subRoute));
-    } else {
-      setIsNotFound(false);
-    }
-  }, [location]);
+    // Protected routes
+    {
+      path: "/",
+      element: <ProtectedRoute />,
+      children: [{ path: "test", element: <TestPage /> }],
+    },
 
-  return isNotFound ? (
-    <NotFound />
-  ) : (
-    <Routes>
-      <Route path="/" element={<HomePage />} />
-      <Route path="/login" element={<LoginPage />} />
-      <Route path="/support/*" element={<SupportPage />} />
-      <Route element={<ProtectedRoute />}>
-        <Route path="/test" element={<TestPage />} />
-        {/* More protected routes can be added here */}
-      </Route>
-      <Route path="*" element={<NotFound />} />
-    </Routes>
-  );
+    // All other routes should show 404
+    { path: "*", element: <NotFound /> },
+  ]);
+
+  return routes;
 };
 
+/**
+ * App is responsible for managing and rendering the application routes.
+ *
+ * @returns {React.Element} - The rendered JSX element
+ */
 const App = () => {
   return (
     <AuthProvider>
       <Router>
-        <AppRoutes />
+        <RoutesComponent />
       </Router>
     </AuthProvider>
   );
