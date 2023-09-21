@@ -21,9 +21,21 @@ const SectionNavigator = ({ basePath, sections, children }) => {
     return acc;
   }, {});
 
+  /**
+   * useEffect to handle the navigation and scrolling behavior.
+   *
+   * This effect checks the current URL path and scrolls to the
+   * appropriate section in the page. If the last part of the path matches 
+   * the basePath, it scrolls to the top.
+   *
+   * @param {Object} location - The `useLocation` object from `react-router-dom`.
+   * @param {string} basePath - The base URL path this navigator is handling (e.g. 'support').
+   * @param {Object} sectionMap - A map of subroutes to section IDs for quick lookup.
+   */
   useEffect(() => {
     const pathParts = location.pathname.split("/");
     const lastPart = pathParts[pathParts.length - 1];
+    const navbarHeight = 70;
 
     if (sectionMap[lastPart]) {
       // Scroll to the respective section
@@ -31,6 +43,13 @@ const SectionNavigator = ({ basePath, sections, children }) => {
       const sectionElement = document.getElementById(sectionId);
       if (sectionElement) {
         sectionElement.scrollIntoView({ behavior: "smooth" });
+
+        // Adjust the scroll position to account for the fixed navbar
+        const y =
+          sectionElement.getBoundingClientRect().top +
+          window.scrollY -
+          navbarHeight;
+        window.scrollTo({ top: y, behavior: "smooth" });
       }
     } else if (lastPart === basePath) {
       // Scroll to top if it is the base path
