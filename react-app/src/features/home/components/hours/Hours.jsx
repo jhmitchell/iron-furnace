@@ -34,7 +34,10 @@ const Hours = () => {
   );
   */
 
-  const { isOpen, message, loading } = useHours();
+  const { isOpen, loading } = useHours();
+
+  // Render nothing while loading
+  if (loading) return null;
 
   return (
     <div className="welcome-flex-element hours">

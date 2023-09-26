@@ -16,7 +16,7 @@ const Hero = () => {
       <div className="hours-container">
         {!loading && (
           <div className="hours-text">
-            {/*Use isOpen to determine whether to display "OPEN" or "CLOSED"*/}
+            {/* Use isOpen to determine whether to display "OPEN" or "CLOSED" */}
             <span className={isOpen ? "status open" : "status closed"}>
               <p>{isOpen ? "OPEN" : "CLOSED"}</p>
             </span>
