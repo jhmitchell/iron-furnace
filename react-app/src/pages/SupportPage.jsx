@@ -1,7 +1,7 @@
 import React from 'react';
 import MainLayout from '/src/layouts/MainLayout';
 import SectionNavigator from '/src/layouts/sectionNavigator/SectionNavigator';
-import { SupportHero, Membership } from '/src/features/support';
+import { SupportHero, Membership, Volunteer } from '/src/features/support';
 import './SupportPage.css';
 /**
  * The SupportPage component renders the content and navigation for the support page.
@@ -24,6 +24,7 @@ const SupportPage = () => {
         <div className="support-page">
           <div className="content-container">
             <Membership id="membership-section" />
+            <Volunteer id="volunteer-section" />
           </div>
         </div>
       </SectionNavigator>

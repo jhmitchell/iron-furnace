@@ -29,6 +29,8 @@ const RoutesComponent = () => {
         { index: true, element: <SupportPage /> },
         { path: "membership", element: <SupportPage /> },
         { path: "donate", element: <SupportPage /> },
+        { path: "volunteer", element: <SupportPage /> },
+        { path: "sponsorship", element: <SupportPage /> },
         { path: "*", element: <NotFound /> },
       ],
     },

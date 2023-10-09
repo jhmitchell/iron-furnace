@@ -84,12 +84,12 @@ const Footer = () => {
                 </div>
               </div>
               <div>
-                <Link className="footer-link">Support Us</Link>
+                <Link to="/support" className="footer-link">Support Us</Link>
                 <div className="footer-sublinks">
-                  <Link className="footer-sublink">Membership</Link>
-                  <Link className="footer-sublink">Donate</Link>
-                  <Link className="footer-sublink">Corporate Sponsorship</Link>
-                  <Link className="footer-sublink">Volunteer</Link>
+                  <Link to="/support/membership" className="footer-sublink">Membership</Link>
+                  <Link to="/support/donate" className="footer-sublink">Donate</Link>
+                  <Link to="/support/volunteer" className="footer-sublink">Volunteer</Link>
+                  <Link to="/support/sponsorship" className="footer-sublink">Corporate Sponsorship</Link>
                 </div>
               </div>
               <div>
