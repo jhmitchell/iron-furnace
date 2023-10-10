@@ -1,5 +1,6 @@
 import React from "react";
 import { Button } from "/src/components/ui";
+import { useNavigate } from "react-router-dom";
 import "./Membership.css";
 
 /**
@@ -9,6 +10,12 @@ import "./Membership.css";
  * @returns {React.Element} JSX element
  */
 const Membership = () => {
+  const navigate = useNavigate();
+
+  const handleMembershipClick = () => {
+    navigate("/membership");
+  }
+
   return (
     <div className="membership-section" id="membership-section">
       <div className="description-content">
@@ -36,7 +43,7 @@ const Membership = () => {
         <div className="right-side-content">
         <div className="membership-card">
             <p className="signin-text">Interested in becoming a member?</p>
-            <Button color="orange" size="medium" text="JOIN/RENEW NOW" />
+            <Button color="orange" size="medium" text="JOIN/RENEW NOW" onClick={handleMembershipClick} />
           </div>
         </div>
       </div>

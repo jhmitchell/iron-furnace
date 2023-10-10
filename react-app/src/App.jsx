@@ -5,10 +5,10 @@ import LoginPage from "./pages/LoginPage";
 import SupportPage from "./pages/SupportPage";
 import NotFound from "./pages/NotFound";
 import TestPage from "./pages/TestPage";
+import Membership from "./pages/Membership";
 import ProtectedRoute from "./components/protectedRoute/ProtectedRoute";
 import { AuthProvider } from "./features/authentication";
 import "./App.css";
-
 /**
  * RoutesComponent is responsible for defining the routes. If a route
  * cannot be matched, the NotFound component is rendered.
@@ -39,6 +39,11 @@ const RoutesComponent = () => {
     {
       path: "support/:subroute/*",
       element: <NotFound />
+    },
+
+    {
+      path: "/membership",
+      element: <Membership />,
     },
 
     // Protected routes

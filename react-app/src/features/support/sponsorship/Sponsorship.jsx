@@ -13,12 +13,6 @@ const Sponsorship = () => {
     <div className="sponsorship-section" id="sponsorship-section">
       <div className="description-content">
         <div className="left-side-content">
-          <img
-            src="/src/assets/images/sponsorship-image.webp"
-            alt="Sponsor the Cornwall Iron Furnace"
-          />
-        </div>
-        <div className="right-side-content">
           <h2 className="left-aligned-title">Corporate Sponsorship Opportunities</h2>
           <div className="text-content">
             <p>
@@ -30,6 +24,12 @@ const Sponsorship = () => {
               <Button color="orange" text="BECOME A SPONSOR" />
             </div>
           </div>
+        </div>
+        <div className="right-side-content">
+          <img
+            src="/src/assets/images/sponsorship-image.webp"
+            alt="Sponsor the Cornwall Iron Furnace"
+          />
         </div>
       </div>
     </div>
