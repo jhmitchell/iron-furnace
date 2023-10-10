@@ -9,6 +9,7 @@ import Membership from "./pages/Membership";
 import ProtectedRoute from "./components/protectedRoute/ProtectedRoute";
 import { AuthProvider } from "./features/authentication";
 import "./App.css";
+
 /**
  * RoutesComponent is responsible for defining the routes. If a route
  * cannot be matched, the NotFound component is rendered.
@@ -38,7 +39,7 @@ const RoutesComponent = () => {
     // Don't match undefined subroutes
     {
       path: "support/:subroute/*",
-      element: <NotFound />
+      element: <NotFound />,
     },
 
     {

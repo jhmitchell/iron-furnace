@@ -1,1 +1,1 @@
-export { default as MembershipContent } from './components/membershipContent/MembershipContent';
+export { default as MembershipContent } from "./components/membershipContent/MembershipContent";

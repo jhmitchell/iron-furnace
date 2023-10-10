@@ -1,48 +1,47 @@
 .membership-content {
-    padding: 2rem;
-    background-color: var(--dark-background);
-    color: var(--text-off-white);
+  padding: 2rem;
+  background-color: var(--dark-background);
+  color: var(--text-off-white);
 }
 
 .membership-content h2 {
-    font-size: 2rem;
-    margin-bottom: 1rem;
+  font-size: 2rem;
+  margin-bottom: 1rem;
 }
 
 .membership-content p {
-    margin-bottom: 1rem;
-    line-height: 1.5;
+  margin-bottom: 1rem;
+  line-height: 1.5;
 }
 
 /* Style for membership levels and options */
 .membership-content .membership-levels {
-    margin-top: 2rem;
+  margin-top: 2rem;
 }
 
 .membership-content .membership-option {
-    margin-bottom: 1rem;
+  margin-bottom: 1rem;
 }
 
 .membership-content .membership-option input {
-    margin-right: 0.5rem;
+  margin-right: 0.5rem;
 }
 
 .membership-content .membership-option label {
-    font-weight: bold;
+  font-weight: bold;
 }
 
 /* Style for form (if any) */
 .membership-content form {
-    margin-top: 1rem;
+  margin-top: 1rem;
 }
 
 /* Style for links */
 .membership-content a {
-    color: #007BFF;
-    text-decoration: none;
+  color: #007bff;
+  text-decoration: none;
 }
 
 .membership-content a:hover {
-    text-decoration: underline;
+  text-decoration: underline;
 }
-
