@@ -18,7 +18,7 @@ const Hero = () => {
           <div className="hours-text">
             {/* Use isOpen to determine whether to display "OPEN" or "CLOSED" */}
             <span className={isOpen ? "status open" : "status closed"}>
-              <p>{isOpen ? "OPEN" : "CLOSED"}</p>
+              {isOpen ? "OPEN" : "CLOSED"}
             </span>
             <span className="separator">|</span>
             {message}
