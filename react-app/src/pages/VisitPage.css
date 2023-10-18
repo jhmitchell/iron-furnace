@@ -1,0 +1,45 @@
+/* Container for responsive content */
+.support-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: var(--dark-background);
+}
+
+.content-container {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  align-items: center;
+  gap: 40px;
+  box-sizing: border-box;
+}
+
+/* Responsive breakpoints */
+@media (min-width: 768px) {
+  .content-container {
+    width: 720px;
+  }
+}
+
+@media (min-width: 992px) {
+  .content-container {
+    width: 960px;
+  }
+}
+
+@media (min-width: 1200px) {
+  .content-container {
+    width: 1140px;
+  }
+}
+
+@media (min-width: 1512px) {
+  .content-container {
+    width: 1512px;
+  }
+}
+
+.sponsorship-section {
+  margin-bottom: 40px;
+}

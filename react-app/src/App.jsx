@@ -3,6 +3,7 @@ import { BrowserRouter as Router, useRoutes } from "react-router-dom";
 import HomePage from "./pages/HomePage";
 import LoginPage from "./pages/LoginPage";
 import SupportPage from "./pages/SupportPage";
+import VisitPage from "./pages/VisitPage";
 import NotFound from "./pages/NotFound";
 import TestPage from "./pages/TestPage";
 import Membership from "./pages/Membership";
@@ -39,6 +40,24 @@ const RoutesComponent = () => {
     // Don't match undefined subroutes
     {
       path: "support/:subroute/*",
+      element: <NotFound />,
+    },
+
+    {
+      path: "/visit",
+      element: <VisitPage />,
+      children: [
+        { index: true, element: <VisitPage /> },
+        { path: "membership", element: <VisitPage /> },
+        { path: "donate", element: <VisitPage /> },
+        { path: "volunteer", element: <VisitPage /> },
+        { path: "sponsorship", element: <VisitPage /> },
+        { path: "*", element: <NotFound /> },
+      ],
+    },
+
+    {
+      path: "visit/:subroute/*",
       element: <NotFound />,
     },
 
