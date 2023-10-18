@@ -1,6 +1,7 @@
 import React from "react";
 import { Button } from "/src/components/ui";
 import "./Volunteer.css";
+import contentImage from "/src/assets/images/furnace-top.webp"
 
 /**
  * The Volunteer component renders the volunteer section,
@@ -14,7 +15,7 @@ const Volunteer = () => {
       <div className="description-content">
         <div className="left-side-content">
           <img
-            src="/src/assets/images/furnace-top.webp"
+            src={contentImage}
             alt="Volunteer at Cornwall Iron Furnace"
           />
         </div>
