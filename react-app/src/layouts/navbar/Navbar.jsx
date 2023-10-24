@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import MembershipActions from './membershipActions/MembershipActions';
 
@@ -6,6 +6,10 @@ import MembershipActions from './membershipActions/MembershipActions';
 import "./Navbar.css";
 
 const Navbar = () => {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   return (
     <nav className="navbar">
       <div className="nav-container">
