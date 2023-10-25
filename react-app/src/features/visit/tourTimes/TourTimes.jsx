@@ -30,11 +30,11 @@ const TourTimes = () => {
           <div className="tour-list">
             <div>
               <span className="day">Friday:</span>
-              <span className="time">9:30, 1:00, 12:30, and 2:00</span>
+              <span className="time">9:30, 11:00, 12:30, and 2:00</span>
             </div>
             <div>
               <span className="day">Saturday:</span>
-              <span className="time">9:30, 1:00, 12:30, and 2:00</span>
+              <span className="time">9:30, 11:00, 12:30, and 2:00</span>
             </div>
             <div>
               <span className="day">Sunday:</span>
