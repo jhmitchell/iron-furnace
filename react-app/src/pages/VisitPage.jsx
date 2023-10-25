@@ -1,7 +1,8 @@
 import React from 'react';
 import MainLayout from '/src/layouts/MainLayout';
 import SectionNavigator from '/src/layouts/sectionNavigator/SectionNavigator';
-import { SupportHero, Membership, Volunteer, Donate, Sponsorship } from '/src/features/support';
+import { Donate, Sponsorship } from '/src/features/support';
+import { VisitHero, Hours } from '/src/features/visit';
 import './VisitPage.css';
 /**
  * The SupportPage component renders the content and navigation for the support page.
@@ -11,22 +12,20 @@ import './VisitPage.css';
  */
 const VisitPage = () => {
   const sections = [
-    { name: 'MEMBERSHIP', subroute: 'membership', id: 'membership-section' },
-    { name: 'DONATE', subroute: 'donate', id: 'donate-section' },
-    { name: 'VOLUNTEER', subroute: 'volunteer', id: 'volunteer-section'},
-    { name: 'CORPORATE SPONSORSHIP', subroute: 'sponsorship', id: 'sponsorship-section'}
+    { name: 'HOURS', subroute: 'hours', id: 'hours-section' },
+    { name: 'TICKETS', subroute: 'tickets', id: 'tickets-section' },
+    { name: 'ACCESSIBILITY', subroute: 'accessibility', id: 'accessibility-section' },
   ];
 
   return (
     <MainLayout>
-      <SupportHero />
-      <SectionNavigator basePath="support" sections={sections}>
-        <div className="support-page">
+      <VisitHero />
+      <SectionNavigator basePath="visit" sections={sections}>
+        <div className="visit-page">
           <div className="content-container">
-            <Membership id="membership-section" />
-            <Donate id="donate-section" />
-            <Volunteer id="volunteer-section" />
-            <Sponsorship id="sponsorship-section" />
+            <Hours id="visit-section" />
+            <Donate id="tickets-session" />
+            <Sponsorship id="accessibility-section" />
           </div>
         </div>
       </SectionNavigator>

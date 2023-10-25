@@ -48,10 +48,9 @@ const RoutesComponent = () => {
       element: <VisitPage />,
       children: [
         { index: true, element: <VisitPage /> },
-        { path: "membership", element: <VisitPage /> },
-        { path: "donate", element: <VisitPage /> },
-        { path: "volunteer", element: <VisitPage /> },
-        { path: "sponsorship", element: <VisitPage /> },
+        { path: "hours", element: <VisitPage /> },
+        { path: "tickets", element: <VisitPage /> },
+        { path: "accessibility", element: <VisitPage /> },
         { path: "*", element: <NotFound /> },
       ],
     },

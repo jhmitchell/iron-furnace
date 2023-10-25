@@ -1,5 +1,5 @@
 /* Container for responsive content */
-.support-page {
+.visit-page {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -40,6 +40,6 @@
   }
 }
 
-.sponsorship-section {
+.accessibility-section {
   margin-bottom: 40px;
 }
