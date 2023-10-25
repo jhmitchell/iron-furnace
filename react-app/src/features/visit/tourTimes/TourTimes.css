@@ -1,0 +1,94 @@
+.tour-times-section {
+  background-color: var(--dark-background);
+  text-align: center;
+  max-width: 1300px;
+  margin-bottom: 40px;
+}
+
+.tour-times-section .columns {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  margin: 40px auto;
+}
+
+.description-column {
+  flex: 2;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-right: 80px;
+}
+
+.tour-content-column {
+  flex: 1;
+}
+
+.tour-times-section .description {
+  font-size: 1.5rem;
+  font-weight: 300;
+  letter-spacing: 0px;
+  line-height: 1.4;
+  text-align: left;
+}
+
+.tour-times-section h3 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  text-align: left;
+  margin-bottom: 10px;
+}
+
+.tour-times-section .tour-list div {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 5px;
+}
+
+.tour-times-section .day {
+  font-weight: 500;
+  color: var(--text-light-grey);
+}
+
+.tour-times-section .time {
+  color: var(--text-light-grey);
+}
+
+.tour-times-section .horizontal-line {
+  width: 100%;
+  height: 1px;
+  background-color: rgba(255, 255, 255, 0.2);
+  margin: 20px auto;
+}
+
+.reservation-note {
+  font-size: 1rem;
+  text-align: left;
+  margin-top: 15px;
+  color: var(--text-light-grey);
+}
+
+.phone-link {
+  color: #1a73e8;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+@media (max-width: 768px) {
+  .tour-times-section .columns {
+    flex-direction: column;
+  }
+
+  .tour-times-section .description {
+    font-size: 1.5rem;
+    margin-bottom: 40px;
+  }
+
+  .tour-times-section h3 {
+    font-size: 2rem;
+  }
+
+  .tour-times-section .column {
+    margin-bottom: 30px;
+  }
+}

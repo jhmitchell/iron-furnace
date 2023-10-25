@@ -1,71 +1,86 @@
 .hours-section {
-  padding: 60px 0;
   background-color: var(--dark-background);
   text-align: center;
   max-width: 1300px;
+  margin-bottom: 40px;
 }
 
-.description {
-  margin: 20px auto 120px;
-  font-size: 2.0rem;
+.hours-section .description {
+  margin: 80px auto;
+  font-size: 1.5rem;
   font-weight: 300;
   letter-spacing: 0px;
-  line-height: 1.2;
+  line-height: 1.4;
 }
 
-.columns {
+.hours-section .columns {
   display: flex;
   justify-content: space-between;
   width: 100%;
   margin: 0 auto;
 }
 
-.column {
+.hours-section .column {
   flex: 1;
   padding: 0 40px;
 }
 
-h3 {
+.hours-section h3 {
   font-size: 1.5rem;
+  font-weight: 700;
+  text-align: left;
 }
 
-.hours-list,
-.ticket-list {
-  margin-top: 20px;
+.hours-section .hours-list,
+.hours-section .ticket-list {
+  margin-top: 10px;
 }
 
-.hours-list div,
-.ticket-list div {
+.hours-section .hours-list div,
+.hours-section .ticket-list div {
   display: flex;
   justify-content: space-between;
   margin-bottom: 5px;
 }
 
-.hours-list .day,
-.ticket-list .ticket-category {
+.hours-section .hours-list .day,
+.hours-section .ticket-list .ticket-category {
   font-weight: 500;
+  color: var(--text-light-grey);
 }
 
-.ebt-discount {
+.hours-section .hours-list .time,
+.hours-section .ticket-list .price {
+  color: var(--text-light-grey);
+}
+
+.hours-section .ebt-discount {
   margin-top: 20px;
   text-align: left;
 }
 
+.hours-section .horizontal-line {
+  width: 100%;
+  height: 1px;
+  background-color: rgba(255, 255, 255, 0.2);
+  margin: 40px auto;
+}
+
 @media (max-width: 768px) {
-  .columns {
+  .hours-section .columns {
     flex-direction: column;
   }
 
-  .description {
+  .hours-section .description {
     font-size: 1.5rem;
     margin-bottom: 40px;
   }
 
-  h3 {
+  .hours-section h3 {
     font-size: 2rem;
   }
 
-  .column {
+  .hours-section .column {
     margin-bottom: 30px;
   }
 }

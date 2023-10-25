@@ -49,7 +49,7 @@ const RoutesComponent = () => {
       children: [
         { index: true, element: <VisitPage /> },
         { path: "hours", element: <VisitPage /> },
-        { path: "tickets", element: <VisitPage /> },
+        { path: "tours", element: <VisitPage /> },
         { path: "accessibility", element: <VisitPage /> },
         { path: "*", element: <NotFound /> },
       ],

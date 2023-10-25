@@ -1,8 +1,7 @@
 import React from 'react';
 import MainLayout from '/src/layouts/MainLayout';
 import SectionNavigator from '/src/layouts/sectionNavigator/SectionNavigator';
-import { Donate, Sponsorship } from '/src/features/support';
-import { VisitHero, Hours } from '/src/features/visit';
+import { VisitHero, Hours, TourTimes } from '/src/features/visit';
 import './VisitPage.css';
 /**
  * The SupportPage component renders the content and navigation for the support page.
@@ -12,8 +11,8 @@ import './VisitPage.css';
  */
 const VisitPage = () => {
   const sections = [
-    { name: 'HOURS', subroute: 'hours', id: 'hours-section' },
-    { name: 'TICKETS', subroute: 'tickets', id: 'tickets-section' },
+    { name: 'HOURS/TICKETS', subroute: 'hours', id: 'hours-section' },
+    { name: 'TOURS', subroute: 'tours', id: 'tours-section' },
     { name: 'ACCESSIBILITY', subroute: 'accessibility', id: 'accessibility-section' },
   ];
 
@@ -24,8 +23,7 @@ const VisitPage = () => {
         <div className="visit-page">
           <div className="content-container">
             <Hours id="visit-section" />
-            <Donate id="tickets-session" />
-            <Sponsorship id="accessibility-section" />
+            <TourTimes id="tour-times-section" />
           </div>
         </div>
       </SectionNavigator>

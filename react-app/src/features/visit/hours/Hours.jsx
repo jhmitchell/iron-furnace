@@ -8,11 +8,12 @@ import "./Hours.css";
  */
 const Hours = () => {
   return (
-    <div className="hours-section">
+    <div className="hours-section" id="hours-section">
       <p className="description">
         Located in Cornwall, Pennsylvania, the furnace serves as a historic testament to the industrial age.
         The site is open to the public from April through October.
       </p>
+      <div className="horizontal-line"></div>
       <div className="columns">
         <div className="column hours-content">
           <h3>Site Hours</h3>
