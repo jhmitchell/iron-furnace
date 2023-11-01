@@ -1,6 +1,6 @@
 import React from "react";
 import HeroImage from "./heroImage/HeroImage";
-import { useHours } from "../../hooks/useHours";
+import { useHours } from "/src/features/hours";
 import "./Hero.css";
 
 const Hero = () => {

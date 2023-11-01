@@ -5,11 +5,19 @@
   margin-bottom: 40px;
 }
 
+.tour-times-section .section-header {
+  margin: 80px auto 5px;
+  font-size: 3rem;
+  font-weight: 500;
+  letter-spacing: 0px;
+  text-align: left;
+}
+
 .tour-times-section .columns {
   display: flex;
   justify-content: space-between;
   width: 100%;
-  margin: 80px auto;
+  margin: 0 auto 80px;
 }
 
 .description-column {

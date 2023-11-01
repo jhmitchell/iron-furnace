@@ -1,5 +1,6 @@
 import React from "react";
 import "./Hours.css";
+import OpenBanner from "../openBanner/OpenBanner";
 
 /**
  * The Hours component renders the operational hours and ticket prices of the site.
@@ -15,6 +16,7 @@ const Hours = () => {
         Industrial Age in America. The site is open to the public year-round.
       </p>
       <div className="horizontal-line"></div>
+      <OpenBanner id="open-banner"/>
       <div className="columns">
         <div className="column hours-content">
           <h3>Site Hours</h3>

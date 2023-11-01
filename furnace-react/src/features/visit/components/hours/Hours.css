@@ -13,6 +13,10 @@
   line-height: 1.4;
 }
 
+.hours-section #open-banner {
+  margin: 20px 0 40px 0;
+}
+
 .hours-section .columns {
   display: flex;
   justify-content: space-between;
@@ -63,7 +67,7 @@
   width: 100%;
   height: 1px;
   background-color: rgba(255, 255, 255, 0.2);
-  margin: 40px auto;
+  margin: 0 auto;
 }
 
 @media (max-width: 768px) {

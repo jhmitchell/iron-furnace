@@ -1,0 +1,19 @@
+.open-banner {
+  text-align: center;
+  padding: 5px;
+  font-size: 1.0em;
+  border-radius: 12px;
+  font-weight: 600;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.open-banner.open {
+  background-color: #3cac56;
+  color: white;
+}
+
+.open-banner.closed {
+  background-color: #db4756;
+  color: white;
+}

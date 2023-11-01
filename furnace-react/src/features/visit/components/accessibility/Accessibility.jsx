@@ -11,7 +11,7 @@ const Accessibility = () => {
   return (
     <div className="accessibility-section" id="accessibility-section">
       <div className="horizontal-line"></div>
-      <h3>Accessibility</h3>
+      <h2 className="section-header">Accessibility</h2>
       <p>
         While the visitor center and interpretive display are accessible, the
         tour of the furnace building is not as it requires the use of many

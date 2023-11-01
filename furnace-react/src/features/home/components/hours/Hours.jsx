@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { Button } from "../../../../components/ui";
-import { useHours } from "../../hooks/useHours";
+import { useHours } from "/src/features/hours";
 
 import "./Hours.css";
 

@@ -10,6 +10,7 @@ const TourTimes = () => {
   return (
     <div className="tour-times-section" id="tour-times-section">
       <div className="horizontal-line"></div>
+      <h2 className="section-header">Furnace Tours</h2>
       <div className="columns">
         <div className="column description-column">
           <p className="description">
