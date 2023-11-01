@@ -1,15 +1,19 @@
 import React from "react";
 import { BrowserRouter as Router, useRoutes } from "react-router-dom";
-import HomePage from "./pages/HomePage";
-import LoginPage from "./pages/LoginPage";
-import SupportPage from "./pages/SupportPage";
-import VisitPage from "./pages/VisitPage";
-import NotFound from "./pages/NotFound";
-import TestPage from "./pages/TestPage";
-import Membership from "./pages/Membership";
+import {
+  HomePage,
+  LoginPage,
+  SupportPage,
+  VisitPage,
+  NotFound,
+  TestPage,
+  Membership,
+  Accessibility
+} from './pages';
 import ProtectedRoute from "./components/protectedRoute/ProtectedRoute";
 import { AuthProvider } from "./features/authentication";
 import "./App.css";
+
 
 /**
  * RoutesComponent is responsible for defining the routes. If a route
@@ -60,9 +64,15 @@ const RoutesComponent = () => {
       element: <NotFound />,
     },
 
+    // Tertiary pages containing more detailed information
     {
       path: "/membership",
       element: <Membership />,
+    },
+
+    {
+      path: "/accessibility",
+      element: <Accessibility />,
     },
 
     // Protected routes

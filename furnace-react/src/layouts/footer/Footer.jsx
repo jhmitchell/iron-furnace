@@ -77,10 +77,10 @@ const Footer = () => {
               <div>
                 <Link className="footer-link">Visitor Information</Link>
                 <div className="footer-sublinks">
-                  <Link className="footer-sublink">Hours & Admission</Link>
+                  <Link to="/visit/hours" className="footer-sublink">Hours & Admission</Link>
+                  <Link to="/visit/tours" className="footer-sublink">Tours</Link>
                   <Link className="footer-sublink">Special Events</Link>
-                  <Link className="footer-sublink">Museum Map</Link>
-                  <Link className="footer-sublink">Accessibility</Link>
+                  <Link to="/visit/accessibility" className="footer-sublink">Accessibility</Link>
                 </div>
               </div>
               <div>
