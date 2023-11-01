@@ -16,19 +16,25 @@ const AccessibilityContent = () => {
           Cornwall Iron Furnace welcomes all visitors and seeks to provide
           reasonable accommodations for those in need of special assistance.
           Individuals with disabilities who need special assistance or
-          accommodations should call 717-272-9711 or email memery@pa.gov in
-          advance.
+          accommodations should call
+          <a href="tel:+17172729711" className="accessibility-link">
+            {" "}717-272-9711{" "}
+          </a>
+          or email
+          <a href="mailto:memery@pa.gov" className="accessibility-link">
+            {" "}memery@pa.gov{" "}
+          </a>
+          in advance.
         </p>
+
         <h3>Parking</h3>
         <p>
           Parking is free. The driveway and parking lot are paved. Accessible
           Parking Spaces are located at the walkway into the Visitors Center.
         </p>
         <h3>Facilities</h3>
+        <p>Walkways are paved.</p>
         <p>
-          Walkways are paved.
-          </p>
-          <p>
           The Visitors Center indoor exhibit gallery, video viewing area, and
           museum store are all handicap and wheelchair accessible.
         </p>
@@ -46,7 +52,7 @@ const AccessibilityContent = () => {
           Tours of the Furnace Building requires navigation of approximately 100
           steps. There is a room with a ______ inch step that visitors can see
           as part of their tour. Walkers are permitted in the Charging Room. The
-          floor is rough and uneven. 
+          floor is rough and uneven.
         </p>
         <p>
           Walkers, Wheelchairs, and Strollers are not permitted in the Furnace
