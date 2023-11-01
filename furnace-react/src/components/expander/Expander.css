@@ -1,0 +1,24 @@
+.expander-section .expander-header {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    background-color: var(--dark-secondary);
+    padding: 10px 0;
+    margin: 0;
+  }
+  
+  .expander-section .expander-header .arrow {
+    margin: 0 20px;
+    font-size: 1.5rem;
+  }
+  
+  .expander-section .expander-header .expander-title {
+    font-size: 1.5rem;
+    font-weight: 500;
+    margin: 0;
+  }
+  
+  .expander-section .expander-content {
+    background-color: var(--dark-secondary);
+    padding: 20px 43px;
+  }
