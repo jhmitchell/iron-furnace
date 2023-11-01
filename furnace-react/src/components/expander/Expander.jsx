@@ -10,7 +10,7 @@ const Expander = ({ title, children }) => {
   };
 
   return (
-    <div className="expander-section">
+    <div className={`expander-section ${isExpanded ? "expanded" : ""}`}>
       <div onClick={toggleExpanded} className="expander-header">
         {isExpanded ? (
           <FaChevronUp className="arrow" />

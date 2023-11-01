@@ -3,8 +3,16 @@
     align-items: center;
     cursor: pointer;
     background-color: var(--dark-secondary);
-    padding: 10px 0;
+    padding: 20px 0;
     margin: 0;
+  }
+
+  .expander-section.expanded {
+    border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+  }
+  
+  .expander-section:not(.expanded) .expander-header {
+    border-bottom: 2px solid rgba(255, 255, 255, 0.05);
   }
   
   .expander-section .expander-header .arrow {
@@ -20,5 +28,5 @@
   
   .expander-section .expander-content {
     background-color: var(--dark-secondary);
-    padding: 20px 43px;
+    padding: 20px 63px;
   }
