@@ -7,7 +7,7 @@
  */
 
 import { useState, useEffect } from 'react';
-import { getHours } from '/src/services/hoursService';
+import { getHours } from '/src/features/hours';
 
 export const useHours = () => {
   const [isOpen, setIsOpen] = useState(true);

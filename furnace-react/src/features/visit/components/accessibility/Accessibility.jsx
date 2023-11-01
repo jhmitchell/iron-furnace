@@ -19,7 +19,7 @@ const Accessibility = () => {
       </p>
       <p>
         The temperature in the furnace structure can vary widely as there is no
-        heat or a/c. Dress accordingly.{" "}
+        heat or a/c. Please dress accordingly.{" "}
         <NavLink className="accessibility-link" to="/accessibility">
           Click Here
         </NavLink>{" "}
