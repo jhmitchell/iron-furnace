@@ -1,27 +1,22 @@
 import React from "react";
-//import heroImage from '../../../../../assets/images/hero_demo_2.png';
 import heroImage from "../../../../../assets/images/entrance.webp";
 import "./HeroImage.css";
 
-const HeroImage = () => {
-  // Define a subtle gradient overlay to darken the edges of the image
-  const gradient =
-    "linear-gradient(90deg, rgba(0, 0, 0, 0.7) 0%, rgba(0,0,0,0.3) 30%, rgba(0,0,0,0.2) 32%, rgba(0, 0, 0, 0.2) 68%, rgba(0,0,0,0.3) 70%, rgba(0, 0, 0, 0.7) 100%)";
-
+const HeroImage = ({ onImageLoad }) => {
   // Define a filter to decrease the contrast of the image, making it blend
   // in more seamlessly with the page content, increasing readability
   const filter = "contrast(0.90)";
 
-  // Inline the relevant styles
-  const heroImageStyle = {
-    background: `${gradient}, url(${heroImage})`,
-    backgroundSize: "cover",
-    backgroundPosition: "center",
-    backgroundRepeat: "no-repeat",
-    filter: filter,
-  };
+  const handleImageLoad = () => {
+    onImageLoad && onImageLoad();
+  }
 
-  return <div className="hero-image" style={heroImageStyle} />;
+  return (
+    <div className="hero-image">
+      <div className="overlay" />
+      <img src={heroImage} alt="Hero" style={{ filter: filter }} onLoad={handleImageLoad}/>
+    </div>
+  );
 };
 
 export default HeroImage;
