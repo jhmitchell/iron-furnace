@@ -8,10 +8,12 @@ import {
   NotFound,
   TestPage,
   Membership,
-  Accessibility
+  Accessibility,
+  AdminDashboard
 } from './pages';
 import ProtectedRoute from "./components/protectedRoute/ProtectedRoute";
 import { AuthProvider } from "./features/authentication";
+import { AdminOverview } from "./features/adminDashboard";
 import "./App.css";
 
 
@@ -79,7 +81,20 @@ const RoutesComponent = () => {
     {
       path: "/",
       element: <ProtectedRoute />,
-      children: [{ path: "test", element: <TestPage /> }],
+      children: [
+        { path: "test", element: <TestPage /> },
+        {
+          path: "admin",
+          element: <AdminDashboard />,
+          children: [
+            { index: true, element: <AdminOverview /> },
+            { path: "users", element: <AdminOverview /> },
+            { path: "settings", element: <AdminOverview /> },
+            { path: "*", element: <NotFound /> },
+          ]
+        },
+        { path: "*", element: <NotFound /> },
+      ]
     },
 
     // All other routes should show 404
