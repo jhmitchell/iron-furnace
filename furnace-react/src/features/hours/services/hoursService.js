@@ -22,3 +22,30 @@ export const getHours = async () => {
     throw error;
   }
 };
+
+export const setHours = async (day, start_time, end_time) => {
+  // Append ':00' for seconds if times are provided
+  const formattedStartTime = start_time ? `${start_time}:00` : null;
+  const formattedEndTime = end_time ? `${end_time}:00` : null;
+
+  try{
+    console.log(day, formattedStartTime, formattedEndTime);
+    const response = await fetch(`${API_V1_PREFIX}/hours/set`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ day, start_time: formattedStartTime, end_time: formattedEndTime })
+    });
+
+    if (!response.ok) {
+      throw new Error(`Error setting hours: ${response.status}`);
+    }
+
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+};

@@ -1,0 +1,58 @@
+.adminHours {
+    max-width: 500px;
+    margin: auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .adminHours h1 {
+    text-align: center;
+    color: #333;
+  }
+  
+  .dayRow {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+  }
+  
+  .dayRow label {
+    flex-basis: 100px;
+    flex-shrink: 0;
+    font-weight: bold;
+    color: #555;
+  }
+  
+  .dayRow input {
+    flex-grow: 1;
+    padding: 8px 12px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    margin-right: 10px;
+  }
+  
+  .dayRow button {
+    padding: 8px 12px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.2s ease-in-out;
+  }
+  
+  .dayRow button:hover {
+    background-color: #0056b3;
+  }
+  
+  .message {
+    margin-top: 20px;
+    padding: 10px;
+    border-radius: 4px;
+    background-color: #e9ecef;
+    color: #666;
+    text-align: center;
+  }
+  

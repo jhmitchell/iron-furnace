@@ -13,7 +13,7 @@ import {
 } from './pages';
 import ProtectedRoute from "./components/protectedRoute/ProtectedRoute";
 import { AuthProvider } from "./features/authentication";
-import { AdminOverview } from "./features/adminDashboard";
+import { AdminOverview, AdminHours } from "./features/adminDashboard";
 import "./App.css";
 
 
@@ -88,8 +88,7 @@ const RoutesComponent = () => {
           element: <AdminDashboard />,
           children: [
             { index: true, element: <AdminOverview /> },
-            { path: "users", element: <AdminOverview /> },
-            { path: "settings", element: <AdminOverview /> },
+            { path: "hours", element: <AdminHours /> },
             { path: "*", element: <NotFound /> },
           ]
         },

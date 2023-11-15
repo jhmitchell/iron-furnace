@@ -10,6 +10,7 @@ const AdminOverview = () => {
       <h1>Welcome, {user.username}!</h1> 
       <p>
         This is your admin dashboard where you can manage users, settings, and other administrative tasks.
+        Please use the sidebar to navigate the dashboard.
       </p>
     </div>
   );

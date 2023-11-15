@@ -16,6 +16,7 @@
 }
 
 .navLink {
+  color: var(--text-off-white);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -25,13 +26,12 @@
   transition: background-color 0.2s ease-in-out;
 }
 
-.navLink:hover {
-  background-color: #4f5060; /* Slightly lighter color on hover */
+.navLink:hover, .navLink:active {
+  background-color: #4f5060;
 }
 
 .activeNavLink {
   font-weight: bold;
-  color: var(--text-off-white);
   background-color: #565761;
 }
 
