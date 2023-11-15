@@ -5,4 +5,23 @@
     bottom: 0;
     left: 0;
     z-index: 1;
+    overflow: hidden;  /* Hide the overflow to ensure the overlay stays within bounds */
+}
+
+.hero-image .overlay {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background: linear-gradient(90deg, rgba(0, 0, 0, 0.7) 0%, rgba(0,0,0,0.3) 30%, rgba(0,0,0,0.2) 32%, rgba(0, 0, 0, 0.2) 68%, rgba(0,0,0,0.3) 70%, rgba(0, 0, 0, 0.7) 100%);
+    z-index: 2;  /* Ensure the overlay is on top of the image */
+}
+
+.hero-image img {
+    width: 100%;  /* Ensure the image stretches to fill the container */
+    height: 100%;
+    object-fit: cover;  /* Maintain the image's aspect ratio while filling the container */
+    position: relative;
+    z-index: 1;  /* Ensure the image is below the overlay */
 }
