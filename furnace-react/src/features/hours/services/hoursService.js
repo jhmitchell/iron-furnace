@@ -29,7 +29,6 @@ export const setHours = async (day, start_time, end_time) => {
   const formattedEndTime = end_time ? `${end_time}:00` : null;
 
   try{
-    console.log(day, formattedStartTime, formattedEndTime);
     const response = await fetch(`${API_V1_PREFIX}/hours/set`, {
       method: 'POST',
       headers: {

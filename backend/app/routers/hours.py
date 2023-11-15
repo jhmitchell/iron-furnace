@@ -3,6 +3,7 @@ from fastapi import APIRouter, HTTPException, Depends
 from datetime import time, datetime, timedelta
 from sqlalchemy.orm import Session
 from typing import Optional
+from app.internal.models.business_hours import Hours
 from app.internal.db.hours import get_operating_hours
 from app.internal.db import hours as db_hours
 from app.internal.db.session import get_db
@@ -103,22 +104,22 @@ def get_status(db: Session = Depends(get_db)):
 
 
 @router.post("/hours/set")
-def set_operating_hours(day: str, start_time: Optional[time] = None, end_time: Optional[time] = None, db: Session = Depends(get_db)):
+def set_operating_hours(hours: Hours, db: Session = Depends(get_db)):
     # Validate the day
-    if day not in ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]:
+    if hours.day not in ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]:
         raise HTTPException(status_code=400, detail="Invalid day specified.")
 
-    if start_time is None and end_time is None:
+    if hours.start_time is None and hours.end_time is None:
         # Delete the entry if both times are None
-        db_hours.set_operating_hours(db, day)
+        db_hours.set_operating_hours(db, hours.day)
         return {"message": "Operating hours deleted successfully."}
-    elif start_time is None or end_time is None:
+    elif hours.start_time is None or hours.end_time is None:
         # Raise an error if only one of the times is None
         raise HTTPException(
             status_code=400, detail="Both start and end times must be provided or set to None.")
 
     # Call the database function
-    db_hours.set_operating_hours(db, day, start_time, end_time)
+    db_hours.set_operating_hours(db, hours.day, hours.start_time, hours.end_time)
     return {"message": "Operating hours updated successfully."}
 
 

@@ -2,6 +2,9 @@
 
 from sqlalchemy import Column, Integer, Enum, Time, Date, String, create_engine
 from sqlalchemy.ext.declarative import declarative_base
+from typing import Optional
+from pydantic import BaseModel
+from datetime import time
 from .base import Base
 
 
@@ -21,3 +24,8 @@ class Holidays(Base):
     id = Column(Integer, primary_key=True, index=True, autoincrement=True)
     holiday_date = Column(Date, nullable=False)
     description = Column(String(255), nullable=False)
+
+class Hours(BaseModel):
+    day: str
+    start_time: Optional[time] = None
+    end_time: Optional[time] = None
