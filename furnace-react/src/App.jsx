@@ -57,7 +57,6 @@ const RoutesComponent = () => {
         { path: "hours", element: <VisitPage /> },
         { path: "tours", element: <VisitPage /> },
         { path: "accessibility", element: <VisitPage /> },
-        { path: "*", element: <NotFound /> },
       ],
     },
 
@@ -77,24 +76,26 @@ const RoutesComponent = () => {
       element: <Accessibility />,
     },
 
-    // Protected routes
+    // Protected admin routes
     {
-      path: "/",
+      path: "/admin",
       element: <ProtectedRoute />,
       children: [
-        { path: "test", element: <TestPage /> },
-        {
-          path: "admin",
+        { 
+          path: "", 
           element: <AdminDashboard />,
           children: [
             { index: true, element: <AdminOverview /> },
             { path: "hours", element: <AdminHours /> },
-            { path: "*", element: <NotFound /> },
+            // ... other admin sub-routes ...
           ]
         },
-        { path: "*", element: <NotFound /> },
-      ]
+        // ... other protected routes ...
+      ],
     },
+
+    // Test route - Protected
+    { path: "/test", element: <ProtectedRoute><TestPage /></ProtectedRoute> },
 
     // All other routes should show 404
     { path: "*", element: <NotFound /> },
