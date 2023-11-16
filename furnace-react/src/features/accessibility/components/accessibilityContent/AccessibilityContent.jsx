@@ -58,7 +58,7 @@ const AccessibilityContent = () => {
         <Expander title="Tours">
           <p>
             Tours of the Furnace Building require navigation of approximately
-            100 steps. There is a room with a ______ inch step that visitors can
+            100 steps. There is a room with a 7 inch step that visitors can
             see as part of their tour. Walkers are permitted in the Charging
             Room. The floor is rough and uneven.
           </p>
