@@ -6,9 +6,35 @@ import "./Navbar.css";
 const Navbar = () => {
   /*
    * menuOpen is used for the state of the hamburger menu
+   * windowHeight properly sizes the opened hamburger menu
    */
   const [menuOpen, setMenuOpen] = React.useState(false);
-  const toggleMenu = () => setMenuOpen(!menuOpen);
+  const [windowHeight, setWindowHeight] = useState(window.innerHeight);
+
+  // Toggle the hamburger menu
+  const toggleMenu = () => {
+    setMenuOpen(!menuOpen);
+    if (!menuOpen) {
+      // If the menu is about to open, update the height immediately
+      setWindowHeight(window.innerHeight);
+    }
+  };
+
+  // Add resize listener when the menu is open
+  useEffect(() => {
+    const handleResize = () => {
+      setWindowHeight(window.innerHeight);
+    };
+
+    // For efficiency, only add listener when open
+    if (menuOpen) {
+      window.addEventListener("resize", handleResize);
+    }
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, [menuOpen]);
 
   /*
    * When the navbar is rendered, do the following:
@@ -46,7 +72,8 @@ const Navbar = () => {
         <button className="menu-button" onClick={toggleMenu}>
           {menuOpen ? "✕" : "☰"}
         </button>
-        <div className={`nav-links ${menuOpen && "active"}`}>
+        <div className={`nav-links ${menuOpen && "active"}`}
+          style={{ height: menuOpen ? `${windowHeight - 70}px` : 'auto' }}>
           <Link to="/visit" className="nav-link">VISIT</Link>
           <Link to="/about" className="nav-link">ABOUT</Link>
           <Link to="/events" className="nav-link">EVENTS</Link>
@@ -54,13 +81,13 @@ const Navbar = () => {
           <Link to="/shop" className="nav-link">SHOP</Link>
           {menuOpen && (
             <button className="close-button" onClick={toggleMenu}>
-            ✕
+              ✕
             </button>
           )}
         </div>
         < MembershipActions />
       </div>
-    </nav>
+    </nav >
   );
 };
 
