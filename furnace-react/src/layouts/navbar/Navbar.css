@@ -160,7 +160,7 @@
 
 	.navbar .nav-links,
 	.navbar .nav-links.active {
-		height: calc(100vh - 70px);
+		height: calc(100% - 70px);
 		display: none;
 		flex-direction: column;
 		position: absolute;

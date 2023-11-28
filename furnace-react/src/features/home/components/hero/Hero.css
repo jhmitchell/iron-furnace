@@ -68,3 +68,31 @@
     margin-right: 20px;
     color: white;
 }
+
+/* Mobile */
+@media (max-width: 768px) {
+    .hero {
+        height: calc(100%);
+        justify-content: center;
+    }
+
+    .hero h1 {
+        font-size: 3.0rem;
+        padding-top: 0px;
+    }
+
+    .hero h2 {
+        font-size: 1.5rem;
+    }
+
+    .hero .hours-container {
+        position: absolute;
+        bottom: 10px;
+        left: 0;
+        transform: translateX(0);
+        width: 100%;
+        z-index: 2;
+        display: flex;
+        justify-content: center;
+    }
+}
