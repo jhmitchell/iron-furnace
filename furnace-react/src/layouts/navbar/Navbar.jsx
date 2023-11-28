@@ -47,16 +47,16 @@ const Navbar = () => {
           {menuOpen ? "✕" : "☰"}
         </button>
         <div className={`nav-links ${menuOpen && "active"}`}>
-          {menuOpen && (
-            <button className="close-button" onClick={toggleMenu}>
-            ✕
-            </button>
-          )}
           <Link to="/visit" className="nav-link">VISIT</Link>
           <Link to="/about" className="nav-link">ABOUT</Link>
           <Link to="/events" className="nav-link">EVENTS</Link>
           <Link to="/support" className="nav-link">SUPPORT</Link>
           <Link to="/shop" className="nav-link">SHOP</Link>
+          {menuOpen && (
+            <button className="close-button" onClick={toggleMenu}>
+            ✕
+            </button>
+          )}
         </div>
         < MembershipActions />
       </div>
