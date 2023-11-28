@@ -13,7 +13,7 @@
     */
 }
 
-.nav-container {
+.navbar .nav-container {
     height: 100%;
     max-width: 1512px;
     margin: 0 auto;
@@ -34,8 +34,8 @@
 }
 
 .navbar .nav-logo .logo-text {
-    height: 100%;
-    margin-top: 12px;
+    height: 50px;
+    padding-top: 5px;
     display: flex;
     flex-direction: column;
     justify-content: center;
