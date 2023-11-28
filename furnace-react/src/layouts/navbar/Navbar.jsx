@@ -17,6 +17,11 @@ const Navbar = () => {
     if (!menuOpen) {
       // If the menu is about to open, update the height immediately
       setWindowHeight(window.innerHeight);
+      
+      // disable scrolling behind the menu
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
     }
   };
 
@@ -74,6 +79,7 @@ const Navbar = () => {
         </button>
         <div className={`nav-links ${menuOpen && "active"}`}
           style={{ height: menuOpen ? `${windowHeight - 70}px` : 'auto' }}>
+
           <Link to="/visit" className="nav-link">VISIT</Link>
           <Link to="/about" className="nav-link">ABOUT</Link>
           <Link to="/events" className="nav-link">EVENTS</Link>
