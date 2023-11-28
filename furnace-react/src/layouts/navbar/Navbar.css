@@ -24,7 +24,7 @@
 
 .navbar .nav-logo-container,
 .navbar .nav-profile,
-.navbar .menup-button {
+.navbar .menu-button {
 	flex: 1;
 	display: flex;
 }
@@ -160,14 +160,14 @@
 
 	.navbar .nav-links,
 	.navbar .nav-links.active {
-		height: calc(100% - 70px);
+		height: calc(100vh-70px);
+		background-color: var(--dark-secondary);
 		display: none;
 		flex-direction: column;
 		position: absolute;
 		top: 70px;
 		left: 0;
 		right: 0;
-		background-color: var(--dark-secondary);
 	}
 
 	.navbar .nav-links.active {
