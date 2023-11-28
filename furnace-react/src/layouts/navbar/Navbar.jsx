@@ -1,11 +1,34 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import MembershipActions from './membershipActions/MembershipActions';
 import "./Navbar.css";
 
 const Navbar = () => {
+  /*
+   * menuOpen is used for the state of the hamburger menu
+   */
+  const [menuOpen, setMenuOpen] = React.useState(false);
+  const toggleMenu = () => setMenuOpen(!menuOpen);
+
+  /*
+   * When the navbar is rendered, do the following:
+   * 1. Scroll to the top of the page
+   * 2. Listen for window resize to handle the hamburger menu
+   */
   useEffect(() => {
     window.scrollTo(0, 0);
+
+    const handleResize = () => {
+      if (window.innerWidth > 769) {
+        setMenuOpen(false);
+      }
+    };
+
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
   }, []);
 
   return (
@@ -20,7 +43,15 @@ const Navbar = () => {
             </div>
           </Link>
         </div>
-        <div className="nav-links">
+        <button className="menu-button" onClick={toggleMenu}>
+          {menuOpen ? "✕" : "☰"}
+        </button>
+        <div className={`nav-links ${menuOpen && "active"}`}>
+          {menuOpen && (
+            <button className="close-button" onClick={toggleMenu}>
+            ✕
+            </button>
+          )}
           <Link to="/visit" className="nav-link">VISIT</Link>
           <Link to="/about" className="nav-link">ABOUT</Link>
           <Link to="/events" className="nav-link">EVENTS</Link>
