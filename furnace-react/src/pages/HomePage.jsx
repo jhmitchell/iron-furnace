@@ -15,7 +15,6 @@ const HomePage = () => {
         <EventsSection />
         <QuoteSection />
         <VideoSection />
-        <BlankSection />
       </div>
     </MainLayout>
   );

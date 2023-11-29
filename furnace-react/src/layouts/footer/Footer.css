@@ -224,3 +224,212 @@
   -webkit-background-clip: text;
   color: transparent;
 }
+
+@media (max-width: 1200px) {
+  .footer {
+    padding-top: 50px;
+  }
+
+  .footer .footer-container {
+    padding: 20px 10px;
+  }
+
+  .footer .footer-top {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .footer .footer-left {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .footer .footer-right {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .footer .footer-logo {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 0px;
+  }
+
+  .footer .footer-logo-image {
+    height: 200px;
+    width: 150px;
+  }
+
+  .footer .footer-logo-text {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    line-height: 1.2rem;
+    letter-spacing: -1px;
+    font-family: 'Ruwudu';
+    margin-bottom: 12px;
+  }
+
+  .footer .logo-text-historic {
+    font-size: 0.8rem;
+    font-weight: 300;
+    text-align: center;
+  }
+
+  .footer .logo-text-cornwall {
+    font-size: 1.2rem;
+    font-weight: 500;
+    text-align: center;
+  }
+
+  .footer .logo-text-ironfurnace {
+    font-size: 1rem;
+    font-weight: 500;
+    text-align: center;
+  }
+
+  .footer .footer-contact {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+  }
+
+  .footer-address,
+  .footer-phone,
+  .footer-mailing,
+  .footer-socials {
+    margin-bottom: 12px;
+    font-weight: 400;
+    line-height: 1.2rem;
+  }
+
+  .footer .footer-socials {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 5px;
+  }
+
+  .footer .PHMC-logo {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+  }
+
+  .footer .PHMC-logo-image {
+    height: 50px;
+    width: 50px;
+  }
+
+  .footer .PHMC-logo-text {
+    font-size: 1rem;
+    line-height: 1rem;
+    font-weight: 400;
+    /*letter-spacing: -1px;*/
+    font-family: 'adobe-garamond-pro';
+    text-align: left;
+  }
+
+  .footer .footer-right-title {
+    font-size: 1rem;
+    font-weight: 500;
+    line-height: 1.2rem;
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+
+  .footer .footer-right-title .button {
+    width: 200px;
+  }
+
+  .footer .footer-right-links {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding-top: 20px;
+    margin-bottom: 40px;
+  }
+
+  .footer .footer-link {
+    font-size: 2rem;
+    font-weight: 400;
+    line-height: 1.2rem;
+    text-decoration: none;
+    margin-bottom: 10px;
+  }
+
+  .footer-sublinks {
+    margin-top: 15px;
+    margin-bottom: 40px;
+  }
+
+  .footer-sublink {
+    display: block;
+    font-size: 1.2rem;
+    font-weight: 300;
+    line-height: 1.5rem;
+    text-decoration: none;
+    color: #d1d1d1;
+    margin-bottom: 10px;
+  }
+
+  .footer-sublink:hover {
+    opacity: 0.8;
+  }
+
+  .footer .footer-ack {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    gap: 50px;
+    text-align: center;
+  }
+
+  .footer .footer-ack-element {
+    height: 100%;
+    flex: 1;
+    display: flex;
+  }
+
+  .footer .horizontal-line {
+    width: 100%;
+    height: 1px;
+    background: #d1d1d1;
+    margin: 20px auto;
+  }
+
+  .footer .footer-bottom {
+    text-align: center;
+    margin-top: 20px;
+  }
+
+  .footer .footer-bottom {
+    font-size: 0.8rem;
+    font-weight: 300;
+    letter-spacing: 0.5px;
+    color: #d1d1d1;
+  }
+
+}
