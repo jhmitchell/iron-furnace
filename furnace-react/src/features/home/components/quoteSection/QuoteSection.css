@@ -62,3 +62,24 @@
     font-weight: 400;
     color: var(--text-link-grey)
 }
+
+@media (max-width: 1200px) {
+    .quote-section {
+        height: auto;
+        padding: 160px 10px;
+    }
+
+    .quote-container {
+        width: 100%;
+    }
+
+    .quote::before,
+    .quote::after {
+        display: none;
+    }
+
+    .quote-section .quote-text {
+        font-size: 2.5rem;
+        line-height: 3.0rem;
+    }
+}
