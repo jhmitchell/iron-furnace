@@ -72,7 +72,7 @@
 /* Mobile */
 @media (max-width: 768px) {
     .hero {
-        height: 100%;
+        height: calc(100vh - 180px);
         justify-content: center;
     }
 

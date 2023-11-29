@@ -43,3 +43,42 @@
 .welcome .button {
   margin-right: 20px;
 }
+
+@media (max-width: 768px) {
+  .welcome-flex-container {
+    height: fit-content;
+    padding: 0px;
+  }
+
+  .welcome-flex {
+    height: 100%;
+    flex-direction: column;
+    gap: 20px;
+    padding: 0px 20px;
+    margin: 40px 0px;
+  }
+
+  .welcome-flex-element.welcome {
+    align-items: center;
+    text-align: center;
+    margin: 0;
+  }
+
+  .welcome-flex-element.welcome h2 {
+    font-size: 2rem;
+    line-height: 2rem;
+  }
+
+  .welcome-flex-element.welcome h3 {
+    font-size: 1rem;
+    line-height: 1.5;
+  }
+
+  .welcome-flex-element.welcome .button {
+    margin-right: 0px;
+  }
+
+  .welcome-flex-element .animated-arrow {
+    display: none;
+  }
+}

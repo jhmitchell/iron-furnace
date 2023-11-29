@@ -6,3 +6,9 @@
     height: calc(100vh - 70px);
     width: 100%;
 }
+
+@media (max-width: 768px) {
+    .home-page .hero-section {
+        height: fit-content;
+    }
+}
