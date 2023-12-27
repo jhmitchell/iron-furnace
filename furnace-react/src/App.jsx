@@ -5,6 +5,7 @@ import {
   LoginPage,
   SupportPage,
   VisitPage,
+  AboutPage,
   NotFound,
   TestPage,
   Membership,
@@ -62,6 +63,20 @@ const RoutesComponent = () => {
 
     {
       path: "visit/:subroute/*",
+      element: <NotFound />,
+    },
+
+    {
+      path: "/about",
+      element: <AboutPage />,
+      children: [
+        { index: true, element: <AboutPage /> },
+        { path: "history", element: <AboutPage /> },
+      ],
+    },
+
+    {
+      path: "about/:subroute/*",
       element: <NotFound />,
     },
 
