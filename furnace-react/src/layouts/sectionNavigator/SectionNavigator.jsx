@@ -50,7 +50,8 @@ const SectionNavigator = ({ basePath, sections, children }) => {
         const y =
           sectionElement.getBoundingClientRect().top +
           window.scrollY -
-          navbarHeight;
+          navbarHeight
+          - 60;
         window.scrollTo({ top: y, behavior: "smooth" });
       }
     } else if (lastPart === basePath) {

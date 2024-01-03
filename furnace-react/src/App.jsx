@@ -72,6 +72,9 @@ const RoutesComponent = () => {
       children: [
         { index: true, element: <AboutPage /> },
         { path: "history", element: <AboutPage /> },
+        { path: "holdings", element: <AboutPage /> },
+        { path: "associates", element: <AboutPage /> },
+        { path: "gallery", element: <AboutPage /> },
       ],
     },
 
