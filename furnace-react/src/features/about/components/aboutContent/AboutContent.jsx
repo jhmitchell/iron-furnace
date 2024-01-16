@@ -36,6 +36,7 @@ const AboutContent = () => {
 					satisfy the furnace’s appetite for charcoal, limestone, and iron ore."
 					/>
 				</div>
+				
 				<div id="holdings-section" className={styles.holdings}>
           <h2>Our Holdings</h2>
           <p>Explore our extensive archives and collections:</p>
