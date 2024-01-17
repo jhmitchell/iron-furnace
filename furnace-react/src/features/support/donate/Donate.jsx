@@ -14,7 +14,7 @@ const Donate = () => {
       <div className="description-content">
         <div className="left-side-content">
           <img
-            src="/src/assets/images/donation-image.webp"
+            src="/src/assets/images/furnace-sign-snow.jpg"
             alt="Support the Cornwall Iron Furnace"
           />
         </div>
