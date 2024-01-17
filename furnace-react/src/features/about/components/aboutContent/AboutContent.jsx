@@ -63,7 +63,7 @@ const AboutContent = () => {
 							referred to as The Friends of Cornwall Iron Furnace, works in partnership
 							with the
 							{" "}<a className="accessibility-link" href="http://PHMC.pa.gov" target="_blank" rel="noopener noreferrer">
-								Pennsylvania Historical and Museum Commission (PHMC.pa.gov)
+								Pennsylvania Historical and Museum Commission
 							</a>{" "}
 							to preserve and interpret this premier historic site. It is one of more than
 							twenty associations that support individual historic sites and museums on
@@ -71,8 +71,9 @@ const AboutContent = () => {
 						</p>
 					</InfoBlock>
 
-					<h2>Enhancing the Visitor's Experience</h2>
+					
 					<InfoBlock>
+						<h3>Enhancing the Visitor's Experience</h3>
 						<p>
 							Cornwall Iron Furnace Associates work closely with staff providing volunteers
 							to help with operations and programs to promote and interpret the site.
@@ -96,17 +97,17 @@ const AboutContent = () => {
 					</InfoBlock>
 
 					<InfoBlock>
-						<h2>Serving an International Audience</h2>
+						<h3>Serving an International Audience</h3>
 						<p>
 							Every year, visitors to Cornwall Iron Furnace represent almost every state in the
 							United States and some twenty other countries. A large number of school children
-							are among those who come to see this vestige of Pennsylvania’s rich industrial and
+							are among those who come to see this vestige of Pennsylvania's rich industrial and
 							technological past.
 						</p>
 					</InfoBlock>
 
 					<InfoBlock>
-						<h2>Board of Directors</h2>
+						<h3>Board of Directors</h3>
 						<p>
 							New board members are nominated by the Board Nominating Committee and elected for 3-year terms by members at the Annual Membership Meeting.
 						</p>
@@ -127,7 +128,7 @@ const AboutContent = () => {
 					</InfoBlock>
 
 					<InfoBlock>
-						<h2>Becoming a Member of the Cornwall Iron Furnace Associates</h2>
+						<h3>Becoming a Member of the Cornwall Iron Furnace Associates</h3>
 						<p>
 							We invite you to become part of Cornwall Iron Furnace Associates. You can help us to preserve this important historic site by joining our organization. Members receive:
 						</p>
