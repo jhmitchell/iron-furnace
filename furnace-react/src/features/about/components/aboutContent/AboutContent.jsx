@@ -125,6 +125,28 @@ const AboutContent = () => {
 							<p>L. Susan Wentzel</p>
 						</div>
 					</InfoBlock>
+
+					<InfoBlock>
+						<h2>Becoming a Member of the Cornwall Iron Furnace Associates</h2>
+						<p>
+							We invite you to become part of Cornwall Iron Furnace Associates. You can help us to preserve this important historic site by joining our organization. Members receive:
+						</p>
+						<ul className={styles.membershipBenefits}>
+							<li>Unlimited free admission to Cornwall Iron Furnace</li>
+							<li>Our quarterly newsletter, The Ledger</li>
+							<li>10% discounts on museum store purchases</li>
+							<li>Special invitations and opportunities reserved for members</li>
+						</ul>
+						<p>
+							Please join Cornwall Iron Furnace Associates, Inc., d/b/a The Friends of Cornwall Iron Furnace, a non-profit group that supports and maintains the preservation, interpretation, curatorial, and educational programs at Cornwall Iron Furnace. The Friends group is a 501c3 and your membership dues and contributions are tax deductible.
+						</p>
+						<p>
+							There are various levels of membership. You may also upgrade your membership to include the Pennsylvania Heritage Foundation for an additional fee. Your support can make all the difference.
+						</p>
+						<p>
+							<a href="/membership" className="accessibility-link">Click here to become a member.</a>
+						</p>
+					</InfoBlock>
 				</div>
 			</div>
 		</div>

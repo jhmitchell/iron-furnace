@@ -53,3 +53,9 @@
 .boardMembers p {
   margin-left: 10px;
 }
+
+.membershipBenefits {
+  padding-left: 20px; /* Adds indentation */
+}
+
+
