@@ -1,5 +1,6 @@
 import React from "react";
 import { Button } from "/src/components/ui";
+import contentImage from "/src/assets/images/wheel.jpg"
 import "./Sponsorship.css";
 
 /**
@@ -27,7 +28,7 @@ const Sponsorship = () => {
         </div>
         <div className="right-side-content">
           <img
-            src="/src/assets/images/sponsorship-image.webp"
+            src={contentImage}
             alt="Sponsor the Cornwall Iron Furnace"
           />
         </div>
