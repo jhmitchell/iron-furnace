@@ -1,5 +1,6 @@
 import React from "react";
 import { Button } from "/src/components/ui";
+import contentImage from "/src/assets/images/furnace-sign-snow.jpg"
 import "./Donate.css";
 
 /**
@@ -14,7 +15,7 @@ const Donate = () => {
       <div className="description-content">
         <div className="left-side-content">
           <img
-            src="/src/assets/images/furnace-sign-snow.jpg"
+            src={contentImage}
             alt="Support the Cornwall Iron Furnace"
           />
         </div>
