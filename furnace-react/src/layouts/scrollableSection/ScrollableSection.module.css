@@ -1,0 +1,9 @@
+.scrollableSection {
+	display: flex;
+	flex-direction: column;
+	padding: 40px 0;
+}
+
+.contentWrapper {
+	margin: 20px 0;
+}

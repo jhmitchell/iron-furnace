@@ -4,6 +4,8 @@ import Introduction from '../introduction/Introduction';
 import InfoBlock from '../infoBlock/InfoBlock';
 import styles from './AboutContent.module.css';
 import { ArrowTextLink } from '/src/components/ui';
+import ScrollableSection from '../../../../layouts/scrollableSection/ScrollableSection';
+import { LineHeader } from '../../../../components/ui';
 
 /**
  * The AboutContent component renders the content for the about page.
@@ -40,8 +42,7 @@ const AboutContent = () => {
 					<ArrowTextLink text="LEARN MORE" path="/history" />
 				</div>
 
-				<div id="holdings-section" className={styles.holdings}>
-					<h2>Our Holdings</h2>
+				<ScrollableSection id="holdings-section" title="Our Holdings">
 					<p>Explore our extensive archives and collections:</p>
 					<ul>
 						<li>
@@ -53,10 +54,9 @@ const AboutContent = () => {
 							Holdings at the PA Historical Society (Link not available yet)
 						</li>
 					</ul>
-				</div>
+				</ScrollableSection>
 
-				<div id="associates-section" className={styles.associates}>
-					<h2>Our Associates</h2>
+				<ScrollableSection id="associates-section" title="Our Associates">
 					<InfoBlock>
 						<p>
 							Formed in 1984, Cornwall Iron Furnace Associates, also
@@ -71,7 +71,7 @@ const AboutContent = () => {
 						</p>
 					</InfoBlock>
 
-					
+
 					<InfoBlock>
 						<h3>Enhancing the Visitor's Experience</h3>
 						<p>
@@ -148,7 +148,7 @@ const AboutContent = () => {
 							<a href="/membership" className="accessibility-link">Click here to become a member.</a>
 						</p>
 					</InfoBlock>
-				</div>
+				</ScrollableSection>
 			</div>
 		</div>
 	);

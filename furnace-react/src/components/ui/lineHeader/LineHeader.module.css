@@ -1,0 +1,12 @@
+.lineHeader {
+	display: flex;
+	align-items: center;
+	width: 100%;
+	color: var(--orange-accent);
+}
+
+.headerTitle {
+	white-space: nowrap;
+	margin-right: 40px;
+}
+
