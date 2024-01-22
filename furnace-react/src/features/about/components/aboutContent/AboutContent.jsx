@@ -16,17 +16,24 @@ const AboutContent = () => {
 		<div className={styles.aboutPage}>
 			<div className={styles.aboutPageContent}>
 				<ScrollableSection id="history-section" title="History">
-					<Introduction />
+					{/*<Introduction />*/}
+					<InfoBlock margin="0">
+						Cornwall Iron Furnace (1742-1883) is the only surviving intact charcoal cold
+						blast furnace in the Western Hemisphere, a testament to the once great iron
+						industry that flourished in south-central Pennsylvania and our nation.
+					</InfoBlock>
 
 					<InfoBlock>
-						<p>The furnace was the heart of a vast industrial plantation for nearly
+						<p>
+							The furnace was the heart of a vast industrial plantation for nearly
 							a century and a half. It is typical of the furnaces that dotted the
 							Pennsylvania countryside in the eighteenth and nineteenth centuries.
 							Around it developed villages, artisans' shops, stores, schools, churches,
 							and the home of a wealthy ironmaster. Iron ore, limestone, and wood for
 							charcoal were found in this self-contained iron plantation, totaling about
 							10,000 acres at its peak; all of these raw materials were necessary for
-							the smelting process.</p>
+							the smelting process.
+						</p>
 					</InfoBlock>
 
 					<InfoBlock>
@@ -47,7 +54,7 @@ const AboutContent = () => {
 							<p>About the Furnace</p>
 							<h2>Explore our history</h2>
 						</PictureLink>
-						<PictureLink image={Furnace} link="/history">
+						<PictureLink image={Furnace} link="/associates">
 							<p>About the Furnace</p>
 							<h2>Our Associates</h2>
 						</PictureLink>
