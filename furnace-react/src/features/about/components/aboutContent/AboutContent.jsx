@@ -3,9 +3,10 @@ import { NavLink } from 'react-router-dom';
 import Introduction from '../introduction/Introduction';
 import InfoBlock from '../infoBlock/InfoBlock';
 import styles from './AboutContent.module.css';
-import { ArrowTextLink } from '/src/components/ui';
-import ScrollableSection from '../../../../layouts/scrollableSection/ScrollableSection';
-import { LineHeader } from '../../../../components/ui';
+import ScrollableSection from '/src/layouts/scrollableSection/ScrollableSection';
+import { LineHeader, PictureLink, PictureLinkContainer, ArrowTextLink } from '/src/components/ui';
+
+import Furnace from '/src/assets/images/shed.webp';
 
 /**
  * The AboutContent component renders the content for the about page.
@@ -39,7 +40,16 @@ const AboutContent = () => {
 							satisfy the furnace's appetite for charcoal, limestone, and iron ore.
 						</p>
 					</InfoBlock>
-					<ArrowTextLink text="LEARN MORE" path="/history" />
+					<PictureLinkContainer>
+						<PictureLink image={Furnace} link="/history">
+							<h1>About the Furnace</h1>
+							<p>Explore our history</p>
+						</PictureLink>
+						<PictureLink image={Furnace} link="/history">
+							<h1>About the Furnace</h1>
+							<p>Explore our history</p>
+						</PictureLink>
+					</PictureLinkContainer>
 				</div>
 
 				<ScrollableSection id="holdings-section" title="Our Holdings">
