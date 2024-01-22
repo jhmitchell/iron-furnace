@@ -1,14 +1,14 @@
 .introduction {
 	max-width: 1300px;
-	padding-top: 60px;
+	margin-top: 20px;
 }
 
 .introductionContent {
 	text-align: left;
 	font-size: 1.5rem;
-  font-weight: 500;
-  letter-spacing: 0px;
-  line-height: 1.4;
+	font-weight: 500;
+	letter-spacing: 0px;
+	line-height: 1.4;
 }
 
 .dropcap:first-letter {

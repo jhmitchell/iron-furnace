@@ -11,13 +11,13 @@ import Furnace from '/src/assets/images/shed.webp';
 /**
  * The AboutContent component renders the content for the about page.
  */
-
 const AboutContent = () => {
 	return (
 		<div className={styles.aboutPage}>
 			<div className={styles.aboutPageContent}>
-				<div id="history-section">
+				<ScrollableSection id="history-section" title="History">
 					<Introduction />
+
 					<InfoBlock>
 						<p>The furnace was the heart of a vast industrial plantation for nearly
 							a century and a half. It is typical of the furnaces that dotted the
@@ -28,6 +28,7 @@ const AboutContent = () => {
 							10,000 acres at its peak; all of these raw materials were necessary for
 							the smelting process.</p>
 					</InfoBlock>
+
 					<InfoBlock>
 						<p>
 							Originally built by Peter Grubb in 1742, the furnace underwent extensive
@@ -40,17 +41,18 @@ const AboutContent = () => {
 							satisfy the furnace's appetite for charcoal, limestone, and iron ore.
 						</p>
 					</InfoBlock>
+
 					<PictureLinkContainer>
 						<PictureLink image={Furnace} link="/history">
-							<h1>About the Furnace</h1>
-							<p>Explore our history</p>
+							<p>About the Furnace</p>
+							<h2>Explore our history</h2>
 						</PictureLink>
 						<PictureLink image={Furnace} link="/history">
-							<h1>About the Furnace</h1>
-							<p>Explore our history</p>
+							<p>About the Furnace</p>
+							<h2>Our Associates</h2>
 						</PictureLink>
 					</PictureLinkContainer>
-				</div>
+				</ScrollableSection>
 
 				<ScrollableSection id="holdings-section" title="Our Holdings">
 					<p>Explore our extensive archives and collections:</p>

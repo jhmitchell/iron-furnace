@@ -1,14 +1,19 @@
 .pictureLink {
+	height: 100%;
 	display: flex;
 	flex-direction: column;
 }
 
-.image {
-	width: 100%;
-}
-
 .fullLink {
 	width: 100%;
+	height: 100%;
 	text-decoration: none;
 	color: inherit;
+}
+
+.image {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	margin-bottom: 12px;
 }
