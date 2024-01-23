@@ -3,7 +3,9 @@ import ScrollableSection from '/src/layouts/scrollableSection/ScrollableSection'
 import TwoColumn from '/src/layouts/twoColumn/TwoColumn';
 import InfoBlock from '../infoBlock/InfoBlock';
 import styles from './HoldingsSection.module.css';
-import Furnace from '/src/assets/images/shed.webp';
+import TongsImg from '/src/assets/images/collections-tongs.png';
+import TurnpikeImg from '/src/assets/images/collections-turnpike.jpg';
+import CollectionsBookImg from '/src/assets/images/collections-book.png';
 import { HorizontalPictureCard, StyledLink } from '/src/components/ui'
 
 const HoldingsSection = () => (
@@ -18,19 +20,19 @@ const HoldingsSection = () => (
 			}
 			rightContent={
 				<div className={styles.rightContent}>
-					<HorizontalPictureCard image={Furnace}>
+					<HorizontalPictureCard image={TurnpikeImg}>
 						<h3>Holdings at the PA State Archives</h3>
 						<StyledLink to="https://www.cornwallironfurnace.org/CORNWALL_FINA.pdf">
 							See more
 						</StyledLink>
 					</HorizontalPictureCard>
-					<HorizontalPictureCard image={Furnace}>
+					<HorizontalPictureCard image={TongsImg}>
 						<h3>Holdings at the PA Historical Society</h3>
 						<StyledLink to="https://www.portal.hsp.org/">
 							See more
 						</StyledLink>
 					</HorizontalPictureCard>
-					<HorizontalPictureCard image={Furnace}>
+					<HorizontalPictureCard image={CollectionsBookImg}>
 						<h3>Collections showcase</h3>
 						<StyledLink to="https://www.youtube.com/watch?v=Bt2cKXoaPTo">
 							Watch video
