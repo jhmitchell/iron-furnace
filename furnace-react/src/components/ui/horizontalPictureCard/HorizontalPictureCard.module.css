@@ -1,4 +1,6 @@
 .card {
+	height: 100px;
+	width: 100%;
 	display: flex;
 	background-color: var(--dark-secondary);
 }
@@ -6,18 +8,23 @@
 .cardImage {
 	flex: 0 0 30%;
 	overflow: hidden;
+	position: relative;
 }
 
 .cardImage img {
 	width: 100%;
-	height: auto;
+	height: 100%;
 	display: block;
 	object-fit: cover;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
 }
 
 .cardContent {
 	flex: 1;
-	margin: 0 24px;
+	padding: 0 24px;
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
@@ -26,10 +33,18 @@
 @media (max-width: 768px) {
 	.card {
 		flex-direction: column;
+		height: auto;
 	}
 
 	.cardImage {
 		width: 100%;
+		height: auto;
+		position: relative;
+	}
+
+	.cardImage img {
+		position: static;
+		transform: none;
 	}
 
 	.cardContent {

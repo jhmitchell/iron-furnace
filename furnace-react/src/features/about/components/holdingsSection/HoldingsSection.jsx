@@ -19,7 +19,7 @@ const HoldingsSection = () => (
 				</>
 			}
 			rightContent={
-				<div className={styles.rightContent}>
+				<div className={styles.cardsContainer}>
 					<HorizontalPictureCard image={TurnpikeImg}>
 						<h3>Holdings at the PA State Archives</h3>
 						<StyledLink to="https://www.cornwallironfurnace.org/CORNWALL_FINA.pdf">
