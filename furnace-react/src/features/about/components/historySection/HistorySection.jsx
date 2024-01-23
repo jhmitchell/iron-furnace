@@ -4,7 +4,8 @@ import ScrollableSection from '/src/layouts/scrollableSection/ScrollableSection'
 import { PictureLink, PictureLinkContainer } from '/src/components/ui';
 
 import styles from './HistorySection.module.css';
-import Furnace from '/src/assets/images/shed.webp';
+import OldImg from '/src/assets/images/history-old-furnace.jpg';
+import AssociatesImg from '/src/assets/images/history-associates.jpg';
 
 const HistorySection = () => (
 	<ScrollableSection id="history-section" title="About the Furnace">
@@ -42,11 +43,11 @@ const HistorySection = () => (
 		</InfoBlock>
 
 		<PictureLinkContainer>
-			<PictureLink image={Furnace} link="/history">
+			<PictureLink image={OldImg} link="/history">
 				<p>About the Furnace</p>
 				<h2>Explore our history</h2>
 			</PictureLink>
-			<PictureLink image={Furnace} link="/associates">
+			<PictureLink image={AssociatesImg} link="/associates">
 				<p>About the Furnace</p>
 				<h2>Our Associates and Partners</h2>
 			</PictureLink>
