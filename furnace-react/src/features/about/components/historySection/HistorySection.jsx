@@ -11,6 +11,7 @@ const HistorySection = () => (
 	<ScrollableSection id="history-section" title="About the Furnace">
 		{/*<Introduction />*/}
 		<InfoBlock margin="0">
+			
 			Cornwall Iron Furnace (1742-1883) is the only surviving intact charcoal cold
 			blast furnace in the Western Hemisphere, a testament to the once great iron
 			industry that flourished in south-central Pennsylvania and our nation.
@@ -29,7 +30,7 @@ const HistorySection = () => (
 			</p>
 		</InfoBlock>
 
-		<InfoBlock>
+		<InfoBlock margin="0 0 72px">
 			<p>
 				Originally built by Peter Grubb in 1742, the furnace underwent extensive
 				renovations in 1856-57 under its subsequent owners, the Coleman family,
