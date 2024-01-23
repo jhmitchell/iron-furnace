@@ -13,7 +13,6 @@ const AboutPage = () => {
   const sections = [
     { name: 'HISTORY', subroute: 'history', id: 'history-section' },
     { name: 'HOLDINGS', subroute: 'holdings', id: 'holdings-section' },
-    { name: 'ASSOCIATES', subroute: 'associates', id: 'associates-section' },
     { name: 'GALLERY', subroute: 'gallery', id: 'gallery-section' },
   ];
 

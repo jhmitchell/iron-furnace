@@ -1,0 +1,16 @@
+.twoColumn {
+	display: flex;
+	flex-wrap: nowrap;
+}
+
+.leftColumn,
+.rightColumn {
+	flex-basis: 50%;
+	flex-grow: 1;
+	flex-shrink: 0;
+}
+
+.leftColumn img,
+.rightColumn img {
+	width: 100%;
+}

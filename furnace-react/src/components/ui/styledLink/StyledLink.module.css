@@ -1,0 +1,12 @@
+.styledLink {
+	color: grey;
+	text-decoration: underline;
+
+	&:hover {
+		text-decoration: none;
+	}
+
+	&:focus {
+		outline: none;
+	}
+}
