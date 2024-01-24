@@ -1,9 +1,9 @@
 import React from 'react';
 import styles from './TwoColumn.module.css';
 
-const TwoColumn = ({ leftContent, rightContent }) => {
+const TwoColumn = ({ leftContent, rightContent, className }) => {
 	return (
-		<div className={styles.twoColumn}>
+		<div className={`${styles.twoColumn} ${className}`}>
 			<div className={styles.leftColumn}>
 				{leftContent}
 			</div>
