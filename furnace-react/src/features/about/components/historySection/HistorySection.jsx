@@ -5,13 +5,14 @@ import { PictureLink, PictureLinkContainer } from '/src/components/ui';
 
 import styles from './HistorySection.module.css';
 import OldImg from '/src/assets/images/history-old-furnace.jpg';
+import MapImg from '/src/assets/images/history-map.jpeg';
 import AssociatesImg from '/src/assets/images/history-associates.jpg';
 
 const HistorySection = () => (
 	<ScrollableSection id="history-section" title="About the Furnace">
 		{/*<Introduction />*/}
 		<InfoBlock margin="0">
-			
+
 			Cornwall Iron Furnace (1742-1883) is the only surviving intact charcoal cold
 			blast furnace in the Western Hemisphere, a testament to the once great iron
 			industry that flourished in south-central Pennsylvania and our nation.
@@ -47,6 +48,10 @@ const HistorySection = () => (
 			<PictureLink image={OldImg} link="/history">
 				<p>About the Furnace</p>
 				<h2>Explore our history</h2>
+			</PictureLink>
+			<PictureLink image={MapImg} link="/history">
+				<p>About the Furnace</p>
+				<h2>Site Map</h2>
 			</PictureLink>
 			<PictureLink image={AssociatesImg} link="/associates">
 				<p>About the Furnace</p>

@@ -6,6 +6,7 @@ import {
   SupportPage,
   VisitPage,
   AboutPage,
+  HistoryPage,
   NotFound,
   TestPage,
   Membership,
@@ -84,6 +85,11 @@ const RoutesComponent = () => {
     },
 
     // Tertiary pages containing more detailed information
+    {
+      path: "/history",
+      element: <HistoryPage />,
+    },
+
     {
       path: "/membership",
       element: <Membership />,
