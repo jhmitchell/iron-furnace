@@ -1,0 +1,19 @@
+.historyBlock {
+	margin: 20px auto;
+}
+
+.historyBlockContent {
+    max-width: 66%;
+    color: var(--text-off-white);
+	text-align: justify;
+	font-size: 1.2rem;
+	font-weight: 300;
+	letter-spacing: 0;
+	line-height: 1.5;
+}
+
+.historyBlockContent h2 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 10px;
+}

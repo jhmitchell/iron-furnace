@@ -10,8 +10,7 @@ const HistoryHero = () => {
 			<div className={styles.heroText}>
 				<h1>Our History</h1>
 				<p>
-					The Cornwall Iron Furnace is the only surviving intact charcoal cold
-					blast furnace in the Western Hemisphere.
+					Tracing the legacy of Cornwall Iron Furnace: a monument to America's Industrial Past
 				</p>
 			</div>
 		</div>
@@ -24,10 +23,10 @@ const HistoryHero = () => {
 	);
 
 	return (
-			<TwoColumn className={styles.historyHero}
-				leftContent={<HeroText />}
-				rightContent={HeroImg}
-			/>
+		<TwoColumn className={styles.historyHero}
+			leftContent={<HeroText />}
+			rightContent={HeroImg}
+		/>
 	);
 };
 
