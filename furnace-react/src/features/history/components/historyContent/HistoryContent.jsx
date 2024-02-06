@@ -5,89 +5,128 @@ import styles from './HistoryContent.module.css';
 const HistoryContent = () => {
 	return (
 		<div className={styles.historyContent}>
-			<LineHeader title="From Humble Beginnings: The Genesis of an Iron Giant"/>
-			
+			<LineHeader title="The Grubb Legacy: 1734 to 1789" />
+
 			<HistoryBlock margin="40px 0 0">
-				<h2>The Grubb Legacy</h2>
 				<p>
-					In the 1730s, the story of Cornwall Iron Furnace began with Peter Grubb, 
-					a visionary stonemason who saw potential in the rich iron ore deposits 
-					of south-central Pennsylvania. Grubb's initial foray into mining laid 
-					the foundation for what would become one of the most significant 
-					ironworks in American history.
-				</p>
-			</HistoryBlock>
-			<HistoryBlock margin="40px 0 0">
-				<h2>Establishing the Furnace</h2>
-				<p>
-					In 1742, Grubb established the Cornwall Iron Furnace, aptly naming it after 
-					Cornwall in England, his father's birthplace. This decision marked the 
-					beginning of an era that would see this furnace become a cornerstone of 
-					American iron production. The early years were marked by manual labor and 
-					rudimentary techniques, with local resources like iron ore, limestone, and 
-					wood for charcoal fuelling the furnace's insatiable appetite.
+					In 1734 William Allen sold 300 acres in what is now Cornwall Pennsylvania
+					to Peter Grubb for £135 and three years later another 142 acres. Peter and
+					his brother, Samuel, built a small bloomery forge to test the quality of the
+					iron ore present on the property. Pleased with the results they made plans
+					to construct a cold-blast charcoal iron furnace just north of the ore
+					supply. The furnace went into blast for the first time in 1742. Peter signed
+					a 20-year lease on the furnace to an outside group. He died in 1754 leaving
+					the furnace and the ore mine to his sons, Curtis and Peter, Jr. When the
+					lease ended the brothers took over the operations.
 				</p>
 			</HistoryBlock>
 			<HistoryBlock margin="40px 0 80px">
-				<h2>The Iron Industry's Rise</h2>
 				<p>
-					Despite the challenges of the colonial period, including the British 
-					Parliament's attempts in 1750 to restrict iron production in the colonies, 
-					the furnace thrived. The American colonies, spearheaded by Pennsylvania's 
-					ironworks, continued to ramp up production, defiantly contributing 
-					significantly to the world's iron output. Cornwall Iron Furnace stood at the 
-					forefront of this industrial revolution, symbolizing the colonies' burgeoning 
-					independence and industrial prowess.
+					Curtis ran the furnace and ore bank while Peter, Jr. managed the Hopewell
+					Forges a few miles southwest from the furnace. Curtis built a mansion on a
+					hill overlooking the furnace. The air supply for the furnace was provided by
+					a water wheel powered by the Furnace Creek and the nearby woods provided the
+					charcoal. The furnace supplied shot, shell and cannons for the Revolutionary
+					War. After an unsuccessful attempt to cast a cannon, the first “proved”
+					cannon, of an eventual 42, was completed on September 6, 1776. Two dozen
+					enslaved workers contributed to the working of the operations, which
+					included field work and domestic service in addition to supporting the
+					industrial operations.
 				</p>
 			</HistoryBlock>
 
-			<LineHeader title="The Industrial Powerhouse: Cornwall in its Prime"/>
+			<LineHeader title="Robert Coleman: 1786 to 1825" />
 			<HistoryBlock margin="40px 0 0">
-				<h2>The Furnace at Work</h2>
 				<p>
-					During its operational peak, Cornwall Iron Furnace emerged as a beacon of 
-					industrial might. The furnace, with its roaring fires and molten iron, became 
-					a symbol of American ingenuity and resilience. It was here that raw materials 
-					— iron ore, limestone, and wood for charcoal — were masterfully transformed 
-					into valuable commodities like cannons, stoves, and pig iron. These products 
-					were not just commercial goods; they were instrumental in shaping the 
-					burgeoning nation, both in times of peace and during conflicts.
+					Robert Coleman arrived in the American Colonies at the age of 16 and
+					eventually became a clerk at the Hopewell Forge operated by Peter Grubb, Jr.
+					After a year in the Grubb's employment, Robert left to work for James Old, a
+					well-known Lancaster area iron master. Robert married Old's daughter, Ann,
+					in 1773 and after leasing Salford Forge near present day Norristown,
+					Pennsylvania returned the area, taking a seven-year lease on nearby
+					Elizabeth Furnace. Beginning in 1786, Robert began acquiring ownership of the
+					Cornwall Furnace and the ore mine and added a new Charging Houe, Wheel House
+					and, possibly, a new Coal House. By 1798 he owned the furnace outright and
+					5/6 of the mine.
 				</p>
 			</HistoryBlock>
-			<HistoryBlock margin="40px 0 0">
-				<h2>Life in the Iron Plantation</h2>
+			<HistoryBlock margin="40px 0 80px">
+				<p>	
+					Robert installed his oldest son, William, as manager of the Cornwall
+					properties who remained in charge of the operations until 1828. Robert
+					Coleman died in 1825 and left the Cornwall Furnace to his sons William, James
+					and Edward and the mines to the three brothers and their younger brother,
+					Thomas Bird. In that same year a roasting oven was built next to the Coal
+					House to roast the iron ore before charging to burn off sulfur. Willaim and
+					Edward sold their ownership of all of their iron properties to their brothers,
+					James and Thomas Bird. When James died in 1831, Thomas Bird became sole owner
+					of the Cornwall Furnace.
+				</p>
+			</HistoryBlock>			
+
+			<LineHeader title="Robert W. and William Coleman: 1836 to 1864" />
+			<HistoryBlock margin="40px 0 80px">
 				<p>
-					The furnace was more than an industrial unit; it was the heart of a vast 
-					industrial plantation. Around it, a self-sufficient community thrived, 
-					complete with villages, artisans' shops, stores, schools, and churches. The 
-					life of the workers and their families revolved around the furnace's rhythm, 
-					creating a unique socio-economic ecosystem. This microcosm of industry and 
-					community life was a typical representation of the iron plantations that 
-					dotted Pennsylvania's landscape during this era.
+					Robert W. and William Coleman were teenagers when their father, Thomas Bird
+					Coleman, died in 1836, Their uncles, William and Edward, along with trusted
+					managers, stepped in to keep the furnace running. During the 1840s numerous
+					improvements were made to the furnace. The first steam engine was introduced
+					to replace the water wheel and blowing tubs were added to regulate the air
+					flow to the furnace. The furnace stack was re-built and various repairs were
+					made. During the next decade the current stone walls were built. In 1859 the
+					steam engine was replaced with a newer 20 horsepower engine and a new water
+					wheel was built.
+
+					Robert W. Coleman, the visionary of the brothers, was a gifted iron master
+					and shrewd businessman. In addition to the improvements to the Cornwall
+					furnace, he oversaw the construction of a new hot blast furnace the west of
+					the charcoal. In partnership with his cousin, George Dawson Coleman, a
+					railroad was built between the ore mines and the Union Canal in north
+					Lebanon, near the site of George Dawson's anthracite furnaces.
 				</p>
 			</HistoryBlock>
-			<HistoryBlock margin="40px 0 0">
-				<h2>Technological Advancements</h2>
+
+			<LineHeader title="Heirs of R. W. Coleman and The Cornwall Iron Company: 1864 to 1883" />
+			<HistoryBlock margin="40px 0 80px">
 				<p>
-					The mid-19th century brought significant advancements in iron making, and 
-					Cornwall Iron Furnace was at the forefront of these innovations. The furnace 
-					underwent extensive renovations in 1856-57 under the Coleman family, 
-					adapting to new techniques and increasing efficiency. These improvements 
-					reflected the broader industrial revolution sweeping across the nation, 
-					positioning the furnace as a leader in iron production technology.
+					William died in 1861 and Robert in 1864. The end of a significant expansion
+					in the Cornwall furnace operations came to a close. The Heirs of R. W.
+					Coleman was formed, owned by William and Robert's sisters, Margaret Freeman,
+					Anne Alden and Sarah Coleman, and William's two young children, Robert H and
+					Anne Coleman. During the next decade and a half, managers such as Artemis
+					Wilhelm, were crucial to the success of the Cornwall furnace and the other
+					furnaces which the Heirs owned.
+
+					When Robert H. Coleman became involved in the family business he sought to
+					venture out on his own and forced of a partition of the family holdings.
+					Robert became owner of the Cornwall Anthracite furnace and all other
+					properties in Cornwall, including the charcoal furnace, fell under the
+					management of the Cornwall Iron Company. By the early 1880s demand for
+					charcoal-based iron was drying up and the Cornwall furnace was losing money.
+					The furnace went out of blast on February 11, 1883.
 				</p>
 			</HistoryBlock>
-			<HistoryBlock margin="40px 0 0">
-				<h2>The Furnace's Broader Impact</h2>
+
+			<LineHeader title="The Cornwall Iron Furnace Museum" />
+			<HistoryBlock margin="40px 0 120px">
 				<p>
+					While the Coleman descendants sold their properties to Bethlehem Steel in 
+					the years following WWI, they held onto the Cornwall furnace. The last Coleman 
+					family member to live in the Manor on the top of the hill overlooking the 
+					furnace, Margaret Coleman Freeman Buckingham, donated the furnace to the 
+					Commonwealth of Pennsylvania in 1932 to preserve it as a museum. Because 
+					of this gift the Pennsylvania Historical Museum Commission is proud to share 
+					this industrial gem with thousands of guests every year.
+
 					The operations at Cornwall Iron Furnace were not just a local affair; they 
 					had far-reaching implications. The iron produced here played a crucial role 
 					in the nation's development, from building infrastructure to supplying 
-					materials for manufacturing and warfare. The furnace stood as a testament 
-					to the industrial capabilities of the United States, contributing significantly 
-					to the country's economic and industrial growth.
+					materials for manufacturing and warfare. The furnace stands as a testament 
+					to the industrial capabilities of the United States, contributing 
+					significantly to the country's economic and industrial growth.
 				</p>
 			</HistoryBlock>
+
 		</div>
 	);
 }
