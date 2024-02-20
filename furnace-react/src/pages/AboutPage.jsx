@@ -11,7 +11,7 @@ import { AboutHero, AboutContent } from '/src/features/about';
  */
 const AboutPage = () => {
   const sections = [
-    { name: 'HISTORY', subroute: 'history', id: 'history-section' },
+    { name: 'ABOUT THE FURNACE', subroute: 'history', id: 'history-section' },
     { name: 'HOLDINGS', subroute: 'holdings', id: 'holdings-section' },
     { name: 'GALLERY', subroute: 'gallery', id: 'gallery-section' },
   ];

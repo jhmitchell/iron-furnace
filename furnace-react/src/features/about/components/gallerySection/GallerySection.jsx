@@ -10,6 +10,8 @@ import BigWheel from "/src/assets/images/big-wheel-min.jpg";
 import Bell from "/src/assets/images/bell-min.jpg";
 import GothicWindow from "/src/assets/images/gothic-window-min.jpg";
 import Cannon from "/src/assets/images/cannon-min.jpg";
+import BrickArch from "/src/assets/images/brick-arch-min.jpg";
+import OilLamps from "/src/assets/images/oil-lamps-min.jpg";
 
 const photos = [
 	{ src: FurnaceImg, width: 7728, height: 5152 },
@@ -20,6 +22,8 @@ const photos = [
 	{ src: Bell, width: 640, height: 427 },
 	{ src: GothicWindow, width: 241, height: 427 },
 	{ src: Cannon, width: 640, height: 268 },
+	{ src: BrickArch, width: 427, height: 640 },
+	{ src: OilLamps, width: 640, height: 427 },
 ];
 
 const GallerySection = () => {
