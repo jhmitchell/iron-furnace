@@ -1,0 +1,12 @@
+.textLink {
+	color: blue;
+	text-decoration: underline;
+
+	&:hover {
+		text-decoration: none;
+	}
+
+	&:focus {
+		outline: none;
+	}
+}

@@ -1,12 +1,11 @@
 import React from 'react';
 import ScrollableSection from '/src/layouts/scrollableSection/ScrollableSection';
 import TwoColumn from '/src/layouts/twoColumn/TwoColumn';
-import InfoBlock from '../infoBlock/InfoBlock';
 import styles from './HoldingsSection.module.css';
 import TongsImg from '/src/assets/images/collections-tongs.png';
 import TurnpikeImg from '/src/assets/images/collections-turnpike.jpg';
 import CollectionsBookImg from '/src/assets/images/collections-book.png';
-import { HorizontalPictureCard, StyledLink } from '/src/components/ui'
+import { HorizontalPictureCard, StyledLink, InfoBlock } from '/src/components/ui'
 
 const HoldingsSection = () => (
 	<ScrollableSection id="holdings-section" title="Our Holdings">

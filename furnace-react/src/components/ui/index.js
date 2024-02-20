@@ -1,9 +1,11 @@
 export { default as Button } from './button/Button';
+export { default as TextLink } from './textLink/TextLink';
 export { default as StyledLink } from './styledLink/StyledLink';
 export { default as ArrowTextLink } from './arrowTextLink/ArrowTextLink';
 export { default as MediaCard } from './mediaCard/MediaCard';
 export { default as HorizontalLine } from './horizontalLine/HorizontalLine';
 export { default as LineHeader } from './lineHeader/LineHeader';
+export { default as InfoBlock } from './infoBlock/InfoBlock';
 export { default as PictureLink } from './pictureLink/PictureLink';
 export { default as PictureLinkContainer } from './pictureLinkContainer/PictureLinkContainer';
 export { default as HorizontalPictureCard } from './horizontalPictureCard/HorizontalPictureCard';

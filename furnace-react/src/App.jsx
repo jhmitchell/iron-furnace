@@ -11,7 +11,8 @@ import {
   TestPage,
   Membership,
   Accessibility,
-  AdminDashboard
+  AdminDashboard,
+  AssociatesPage,
 } from './pages';
 import ProtectedRoute from "./components/protectedRoute/ProtectedRoute";
 import { AuthProvider } from "./features/authentication";
@@ -93,6 +94,11 @@ const RoutesComponent = () => {
     {
       path: "/membership",
       element: <Membership />,
+    },
+
+    {
+      path: "/associates",
+      element: <AssociatesPage />,
     },
 
     {

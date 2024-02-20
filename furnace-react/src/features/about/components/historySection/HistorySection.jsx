@@ -1,7 +1,6 @@
 import React from 'react';
-import InfoBlock from '../infoBlock/InfoBlock';
 import ScrollableSection from '/src/layouts/scrollableSection/ScrollableSection';
-import { PictureLink, PictureLinkContainer } from '/src/components/ui';
+import { PictureLink, PictureLinkContainer, InfoBlock } from '/src/components/ui';
 
 import styles from './HistorySection.module.css';
 import OldImg from '/src/assets/images/history-old-furnace.jpg';

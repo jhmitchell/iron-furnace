@@ -3,6 +3,7 @@ export { default as LoginPage } from './LoginPage';
 export { default as SupportPage } from './SupportPage';
 export { default as VisitPage } from './VisitPage';
 export { default as AboutPage } from './AboutPage';
+export { default as AssociatesPage } from './AssociatesPage';
 export { default as HistoryPage } from './HistoryPage';
 export { default as NotFound } from './NotFound';
 export { default as TestPage } from './TestPage';
