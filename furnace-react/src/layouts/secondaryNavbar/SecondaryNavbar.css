@@ -3,6 +3,7 @@
   color: var(--text-off-white);
   height: 60px;
   width: 100%;
+  z-index: 100;
 }
 
 .secondary-nav-container {
