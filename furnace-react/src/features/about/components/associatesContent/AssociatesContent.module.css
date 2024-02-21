@@ -10,3 +10,56 @@
   max-width: 1300px;
   margin: 0 auto;
 }
+
+.associatesPageContent h3 {
+  margin-top: 32px;
+  margin-bottom: 8px;
+}
+
+.membershipBenefits {
+  margin-left: 20px;
+  padding: 8px 0;
+}
+
+.membershipBenefits li {
+  margin-bottom: 8px;
+}
+
+.boardHeader {
+  color: var(--accent-color);
+  font-size: 1.2em;
+}
+
+.boardMembers {
+  background-color: var(--light-background);
+  color: var(--dark-text);
+  padding: 20px;
+  border-radius: 8px;
+  margin-bottom: 32px;
+}
+
+.boardMembers p {
+  margin-bottom: 10px;
+  line-height: 1.4;
+}
+
+.boardMembers b {
+  font-weight: 600;
+  color: var(--accent-color);
+}
+
+.boardMembers a {
+  color: var(--primary-color);
+  text-decoration: underline;
+}
+
+.boardMembers a:hover {
+  color: var(--hover-color);
+  text-decoration: none;
+}
+
+@media (max-width: 768px) {
+  .boardMembers {
+    padding: 15px;
+  }
+}

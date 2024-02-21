@@ -92,9 +92,13 @@ const AssociatesContent = () => {
 							<li>10% discounts on museum store purchases</li>
 							<li>Special invitations and opportunities reserved for members</li>
 						</ul>
+					</InfoBlock>
+					<InfoBlock>
 						<p>
 							Please join Cornwall Iron Furnace Associates, Inc., d/b/a The Friends of Cornwall Iron Furnace, a non-profit group that supports and maintains the preservation, interpretation, curatorial, and educational programs at Cornwall Iron Furnace. The Friends group is a 501c3 and your membership dues and contributions are tax deductible.
 						</p>
+					</InfoBlock>
+					<InfoBlock>
 						<p>
 							There are various levels of membership. You may also upgrade your membership to include the Pennsylvania Heritage Foundation for an additional fee. Your support can make all the difference.
 						</p>
