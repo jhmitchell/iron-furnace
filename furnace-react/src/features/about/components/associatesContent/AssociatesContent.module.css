@@ -1,0 +1,12 @@
+.associatesPage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: var(--dark-background);
+  color: var(--light-text);
+}
+
+.associatesPageContent {
+  max-width: 1300px;
+  margin: 0 auto;
+}
