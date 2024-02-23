@@ -7,6 +7,7 @@ import {
   VisitPage,
   AboutPage,
   HistoryPage,
+  SiteMapPage,
   NotFound,
   TestPage,
   Membership,
@@ -99,6 +100,11 @@ const RoutesComponent = () => {
     {
       path: "/associates",
       element: <AssociatesPage />,
+    },
+
+    {
+      path: "/map",
+      element: <SiteMapPage />,
     },
 
     {
