@@ -1,17 +1,13 @@
 import React from "react";
 import InteractiveArea from "./InteractiveArea";
 
-const SiteMap = () => {
-  const handleAreaClick = (id) => {
-    console.log(`Interactive area ${id} clicked`);
-    // Additional click handling logic here
-  };
-
+const SiteMap = ({ className, handleAreaClick }) => {
   const defaultFillColor = "#a7a9ac";
   const defaultHoverColor = "#dddddd";
 
   return (
     <svg
+      className={className}
       xmlns="http://www.w3.org/2000/svg"
       xmlnsXlink="http://www.w3.org/1999/xlink"
       width="7.96in"

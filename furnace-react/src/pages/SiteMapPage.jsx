@@ -1,13 +1,14 @@
 import React from 'react';
-import MainLayout from '/src/layouts/MainLayout';
+import { Navbar } from '/src/layouts';
 
-import SiteMap from '/src/assets/maps/SiteMap'
+import { SiteMapContent } from '/src/features/siteMap';
 
 const SiteMapPage = () => {
   return (
-    <MainLayout>
-      <SiteMap />
-    </MainLayout>
+    <>
+      <Navbar />
+      <SiteMapContent />
+    </>
   );
 };
 
