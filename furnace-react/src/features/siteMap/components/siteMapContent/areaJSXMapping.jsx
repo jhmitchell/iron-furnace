@@ -1,21 +1,95 @@
 import MuseumCannonballs from '/src/assets/images/map/museum-cannonballs.jpg';
+import Boilers from '/src/assets/images/map/boilers.png';
+import CastingHouse from '/src/assets/images/map/casting-house.jpg';
+import GreatWheel from '/src/assets/images/map/great-wheel.jpg';
+import CharingRoom from '/src/assets/images/map/charging-room.png';
 import styles from './SiteMapContent.module.css';
 
+const restrooms = () => (
+	<div>
+		<h2>Restrooms</h2>
+		<p>
+			Accessible restrooms and baby changing area are located in the
+			Visitor's Center.
+		</p>
+	</div>
+);
+
 const areaJSXMapping = {
-	museum: () => (
+	"museum": () => (
 		<div className={styles.info}>
 			<h2>Visitor's Center</h2>
 			<img src={MuseumCannonballs} alt="Museum Cannonballs" />
-			<p>Located in the 19th century charcoal barn, the Visitors' Center offers interpretative exhibits on mining, charcoal making, and ironmaking and gives the visitor a glimpse of the huge spaces needed to contain the fuel used in the smelting process.
+			<p>
+				Located in the 19th century charcoal barn, the Visitor's Center 
+				offers interpretative exhibits on mining, charcoal making, and 
+				ironmaking and gives the visitor a glimpse of the huge spaces 
+				needed to contain the fuel used in the smelting process.
 			</p>
 		</div>
 	),
-	area2: () => (
+	"connecting-shed": () => (
 		<div>
-			<h2>Area 2 Title</h2>
-			<img src="/path/to/area2photo.jpg" alt="Area 2" />
-			<p>Description for Area 2...</p>
-			{/* More custom JSX for Area 2 */}
+			<h2>Connecting Shed</h2>
+			<p>
+				This roof protected charcoal from inclement weather as it was 
+				transported in carts from the charcoal barn to the charging room. 
+				Before the furnace building was constructed around the stack, 
+				raw materials were brought to the top of the stack on a bridge 
+				from the top of the hill.
+			</p>
+		</div>
+	),
+	"arch": () => (
+		<div>
+			<h2>Boilers</h2>
+			<img src={Boilers} alt="Boilers" />
+			<p>
+				The boilers, located on the top of the furnace stack, use exhausted 
+				heat from the smelting process to create steam to power the steam 
+				engine.
+			</p>
+		</div>
+	),
+	"molding-room": () => (
+		<div>
+			<h2>Casting House</h2>
+			<img src={CastingHouse} alt="Casting House" />
+			<p>
+				It was here that the furnace was tapped for iron twice daily. If the 
+				molder was making any stove plates, pans, cannon balls, or other 
+				items, he would have his molding flask ready on the casting house 
+				floor. The remainder was directed into small channels on the casting 
+				house floor. A bar of iron created in these channels was known as pig 
+				iron and was taken to forges for further processing.
+			</p>
+		</div>
+	),
+	"bathroom1": restrooms,
+	"bathroom2": restrooms,
+	"bathroom3": restrooms,
+	"giant-wheel": () => (
+		<div>
+			<h2>Great Wheel</h2>
+			<img src={GreatWheel} alt="Great Wheel" />
+			<p>
+				The blowing apparatus installed by the Coleman family included the 
+				Great Wheel, which weighs four tons and measures 24 feet in diameter.
+			</p>
+		</div>
+	),
+	"cart-room": () => (
+		<div>
+			<h2>Charging Room</h2>
+			<img src={CharingRoom} alt="Charging Room" />
+			<p>
+				Originally, several distinct buildings clustered around the furnace stack. 
+				The furnace building was constructed when the furnace was remodeled and 
+				enlarged in the mid-1800s. Its elegant facade and Gothic Revival details 
+				add testament to the success of the furnace and to the refined taste of 
+				its owners. Charcoal, iron ore, and limestone were brought into this room 
+				with carts and wagons and added to the furnace through a hole in the floor.
+			</p>
 		</div>
 	),
 };
