@@ -12,12 +12,14 @@ const SiteMapContent = () => {
   };
 
   return (
-    <div className={styles.siteMapContainer}>
-      <div className={styles.mapArea}>
-        <SiteMap className={styles.siteMap} handleAreaClick={handleAreaClick}/>
-      </div>
-      <div className={styles.infoArea}>
-        {selectedArea && areaJSXMapping[selectedArea] ? areaJSXMapping[selectedArea]() : <h2>Hover over an area to see information.</h2>}
+    <div className={styles.card}>
+      <div className={styles.siteMapContainer}>
+        <div className={styles.mapArea}>
+          <SiteMap className={styles.siteMap} handleAreaClick={handleAreaClick}/>
+        </div>
+        <div className={styles.infoArea}>
+          {selectedArea && areaJSXMapping[selectedArea] ? areaJSXMapping[selectedArea]() : <h2>Click on an area of the map to see more information.</h2>}
+        </div>
       </div>
     </div>
   );
