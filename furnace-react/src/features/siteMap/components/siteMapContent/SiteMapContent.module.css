@@ -1,22 +1,16 @@
-.card {
+.siteMapContainer {
+  height: calc(100vh - 70px);
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: 100%;
-  height: 100%;
-  padding: 20px;
 }
 
-.siteMapContainer {
+.card {
   display: flex;
   background-color: var(--text-off-white);
   border-radius: 10px;
   overflow: hidden;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-  width: auto;
-  max-width: 1300px;
-  height: auto;
-  max-height: 100%;
 }
 
 .mapArea {
@@ -24,13 +18,26 @@
   display: flex;
   justify-content: center;
   align-items: stretch;
-  overflow: hidden;
 }
 
 .infoArea {
+  height: 100%;
   width: 400px;
   padding: 20px;
   overflow-y: auto; 
+}
+
+.defaultMessageContainer {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.defaultMessage {
+  color: var(--text-dark-grey);
+  text-align: center;
 }
 
 .siteMap {
