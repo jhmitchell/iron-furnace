@@ -312,21 +312,6 @@ const SiteMap = ({ className, handleAreaClick }) => {
         />
       </InteractiveArea>
 
-
-      {/* THESE ARE THE CLICKABLE AREAS */}
-      <InteractiveArea
-        id="storage"
-        onClick={handleAreaClick}
-        fillColor={defaultFillColor}
-        hoverColor={defaultHoverColor}
-      >
-        <path
-          stroke="#27aae1"
-          strokeMiterlimit="10"
-          d="M199.29 177.56H238.63V195.22H199.29z"
-        />
-      </InteractiveArea>
-
       <InteractiveArea
         id="museum"
         onClick={handleAreaClick}
@@ -336,7 +321,7 @@ const SiteMap = ({ className, handleAreaClick }) => {
         <path
           stroke="#27aae1"
           strokeMiterlimit="10"
-          d="M199.3 195.23H238.64000000000001V225.10999999999999H199.3z"
+          d="M199.29 177.56H238.63V225.11H199.29z"
         />
       </InteractiveArea>
 

@@ -45,6 +45,7 @@
 
 .infoArea p {
   color: var(--text-dark-grey);
+  margin-bottom: 20px;
 }
 
 .infoArea img {
