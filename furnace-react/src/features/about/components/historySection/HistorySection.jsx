@@ -48,7 +48,7 @@ const HistorySection = () => (
 				<p>About the Furnace</p>
 				<h2>Explore our history</h2>
 			</PictureLink>
-			<PictureLink image={MapImg} link="/history">
+			<PictureLink image={MapImg} link="/map">
 				<p>About the Furnace</p>
 				<h2>Site Map</h2>
 			</PictureLink>
