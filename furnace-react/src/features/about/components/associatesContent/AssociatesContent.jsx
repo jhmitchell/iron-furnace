@@ -57,10 +57,37 @@ const AssociatesContent = () => {
 					</InfoBlock>
 				</ScrollableSection>
 
+				<ScrollableSection id="sponsors" title="Corporate Sponsors">
+					<InfoBlock>
+						<p>
+							The following local businesses support the Cornwall Iron Furnace Associates through 
+							their financial contributions at varying giving levels:
+						</p>
+					</InfoBlock>
+					<InfoBlock>
+						<div className={styles.boardMembers}>
+							<p>Technical Metal Solutions</p>
+							<p>PRL Industries, Inc.</p>
+							<p>Dechert Dynamics Corp.</p>
+							<p>Alden Management Co., Inc.</p>
+							<p>Blue Bird Inn</p>
+							<p>Bamberger's, Inc.</p>
+							<p>Keller Brothers Ford</p>
+							<p>Hamlin Golf Club</p>
+							<p>Jonestown Bank & Trust</p>
+						</div>
+					</InfoBlock>
+					<InfoBlock>
+						If your business is interested in becoming a corporate partner, click {" "}
+						<TextLink to="/sponsorship">here</TextLink> for more information.
+					</InfoBlock>
+				</ScrollableSection>
+
 				<ScrollableSection id="board" title="Board of Directors">
 					<InfoBlock>
 						<p>
-							New board members are nominated by the Board Nominating Committee and elected for 3-year terms by members at the Annual Membership Meeting.
+							New board members are nominated by the Board Nominating Committee and elected for 
+							3-year terms by members at the Annual Membership Meeting.
 						</p>
 					</InfoBlock>
 					<InfoBlock>
