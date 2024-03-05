@@ -1,6 +1,6 @@
 .infoBlock {
-	max-width: 1300px;
-	margin: 20px auto;
+	max-width: 65ch;
+	margin: 20px 0;
 }
 
 .infoBlockContent {

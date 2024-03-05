@@ -8,6 +8,11 @@ const HistoryContent = () => {
 			<LineHeader title="The Grubb Legacy: 1734 to 1789" />
 
 			<HistoryBlock margin="40px 0 0">
+				{/*
+				<p className={styles.pullQuote}>
+					"This memorable quote is a great way to summarize the content of this section."
+				</p>
+				*/}
 				<p>
 					In 1734, William Allen sold 300 acres in what is now Cornwall, Pennsylvania, to 
 					Peter Grubb for £135. Three years later, another 142 acres were purchased. Peter 
