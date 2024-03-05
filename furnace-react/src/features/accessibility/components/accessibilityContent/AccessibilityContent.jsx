@@ -1,5 +1,6 @@
 import React from "react";
 import { Expander } from "/src/components";
+import { TextLink } from "/src/components/ui";
 import "./AccessibilityContent.css";
 
 /**
@@ -75,17 +76,18 @@ const AccessibilityContent = () => {
         </Expander>
         <Expander title="Sensory Considerations">
           <p>
-            Sensory Friendly Spaces – Some spaces are quieter and less
+            Sensory Friendly Spaces - Some spaces are quieter and less
             stimulating, while others may have low lights or loud noises.
           </p>
           <p>
-            Temperature – There is no heat or air conditioning in the Furnace
+            Temperature - There is no heat or air conditioning in the Furnace
             Building. Be sure to dress appropriately for the activities.
             Comfortable footwear is suggested for the guided tour.
           </p>
         </Expander>
         <Expander title="Site Map">
-          <p>Maps of the site are provided at the visitor’s desk.</p>
+          <p>Site map brochures are provided in the visitor's center.</p>
+          <p>An interactive site map can be found <TextLink to="/map">here</TextLink>.</p>
         </Expander>
       </div>
     </div>
