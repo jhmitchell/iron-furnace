@@ -14,7 +14,7 @@ const Accessibility = () => {
     <ScrollableSection id="accessibility-section" title="Accessibility">
     <div className="accessibility-section">
       <p>
-        While the visitor center and interpretive display are accessible, the
+        While the Vistor Center and interpretive display are accessible, the
         tour of the furnace building is not as it requires the use of many
         steps.
       </p>

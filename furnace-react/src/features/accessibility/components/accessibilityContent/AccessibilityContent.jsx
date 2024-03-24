@@ -36,57 +36,53 @@ const AccessibilityContent = () => {
         <Expander title="Parking">
           <p>
             Parking is free. The driveway and parking lot are paved. Accessible
-            Parking Spaces are located at the walkway into the Visitors Center.
+            parking spaces are located at the walkway into the Visitor Center.
           </p>
         </Expander>
         <Expander title="Facilities">
-          <p>Walkways are paved.</p>
           <p>
-            The Visitors Center indoor exhibit gallery, video viewing area, and
-            museum store are all handicap and wheelchair accessible.
-          </p>
-          <p>
-            Restrooms are located in the Visitors Center and are handicapped
-            accessible.
+            Walkways are paved. The Visitor Center indoor exhibit gallery, video 
+            viewing area, and museum store are all accessible. Restrooms are located 
+            in the Visitor Center and are accesible.
           </p>
         </Expander>
         <Expander title="Audio and Visual Accessibility">
           <p>
-            A narrated Video has close captioning enabled for our visitors with
+            A narrated video has closed captioning enabled for our visitors with
             hearing impairments.
           </p>
         </Expander>
         <Expander title="Tours">
           <p>
-            Tours of the Furnace Building require navigation of approximately
-            100 steps. There is a room with a 7 inch step that visitors can
-            see as part of their tour. Walkers are permitted in the Charging
-            Room. The floor is rough and uneven.
+            Tours of the furnace building require navigation of approximately
+            100 steps. There is a room with a seven inch step that visitors can
+            see as part of their tour. Walkers are permitted in the charging
+            room. The floor is rough and uneven.
           </p>
           <p>
-            Walkers, Wheelchairs, and Strollers are not permitted in the Furnace
-            Building due to limited accessibility.
+            Walkers, wheelchairs, and strollers are not permitted in the furnace
+            building due to limited accessibility.
           </p>
         </Expander>
         <Expander title="Animals">
           <p>
-            Service Animals are encouraged; Pets are not allowed in the
-            buildings; Dogs are permitted on the grounds but must be on a leash.
+            Service animals are encouraged; pets are not allowed in the
+            buildings; dogs are permitted on the grounds but must be on a leash.
           </p>
         </Expander>
         <Expander title="Sensory Considerations">
           <p>
-            Sensory Friendly Spaces - Some spaces are quieter and less
+            Sensory friendly spaces - some spaces are quieter and less
             stimulating, while others may have low lights or loud noises.
           </p>
           <p>
-            Temperature - There is no heat or air conditioning in the Furnace
-            Building. Be sure to dress appropriately for the activities.
+            Temperature - there is no heat or air conditioning in the furnace
+            building. Be sure to dress appropriately for the activities.
             Comfortable footwear is suggested for the guided tour.
           </p>
         </Expander>
         <Expander title="Site Map">
-          <p>Site map brochures are provided in the visitor's center.</p>
+          <p>Site map brochures are provided in the Visitor Center.</p>
           <p>An interactive site map can be found <TextLink to="/map">here</TextLink>.</p>
         </Expander>
       </div>

@@ -34,7 +34,7 @@ const Membership = () => {
                 programming and admission.
               </li>
               <li>
-                You are helping to tell our century-old history to thousands of
+                You are helping to tell our centuries-old history to thousands of
                 visitors each year.
               </li>
             </ul>
