@@ -5,13 +5,13 @@ import "./EventsCard.css";
 const EventCard = ({ image, title, date, description, path }) => {
   return (
     <div className="event-card">
-    <MediaCard
-      image={image}
-      title={title}
-      subtitle={date}
-      description={description}
-      path={path}
-    />
+      <MediaCard
+        image={image}
+        title={title}
+        subtitle={date}
+        description={description}
+        path={path}
+      />
     </div>
   );
 };

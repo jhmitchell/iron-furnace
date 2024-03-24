@@ -12,10 +12,12 @@
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
   }
   
+  /*
   .media-card:hover {
     transform: scale(1.03);
     box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.8);
   }
+  */
   
   .media-image {
     height: 300px;
