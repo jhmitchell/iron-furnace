@@ -145,7 +145,7 @@ const Footer = () => {
         <div className="footer-bottom">
           <div className="horizontal-line" />
           <div className="footer-copyright">
-            <p>&copy; 2023 Cornwall Iron Furnace | All Rights Reserved</p>
+            <p>&copy; 2024 Cornwall Iron Furnace | All Rights Reserved</p>
             <p>
               Designed & Developed by John Mitchell | Powered by{" "}
               <span className="quadra">quadra</span>

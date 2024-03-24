@@ -1,7 +1,7 @@
 .hours-section {
   background-color: var(--dark-background);
   text-align: center;
-  max-width: 1300px;
+  width: 1300px;
   margin-bottom: 40px;
 }
 

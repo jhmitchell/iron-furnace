@@ -11,7 +11,7 @@ import './VisitPage.css';
  */
 const VisitPage = () => {
   const sections = [
-    { name: 'HOURS/TICKETS', subroute: 'hours', id: 'hours-section' },
+    { name: 'HOURS / TICKETS', subroute: 'hours', id: 'hours-section' },
     { name: 'TOURS', subroute: 'tours', id: 'tour-times-section' },
     { name: 'ACCESSIBILITY', subroute: 'accessibility', id: 'accessibility-section' },
   ];

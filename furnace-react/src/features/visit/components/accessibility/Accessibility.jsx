@@ -1,5 +1,7 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
+import { TextLink } from "/src/components/ui";
+import ScrollableSection from "/src/layouts/scrollableSection/ScrollableSection";
 import "./Accessibility.css";
 
 /**
@@ -9,9 +11,8 @@ import "./Accessibility.css";
  */
 const Accessibility = () => {
   return (
-    <div className="accessibility-section" id="accessibility-section">
-      <div className="horizontal-line"></div>
-      <h2 className="section-header">Accessibility</h2>
+    <ScrollableSection id="accessibility-section" title="Accessibility">
+    <div className="accessibility-section">
       <p>
         While the visitor center and interpretive display are accessible, the
         tour of the furnace building is not as it requires the use of many
@@ -19,13 +20,12 @@ const Accessibility = () => {
       </p>
       <p>
         The temperature in the furnace structure can vary widely as there is no
-        heat or a/c. Please dress accordingly.{" "}
-        <NavLink className="accessibility-link" to="/accessibility">
-          Click Here
-        </NavLink>{" "}
+        heat or a/c. Please dress accordingly.
+        {" "}<TextLink to="/accessibility">Click Here</TextLink>{" "}
         for more information about accessibility.
       </p>
     </div>
+    </ScrollableSection>
   );
 };
 
