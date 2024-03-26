@@ -175,7 +175,7 @@ const areaJSXMapping = {
 			<img src={ManagerHouse} alt="Manager's House" />
 			<p>
 				Present knowledge indicates that this impressive stone building was constructed 
-				in the nineteenth Century as a residence for the furnace manager. Its size and design 
+				in the nineteenth century as a residence for the furnace manager. Its size and design 
 				show the importance of the manager, who ranked second only to the owner. Throughout
 				the twentieth century, Bethlehem Steel used this building as its Cornwall office. 
 				Today the structure is owned by Cornwall Manor and is not open to the public.
@@ -251,7 +251,7 @@ const areaJSXMapping = {
 			<h2>Minersvillage</h2>
 			<img src={MinersVillage} alt="Miners' Village" />
 			<p>
-				Just beyond the open pit lies Minersvillage, a picturesque community of brick
+				Just beyond the open pit lies Minersvillage, a picturesque community of brick,
 				stone, and frame homes. The mine owners built this village a few units at a time
 				to provide housing for their workers. Today the houses are private residences and 
 				may be seen along Boyd Street.
