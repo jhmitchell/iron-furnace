@@ -24,7 +24,7 @@ const AdminHours = () => {
 
   return (
     <div className={styles.adminHours}>
-      <h1>Set Operating Hours</h1>
+      <h1>Operating Hours</h1>
       {daysOfWeek.map(day => (
         <div key={day} className={styles.dayRow}>
           <label>{day}</label>

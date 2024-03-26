@@ -16,7 +16,7 @@ est_timezone = pytz.timezone('US/Eastern')
 
 def format_time(time_obj: datetime.time) -> str:
     """
-    Formats a time string to the format like 9:00 AM or 5:00 PM.
+    Formats a time string to the form 9:00 AM or 5:00 PM.
 
     Args:
         time_obj (datetime.time): A time object.
@@ -101,6 +101,28 @@ def get_status(db: Session = Depends(get_db)):
                 return {"status": "CLOSED", "message": f"Open {next_opening_day} from {format_time(next_open)} to {format_time(next_close)}"}
 
     return {"status": "CLOSED", "message": "Closed until further notice"}
+
+
+@router.get("/hours")
+def get_hours(db: Session = Depends(get_db)):
+    """
+    Fetches and returns all operating hours and holidays.
+
+    Returns:
+        A JSON object with two keys:
+        - "operating_hours": A dictionary with days of the week as keys and their operating hours as values.
+        - "holidays": A list of holidays with their dates and descriptions.
+    """
+    hours, holidays = get_operating_hours(db)
+
+    # Format the data for readability
+    #formatted_hours = format_hours(operating_hours)
+    #formatted_holidays = format_holidays(holidays)
+
+    return {
+        "operating_hours": hours,
+        "holidays": holidays
+    }
 
 
 @router.post("/hours/set")

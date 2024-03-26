@@ -1,5 +1,5 @@
 .adminHours {
-    max-width: 500px;
+    max-width: 600px;
     margin: auto;
     padding: 20px;
     background-color: #f9f9f9;
@@ -10,6 +10,7 @@
   .adminHours h1 {
     text-align: center;
     color: #333;
+    margin-bottom: 15px;
   }
   
   .dayRow {

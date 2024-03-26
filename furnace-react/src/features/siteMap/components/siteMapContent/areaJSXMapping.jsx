@@ -23,7 +23,7 @@ const restrooms = () => (
 		<h2>Restrooms</h2>
 		<p>
 			Accessible restrooms and baby changing area are located in the
-			Visitor's Center.
+			Visitor Center.
 		</p>
 	</div>
 );
@@ -31,13 +31,15 @@ const restrooms = () => (
 const areaJSXMapping = {
 	"museum": () => (
 		<div className={styles.info}>
-			<h2>Visitor's Center</h2>
+			<h2>Museum</h2>
 			<img src={MuseumCannonballs} alt="Museum Cannonballs" />
 			<p>
-				Located in the 19th century charcoal barn, the Visitor's Center
-				offers interpretative exhibits on mining, charcoal making, and
-				ironmaking and gives the visitor a glimpse of the huge spaces
-				needed to contain the fuel used in the smelting process.
+				Located in the mid-nineteenth century charcoal barn, the Visitor
+				Center offers interpretative exhibits on mining, charcoal making,
+				and ironmaking and gives the visitor a glimpse of the huge spaces
+				needed to contain the fuel used in the smelting process. Also
+ 				located in this space is a display of mineral and ore samples
+				collected from the Cornwall mines.
 			</p>
 		</div>
 	),
@@ -111,10 +113,10 @@ const areaJSXMapping = {
 			<h2>Museum Store</h2>
 			<img src={MuseumStore} alt="Museum Store" />
 			<p>
-				The museum store is located in the visitor's center and offers a
+				The museum store is located in the Visitor Center and offers a wide
 				selection of redware, cast iron cookware, books, artwork, apparel, and
 				other souvenirs relating to the furnace and the iron industry. Every
-				purchase supports the Friends of the Cornwall Iron Furnace.
+				store purchase supports the Friends of the Cornwall Iron Furnace.
 			</p>
 		</div>
 	),
@@ -123,7 +125,7 @@ const areaJSXMapping = {
 			<h2>Exhibits</h2>
 			<img src={Exhibits} alt="Exhibits" />
 			<p>
-				Interpretative displays and a short film help to tell the story of 
+				Interpretative displays and a 15 minute film help to tell the story of 
 				Cornwall Iron Furnace.
 			</p>
 		</div>
@@ -135,8 +137,9 @@ const areaJSXMapping = {
 			<p>
 				This building quartered the horses and mules used in everyday functions of 
 				the furnace, such as hauling raw materials and finished products. There are 
-				Keystone arches over the lower doors and the vent grills in the upper doors. 
-				Today the stable serves as the maintenance shop for Cornwall Manor.
+				keystone arches over the lower doors and the vent grills in the upper doors. 
+				Today the stable serves as the maintenance shop for Cornwall Manor and is
+				closed to the public.
 			</p>
 		</div>
 	),
@@ -147,9 +150,10 @@ const areaJSXMapping = {
 			<p>
 				Curttis and Peter Grubb, the sons of the builder of Cornwall Furnace, built 
 				this mansion in 1773. The Coleman family, whose patriarch Robert Coleman had 
-				acquired the furnace and estate, did extensive remodeling in 1865. Included 
-				in the renovation was the addition of Italianate architectural elements. 
-				Today a few residents of Cornwall Manor have apartments in this building.
+				acquired the furnace and estate, did extensive remodeling in the mid-nineteenth
+				century. Included in the renovation was the addition of Italianate architectural 
+				elements. Today a few residents of Cornwall Manor have apartments in this building.
+				These private residences are not open to the public.
 			</p>
 		</div>
 	),
@@ -171,10 +175,10 @@ const areaJSXMapping = {
 			<img src={ManagerHouse} alt="Manager's House" />
 			<p>
 				Present knowledge indicates that this impressive stone building was constructed 
-				in the 19th Century as a residence for the furnace manager. Its size and design 
-				show the importance of the manager, who ranked second only to the owner. In the 
-				20th Century, Bethlehem Steel used this building as its Cornwall office. Today 
-				the structure is owned by Cornwall Manor.
+				in the nineteenth Century as a residence for the furnace manager. Its size and design 
+				show the importance of the manager, who ranked second only to the owner. Throughout
+				the twentieth century, Bethlehem Steel used this building as its Cornwall office. 
+				Today the structure is owned by Cornwall Manor and is not open to the public.
 			</p>
 		</div>
 	),
@@ -183,8 +187,9 @@ const areaJSXMapping = {
 			<h2>Abattoir</h2>
 			<img src={Abattoir} alt="Abattoir" />
 			<p>
-				This charming Gothic Revival building, featuring quatrefoil-foil windows, served 
-				as the smokehouse and butcher shop for the Cornwall Estate.
+				This charming Gothic Revival building, featuring quatrefoil windows, served 
+				as the butcher shop and smokehouse for the Cornwall Estate. The three-story
+				interior meat tree still stands and serves as a structural support.
 			</p>
 		</div>
 	),
@@ -231,21 +236,25 @@ const areaJSXMapping = {
 			<h2>Open Pit</h2>
 			<img src={OpenPit} alt="Open Pit" />
 			<p>
-				Cornwall Ore Banks was one of the world's greatest iron ore deposits. More 
-				than 100 million tons were extracted between 1730 and 1973. The depth of the 
-				open pit reached five hundred feet below the surface. Today, the pit is 
-				filled with water and may be viewed from Boyd Street.
+				The mine, now filled with water, is visible from Boyd Street, just south of
+				Cornwall Iron Furnace. It operated continuously from the 1730s to 1973 and was
+				at one time the largest open-pit iron ore mine in the world. The mine
+				produced over 106 million tons of iron ore, as well as copper, cobalt, gold,
+				and silver. Mining operations closed as a result of flooding from Tropical
+				Storm Agnes. The pit continued to fill with water until it reached its full
+				capacity in 1964.
 			</p>
 		</div>
 	),
 	"miners-village": () => (
 		<div>
-			<h2>Miners' Village</h2>
+			<h2>Minersvillage</h2>
 			<img src={MinersVillage} alt="Miners' Village" />
 			<p>
-				Company housing was made available to miners and furnace workers. 
-				Minersvillage was started in 1865 and has been occupied continuously. Today 
-				the houses are private residences and may be seen along Boyd Street.
+				Just beyond the open pit lies Minersvillage, a picturesque community of brick
+				stone, and frame homes. The mine owners built this village a few units at a time
+				to provide housing for their workers. Today the houses are private residences and 
+				may be seen along Boyd Street.
 			</p>
 		</div>
 	)
