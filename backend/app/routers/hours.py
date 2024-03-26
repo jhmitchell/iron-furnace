@@ -120,7 +120,7 @@ def get_hours(db: Session = Depends(get_db)):
     #formatted_holidays = format_holidays(holidays)
 
     return {
-        "operating_hours": hours,
+        "hours": hours,
         "holidays": holidays
     }
 
