@@ -3,6 +3,17 @@ import { NavLink, Outlet, useNavigate } from 'react-router-dom';
 import styles from './AdminDashboard.module.css';
 import { useAuth } from '/src/features/authentication';
 
+const DashLink = ({ to, children }) => {
+	return (
+		<NavLink
+			to={to}
+			className={({ isActive }) => isActive ? `${styles.navLink} ${styles.activeNavLink}` : styles.navLink}
+		>
+			{children}
+		</NavLink>
+	);
+};
+
 const AdminDashboard = () => {
 	const navigate = useNavigate();
 	const { logoutUser } = useAuth();
@@ -15,18 +26,9 @@ const AdminDashboard = () => {
 	return (
 		<div className={styles.adminDashboard}>
 			<nav className={styles.sidebar}>
-				<NavLink
-					to="/admin"
-					className={({ isActive }) => isActive ? `${styles.navLink} ${styles.activeNavLink}` : styles.navLink}
-				>
-					Dashboard
-				</NavLink>
-				<NavLink
-					to="/admin/hours"
-					className={({ isActive }) => isActive ? `${styles.navLink} ${styles.activeNavLink}` : styles.navLink}
-				>
-					Hours
-				</NavLink>
+				<DashLink to="/admin/">Dashboard</DashLink>
+				<DashLink to="/admin/hours">Hours</DashLink>
+				<DashLink to="/admin/events">Events</DashLink>
 			</nav>
 			<div className={styles.mainContent}>
 				<header className={styles.topBar}>
