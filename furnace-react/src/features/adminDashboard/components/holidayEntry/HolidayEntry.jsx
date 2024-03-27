@@ -1,11 +1,15 @@
-// HolidayEntry.js
 import React from "react";
+import { FaTrashAlt } from 'react-icons/fa';
+import styles from "./HolidayEntry.module.css";
 
-const HolidayEntry = ({ date, description }) => {
+const HolidayEntry = ({ date, description, onDelete }) => {
   return (
-    <div style={{ padding: "10px", margin: "5px 0", border: "1px solid #ccc", borderRadius: "5px" }}>
-      <h4>{date}</h4>
-      <p>{description || "No description available"}</p>
+    <div className={styles.card}>
+      <div className={styles.delete} onClick={() => onDelete(date)}>
+        <FaTrashAlt />
+      </div>
+      <h4 className={styles.date}>{date}</h4>
+      <p className={styles.description}>{description || "No description available"}</p>
     </div>
   );
 }

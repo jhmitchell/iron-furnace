@@ -33,20 +33,30 @@ const HolidaysCard = () => {
 		}
 	};
 
+	const removeHoliday = async (date) => {
+		try {
+			await setHoliday(date, null);
+			refreshHolidays();
+		} catch (error) {
+			console.error("Failed to remove holiday:", error);
+			alert("Failed to remove the holiday. Please check the console for more details.");
+		}
+	};
+
 	useEffect(() => {
 		refreshHolidays();
 	}, []);
 
 	return (
 		<div>
-			<h2>Holidays</h2>
+			<h2>Holidays and Special Closures</h2>
 			<div style={{ marginBottom: "20px", cursor: "pointer" }} onClick={addHoliday}>
 				<span style={{ fontSize: "24px", marginRight: "10px" }}>+</span>
 				Add Holiday
 			</div>
 			<div>
 				{holidays.map((holiday, index) => (
-					<HolidayEntry key={index} date={holiday.holiday_date} description={holiday.description} />
+					<HolidayEntry key={index} date={holiday.holiday_date} description={holiday.description} onDelete={(date) => removeHoliday(date)} />
 				))}
 			</div>
 		</div>

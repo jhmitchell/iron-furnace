@@ -77,7 +77,7 @@ const HoursCard = () => {
 
   return (
     <div className={styles.adminHours}>
-      <h1>Operating Hours</h1>
+      <h1>Recurring Operating Hours</h1>
       {daysOfWeek.map(day => (
         <div key={day} className={styles.dayRow}>
           <label>{day}</label>
