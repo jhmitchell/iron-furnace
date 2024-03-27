@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { useSetHours, getAllHours } from '/src/features/hours';
 import { FaPencilAlt, FaTrashAlt } from 'react-icons/fa';
-import styles from './AdminHours.module.css';
+import styles from './HoursCard.module.css';
 
 const daysOfWeek = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
 
-const AdminHours = () => {
+const HoursCard = () => {
   const { handleSetHours, loading, message } = useSetHours();
   const [hours, setHours] = useState(daysOfWeek.reduce((acc, day) => ({ ...acc, [day]: { start: '', end: '' }}), {}));
   const [editMode, setEditMode] = useState(null);
@@ -111,4 +111,4 @@ const AdminHours = () => {
   );
 };
 
-export default AdminHours;
+export default HoursCard;

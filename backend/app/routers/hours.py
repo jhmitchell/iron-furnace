@@ -3,7 +3,7 @@ from fastapi import APIRouter, HTTPException, Depends
 from datetime import time, datetime, timedelta
 from sqlalchemy.orm import Session
 from typing import Optional
-from app.internal.models.business_hours import Hours
+from app.internal.models.business_hours import Hours, Holiday
 from app.internal.db.hours import get_operating_hours
 from app.internal.db import hours as db_hours
 from app.internal.db.session import get_db
@@ -145,20 +145,38 @@ def set_operating_hours(hours: Hours, db: Session = Depends(get_db)):
     return {"message": "Operating hours updated successfully."}
 
 
+@router.get("/holidays")
+def get_holidays(db: Session = Depends(get_db)):
+    """
+    Fetches and returns all holidays.
+
+    Returns:
+        A list of holidays with their dates and descriptions.
+    """
+    holidays = db_hours.get_holidays(db)
+
+    return holidays
+
+
 @router.post("/holidays/set")
-def set_holiday(date: str, description: str = None, db: Session = Depends(get_db)):
+def set_holiday(holiday: Holiday, db: Session = Depends(get_db)):
+    """
+    Sets or deletes a holiday based on the provided date and description.
+    """
     # Convert the date from string to datetime.date
     try:
-        holiday_date = datetime.strptime(date, "%Y-%m-%d").date()
+        print(f'date: {holiday.date}')
+        formatted_date = datetime.strptime(holiday.date, "%Y-%m-%d").date()
+        print(f'formatted date: {formatted_date}')
     except ValueError:
         raise HTTPException(
             status_code=400, detail="Invalid date format. Use YYYY-MM-DD.")
 
     # Call the database function
-    db_hours.set_holiday(db, holiday_date, description)
+    db_hours.set_holiday(db, formatted_date, holiday.description)
 
     # Return a success message or a deletion message based on the description
-    if description:
+    if holiday.description:
         return {"message": "Holiday set successfully."}
     else:
         return {"message": "Holiday deleted successfully."}

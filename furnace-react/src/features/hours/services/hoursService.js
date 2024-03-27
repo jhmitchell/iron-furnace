@@ -63,3 +63,43 @@ export const setHours = async (day, start_time, end_time) => {
     throw error;
   }
 };
+
+export const getHolidays = async () => {
+  try {
+    const response = await fetch(`${API_V1_PREFIX}/holidays`);
+    if (!response.ok) {
+      throw new Error(`Error getting holidays: ${response.status}`);
+    }
+
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+};
+
+export const setHoliday = async (date, description) => {
+  try {
+    const response = await fetch(`${API_V1_PREFIX}/holidays/set`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        date,
+        description,
+      }),
+    });
+
+    if (!response.ok) {
+      throw new Error(`Error setting holiday: ${response.status}`);
+    }
+
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+};

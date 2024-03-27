@@ -17,9 +17,8 @@ import {
 } from './pages';
 import ProtectedRoute from "./components/protectedRoute/ProtectedRoute";
 import { AuthProvider } from "./features/authentication";
-import { AdminOverview, AdminHours } from "./features/adminDashboard";
+import { AdminOverview, AdminOperatingHours } from "./features/adminDashboard";
 import "./App.css";
-
 
 /**
  * RoutesComponent is responsible for defining the routes. If a route
@@ -122,7 +121,7 @@ const RoutesComponent = () => {
           element: <AdminDashboard />,
           children: [
             { index: true, element: <AdminOverview /> },
-            { path: "hours", element: <AdminHours /> },
+            { path: "hours", element: <AdminOperatingHours /> },
             // ... other admin sub-routes ...
           ]
         },

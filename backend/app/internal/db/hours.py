@@ -52,6 +52,17 @@ def set_operating_hours(db: Session, day: str, start_time: Optional[datetime.tim
     db.commit()
 
 
+def get_holidays(db: Session):
+    # Query holidays
+    holidays = db.query(Holidays.holiday_date, Holidays.description).all()
+
+    # Define holidays as a dictionary
+    holidays_dict = [{"holiday_date": date, "description": desc}
+                     for date, desc in holidays]
+
+    return holidays_dict
+
+
 def set_holiday(db: Session, date: datetime.date, description: str = None):
     # Find the record for the specified date
     holiday_record = db.query(Holidays).filter(

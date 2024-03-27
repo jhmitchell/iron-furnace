@@ -29,3 +29,7 @@ class Hours(BaseModel):
     day: str
     start_time: Optional[time] = None
     end_time: Optional[time] = None
+
+class Holiday(BaseModel):
+    date: str
+    description: Optional[str] = None
