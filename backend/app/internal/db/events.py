@@ -1,4 +1,5 @@
 from sqlalchemy.orm import Session
+from datetime import datetime, date
 from app.internal.models.events import Event, EventModel
 
 
@@ -74,3 +75,43 @@ def delete_event_db(db: Session, event_id: int):
         db.commit()
     else:
         raise ValueError(f"Event with ID {event_id} does not exist.")
+
+
+def get_upcoming_events_db(db: Session, number_of_events: int):
+    """
+    Retrieve a specified number of upcoming events, sorted by start datetime.
+
+    Parameters:
+    - db (Session): The database session object.
+    - number_of_events (int): The number of events to retrieve.
+
+    Returns:
+    - List[Optional[Dict]]: A list of dictionaries representing the events, or None for unfilled entries.
+    """
+    # today marks the start of the day, so that all events today are included
+    # regardless of the current time
+    today = datetime.combine(date.today(), datetime.min.time())
+
+    # Query upcoming events, sorted by start datetime
+    events = db.query(EventModel).filter(EventModel.event_start >= today)\
+        .order_by(EventModel.event_start.asc())\
+        .limit(number_of_events).all()
+
+    # Convert events to dictionaries
+    events_dict = [
+        {
+            "id": event.id,
+            "title": event.title,
+            "category": event.category,
+            "description": event.description,
+            "start_date": event.event_start,
+            "image": event.image,
+            "link_text": event.link_text,
+            "link_url": event.link_url
+        } for event in events
+    ]
+
+    # If there are fewer events than requested, fill in the remaining with None
+    events_dict += [None] * (number_of_events - len(events_dict))
+
+    return events_dict
