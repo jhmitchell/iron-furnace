@@ -5,7 +5,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy import text
 
-from .routers import authentication, users, hours
+from .routers import authentication, users, hours, events
 from .internal.db.session import get_db
 from .internal.db.init import (create_users_table, 
                                create_hours_table, 
@@ -43,6 +43,7 @@ app.include_router(authentication.router,
                    prefix=f'{API_V1_PREFIX}{AUTH_PREFIX}')
 app.include_router(users.router, prefix=f'{API_V1_PREFIX}')
 app.include_router(hours.router, prefix=f'{API_V1_PREFIX}')
+app.include_router(events.router, prefix=f'{API_V1_PREFIX}')
 
 
 @app.on_event("startup")

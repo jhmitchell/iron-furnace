@@ -1,5 +1,3 @@
-# internal/db/hours.py
-
 from sqlalchemy.orm import Session
 from typing import Optional
 from app.internal.models.business_hours import OperatingHours, Holidays

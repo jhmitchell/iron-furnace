@@ -1,11 +1,24 @@
+from sqlalchemy import Column, Integer, String, DateTime
 from pydantic import BaseModel
 from typing import Optional
 from datetime import datetime
+from .base import Base
 
-class EventModel(BaseModel):
-    id: Optional[int] = None
+class EventModel(Base):
+    __tablename__ = 'events'
+
+    id = Column(Integer, primary_key=True, index=True)
+    event_start = Column(DateTime, nullable=False)
+    image = Column(String, nullable=False)
+    title = Column(String, nullable=False)
+    category = Column(String, nullable=False)
+    description = Column(String, nullable=True)
+    link_text = Column(String, nullable=True)
+    link_url = Column(String, nullable=True)
+
+class Event(BaseModel):
     event_start: datetime
-    image: Optional[str] = None
+    image: str
     title: str
     category: str
     description: Optional[str] = None
