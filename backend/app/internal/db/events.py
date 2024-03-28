@@ -2,7 +2,7 @@ from sqlalchemy.orm import Session
 from app.internal.models.events import Event, EventModel
 
 
-def get_events(db: Session):
+def get_events_db(db: Session):
     """
     Retrieve all events from the database.
 
@@ -30,7 +30,7 @@ def get_events(db: Session):
     return events_dict
 
 
-def create_event(db: Session, event: Event):
+def create_event_db(db: Session, event: Event):
     """
     Creates a new event in the database.
 
@@ -59,7 +59,7 @@ def create_event(db: Session, event: Event):
     return new_event
 
 
-def delete_event(db: Session, event_id: int):
+def delete_event_db(db: Session, event_id: int):
     """
     Deletes an event from the database.
 
