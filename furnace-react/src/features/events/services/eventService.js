@@ -4,7 +4,7 @@
 */
 
 const API_V1_PREFIX = import.meta.env.VITE_API_V1_PREFIX;
-const EVENT_IMAGE_DIR = `${import.meta.env.VITE_SERVER_URL}/static/event_images`;
+const EVENT_IMAGE_DIR = `/static/event_images`;
 
 export const getAllEvents = async () => {
 	try {
