@@ -106,7 +106,6 @@ def get_upcoming_events_db(db: Session, number_of_events: int):
             "category": event.category,
             "description": event.description,
             "start_date": event.event_start,
-            "image": event.image,
             "link_text": event.link_text,
             "link_url": event.link_url
         } for event in events

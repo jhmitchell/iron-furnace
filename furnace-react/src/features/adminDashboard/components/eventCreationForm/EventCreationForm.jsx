@@ -52,10 +52,9 @@ const EventCreationForm = () => {
 
 			// Pass the event object and the image file to the createEvent service
 			const response = await createEvent(event, image);
-			console.log('Event Created Successfully:', response);
 			// Handle success, clear form, or redirect as needed
 		} catch (error) {
-			console.error('Error creating event:', error);
+			console.error('Error creating event');
 			// Handle error (e.g., show error message)
 		} finally {
 			setSubmitting(false);

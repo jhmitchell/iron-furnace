@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { FaChevronLeft, FaChevronRight } from 'react-icons/fa6';
-import { EventCard } from "/src/features/events";
+import { EventCard, getUpcomingEvents } from "/src/features/events";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 import "./EventsSection.css";
@@ -26,16 +26,51 @@ const EventsSection = () => {
       <FaChevronLeft size={50} color="orange" />
     </button>
   );
-  
+
   const CustomRightArrow = ({ onClick }) => (
     <button className="custom-right-arrow" onClick={onClick}>
       <FaChevronRight size={50} color="orange" />
     </button>
-  );  
+  );
+
+  const [events, setEvents] = useState([]);
+
+  useEffect(() => {
+    async function fetchEvents() {
+      const events = await getUpcomingEvents(3);
+      setEvents(events);
+    }
+    fetchEvents();
+  }, []);
+
+  function EventCardOrPlaceholder({ event }) {
+    // Define default placeholders
+    const defaultImage = "http://localhost:3001/static/event_images/10";
+    const defaultTitle = "Event Unavailable";
+    const defaultDate = "Date TBD";
+    const defaultPath = "example";
+
+    // Check if event is null and use default values
+    const image = event ? event.image : defaultImage;
+    const title = event ? event.title : defaultTitle;
+    const date = event ? event.start_date : defaultDate;
+    const description = event ? event.description : "Description Unavailable";
+    const path = event ? `/events/${event.id}` : defaultPath;
+
+    return (
+      <EventCard
+        image={image}
+        title={title}
+        date={date}
+        description={description}
+        path={path}
+      />
+    );
+  }
 
   return (
     <section className="events-section">
-      <div className="content-container"> {/* Added content container */}
+      <div className="content-container">
         <h2 className="section-title">Upcoming Events</h2>
         <div className="events-container">
           <Carousel
@@ -69,6 +104,7 @@ const EventsSection = () => {
             slidesToSlide={1}
             swipeable
           >
+            {/*
             <EventCard
               image="/src/assets/images/events/jim2023.jpg"
               title="Industrial Innovation Conference"
@@ -87,6 +123,11 @@ const EventsSection = () => {
               date="November 18, 2023"
               path="#"
             />
+            */}
+            {events.map((event, index) => (
+              <EventCardOrPlaceholder key={index} event={event} />
+            ))}
+
           </Carousel>
         </div>
       </div>
