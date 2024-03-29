@@ -1,6 +1,10 @@
 RewriteEngine On
 RewriteBase /
 RewriteRule ^index\.html$ - [L]
+
+# Exclude /static from rewriting
+RewriteCond %{REQUEST_URI} !^/static/
+
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule . /index.html [L]
