@@ -38,6 +38,9 @@ MANIFEST
 queries.txt
 *.db
 
+# Images
+static/
+
 # Log files
 *.log
 
