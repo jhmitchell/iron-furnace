@@ -1,6 +1,6 @@
 import React from "react";
 import { FaChevronLeft, FaChevronRight } from 'react-icons/fa6';
-import EventCard from "./eventsCard/EventsCard";
+import { EventCard } from "/src/features/events";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 import "./EventsSection.css";
