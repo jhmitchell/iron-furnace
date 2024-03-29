@@ -3,6 +3,7 @@ from dotenv import load_dotenv
 import logging
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.staticfiles import StaticFiles
 from sqlalchemy import text
 
 from .routers import authentication, users, hours, events
@@ -44,6 +45,8 @@ app.include_router(authentication.router,
 app.include_router(users.router, prefix=f'{API_V1_PREFIX}')
 app.include_router(hours.router, prefix=f'{API_V1_PREFIX}')
 app.include_router(events.router, prefix=f'{API_V1_PREFIX}')
+
+app.mount("/static", StaticFiles(directory="static"), name="static")
 
 
 @app.on_event("startup")

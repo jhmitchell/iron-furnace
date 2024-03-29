@@ -1,4 +1,5 @@
 import pytz
+import os
 from fastapi import APIRouter, HTTPException, UploadFile, File, Depends, Form
 from sqlalchemy.orm import Session
 from typing import Optional
@@ -109,8 +110,16 @@ async def save_image(image: UploadFile, event_id: int):
     - image (UploadFile): The image file to save.
 
     Returns:
-    - str: The path to / identifier for the saved image.
+    - str: The path to the saved image.
     """
-    file_location = f"event_images/{event_id}"
-    with open(file_location, "wb+") as file_object:
-        file_object.write(await image.read())
+    directory = "static/event_images" 
+    if not os.path.exists(directory):
+        os.makedirs(directory)
+
+    file_path = os.path.join(directory, f"{event_id}")
+    with open(file_path, "wb") as file_object:
+        content = await image.read()
+        file_object.write(content)
+
+    # Return a path or URL that can be accessed by clients
+    return f"/static/event_images/{event_id}"
