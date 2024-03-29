@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { getAllEvents, getUpcomingEvents } from '/src/features/events';
+import EventCreationForm from '../eventCreationForm/EventCreationForm';
 import styles from './AdminEvents.module.css';
 
 const AdminEvents = () => {
@@ -21,6 +22,7 @@ const AdminEvents = () => {
 	return (
 		<div className={styles.eventsCard}>
 			<h2>Events</h2>
+			<EventCreationForm />
 			<ul>
 				{events.map((event) => (
 					<li key={event.id}>

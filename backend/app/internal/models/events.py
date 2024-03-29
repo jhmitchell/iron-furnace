@@ -16,7 +16,7 @@ class EventModel(Base):
     link_url = Column(String, nullable=True)
 
 class Event(BaseModel):
-    event_start: datetime
+    event_start: str
     title: str
     category: str
     description: Optional[str] = None

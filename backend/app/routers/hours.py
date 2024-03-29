@@ -165,9 +165,7 @@ def set_holiday(holiday: Holiday, db: Session = Depends(get_db)):
     """
     # Convert the date from string to datetime.date
     try:
-        print(f'date: {holiday.date}')
         formatted_date = datetime.strptime(holiday.date, "%Y-%m-%d").date()
-        print(f'formatted date: {formatted_date}')
     except ValueError:
         raise HTTPException(
             status_code=400, detail="Invalid date format. Use YYYY-MM-DD.")

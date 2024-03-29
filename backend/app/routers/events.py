@@ -1,6 +1,7 @@
 import pytz
-from fastapi import APIRouter, HTTPException, UploadFile, File, Depends
+from fastapi import APIRouter, HTTPException, UploadFile, File, Depends, Form
 from sqlalchemy.orm import Session
+from typing import Optional
 
 from app.internal.models.events import Event
 from app.internal.db.session import get_db
@@ -49,31 +50,35 @@ def get_upcoming_events(num_events: int, db: Session = Depends(get_db)):
     return upcoming_events
 
 
-@router.post("/events", response_model=Event)
-def create_event(event: Event,
-                 image: UploadFile = File(...),
-                 db: Session = Depends(get_db)
-                 ):
-    """
-    Creates a new event in the database.
+@router.post("/events")
+async def create_event(
+    event_start: str = Form(...),
+    title: str = Form(...),
+    category: str = Form(...),
+    description: Optional[str] = Form(None),
+    link_text: Optional[str] = Form(None),
+    link_url: Optional[str] = Form(None),
+    image: UploadFile = File(...),
+    db: Session = Depends(get_db)
+):
+    event_data = {
+        "event_start": event_start,
+        "title": title,
+        "category": category,
+        "description": description,
+        "link_text": link_text,
+        "link_url": link_url,
+    }
+    event = Event(**event_data)
 
-    Parameters:
-    - event (Event): An Event object representing the new event to be added.
-    - image (UploadFile): The image file uploaded with the event.
-    - db (Session, auto-injected): Database session dependency injected by FastAPI.
-
-    Returns:
-    - Event: The newly created Event object as a JSON response.
-    """
     try:
         new_event = create_event_db(db, event)
-        save_image(image, new_event.id)
+        await save_image(image, new_event.id)
         return new_event
     except ValueError as e:
         raise HTTPException(status_code=404, detail=str(e))
     except Exception as e:
-        raise HTTPException(
-            status_code=500, detail="An error occurred while creating the event.")
+        raise HTTPException(status_code=500, detail="An error occurred while creating the event.")
 
 
 @router.delete("/events/{event_id}")
