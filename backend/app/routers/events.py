@@ -1,5 +1,5 @@
 import pytz
-from fastapi import APIRouter, HTTPException, Depends
+from fastapi import APIRouter, HTTPException, UploadFile, File, Depends
 from sqlalchemy.orm import Session
 
 from app.internal.models.events import Event
@@ -50,12 +50,16 @@ def get_upcoming_events(num_events: int, db: Session = Depends(get_db)):
 
 
 @router.post("/events", response_model=Event)
-def create_event(event: Event, db: Session = Depends(get_db)):
+def create_event(event: Event,
+                 image: UploadFile = File(...),
+                 db: Session = Depends(get_db)
+                 ):
     """
     Creates a new event in the database.
 
     Parameters:
     - event (Event): An Event object representing the new event to be added.
+    - image (UploadFile): The image file uploaded with the event.
     - db (Session, auto-injected): Database session dependency injected by FastAPI.
 
     Returns:
@@ -63,6 +67,7 @@ def create_event(event: Event, db: Session = Depends(get_db)):
     """
     try:
         new_event = create_event_db(db, event)
+        save_image(image, new_event.id)
         return new_event
     except ValueError as e:
         raise HTTPException(status_code=404, detail=str(e))
@@ -89,3 +94,18 @@ def delete_event(event_id: int, db: Session = Depends(get_db)):
     except Exception as e:
         raise HTTPException(
             status_code=500, detail="An error occurred while deleting the event.")
+
+
+async def save_image(image: UploadFile, event_id: int):
+    """
+    Saves an uploaded image file to the server.
+
+    Parameters:
+    - image (UploadFile): The image file to save.
+
+    Returns:
+    - str: The path to / identifier for the saved image.
+    """
+    file_location = f"event_images/{event_id}"
+    with open(file_location, "wb+") as file_object:
+        file_object.write(await image.read())

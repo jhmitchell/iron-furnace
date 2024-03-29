@@ -22,7 +22,6 @@ def get_events_db(db: Session):
             "category": event.category,
             "description": event.description,
             "start_date": event.event_start,
-            "image": event.image,
             "link_text": event.link_text,
             "link_url": event.link_url
         } for event in events
@@ -44,7 +43,6 @@ def create_event_db(db: Session, event: Event):
     """
     new_event = EventModel(
         event_start=event.event_start,
-        image=event.image,
         title=event.title,
         category=event.category,
         description=event.description,

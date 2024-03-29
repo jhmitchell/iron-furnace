@@ -1,25 +1,33 @@
 import React, { useEffect } from 'react';
-import { getEvents } from '/src/features/events';
+import { getAllEvents, getUpcomingEvents } from '/src/features/events';
 import styles from './AdminEvents.module.css';
 
 const AdminEvents = () => {
 	const [events, setEvents] = React.useState([]);
 
+	const fetchAllEvents = async () => {
+		try {
+			const events = await getAllEvents();
+			setEvents(events);
+		} catch (error) {
+			console.error(error);
+		}
+	};
+
 	useEffect(() => {
-		getEvents()
-			.then((data) => {
-				setEvents(data);
-			})
-			.catch((error) => {
-				console.error(error);
-			});
-		
-			console.log('events', events);
+		fetchAllEvents();
 	}, []);
 
 	return (
 		<div className={styles.eventsCard}>
-			Events
+			<h2>Events</h2>
+			<ul>
+				{events.map((event) => (
+					<li key={event.id}>
+						{event.title} - {event.description}
+					</li>
+				))}
+			</ul>
 		</div>
 	)
 }

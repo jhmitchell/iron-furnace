@@ -1,1 +1,2 @@
-export { getEvents as getEvents } from './services/eventService';
+export { getAllEvents as getAllEvents } from './services/eventService';
+export { getUpcomingEvents as getUpcomingEvents } from './services/eventService';

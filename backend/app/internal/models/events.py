@@ -9,7 +9,6 @@ class EventModel(Base):
 
     id = Column(Integer, primary_key=True, index=True)
     event_start = Column(DateTime, nullable=False)
-    image = Column(String, nullable=False)
     title = Column(String, nullable=False)
     category = Column(String, nullable=False)
     description = Column(String, nullable=True)
@@ -18,7 +17,6 @@ class EventModel(Base):
 
 class Event(BaseModel):
     event_start: datetime
-    image: str
     title: str
     category: str
     description: Optional[str] = None
