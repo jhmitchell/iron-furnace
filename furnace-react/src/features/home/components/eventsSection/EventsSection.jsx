@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { FaChevronLeft, FaChevronRight } from 'react-icons/fa6';
 import { EventCard, getUpcomingEvents } from "/src/features/events";
 import Carousel from "react-multi-carousel";
+import DefaultEventImage from "/src/assets/images/chandelier.jpeg";
 import "react-multi-carousel/lib/styles.css";
 import "./EventsSection.css";
 
@@ -37,7 +38,7 @@ const EventsSection = () => {
 
   useEffect(() => {
     async function fetchEvents() {
-      const events = await getUpcomingEvents(3);
+      const events = await getUpcomingEvents(4);
       setEvents(events);
     }
     fetchEvents();
@@ -45,13 +46,12 @@ const EventsSection = () => {
 
   function EventCardOrPlaceholder({ event }) {
     // Define default placeholders
-    const defaultImage = "http://localhost:3001/static/event_images/10";
     const defaultTitle = "Event Unavailable";
     const defaultDate = "Date TBD";
     const defaultPath = "example";
 
     // Check if event is null and use default values
-    const image = event ? event.image : defaultImage;
+    const image = event ? event.image : DefaultEventImage;
     const title = event ? event.title : defaultTitle;
     const date = event ? event.start_date : defaultDate;
     const description = event ? event.description : "Description Unavailable";

@@ -4,6 +4,7 @@
 */
 
 const API_V1_PREFIX = import.meta.env.VITE_API_V1_PREFIX;
+const EVENT_IMAGE_DIR = `${import.meta.env.VITE_SERVER_URL}/static/event_images`;
 
 export const getAllEvents = async () => {
 	try {
@@ -28,6 +29,14 @@ export const getUpcomingEvents = async (numEvents) => {
 		}
 
 		const data = await response.json();
+
+		// Construct the image URL for each event
+		data.forEach(event => {
+      if (event) {
+        event.image = `${EVENT_IMAGE_DIR}/${event.id}`;
+      }
+    });
+
 		return data;
 	} catch (error) {
 		console.error(error);
