@@ -7,13 +7,13 @@ from .base import Base
 class User(Base):
     __tablename__ = 'users'
 
-    member_id = Column(String, primary_key=True, index=True)
-    email = Column(String, unique=True, index=True)
-    hashed_password = Column(String)
-    first_name = Column(String)
-    last_name = Column(String)
+    member_id = Column(String(255), primary_key=True, index=True)
+    email = Column(String(255), unique=True, index=True)
+    hashed_password = Column(String(255))
+    first_name = Column(String(255))
+    last_name = Column(String(255))
     disabled = Column(Boolean, default=False)
-    refresh_token = Column(String, nullable=True)
+    refresh_token = Column(String(255), nullable=True)
     refresh_token_expires_at = Column(DateTime, nullable=True)
 
 # Pydantic User Schema
