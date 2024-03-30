@@ -41,9 +41,8 @@ def create_event_db(db: Session, event: Event):
     Returns:
         An instance of EventModel with the created event data.
     """
-    print(event.event_start)
     event_start_datetime = datetime.strptime(event.event_start, "%Y-%m-%dT%H:%M:%S")
-    print(event_start_datetime)
+    
     new_event = EventModel(
         event_start=event_start_datetime,
         title=event.title,

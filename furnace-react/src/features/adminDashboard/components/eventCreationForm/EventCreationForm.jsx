@@ -126,11 +126,7 @@ const EventCreationForm = () => {
 							</button>
 						</Form>
 						<EventCard
-							title={values.title}
-							description={values.description}
-							date={values.date}
-							time={values.time}
-							image={imageURL}
+							event={{...values, image: imageURL}}
 						/>
 					</>
 				);
