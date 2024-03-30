@@ -46,7 +46,7 @@ const EventsSection = () => {
   return (
     <section className="events-section">
       <div className="content-container">
-        <h2 className="section-title">Upcoming Events</h2>
+        <h2 className="section-title">Upcoming Programs and Events</h2>
         <div className="events-container">
           <Carousel
             responsive={responsive}

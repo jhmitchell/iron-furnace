@@ -1,6 +1,6 @@
 import React from "react";
 import MediaCard from "/src/components/ui/mediaCard/MediaCard";
-import styles from "./EventsCard.module.css";
+import styles from "./EventCard.module.css";
 import DefaultEventImage from "/src/assets/images/chandelier.jpeg";
 
 const EventCard = ({ event }) => {
