@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { FaChevronLeft, FaChevronRight } from 'react-icons/fa6';
 import { EventCard, getUpcomingEvents } from "/src/features/events";
 import Carousel from "react-multi-carousel";
-import DefaultEventImage from "/src/assets/images/chandelier.jpeg";
 import "react-multi-carousel/lib/styles.css";
 import "./EventsSection.css";
 
@@ -43,30 +42,6 @@ const EventsSection = () => {
     }
     fetchEvents();
   }, []);
-
-  function EventCardOrPlaceholder({ event }) {
-    // Define default placeholders
-    const defaultTitle = "Event Unavailable";
-    const defaultDate = "Date TBD";
-    const defaultPath = "example";
-
-    // Check if event is null and use default values
-    const image = event ? event.image : DefaultEventImage;
-    const title = event ? event.title : defaultTitle;
-    const date = event ? event.start_date : defaultDate;
-    const description = event ? event.description : "Description Unavailable";
-    const path = event ? `/events/${event.id}` : defaultPath;
-
-    return (
-      <EventCard
-        image={image}
-        title={title}
-        date={date}
-        description={description}
-        path={path}
-      />
-    );
-  }
 
   return (
     <section className="events-section">
@@ -124,8 +99,9 @@ const EventsSection = () => {
               path="#"
             />
             */}
+
             {events.map((event, index) => (
-              <EventCardOrPlaceholder key={index} event={event} />
+              <EventCard key={index} event={event} />
             ))}
 
           </Carousel>
