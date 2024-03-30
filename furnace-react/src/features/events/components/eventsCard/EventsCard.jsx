@@ -1,10 +1,10 @@
 import React from "react";
 import MediaCard from "/src/components/ui/mediaCard/MediaCard";
-import "./EventsCard.css";
+import styles from "./EventsCard.module.css";
 
 const EventCard = ({ image, title, date, description, path }) => {
   return (
-    <div className="event-card">
+    <div className={styles.cardContainer}>
       <MediaCard
         image={image}
         title={title}

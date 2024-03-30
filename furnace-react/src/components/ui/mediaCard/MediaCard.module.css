@@ -1,0 +1,40 @@
+.mediaCard {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+  text-decoration: none;
+  background-color: var(--dark-secondary);
+  color: var(--text-off-white);
+}
+
+.mediaDetails {
+  padding: 15px;
+}
+
+.mediaTitle {
+  margin: 0;
+  font-weight: bold;
+}
+
+.mediaSubtitle {
+  color: var(--text-off-white);
+  font-size: 0.9rem;
+}
+
+.mediaDescription {
+  margin-top: 10px;
+}
+
+.mediaImage {
+  height: 300px;
+  background-size: cover;
+  background-position: center;
+  background-size: 102% auto;
+  transition: background-size 0.35s ease;
+}
+
+.mediaCard:hover .mediaImage {
+  background-size: 100% auto;
+}

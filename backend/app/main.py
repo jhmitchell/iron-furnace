@@ -51,8 +51,7 @@ app.mount("/static", StaticFiles(directory="static"), name="static")
 
 @app.on_event("startup")
 async def startup_event():
-    logger.info("Initializing server...")
-    logger.info("Current directory: " + os.getcwd())
+    logger.info("Initializing FastAPI server...")
 
     # Create tables and root user if they do not exist
     db = next(get_db())
