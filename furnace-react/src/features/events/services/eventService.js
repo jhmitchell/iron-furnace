@@ -72,3 +72,18 @@ export const createEvent = async (event, imageFile) => {
 			throw error;
 	}
 };
+
+export const deleteEvent = async (eventId) => {
+	try {
+		const response = await fetch(`${API_V1_PREFIX}/events/${eventId}`, {
+			method: 'DELETE',
+		});
+
+		if (!response.ok) {
+			throw new Error(`Error deleting event: ${response.status}`);
+		}
+	} catch (error) {
+		console.error(error);
+		throw error;
+	}
+};

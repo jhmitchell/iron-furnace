@@ -23,7 +23,7 @@ def get_events(db: Session = Depends(get_db)):
     Fetches and returns all events
 
     Returns:
-        A JSON object with 
+        A JSON object with a list of all events.
     """
     events = get_events_db(db)
     return events
@@ -85,21 +85,26 @@ async def create_event(
 @router.delete("/events/{event_id}")
 def delete_event(event_id: int, db: Session = Depends(get_db)):
     """
-    Deletes an event identified by its ID from the database.
+    Deletes an event identified by its ID from the database, along with its associated image.
 
     Parameters:
     - event_id (int): The unique identifier of the event to be deleted.
-    - db (Session, auto-injected): Database session dependency injected by FastAPI.
+    - db (Session): the database session.
 
     Returns:
-    - JSON: A message indicating the success or failure of the event deletion.
+    - JSON: A status message.
     """
     try:
         delete_event_db(db, event_id)
+
+        image_path = f"static/event_images/{event_id}"
+        if os.path.exists(image_path):
+            os.remove(image_path)
+            
         return {"message": "Event deleted successfully."}
     except Exception as e:
         raise HTTPException(
-            status_code=500, detail="An error occurred while deleting the event.")
+            status_code=500, detail=f"An error occurred while deleting the event: {str(e)}")
 
 
 async def save_image(image: UploadFile, event_id: int):

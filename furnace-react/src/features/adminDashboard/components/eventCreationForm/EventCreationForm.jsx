@@ -3,6 +3,7 @@ import { Formik, Form, Field, ErrorMessage } from 'formik';
 import { createEvent } from '/src/features/events';
 import * as Yup from 'yup';
 import { EventCard } from '../../../events';
+import styles from './EventCreationForm.module.css';
 
 const EventCreationForm = () => {
 	const initialValues = {
@@ -125,9 +126,11 @@ const EventCreationForm = () => {
 								Create Event
 							</button>
 						</Form>
-						<EventCard
-							event={{...values, image: imageURL}}
-						/>
+						<div className={styles.preview}>
+							<EventCard
+								event={{ ...values, image: imageURL }}
+							/>
+						</div>
 					</>
 				);
 			}}
