@@ -60,6 +60,41 @@ def create_event_db(db: Session, event: Event):
     return new_event
 
 
+def edit_event_db(db: Session, event_id: int, updated_event: dict):
+    """
+    Edits an existing event in the database.
+
+    Args:
+        db (Session): The database session.
+        event_id (int): The ID of the event to edit.
+        updated_event (dict): The updated event data.
+
+    Returns:
+        EventModel: The updated event model.
+
+    Raises:
+        ValueError: If the event with the specified ID does not exist.
+    """
+    event = db.query(EventModel).filter(EventModel.id == event_id).first()
+    if event:
+        event.title = updated_event.get("title", event.title)
+        event.category = updated_event.get("category", event.category)
+        event.description = updated_event.get("description", event.description)
+        event.link_text = updated_event.get("link_text", event.link_text)
+        event.link_url = updated_event.get("link_url", event.link_url)
+        
+        event_start = updated_event.get("event_start")
+        if event_start:
+            event_start_datetime = datetime.strptime(event_start, "%Y-%m-%dT%H:%M:%S")
+            event.event_start = event_start_datetime
+        
+        db.commit()
+        db.refresh(event)
+        return event
+    else:
+        raise ValueError(f"Event with ID {event_id} does not exist.")
+
+
 def delete_event_db(db: Session, event_id: int):
     """
     Deletes an event from the database.
