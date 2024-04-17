@@ -105,12 +105,9 @@ async def create_event(
 @router.put("/events/{event_id}")
 async def edit_event(
     event_id: int,
-    event_start: str = Form(...),
     title: str = Form(...),
-    category: str = Form(...),
     description: Optional[str] = Form(None),
     link_text: Optional[str] = Form(None),
-    link_url: Optional[str] = Form(None),
     pdf: Optional[UploadFile] = File(None),
     db: Session = Depends(get_db),
 ):
@@ -119,12 +116,9 @@ async def edit_event(
 
     Args:
         event_id (int): The ID of the event to edit.
-        event_start (str): The start date and time of the event.
         title (str): The title of the event.
-        category (str): The category of the event.
         description (Optional[str]): The description of the event.
         link_text (Optional[str]): The text for the event link.
-        link_url (Optional[str]): The URL for the event link.
         pdf (Optional[UploadFile]): The PDF file for the event.
         db (Session): The database session.
 
@@ -135,18 +129,15 @@ async def edit_event(
         HTTPException: If an error occurs while editing the event.
     """
     event_data = {
-        "event_start": event_start,
         "title": title,
-        "category": category,
         "description": description,
         "link_text": link_text,
-        "link_url": link_url,
     }
     try:
         edited_event = edit_event_db(db, event_id, event_data)
         if pdf:
             await save_pdf(pdf, event_id)
-        return edited_event.dict()
+        return edited_event
     except Exception as e:
         raise HTTPException(
             status_code=500, detail=f"An error occurred while editing the event: {str(e)}"

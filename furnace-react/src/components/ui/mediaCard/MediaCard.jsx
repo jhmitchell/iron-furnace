@@ -2,9 +2,12 @@ import React from "react";
 import { Link } from "react-router-dom";
 import styles from "./MediaCard.module.css"; // Updated import
 
-const MediaCard = ({ image, title, subtitle, description, path, children }) => {
+const MediaCard = ({ image, title, subtitle, description, path, clickable, children }) => {
+  const CardContainer = clickable ? Link : 'div';
+  const cardProps = clickable ? { to: path } : {};
+  
   return (
-    <Link to={path} className={styles.mediaCard}>
+    <CardContainer {...cardProps} className={styles.mediaCard}>
       <div className={styles.mediaImage} style={{ backgroundImage: `url(${image})` }}></div>
       <div className={styles.mediaDetails}>
         <h3 className={styles.mediaTitle}>{title}</h3>
@@ -12,7 +15,7 @@ const MediaCard = ({ image, title, subtitle, description, path, children }) => {
         {description && <p className={styles.mediaDescription}>{description}</p>}
         {children}
       </div>
-    </Link>
+    </CardContainer>
   );
 };
 

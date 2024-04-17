@@ -14,6 +14,7 @@ import {
   Accessibility,
   AdminDashboard,
   AssociatesPage,
+  EventDetailsPage,
 } from './pages';
 import ProtectedRoute from "./components/protectedRoute/ProtectedRoute";
 import { AuthProvider } from "./features/authentication";
@@ -129,6 +130,8 @@ const RoutesComponent = () => {
         // ... other protected routes ...
       ],
     },
+
+    { path: "/events/:id", element: <EventDetailsPage /> },
 
     // Test route - Protected
     { path: "/test", element: <ProtectedRoute><TestPage /></ProtectedRoute> },

@@ -78,15 +78,8 @@ def edit_event_db(db: Session, event_id: int, updated_event: dict):
     event = db.query(EventModel).filter(EventModel.id == event_id).first()
     if event:
         event.title = updated_event.get("title", event.title)
-        event.category = updated_event.get("category", event.category)
         event.description = updated_event.get("description", event.description)
         event.link_text = updated_event.get("link_text", event.link_text)
-        event.link_url = updated_event.get("link_url", event.link_url)
-        
-        event_start = updated_event.get("event_start")
-        if event_start:
-            event_start_datetime = datetime.strptime(event_start, "%Y-%m-%dT%H:%M:%S")
-            event.event_start = event_start_datetime
         
         db.commit()
         db.refresh(event)

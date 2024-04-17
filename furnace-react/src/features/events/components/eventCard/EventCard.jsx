@@ -7,7 +7,6 @@ const EventCard = ({ event }) => {
   const defaultTitle = "Event Unavailable";
   const defaultDate = "Date TBD";
   const defaultDescription = "Description Unavailable";
-  const defaultPath = "example";
 
   // Destructure event object if it exists, otherwise use default values
   const {
@@ -18,8 +17,10 @@ const EventCard = ({ event }) => {
     id,
   } = event || {};
 
+  const pdfPath = true;
+
   const formattedDate = startDate !== defaultDate ? formatDate(startDate) : defaultDate;
-  const path = event ? `/events/${id}` : defaultPath;
+  const path = pdfPath ? `/events/${id}` : "#";
 
   return (
     <div className={styles.cardContainer}>
@@ -29,6 +30,7 @@ const EventCard = ({ event }) => {
         subtitle={formattedDate}
         description={description}
         path={path}
+        clickable={pdfPath}
       />
     </div>
   );

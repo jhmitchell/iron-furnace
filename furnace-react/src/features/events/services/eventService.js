@@ -83,11 +83,9 @@ export const deleteEvent = async (eventId) => {
 	}
 };
 
-export const editEvent = async (eventId, eventStart, title, category, description, pdfFile, linkText, linkUrl) => {
+export const editEvent = async (eventId, title, description, pdfFile, linkText) => {
   const formData = new FormData();
-  formData.append('event_start', eventStart);
   formData.append('title', title);
-  formData.append('category', category);
   if (description) {
     formData.append('description', description);
   }
@@ -97,9 +95,7 @@ export const editEvent = async (eventId, eventStart, title, category, descriptio
   if (linkText) {
     formData.append('link_text', linkText);
   }
-  if (linkUrl) {
-    formData.append('link_url', linkUrl);
-  }
+  console.log(title, description, pdfFile, linkText);
   try {
     const response = await fetch(`${API_V1_PREFIX}/events/${eventId}`, {
       method: 'PUT',
