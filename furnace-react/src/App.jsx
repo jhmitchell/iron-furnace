@@ -14,6 +14,7 @@ import {
   Accessibility,
   AdminDashboard,
   AssociatesPage,
+  EventsPage,
   EventDetailsPage,
 } from './pages';
 import ProtectedRoute from "./components/protectedRoute/ProtectedRoute";
@@ -84,6 +85,11 @@ const RoutesComponent = () => {
     {
       path: "about/:subroute/*",
       element: <NotFound />,
+    },
+
+    {
+      path: "/events",
+      element: <EventsPage />,
     },
 
     // Tertiary pages containing more detailed information

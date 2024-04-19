@@ -84,30 +84,82 @@ export const deleteEvent = async (eventId) => {
 };
 
 export const editEvent = async (eventId, title, description, pdfFile, linkText) => {
-  const formData = new FormData();
-  formData.append('title', title);
-  if (description) {
-    formData.append('description', description);
-  }
-  if (pdfFile) {
-    formData.append('pdf', pdfFile);
-  }
-  if (linkText) {
-    formData.append('link_text', linkText);
-  }
-  console.log(title, description, pdfFile, linkText);
-  try {
-    const response = await fetch(`${API_V1_PREFIX}/events/${eventId}`, {
-      method: 'PUT',
-      body: formData,
-    });
-    if (!response.ok) {
-      throw new Error(`Error editing event: ${response.statusText}`);
-    }
-    const data = await response.json();
-    return data;
-  } catch (error) {
-    console.error(error);
-    throw error;
-  }
+	const formData = new FormData();
+	formData.append('title', title);
+	if (description) {
+		formData.append('description', description);
+	}
+	if (pdfFile) {
+		formData.append('pdf', pdfFile);
+	}
+	if (linkText) {
+		formData.append('link_text', linkText);
+	}
+	console.log(title, description, pdfFile, linkText);
+	try {
+		const response = await fetch(`${API_V1_PREFIX}/events/${eventId}`, {
+			method: 'PUT',
+			body: formData,
+		});
+		if (!response.ok) {
+			throw new Error(`Error editing event: ${response.statusText}`);
+		}
+		const data = await response.json();
+		return data;
+	} catch (error) {
+		console.error(error);
+		throw error;
+	}
+};
+
+export const groupEventsByYearAndMonth = (events) => {
+	const yearMonthMap = new Map();
+
+	events.forEach((event) => {
+		const date = new Date(event.start_date);
+		const year = date.getFullYear();
+		const month = date.toLocaleString("default", { month: "long" });
+
+		if (!yearMonthMap.has(year)) {
+			yearMonthMap.set(year, new Map());
+		}
+
+		const monthMap = yearMonthMap.get(year);
+		if (!monthMap.has(month)) {
+			monthMap.set(month, []);
+		}
+
+		monthMap.get(month).push(event);
+	});
+
+	const sortedYearMonthMap = new Map(
+		[...yearMonthMap.entries()].sort((a, b) => a[0] - b[0])
+	);
+
+	sortedYearMonthMap.forEach((monthMap, year) => {
+		sortedYearMonthMap.set(
+			year,
+			new Map(
+				[...monthMap.entries()].sort((a, b) => {
+					const monthOrder = [
+						"January",
+						"February",
+						"March",
+						"April",
+						"May",
+						"June",
+						"July",
+						"August",
+						"September",
+						"October",
+						"November",
+						"December",
+					];
+					return monthOrder.indexOf(a[0]) - monthOrder.indexOf(b[0]);
+				})
+			)
+		);
+	});
+
+	return sortedYearMonthMap;
 };

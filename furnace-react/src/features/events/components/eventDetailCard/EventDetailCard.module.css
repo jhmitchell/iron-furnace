@@ -1,0 +1,20 @@
+.linkWrapper {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+}
+
+.cardContainer {
+  padding: 20px;
+  border-bottom: 1px solid #ccc;
+  transition: background-color 0.3s;
+}
+
+.cardContainer:hover {
+  background-color: #3a3a3a;
+}
+
+.cardContent {
+  max-width: 1300px;
+  margin: 0 auto;
+}
