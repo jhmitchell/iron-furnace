@@ -4,6 +4,7 @@ import { EventCard, getUpcomingEvents } from "/src/features/events";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 import "./EventsSection.css";
+import useWindowSize from './useWindowSize';
 
 const EventsSection = () => {
   const responsive = {
@@ -21,19 +22,8 @@ const EventsSection = () => {
     },
   };
 
-  const CustomLeftArrow = ({ onClick }) => (
-    <button className="custom-left-arrow" onClick={onClick}>
-      <FaChevronLeft size={50} color="orange" />
-    </button>
-  );
-
-  const CustomRightArrow = ({ onClick }) => (
-    <button className="custom-right-arrow" onClick={onClick}>
-      <FaChevronRight size={50} color="orange" />
-    </button>
-  );
-
   const [events, setEvents] = useState([]);
+  const windowSize = useWindowSize();
 
   useEffect(() => {
     async function fetchEvents() {
@@ -42,6 +32,26 @@ const EventsSection = () => {
     }
     fetchEvents();
   }, []);
+
+  const calculateImageHeight = () => {
+    const fullScreenHeight = 400;
+    const minHeight = 200;
+    const screenWidth = windowSize.width || window.innerWidth;
+    const calculatedHeight = (screenWidth / 1920) * fullScreenHeight;
+    return Math.max(calculatedHeight, minHeight);
+  };
+
+  const CustomLeftArrow = ({ onClick }) => (
+    <button className="custom-left-arrow" onClick={onClick} style={{ top: `${calculateImageHeight() / 2}px` }}>
+      <FaChevronLeft size={50} color="orange" />
+    </button>
+  );
+
+  const CustomRightArrow = ({ onClick }) => (
+    <button className="custom-right-arrow" onClick={onClick} style={{ top: `${calculateImageHeight() / 2}px` }}>
+      <FaChevronRight size={50} color="orange" />
+    </button>
+  );
 
   return (
     <section className="events-section">
@@ -80,7 +90,11 @@ const EventsSection = () => {
             swipeable
           >
             {events.map((event, index) => (
-              <EventCard key={index} event={event} />
+              <EventCard
+                key={index}
+                event={event}
+                imageHeight={calculateImageHeight()}
+              />
             ))}
           </Carousel>
         </div>

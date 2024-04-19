@@ -3,7 +3,7 @@ import MediaCard from "/src/components/ui/mediaCard/MediaCard";
 import styles from "./EventCard.module.css";
 import DefaultEventImage from "/src/assets/images/chandelier.jpeg";
 
-const EventCard = ({ event }) => {
+const EventCard = ({ event, imageHeight }) => {
   const defaultTitle = "Event Unavailable";
   const defaultDate = "Date TBD";
   const defaultDescription = "Description Unavailable";
@@ -34,6 +34,7 @@ const EventCard = ({ event }) => {
         path={path}
         clickable={pdfPath}
         linkText={link_text}
+        imageHeight={imageHeight}
       />
     </div>
   );
