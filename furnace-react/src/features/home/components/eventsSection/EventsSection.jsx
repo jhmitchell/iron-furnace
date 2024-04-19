@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import { FaChevronLeft, FaChevronRight } from 'react-icons/fa6';
 import { EventCard, getUpcomingEvents } from "/src/features/events";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
-import "./EventsSection.css";
+import styles from "./EventsSection.module.css";
 import useWindowSize from './useWindowSize';
 
 const EventsSection = () => {
@@ -42,22 +43,25 @@ const EventsSection = () => {
   };
 
   const CustomLeftArrow = ({ onClick }) => (
-    <button className="custom-left-arrow" onClick={onClick} style={{ top: `${calculateImageHeight() / 2}px` }}>
+    <button className={styles.customLeftArrow} onClick={onClick} style={{ top: `${calculateImageHeight() / 2}px` }}>
       <FaChevronLeft size={50} color="orange" />
     </button>
   );
 
   const CustomRightArrow = ({ onClick }) => (
-    <button className="custom-right-arrow" onClick={onClick} style={{ top: `${calculateImageHeight() / 2}px` }}>
+    <button className={styles.customRightArrow} onClick={onClick} style={{ top: `${calculateImageHeight() / 2}px` }}>
       <FaChevronRight size={50} color="orange" />
     </button>
   );
 
   return (
-    <section className="events-section">
-      <div className="content-container">
-        <h2 className="section-title">Upcoming Programs and Events</h2>
-        <div className="events-container">
+    <section className={styles.eventsSection}>
+      <div className={styles.contentContainer}>
+        <h2 className={styles.sectionTitle}>Upcoming Programs and Events</h2>
+        <Link to="events" className={styles.seeMore}>
+          View our full schedule {">"}
+        </Link>
+        <div className={styles.eventsContainer}>
           <Carousel
             responsive={responsive}
             customLeftArrow={<CustomLeftArrow />}
@@ -67,13 +71,13 @@ const EventsSection = () => {
             autoPlay
             autoPlaySpeed={5000}
             centerMode={false}
-            className="event-carousel"
-            containerClass="event-carousel-container"
+            className={styles.eventCarousel}
+            containerClass={styles.eventCarouselContainer}
             dotListClass=""
             draggable
             focusOnSelect={false}
             infinite
-            itemClass="event-container-item"
+            itemClass={styles.eventContainerItem}
             keyBoardControl
             minimumTouchDrag={80}
             pauseOnHover
@@ -90,11 +94,7 @@ const EventsSection = () => {
             swipeable
           >
             {events.map((event, index) => (
-              <EventCard
-                key={index}
-                event={event}
-                imageHeight={calculateImageHeight()}
-              />
+              <EventCard key={index} event={event} imageHeight={calculateImageHeight()} />
             ))}
           </Carousel>
         </div>
