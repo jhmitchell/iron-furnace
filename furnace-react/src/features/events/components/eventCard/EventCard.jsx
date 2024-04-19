@@ -19,10 +19,8 @@ const EventCard = ({ event, imageHeight }) => {
     id,
   } = event || {};
 
-  const pdfPath = true;
-
   const formattedDate = startDate !== defaultDate ? formatDate(startDate) : defaultDate;
-  const path = pdfPath ? `/events/${id}` : "#";
+  const path = link_text ? `/events/${id}` : "#";
 
   return (
     <div className={styles.cardContainer}>
@@ -32,7 +30,7 @@ const EventCard = ({ event, imageHeight }) => {
         subtitle={formattedDate}
         description={description}
         path={path}
-        clickable={pdfPath}
+        clickable={link_text}
         linkText={link_text}
         imageHeight={imageHeight}
       />
