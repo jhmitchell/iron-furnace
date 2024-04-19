@@ -9,7 +9,7 @@ const EventsSection = () => {
   const responsive = {
     desktop: {
       breakpoint: { max: 3000, min: 1024 },
-      items: 3,
+      items: 2,
     },
     tablet: {
       breakpoint: { max: 1024, min: 464 },
@@ -79,31 +79,9 @@ const EventsSection = () => {
             slidesToSlide={1}
             swipeable
           >
-            {/*
-            <EventCard
-              image="/src/assets/images/events/jim2023.jpg"
-              title="Industrial Innovation Conference"
-              date="September 10, 2023"
-              path="#"
-            />
-            <EventCard
-              image="/src/assets/images/events/patrick2023.jpg"
-              title="Cornwall Heritage Festival"
-              date="October 5, 2023"
-              path="#"
-            />
-            <EventCard
-              image="/src/assets/images/events/mike2023.jpg"
-              title="Sustainable Engineering Workshop"
-              date="November 18, 2023"
-              path="#"
-            />
-            */}
-
             {events.map((event, index) => (
               <EventCard key={index} event={event} />
             ))}
-
           </Carousel>
         </div>
       </div>

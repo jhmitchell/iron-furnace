@@ -7,6 +7,7 @@ const EventCard = ({ event }) => {
   const defaultTitle = "Event Unavailable";
   const defaultDate = "Date TBD";
   const defaultDescription = "Description Unavailable";
+  const defaultLinkText = null;
 
   // Destructure event object if it exists, otherwise use default values
   const {
@@ -14,6 +15,7 @@ const EventCard = ({ event }) => {
     title = defaultTitle,
     start_date: startDate = defaultDate,
     description = defaultDescription,
+    link_text = defaultLinkText,
     id,
   } = event || {};
 
@@ -31,6 +33,7 @@ const EventCard = ({ event }) => {
         description={description}
         path={path}
         clickable={pdfPath}
+        linkText={link_text}
       />
     </div>
   );

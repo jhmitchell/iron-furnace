@@ -5,12 +5,12 @@
   width: 100%;
   overflow: hidden;
   text-decoration: none;
-  background-color: var(--dark-secondary);
+  /*background-color: var(--dark-secondary);*/
   color: var(--text-off-white);
 }
 
 .mediaDetails {
-  padding: 15px;
+  padding-top: 15px;
 }
 
 .mediaTitle {
@@ -28,7 +28,7 @@
 }
 
 .mediaImage {
-  height: 300px;
+  height: 400px;
   background-size: cover;
   background-position: center;
   background-size: 102% auto;
@@ -37,4 +37,10 @@
 
 .mediaCard:hover .mediaImage {
   background-size: 100% auto;
+}
+
+.linkText {
+  margin-top: 10px;
+  font-weight: 700;
+  color: var(--orange-accent);
 }
