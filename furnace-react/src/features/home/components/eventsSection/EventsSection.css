@@ -46,19 +46,26 @@
 
 .custom-left-arrow,
 .custom-right-arrow {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  background: none;
-  border: none;
-  cursor: pointer;
-  z-index: 1;
+	position: absolute;
+	top: 50%;
+	transform: translateY(-50%);
+	background: none;
+	border: none;
+	cursor: pointer;
+	z-index: 1;
 }
 
 .custom-left-arrow {
-  left: -80px;
+	left: -80px;
 }
 
 .custom-right-arrow {
-  right: -80px;
+	right: -80px;
+}
+
+@media (max-width: 464px) {
+	.custom-left-arrow,
+	.custom-right-arrow {
+		display: none;
+	}
 }
