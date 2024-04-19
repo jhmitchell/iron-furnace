@@ -5,16 +5,20 @@
 }
 
 .cardContainer {
-  padding: 20px;
-  border-bottom: 1px solid #ccc;
   transition: background-color 0.3s;
 }
 
 .cardContainer:hover {
-  background-color: #3a3a3a;
+  background-color: var(--dark-secondary);
 }
 
 .cardContent {
-  max-width: 1300px;
+  border-top: 1px solid var(--text-link-grey);
+  max-width: 1200px;
   margin: 0 auto;
+  padding: 30px 0;
+}
+
+.lastCard {
+  border-bottom: 1px solid var(--text-link-grey);
 }

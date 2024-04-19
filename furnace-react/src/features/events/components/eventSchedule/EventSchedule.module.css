@@ -1,14 +1,16 @@
 .eventSchedule {
-    max-width: 1300px;
-    margin: 0 auto;
-  }
-  
-  .monthSection {
-    margin-bottom: 40px;
-  }
-  
-  .monthTitle {
-    font-size: 24px;
-    font-weight: bold;
-    margin-bottom: 20px;
-  }
+  width: 100%;
+}
+
+.yearContent,
+.monthContent {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.yearTitle,
+.monthTitle {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 20px;
+}

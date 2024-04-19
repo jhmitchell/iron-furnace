@@ -6,7 +6,9 @@ import styles from './EventsPage.module.css';
 const EventsPage = () => {
 	return (
 		<MainLayout>
-			<EventSchedule />
+			<div className={styles.page}>
+				<EventSchedule />
+			</div>
 		</MainLayout>
 	);
 };
