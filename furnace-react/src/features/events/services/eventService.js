@@ -112,54 +112,62 @@ export const editEvent = async (eventId, title, description, pdfFile, linkText) 
 	}
 };
 
-export const groupEventsByYearAndMonth = (events) => {
-	const yearMonthMap = new Map();
+export const groupEventsByDate = (events) => {
+  const yearMonthMap = new Map();
 
-	events.forEach((event) => {
-		const date = new Date(event.start_date);
-		const year = date.getFullYear();
-		const month = date.toLocaleString("default", { month: "long" });
+  events.forEach((event) => {
+    const date = new Date(event.start_date);
+    const year = date.getFullYear();
+    const month = date.toLocaleString("default", { month: "long" });
 
-		if (!yearMonthMap.has(year)) {
-			yearMonthMap.set(year, new Map());
-		}
+    if (!yearMonthMap.has(year)) {
+      yearMonthMap.set(year, new Map());
+    }
 
-		const monthMap = yearMonthMap.get(year);
-		if (!monthMap.has(month)) {
-			monthMap.set(month, []);
-		}
+    const monthMap = yearMonthMap.get(year);
+    if (!monthMap.has(month)) {
+      monthMap.set(month, []);
+    }
 
-		monthMap.get(month).push(event);
-	});
+    monthMap.get(month).push(event);
+  });
 
-	const sortedYearMonthMap = new Map(
-		[...yearMonthMap.entries()].sort((a, b) => a[0] - b[0])
-	);
+  const sortedYearMonthMap = new Map(
+    [...yearMonthMap.entries()].sort((a, b) => a[0] - b[0])
+  );
 
-	sortedYearMonthMap.forEach((monthMap, year) => {
-		sortedYearMonthMap.set(
-			year,
-			new Map(
-				[...monthMap.entries()].sort((a, b) => {
-					const monthOrder = [
-						"January",
-						"February",
-						"March",
-						"April",
-						"May",
-						"June",
-						"July",
-						"August",
-						"September",
-						"October",
-						"November",
-						"December",
-					];
-					return monthOrder.indexOf(a[0]) - monthOrder.indexOf(b[0]);
-				})
-			)
-		);
-	});
+  sortedYearMonthMap.forEach((monthMap, year) => {
+    sortedYearMonthMap.set(
+      year,
+      new Map(
+        [...monthMap.entries()].sort((a, b) => {
+          const monthOrder = [
+            "January",
+            "February",
+            "March",
+            "April",
+            "May",
+            "June",
+            "July",
+            "August",
+            "September",
+            "October",
+            "November",
+            "December",
+          ];
+          return monthOrder.indexOf(a[0]) - monthOrder.indexOf(b[0]);
+        })
+      )
+    );
 
-	return sortedYearMonthMap;
+    monthMap.forEach((events, month) => {
+      events.sort((a, b) => {
+        const dateA = new Date(a.start_date);
+        const dateB = new Date(b.start_date);
+        return dateA.getDate() - dateB.getDate();
+      });
+    });
+  });
+
+  return sortedYearMonthMap;
 };
