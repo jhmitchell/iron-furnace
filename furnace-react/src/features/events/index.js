@@ -5,3 +5,4 @@ export { deleteEvent as deleteEvent } from './services/eventService';
 export { editEvent as editEvent } from './services/eventService';
 export { default as EventCard } from './components/eventCard/EventCard';
 export { default as EventSchedule } from './components/eventSchedule/EventSchedule';
+export { default as EventsHero } from './components/eventsHero/EventsHero';
