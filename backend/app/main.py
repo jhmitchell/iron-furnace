@@ -1,5 +1,6 @@
 import os
 from dotenv import load_dotenv
+from pytz import timezone
 import logging
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
@@ -51,12 +52,12 @@ app.include_router(events.router, prefix=f'{API_V1_PREFIX}')
 app.mount("/static", StaticFiles(directory="static"), name="static")
 
 scheduler = AsyncIOScheduler()
+eastern = timezone('US/Eastern')
 
-
-@scheduler.scheduled_job("cron", hour=0, minute=0)
+@scheduler.scheduled_job("cron", hour=3, minute=0, timezone=eastern)
 async def scheduled_delete_expired_events():
     '''
-    Scheduled job to delete expired events every day at midnight.
+    Scheduled job to delete expired events every day at midnight ET.
     '''
     db = next(get_db())
     try:
