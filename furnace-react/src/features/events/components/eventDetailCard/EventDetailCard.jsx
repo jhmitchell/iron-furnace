@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import styles from "./EventDetailCard.module.css";
 
 const EventDetailCard = ({ event, isLastCard }) => {
-  const { id, title, start_date, description, link_text } = event || {};
+  const { id, title, start_date, description, link_text, image } = event || {};
   const defaultDate = "Date not available";
   const path = link_text ? `/events/${id}` : "#";
   const formattedDate = start_date ? formatDate(start_date) : defaultDate;
@@ -16,9 +16,16 @@ const EventDetailCard = ({ event, isLastCard }) => {
             isLastCard ? styles.lastCard : ""
           }`}
         >
-          <h3>{title}</h3>
-          <p>{formattedDate}</p>
-          {/* Include other event details as needed */}
+          <div className={styles.mediaImage} style={{ backgroundImage: `url(${image})` }}></div>
+          <div className={styles.eventDetails}>
+            <h3 className={styles.title}>{title}</h3>
+            <p className={styles.description}>{description}</p>
+            <p className={styles.date}>
+              <span>{formattedDate}</span>
+            </p>
+            <p className={styles.linkText}>{link_text}</p>
+            {/* Include other event details as needed */}
+          </div>
         </div>
       </div>
     </Link>

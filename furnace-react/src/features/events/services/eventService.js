@@ -9,6 +9,14 @@ export const getAllEvents = async () => {
 		}
 
 		const data = await response.json();
+
+		// Construct the image URL for each event
+		data.forEach(event => {
+			if (event) {
+				event.image = `${EVENT_IMAGE_DIR}/${event.id}`;
+			}
+		});
+		
 		return data;
 	} catch (error) {
 		console.error(error);

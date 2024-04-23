@@ -20,13 +20,10 @@ const EventSchedule = () => {
     <div className={styles.eventSchedule}>
       {Array.from(eventsByDate.entries()).map(([year, monthMap]) => (
         <div key={year} className={styles.yearSection}>
-          <div className={styles.yearContent}>
-            <h2 className={styles.yearTitle}>{year}</h2>
-          </div>
           {Array.from(monthMap.entries()).map(([month, monthEvents]) => (
             <div key={`${year}-${month}`} className={styles.monthSection}>
               <div className={styles.monthContent}>
-                <h3 className={styles.monthTitle}>{month}</h3>
+                <h3 className={styles.monthTitle}>{month} {year}</h3>
               </div>
               {monthEvents.map((event, index) => (
                 <EventDetailCard
