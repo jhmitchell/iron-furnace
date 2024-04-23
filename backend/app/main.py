@@ -5,14 +5,16 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 from sqlalchemy import text
+from apscheduler.schedulers.asyncio import AsyncIOScheduler
 
 from .routers import authentication, users, hours, events
 from .internal.db.session import get_db
-from .internal.db.init import (create_users_table, 
-                               create_hours_table, 
-                               create_holidays_table, 
-                               create_events_table, 
+from .internal.db.init import (create_users_table,
+                               create_hours_table,
+                               create_holidays_table,
+                               create_events_table,
                                create_root_user)
+from .internal.db.jobs import delete_expired_events
 
 # Initialize logging
 logging.basicConfig(level=logging.INFO)
@@ -48,6 +50,20 @@ app.include_router(events.router, prefix=f'{API_V1_PREFIX}')
 
 app.mount("/static", StaticFiles(directory="static"), name="static")
 
+scheduler = AsyncIOScheduler()
+
+
+@scheduler.scheduled_job("cron", hour=0, minute=0)
+async def scheduled_delete_expired_events():
+    '''
+    Scheduled job to delete expired events every day at midnight.
+    '''
+    db = next(get_db())
+    try:
+        delete_expired_events(db)
+    finally:
+        db.close()
+
 
 @app.on_event("startup")
 async def startup_event():
@@ -64,4 +80,5 @@ async def startup_event():
     finally:
         db.close()
 
+    scheduler.start()
     logger.info(f'Initialized server in {env} mode')
