@@ -29,7 +29,6 @@ import "./App.css";
  * @returns {React.Element} - The rendered JSX element
  */
 const RoutesComponent = () => {
-  // Define your routes here
   const routes = useRoutes([
     { path: "/", element: <HomePage /> },
     { path: "/login", element: <LoginPage /> },

@@ -18,7 +18,7 @@ from .internal.db.init import (create_users_table,
 from .internal.db.jobs import delete_expired_events
 
 # Initialize logging
-logging.basicConfig(level=logging.INFO)
+logging.basicConfig(filename='pythonapp.log', level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 # Load the .env file
