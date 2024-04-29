@@ -19,13 +19,19 @@ AUTH_PREFIX = os.getenv("AUTH_PREFIX")
 LOG_FILE = os.getenv("LOG_FILE")
 
 # Initialize logging
-if LOG_FILE:  # Check if LOG_FILE is defined
-    log_handler = RotatingFileHandler(LOG_FILE, maxBytes=10000, backupCount=10)
-    logging.basicConfig(handlers=[log_handler], level=logging.INFO, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+if LOG_FILE:
+    log_handler = logging.FileHandler(LOG_FILE)
+    log_handler.setLevel(logging.INFO)
+    logger = logging.getLogger()
+    logger.setLevel(logging.INFO)
+    logger.addHandler(log_handler)
     print(f'Logging to {LOG_FILE}')
 else:
-    logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
-    print('No LOG_FILE environment variable defined. Logging to console.')
+    logger = logging.getLogger()
+    logger.setLevel(logging.INFO)
+    logger.addHandler(logging.StreamHandler())
+    print('Logging to console')
+    
 logger = logging.getLogger(__name__)
 
 app = FastAPI()
