@@ -31,7 +31,7 @@ else:
     logger.setLevel(logging.INFO)
     logger.addHandler(logging.StreamHandler())
     print('Logging to console')
-    
+
 logger = logging.getLogger(__name__)
 
 app = FastAPI()
@@ -88,4 +88,3 @@ async def startup_event():
         db.close()
     scheduler.start()
     logger.info(f'Initialized server in {env} mode')
-
