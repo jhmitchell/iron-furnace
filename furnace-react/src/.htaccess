@@ -5,6 +5,10 @@ RewriteRule ^index\.html$ - [L]
 # Exclude /static from rewriting
 RewriteCond %{REQUEST_URI} !^/static/
 
+# Proxy requests to /api to port 3001
+RewriteCond %{REQUEST_URI} ^/api/
+RewriteRule ^api/(.*)$ http://localhost:3001/api/$1 [P]
+
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule . /index.html [L]
