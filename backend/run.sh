@@ -5,5 +5,5 @@ export $(grep -v '^#' .env | xargs)
 
 source .venv/bin/activate
 
-# Run the application with Gunicorn in production mode
-gunicorn app.main:app --bind 0.0.0.0:$PORT --workers 4 --daemon
+# Run the application with Uvicorn in production mode
+nohup uvicorn app.main:app --host 0.0.0.0 --port $PORT --workers 4 &
