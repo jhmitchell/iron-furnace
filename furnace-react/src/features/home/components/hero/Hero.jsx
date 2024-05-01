@@ -21,16 +21,16 @@ const Hero = () => {
             <h2>EXPLORING AMERICA'S RICH INDUSTRIAL HERITAGE</h2>
           </div>
           <div className="hours-container">
-            {!loading && (
+            {loading ? (
+              <div className="loading">Loading hours...</div>
+            ) : (
               <div className="hours-text">
-                {/* Use isOpen to determine whether to display "OPEN" or "CLOSED" */}
                 <span className={isOpen ? "status open" : "status closed"}>
                   {isOpen ? "OPEN" : "CLOSED"}
                 </span>
                 <span className="separator">|</span>
                 {message}
               </div>
-
             )}
           </div>
         </>
