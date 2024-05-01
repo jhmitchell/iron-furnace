@@ -141,6 +141,10 @@ const RoutesComponent = () => {
     // Test route - Protected
     { path: "/test", element: <ProtectedRoute><TestPage /></ProtectedRoute> },
 
+    // Ignore /api and /auth routes
+    { path: "/api/*", element: null },
+    { path: "/auth/*", element: null },
+
     // All other routes should show 404
     { path: "*", element: <NotFound /> },
   ]);
