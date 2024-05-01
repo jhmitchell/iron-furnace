@@ -1,3 +1,10 @@
+# DO NOT REMOVE. CLOUDLINUX PASSENGER CONFIGURATION BEGIN
+PassengerAppRoot "/home/p6qv8hi06h6k/backend"
+PassengerBaseURI "/"
+PassengerPython "/home/p6qv8hi06h6k/virtualenv/backend/3.9/bin/python"
+PassengerAppLogFile "/home/p6qv8hi06h6k/logs/backend.log"
+# DO NOT REMOVE. CLOUDLINUX PASSENGER CONFIGURATION END
+
 RewriteEngine On
 RewriteBase /
 
@@ -6,16 +13,21 @@ RewriteCond %{REQUEST_URI} ^/static/
 RewriteCond %{REQUEST_FILENAME} -f
 RewriteRule ^static/(.*)$ static/$1 [L]
 
-# Proxy requests to /api to port 3001
+# Exclude /api routes from rewriting
 RewriteCond %{REQUEST_URI} ^/api/
-RewriteRule ^api/(.*)$ http://localhost:3001/api/$1 [P]
-
-RewriteRule ^index\.html$ - [L]
+RewriteRule ^api/(.*)$ - [L]
 
 # Exclude /static from rewriting
 RewriteCond %{REQUEST_URI} !^/static/
-
-
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule . /index.html [L]
+
+# DO NOT REMOVE OR MODIFY. CLOUDLINUX ENV VARS CONFIGURATION BEGIN
+<IfModule Litespeed>
+</IfModule>
+# DO NOT REMOVE OR MODIFY. CLOUDLINUX ENV VARS CONFIGURATION END
+
+# Proxy requests to /api to port 3001
+#RewriteCond %{REQUEST_URI} ^/api/
+#RewriteRule ^api/(.*)$ http://localhost:3001/api/$1 [P]
