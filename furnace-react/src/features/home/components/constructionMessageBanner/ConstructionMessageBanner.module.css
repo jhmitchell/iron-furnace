@@ -1,0 +1,30 @@
+.banner {
+	background-color: var(--orange-accent);
+	padding: 10px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	font-weight: bold;
+	animation: slideDown 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+	z-index: 10;
+	font-weight: 500;
+}
+
+.icon {
+	margin-right: 10px;
+	font-size: 1.2rem;
+}
+
+.message {
+	color: var(--text-off-white);
+}
+
+@keyframes slideDown {
+	0% {
+		transform: translateY(-100%);
+	}
+
+	100% {
+		transform: translateY(0);
+	}
+}

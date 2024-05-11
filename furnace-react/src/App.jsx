@@ -16,6 +16,7 @@ import {
   AssociatesPage,
   EventsPage,
   EventDetailsPage,
+  UnderConstruction,
 } from './pages';
 import ProtectedRoute from "./components/protectedRoute/ProtectedRoute";
 import { AuthProvider } from "./features/authentication";
@@ -89,6 +90,11 @@ const RoutesComponent = () => {
     {
       path: "/events",
       element: <EventsPage />,
+    },
+
+    {
+      path: "/shop",
+      element: <UnderConstruction />,
     },
 
     // Tertiary pages containing more detailed information

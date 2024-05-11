@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import HeroImage from "./heroImage/HeroImage";
 import { useHours } from "/src/features/hours";
-import "./Hero.css";
+import ConstructionMessageBanner from "../constructionMessageBanner/ConstructionMessageBanner";
+import styles from "./Hero.module.css";
 
 const Hero = () => {
   const [imageLoaded, setImageLoaded] = useState(false);
@@ -12,23 +13,26 @@ const Hero = () => {
   };
 
   return (
-    <div className="hero">
+    <div className={styles.hero}>
+      <ConstructionMessageBanner />
+
       <HeroImage onImageLoad={handleImageLoad} />
+
       {imageLoaded && (
         <>
-          <div className="hero-text">
+          <div className={styles.heroText}>
             <h1>CORNWALL IRON FURNACE</h1>
             <h2>EXPLORING AMERICA'S RICH INDUSTRIAL HERITAGE</h2>
           </div>
-          <div className="hours-container">
+          <div className={styles.hoursContainer}>
             {loading ? (
-              <div className="loading">Loading hours...</div>
+              <div className={styles.loading}>Loading hours...</div>
             ) : (
-              <div className="hours-text">
-                <span className={isOpen ? "status open" : "status closed"}>
+              <div className={styles.hoursText}>
+                <span className={isOpen ? styles.statusOpen : styles.statusClosed}>
                   {isOpen ? "OPEN" : "CLOSED"}
                 </span>
-                <span className="separator">|</span>
+                <span className={styles.separator}>|</span>
                 {message}
               </div>
             )}
