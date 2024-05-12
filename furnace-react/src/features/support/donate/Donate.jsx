@@ -1,4 +1,5 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import { Button } from "/src/components/ui";
 import contentImage from "/src/assets/images/furnace-sign-snow.jpg"
 import "./Donate.css";
@@ -10,6 +11,12 @@ import "./Donate.css";
  * @returns {React.Element} JSX element
  */
 const Donate = () => {
+  const navigate = useNavigate();
+
+  const handleDonateClick = () => {
+    navigate("/donate");
+  }
+
   return (
     <div className="donate-section" id="donate-section">
       <div className="description-content">
@@ -27,7 +34,7 @@ const Donate = () => {
               Every donation, no matter the amount, makes a significant impact.
             </p>
             <div className="donate-options">
-            <Button color="orange" text="DONATE NOW" />
+            <Button color="orange" text="DONATE NOW" onClick={handleDonateClick}/>
             </div>
           </div>
         </div>

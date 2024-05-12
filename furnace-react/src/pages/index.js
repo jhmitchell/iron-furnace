@@ -12,5 +12,6 @@ export { default as Accessibility } from './Accessibility';
 export { default as AdminDashboard } from './AdminDashboard';
 export { default as EventsPage } from './EventsPage';
 export { default as EventDetailsPage } from './EventDetailsPage';
+export { default as UpcomingFeatures } from './UpcomingFeatures';
 export { default as NotFound } from './NotFound';
 export { default as UnderConstruction } from './UnderConstruction';

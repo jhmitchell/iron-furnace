@@ -1,0 +1,50 @@
+.postContent {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 40px;
+}
+
+.overview,
+.roadmap {
+  margin-top: 60px;
+}
+
+.overview h2,
+.roadmap h2 {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 30px;
+}
+
+.features {
+  display: flex;
+  justify-content: space-between;
+  gap: 30px;
+}
+
+.feature {
+  flex: 1;
+  text-align: center;
+}
+
+.feature h3 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 15px;
+}
+
+.feature p {
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+.roadmap ul {
+  list-style-type: disc;
+  margin-left: 20px;
+}
+
+.roadmap li {
+  font-size: 1.1rem;
+  line-height: 1.6;
+  margin-bottom: 10px;
+}

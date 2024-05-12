@@ -16,6 +16,7 @@ import {
   AssociatesPage,
   EventsPage,
   EventDetailsPage,
+  UpcomingFeatures,
   UnderConstruction,
 } from './pages';
 import ProtectedRoute from "./components/protectedRoute/ProtectedRoute";
@@ -105,7 +106,13 @@ const RoutesComponent = () => {
 
     {
       path: "/membership",
-      element: <Membership />,
+      //element: <Membership />,
+      element: <UnderConstruction />,
+    },
+
+    {
+      path: "/donate",
+      element: <UnderConstruction />,
     },
 
     {
@@ -121,6 +128,11 @@ const RoutesComponent = () => {
     {
       path: "/accessibility",
       element: <Accessibility />,
+    },
+
+    {
+      path: "/new-website-announcement",
+      element: <UpcomingFeatures />,
     },
 
     // Protected admin routes

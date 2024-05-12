@@ -9,7 +9,11 @@ const ConstructionMessageBanner = () => {
       <FaExclamationTriangle className={styles.icon} />
       <span className={styles.message}>
         Website Under Construction -{' '}
-        <TextLink to="/new-website-announcement">
+        <TextLink
+          to="/new-website-announcement"
+          color="#333437"
+          underline={true}
+        >
           Learn more about our upcoming features
         </TextLink>
       </span>
