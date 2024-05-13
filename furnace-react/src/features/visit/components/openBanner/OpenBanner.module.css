@@ -1,4 +1,4 @@
-.open-banner {
+.openBanner {
   text-align: center;
   padding: 5px;
   font-size: 1.0em;
@@ -8,12 +8,12 @@
   margin: 0 auto;
 }
 
-.open-banner.open {
+.open {
   background-color: #3cac56;
   color: white;
 }
 
-.open-banner.closed {
+.closed {
   background-color: #db4756;
   color: white;
 }

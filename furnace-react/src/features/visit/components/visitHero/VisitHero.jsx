@@ -1,10 +1,10 @@
 import React from "react";
-import "./VisitHero.css";
+import styles from "./VisitHero.module.css";
 
 const VisitHero = () => {
   return (
-    <div className="visit-hero">
-      <div className="visit-hero-text">
+    <div className={styles.visitHero}>
+      <div className={styles.visitHeroText}>
         <h1>PLAN YOUR VISIT</h1>
       </div>
     </div>

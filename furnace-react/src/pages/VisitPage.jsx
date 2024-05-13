@@ -2,13 +2,8 @@ import React from 'react';
 import MainLayout from '/src/layouts/MainLayout';
 import SectionNavigator from '/src/layouts/sectionNavigator/SectionNavigator';
 import { VisitHero, Hours, TourTimes, Accessibility } from '/src/features/visit';
-import './VisitPage.css';
-/**
- * The SupportPage component renders the content and navigation for the support page.
- * It makes use of the SectionNavigator for handling section scrolling and displaying the secondary navbar.
- * 
- * @returns {React.Element} JSX element
- */
+import styles from './VisitPage.module.css';
+
 const VisitPage = () => {
   const sections = [
     { name: 'HOURS / TICKETS', subroute: 'hours', id: 'hours-section' },
@@ -20,8 +15,8 @@ const VisitPage = () => {
     <MainLayout>
       <VisitHero />
       <SectionNavigator basePath="visit" sections={sections}>
-        <div className="visit-page">
-          <div className="content-container">
+        <div className={styles.visitPage}>
+          <div className={styles.contentContainer}>
             <Hours id="visit-section" />
             <TourTimes id="tour-times-section" />
             <Accessibility id="accessibility-section" />

@@ -1,12 +1,11 @@
-/* Container for responsive content */
-.visit-page {
+.visitPage {
   display: flex;
   flex-direction: column;
   align-items: center;
   background-color: var(--dark-background);
 }
 
-.content-container {
+.contentContainer {
   display: flex;
   width: 100%;
   flex-direction: column;
@@ -15,31 +14,36 @@
   box-sizing: border-box;
 }
 
-/* Responsive breakpoints */
+@media (max-width: 767px) {
+  .contentContainer {
+    padding: 20px;
+  }
+}
+
 @media (min-width: 768px) {
-  .content-container {
+  .contentContainer {
     width: 720px;
   }
 }
 
 @media (min-width: 992px) {
-  .content-container {
+  .contentContainer {
     width: 960px;
   }
 }
 
 @media (min-width: 1200px) {
-  .content-container {
+  .contentContainer {
     width: 1140px;
   }
 }
 
 @media (min-width: 1512px) {
-  .content-container {
+  .contentContainer {
     width: 1512px;
   }
 }
 
-.accessibility-section {
+.accessibilitySection {
   margin-bottom: 40px;
 }
