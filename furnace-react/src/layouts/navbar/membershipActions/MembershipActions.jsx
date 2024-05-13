@@ -1,23 +1,24 @@
 import React from "react";
-import { useAuth } from "/src/features/authentication";
-import { Button, StyledLink } from "/src/components/ui";
+import { useAuth } from "../../../features/authentication";
 import { Link } from "react-router-dom";
-import "./MembershipActions.css";
+import { Button } from "../../../components/ui";
+import styles from "./MembershipActions.module.css";
 
 const MembershipActions = () => {
-  // Import the user object from the useAuth hook
   const { user } = useAuth();
 
   return (
-    <div className="nav-profile">
+    <div className={styles.navProfile}>
       {user ? (
-        <div className="profile-links">
-          <StyledLink to="/profile">Welcome, {user.username}</StyledLink>
+        <div className={styles.profileLinks}>
+          <Link to="/profile">Welcome, {user.username}</Link>
         </div>
       ) : (
-        <span className="membership-links">
-          <StyledLink to="/membership" className="nav-link">MEMBERSHIP</StyledLink>
-          <Link to="/support/donate"><Button text="DONATE" color="orange"/></Link>
+        <span className={styles.membershipLinks}>
+          <Link to="/membership" className={styles.navLink}>MEMBERSHIP</Link>
+          <Link to="/support/donate" className={styles.button}>
+            <Button text="DONATE" color="orange" />
+          </Link>
         </span>
       )}
     </div>

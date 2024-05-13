@@ -1,0 +1,56 @@
+/* MembershipActions.module.css */
+.navProfile {
+  display: flex;
+  align-items: center;
+}
+
+.membershipLinks {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+}
+
+.profileLinks {
+  display: flex;
+  align-items: center;
+}
+
+.profileLinks a {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--text-off-white);
+  font-size: 1rem;
+  font-weight: 300;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.profileLinks a:hover {
+  color: var(--text-link-grey);
+}
+
+.navLink {
+  color: var(--text-off-white);
+  text-decoration: none;
+  font-size: 1rem;
+  font-weight: 300;
+  letter-spacing: 0.5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.navLink:hover {
+  opacity: 0.8;
+}
+
+.button {
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 50px;
+  text-decoration: none;
+}
