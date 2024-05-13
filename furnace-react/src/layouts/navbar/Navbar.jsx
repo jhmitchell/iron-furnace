@@ -1,10 +1,10 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import MembershipActions from './membershipActions/MembershipActions';
-import TempLogo from "/src/assets/images/temp-logo.png";
-import IronFurnaceLogo from "/src/assets/images/temp-logo.png"; // Add the iron furnace logo here
-import styles from "./Navbar.module.css";
-import useResponsive from "/src/hooks/useResponsive";
+import TempLogo from '/src/assets/images/temp-logo.png';
+import IronFurnaceLogo from '/src/assets/images/temp-logo.png'; // Add the iron furnace logo here
+import styles from './Navbar.module.css';
+import useResponsive from '/src/hooks/useResponsive';
 
 const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -12,7 +12,7 @@ const Navbar = () => {
 
   const toggleMenu = () => {
     setMenuOpen(!menuOpen);
-    document.body.style.overflow = menuOpen ? "unset" : "hidden";
+    document.body.style.overflow = menuOpen ? 'unset' : 'hidden';
   };
 
   return (
@@ -52,7 +52,7 @@ const Navbar = () => {
             </div>
           </nav>
 
-          <div className={`${styles.mobileMenu} ${menuOpen ? styles.open : ""}`}>
+          <div className={`${styles.mobileMenu} ${menuOpen ? styles.open : ''}`}>
             <button className={styles.closeButton} onClick={toggleMenu}>✕</button>
             <div className={styles.navLinks}>
               <Link to="/visit" className={styles.navLink} onClick={toggleMenu}>VISIT</Link>

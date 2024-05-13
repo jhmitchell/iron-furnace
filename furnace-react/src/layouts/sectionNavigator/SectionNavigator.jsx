@@ -1,8 +1,8 @@
-// SectionNavigator.jsx
-import React, { useRef } from "react";
-import { Link } from "react-router-dom";
-import SecondaryNavbar from "/src/layouts/secondaryNavbar/SecondaryNavbar";
-import useScrollToSection from "/src/hooks/useScrollToSection";
+import React, { useRef } from 'react';
+import { Link } from 'react-router-dom';
+import SecondaryNavbar from '/src/layouts/secondaryNavbar/SecondaryNavbar';
+import useScrollToSection from '/src/hooks/useScrollToSection';
+import styles from './SectionNavigator.module.css';
 
 const SectionNavigator = ({ basePath, sections, children }) => {
   const navRef = useRef(null);
@@ -16,11 +16,11 @@ const SectionNavigator = ({ basePath, sections, children }) => {
 
   return (
     <>
-      <SecondaryNavbar ref={navRef} className={"sticky"}>
+      <SecondaryNavbar ref={navRef} className={styles.sticky}>
         {sections.map((section) => (
           <Link
             to={`/${basePath}/${section.subroute}`}
-            className="nav-item"
+            className={styles.navItem}
             key={section.subroute}
           >
             {section.name}

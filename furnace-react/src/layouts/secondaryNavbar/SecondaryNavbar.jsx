@@ -1,11 +1,11 @@
-import React, { forwardRef } from "react";
-import "./SecondaryNavbar.css";
+import React, { forwardRef } from 'react';
+import styles from './SecondaryNavbar.module.css';
 
 const SecondaryNavbar = forwardRef((props, ref) => {
   const { children, className } = props;
   return (
-    <nav ref={ref} className={`secondary-navbar ${className}`}>
-      <div className="secondary-nav-container">{children}</div>
+    <nav ref={ref} className={`${styles.secondaryNavbar} ${className}`}>
+      <div className={styles.secondaryNavContainer}>{children}</div>
     </nav>
   );
 });

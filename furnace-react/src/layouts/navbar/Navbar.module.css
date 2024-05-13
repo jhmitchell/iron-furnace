@@ -24,6 +24,7 @@
   .navLogoContainer {
 	display: flex;
 	align-items: center;
+	flex: 1; /* Ensure equal width with navProfile */
   }
   
   .navLogo {
@@ -36,15 +37,17 @@
   
   .navLinks {
 	display: flex;
-	justify-content: space-between;
+	justify-content: center; /* Center the nav links */
 	align-items: center;
 	gap: 40px;
+	flex: 2; /* Allow the nav links to take up more space */
   }
   
   .navProfile {
 	display: flex;
 	align-items: center;
 	justify-content: flex-end;
+	flex: 1; /* Ensure equal width with navLogoContainer */
   }
   
   .navLink {
@@ -165,6 +168,10 @@
   
 	.mobileMenu .logo {
 	  width: 150px;
+	}
+  
+	.navLinks {
+	  justify-content: flex-start; /* Override for mobile to not center links */
 	}
   }
   
