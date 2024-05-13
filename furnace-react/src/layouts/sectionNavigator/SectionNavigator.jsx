@@ -17,15 +17,17 @@ const SectionNavigator = ({ basePath, sections, children }) => {
   return (
     <>
       <SecondaryNavbar ref={navRef} className={styles.sticky}>
-        {sections.map((section) => (
-          <Link
-            to={`/${basePath}/${section.subroute}`}
-            className={styles.navItem}
-            key={section.subroute}
-          >
-            {section.name}
-          </Link>
-        ))}
+        <div className={styles.secondaryNavContainer}>
+          {sections.map((section) => (
+            <Link
+              to={`/${basePath}/${section.subroute}`}
+              className={styles.navItem}
+              key={section.subroute}
+            >
+              {section.name}
+            </Link>
+          ))}
+        </div>
       </SecondaryNavbar>
       {children}
     </>

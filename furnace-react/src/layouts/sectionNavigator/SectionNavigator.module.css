@@ -1,37 +1,51 @@
 /* SectionNavigator.module.css */
 .sticky {
-    position: sticky;
-    top: 69px;
+  position: sticky;
+  top: 69px;
+}
+
+.navItem {
+  color: var(--text-off-white);
+  text-decoration: none;
+  font-size: 1rem;
+  font-weight: 300;
+  letter-spacing: 0.5px;
+  padding: 10px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 1; /* Ensure each nav item takes up equal space */
+}
+
+.navItem:hover {
+  opacity: 0.8;
+}
+
+.navItemActive {
+  font-weight: 500;
+  border-bottom: 2px solid var(--text-off-white);
+}
+
+.secondaryNavContainer {
+  height: 100%;
+  max-width: 1512px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px; /* Set a specific gap between each link */
+}
+
+/* Mobile-responsive */
+/* NOTE: this needs to be improved!! */
+@media (max-width: 769px) {
+  .secondaryNavContainer {
+    justify-content: space-between; /* Ensure even spacing between links */
+    gap: 10px; /* Adjust gap if necessary */
   }
   
   .navItem {
-    color: var(--text-off-white);
-    text-decoration: none;
-    font-size: 1rem;
-    font-weight: 300;
-    letter-spacing: 0.5px;
-    padding: 10px 20px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    flex: 1 1 auto; /* Allow nav items to take up equal space */
+    text-align: center;
   }
-  
-  .navItem:hover {
-    opacity: 0.8;
-  }
-  
-  .navItemActive {
-    font-weight: 500;
-    border-bottom: 2px solid var(--text-off-white);
-  }
-  
-  .secondaryNavContainer {
-    height: 100%;
-    max-width: 1512px;
-    margin: 0 auto;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 20px; /* Set a specific gap between each link */
-  }
-  
+}

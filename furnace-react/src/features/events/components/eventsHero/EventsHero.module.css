@@ -1,19 +1,20 @@
 .hero {
-    height: 25vh;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    background-image: url('/src/assets/images/shed.webp');
-    background-size: 100%;
-    background-position: center;
-    background-repeat: no-repeat;
-    color: var(--text-off-white);
+	height: 25vh;
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	background-image: url('/src/assets/images/shed.webp');
+	background-size: 100%;
+	background-position: center;
+	background-repeat: no-repeat;
+	color: var(--text-off-white);
 }
 
 .heroText {
-    font-size: 1.7rem;
-    font-weight: 700;
-    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);
+	font-size: 1.7rem;
+	font-weight: 700;
+	text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);
+	text-align: center;
 }
