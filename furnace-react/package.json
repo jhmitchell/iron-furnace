@@ -7,7 +7,6 @@
     "check-env": "test -f .env || (echo '.env not found' && exit 1)",
     "dev": "vite",
     "build": "npm run check-env && vite build",
-    "postbuild": "cp src/.htaccess dist/",
     "lint": "eslint src --ext js,jsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview"
   },

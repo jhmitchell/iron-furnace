@@ -27,9 +27,10 @@ div {
 }
 
 body {
+	background-color: var(--dark-background);
+	color: var(--text-off-white);
 	font-family: 'Inter';
 	line-height: 1.5;
-	color: var(--text-off-white);
 }
 
 *,
@@ -43,10 +44,4 @@ html {
 	overflow-y: scroll;
 	overflow-x: hidden;
 	-webkit-overflow-scrolling: touch;
-}
-
-/* For overscrolling */
-body {
-	height: 100%;
-	background-color: var(--dark-background);
 }
