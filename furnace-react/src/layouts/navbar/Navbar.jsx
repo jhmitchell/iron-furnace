@@ -5,25 +5,13 @@ import TempLogo from "/src/assets/images/temp-logo.png";
 import "./Navbar.css";
 
 const Navbar = () => {
-  /*
-   * menuOpen is used for the state of the hamburger menu
-   * windowHeight properly sizes the opened hamburger menu
-   */
-  const [menuOpen, setMenuOpen] = React.useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
   const [windowHeight, setWindowHeight] = useState(window.innerHeight);
 
   // Toggle the hamburger menu
   const toggleMenu = () => {
     setMenuOpen(!menuOpen);
-    if (!menuOpen) {
-      // If the menu is about to open, update the height immediately
-      setWindowHeight(window.innerHeight);
-      
-      // disable scrolling behind the menu
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = 'unset';
-    }
+    document.body.style.overflow = menuOpen ? "unset" : "hidden";
   };
 
   // Add resize listener when the menu is open
@@ -32,7 +20,6 @@ const Navbar = () => {
       setWindowHeight(window.innerHeight);
     };
 
-    // For efficiency, only add listener when open
     if (menuOpen) {
       window.addEventListener("resize", handleResize);
     }
@@ -42,14 +29,8 @@ const Navbar = () => {
     };
   }, [menuOpen]);
 
-  /*
-   * When the navbar is rendered, do the following:
-   * 1. Scroll to the top of the page
-   * 2. Listen for window resize to handle the hamburger menu
-   */
+  // Close the hamburger menu when the window is resized above 769px
   useEffect(() => {
-    window.scrollTo(0, 0);
-
     const handleResize = () => {
       if (window.innerWidth > 769) {
         setMenuOpen(false);
@@ -74,23 +55,21 @@ const Navbar = () => {
         <button className="menu-button" onClick={toggleMenu}>
           {menuOpen ? "✕" : "☰"}
         </button>
-        <div className={`nav-links ${menuOpen && "active"}`}
-          style={{ height: menuOpen ? `${windowHeight - 70}px` : 'auto' }}>
-
-          <Link to="/visit" className="nav-link">VISIT</Link>
-          <Link to="/about" className="nav-link">ABOUT</Link>
-          <Link to="/events" className="nav-link">EVENTS</Link>
-          <Link to="/support" className="nav-link">SUPPORT</Link>
-          <Link to="/shop" className="nav-link">SHOP</Link>
+        <div className={`nav-links ${menuOpen && "active"}`} style={{ height: menuOpen ? `${windowHeight - 70}px` : 'auto' }}>
+          <Link to="/visit" className="nav-link" >VISIT</Link>
+          <Link to="/about" className="nav-link" >ABOUT</Link>
+          <Link to="/events" className="nav-link" >EVENTS</Link>
+          <Link to="/support" className="nav-link" >SUPPORT</Link>
+          <Link to="/shop" className="nav-link" >SHOP</Link>
           {menuOpen && (
             <button className="close-button" onClick={toggleMenu}>
               ✕
             </button>
           )}
         </div>
-        < MembershipActions />
+        <MembershipActions />
       </div>
-    </nav >
+    </nav>
   );
 };
 

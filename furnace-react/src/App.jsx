@@ -1,5 +1,5 @@
-import React from "react";
-import { BrowserRouter as Router, useRoutes } from "react-router-dom";
+import { useEffect } from "react";
+import { BrowserRouter as Router, useRoutes, useLocation } from "react-router-dom";
 import {
   HomePage,
   LoginPage,
@@ -31,6 +31,15 @@ import "./App.css";
  * @returns {React.Element} - The rendered JSX element
  */
 const RoutesComponent = () => {
+  const location = useLocation();
+
+  useEffect(() => {
+    window.scrollTo({
+      top: 0,
+      behavior: "instant",
+    });
+  }, [location]);
+
   const routes = useRoutes([
     { path: "/", element: <HomePage /> },
     { path: "/login", element: <LoginPage /> },
