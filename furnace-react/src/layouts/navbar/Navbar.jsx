@@ -1,75 +1,77 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import MembershipActions from './membershipActions/MembershipActions';
 import TempLogo from "/src/assets/images/temp-logo.png";
-import "./Navbar.css";
+import IronFurnaceLogo from "/src/assets/images/temp-logo.png"; // Add the iron furnace logo here
+import styles from "./Navbar.module.css";
+import useResponsive from "/src/hooks/useResponsive";
 
 const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
-  const [windowHeight, setWindowHeight] = useState(window.innerHeight);
+  const { isMobile } = useResponsive();
 
-  // Toggle the hamburger menu
   const toggleMenu = () => {
     setMenuOpen(!menuOpen);
     document.body.style.overflow = menuOpen ? "unset" : "hidden";
   };
 
-  // Add resize listener when the menu is open
-  useEffect(() => {
-    const handleResize = () => {
-      setWindowHeight(window.innerHeight);
-    };
-
-    if (menuOpen) {
-      window.addEventListener("resize", handleResize);
-    }
-
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
-  }, [menuOpen]);
-
-  // Close the hamburger menu when the window is resized above 769px
-  useEffect(() => {
-    const handleResize = () => {
-      if (window.innerWidth > 769) {
-        setMenuOpen(false);
-      }
-    };
-
-    window.addEventListener("resize", handleResize);
-
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
-  }, []);
-
   return (
-    <nav className="navbar">
-      <div className="nav-container">
-        <div className="nav-logo-container">
-          <Link to="/" className="nav-logo">
-            <img src={TempLogo} alt="Cornwall Iron Furnace" />
-          </Link>
-        </div>
-        <button className="menu-button" onClick={toggleMenu}>
-          {menuOpen ? "✕" : "☰"}
-        </button>
-        <div className={`nav-links ${menuOpen && "active"}`} style={{ height: menuOpen ? `${windowHeight - 70}px` : 'auto' }}>
-          <Link to="/visit" className="nav-link" >VISIT</Link>
-          <Link to="/about" className="nav-link" >ABOUT</Link>
-          <Link to="/events" className="nav-link" >EVENTS</Link>
-          <Link to="/support" className="nav-link" >SUPPORT</Link>
-          <Link to="/shop" className="nav-link" >SHOP</Link>
-          {menuOpen && (
-            <button className="close-button" onClick={toggleMenu}>
-              ✕
-            </button>
-          )}
-        </div>
-        <MembershipActions />
-      </div>
-    </nav>
+    <>
+      {!isMobile && (
+        <nav className={styles.navbar}>
+          <div className={styles.navContainer}>
+            <div className={styles.navLogoContainer}>
+              <Link to="/" className={styles.navLogo}>
+                <img src={TempLogo} alt="Cornwall Iron Furnace" />
+              </Link>
+            </div>
+            <div className={styles.navLinks}>
+              <Link to="/visit" className={styles.navLink}>VISIT</Link>
+              <Link to="/about" className={styles.navLink}>ABOUT</Link>
+              <Link to="/events" className={styles.navLink}>EVENTS</Link>
+              <Link to="/support" className={styles.navLink}>SUPPORT</Link>
+              <Link to="/shop" className={styles.navLink}>SHOP</Link>
+            </div>
+            <div className={styles.navProfile}>
+              <MembershipActions />
+            </div>
+          </div>
+        </nav>
+      )}
+
+      {isMobile && (
+        <>
+          <nav className={styles.navbar}>
+            <div className={styles.navContainer}>
+              <button className={styles.menuButton} onClick={toggleMenu}>
+                ☰
+              </button>
+              <Link to="/" className={styles.navLogo}>
+                <img src={TempLogo} alt="Cornwall Iron Furnace" />
+              </Link>
+            </div>
+          </nav>
+
+          <div className={`${styles.mobileMenu} ${menuOpen ? styles.open : ""}`}>
+            <button className={styles.closeButton} onClick={toggleMenu}>✕</button>
+            <div className={styles.navLinks}>
+              <Link to="/visit" className={styles.navLink} onClick={toggleMenu}>VISIT</Link>
+              <Link to="/about" className={styles.navLink} onClick={toggleMenu}>ABOUT</Link>
+              <Link to="/events" className={styles.navLink} onClick={toggleMenu}>EVENTS</Link>
+            </div>
+            <div className={styles.separator}></div>
+            <div className={styles.navLinks}>
+              <Link to="/shop" className={styles.navLink} onClick={toggleMenu}>Online Shop</Link>
+              <Link to="/support" className={styles.navLink} onClick={toggleMenu}>Support Us</Link>
+            </div>
+            <div className={styles.separator}></div>
+            <div className={styles.logoContainer}>
+              <img src={IronFurnaceLogo} alt="Iron Furnace Logo" className={styles.logo} />
+            </div>
+          </div>
+        </>
+      )}
+    </>
   );
 };
 

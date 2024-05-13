@@ -1,7 +1,7 @@
 import React from "react";
-import { useAuth } from "../../../features/authentication";
+import { useAuth } from "/src/features/authentication";
+import { Button, StyledLink } from "/src/components/ui";
 import { Link } from "react-router-dom";
-import { Button } from "../../../components/ui";
 import "./MembershipActions.css";
 
 const MembershipActions = () => {
@@ -12,11 +12,11 @@ const MembershipActions = () => {
     <div className="nav-profile">
       {user ? (
         <div className="profile-links">
-          <Link to="/profile">Welcome, {user.username}</Link>
+          <StyledLink to="/profile">Welcome, {user.username}</StyledLink>
         </div>
       ) : (
         <span className="membership-links">
-          <Link to="/membership" className="nav-link">MEMBERSHIP</Link>
+          <StyledLink to="/membership" className="nav-link">MEMBERSHIP</StyledLink>
           <Link to="/support/donate"><Button text="DONATE" color="orange"/></Link>
         </span>
       )}

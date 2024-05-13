@@ -1,6 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import App from './App.jsx'
+import { ResponsiveProvider } from "/src/context/ResponsiveContext";
 import './index.css'
 import './assets/fonts/fonts.css'
 
@@ -14,5 +15,7 @@ const addAdobeGaramondPro = () => {
 addAdobeGaramondPro()
 
 ReactDOM.createRoot(document.getElementById('root')).render(
-    <App />,
+  <ResponsiveProvider>
+    <App />
+  </ResponsiveProvider>,
 )
