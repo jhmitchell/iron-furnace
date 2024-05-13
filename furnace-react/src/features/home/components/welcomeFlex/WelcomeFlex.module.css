@@ -47,16 +47,14 @@
 
 @media (max-width: 768px) {
   .welcomeFlexContainer {
-    height: fit-content;
-    padding: 0px;
+    height: auto;
+    padding: 60px;
   }
 
   .welcomeFlex {
-    height: 100%;
     flex-direction: column;
     gap: 20px;
-    padding: 0px 20px;
-    margin: 100px 0px;
+    padding: 0;
   }
 
   .welcome {
@@ -66,20 +64,17 @@
   }
 
   .welcome h2 {
-    font-size: 2rem;
+    font-size: 1.8rem;
     line-height: 2rem;
   }
 
   .welcome h3 {
-    font-size: 1rem;
-    line-height: 1.5;
+    font-size: 1.2rem;
+    line-height: 1.6;
   }
 
   .welcome .button {
-    margin-right: 0px;
-  }
-
-  .welcomeFlexElement .animatedArrow {
-    display: none;
+    margin-right: 0;
+    margin-bottom: 10px;
   }
 }

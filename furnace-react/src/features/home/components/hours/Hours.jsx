@@ -47,7 +47,7 @@ const Hours = () => {
       <div className="visitor-info">
         <p>Open Friday through Sunday</p>
       </div>
-      <Button text="PLAN YOUR VISIT" color="orange" />
+      <Link to="/visit"><Button text="PLAN YOUR VISIT" color="orange"/></Link>
     </div>
   );
 };
