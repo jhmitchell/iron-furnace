@@ -1,0 +1,85 @@
+.hoursSection {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  width: 100%;
+  max-width: 1300px;
+  margin: auto;
+}
+
+.cardContainer {
+  display: flex;
+  background-color: var(--dark-secondary);
+  width: 100%;
+  max-width: 1500px;
+  height: 700px;
+  margin: 20px auto;
+}
+
+.imageSection {
+  flex: 1;
+  background-size: cover;
+  background-position: center;
+}
+
+.infoSection {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+  padding: 20px;
+  text-align: center;
+}
+
+.title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--text-light-grey);
+  margin-bottom: 20px;
+  width: 100%;
+}
+
+.listContainer {
+  width: 100%;
+  padding: 0 20px; 
+}
+
+.horizontalLine {
+  width: calc(100% - 40px);
+  height: 1px;
+  background-color: rgba(255, 255, 255, 0.3);
+  margin: 20px 20px;
+}
+
+.listItem {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  width: 100%;
+}
+
+.label {
+  text-align: left;
+  font-weight: 500;
+  color: var(--text-light-grey);
+}
+
+.value {
+  text-align: right;
+  color: var(--text-light-grey);
+}
+
+
+@media (max-width: 768px) {
+  .cardContainer {
+    flex-direction: column;
+    height: auto;
+  }
+
+  .infoSection {
+    order: 2;
+  }
+}

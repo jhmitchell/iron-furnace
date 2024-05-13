@@ -1,83 +1,46 @@
-import React from "react";
-import "./Hours.css";
-import ScrollableSection from "/src/layouts/scrollableSection/ScrollableSection";
-import OpenBanner from "../openBanner/OpenBanner";
+import React from 'react';
+import styles from './Hours.module.css';
+import ScrollableSection from '/src/layouts/scrollableSection/ScrollableSection';
+import OpenBanner from '../openBanner/OpenBanner';
+import entranceImage from '/src/assets/images/museum.jpeg';
+import useResponsive from '/src/hooks/useResponsive';
 
-/**
- * The Hours component renders the operational hours and ticket prices of the site.
- *
- * @returns {React.Element} JSX element
- */
+const ListItem = ({ label, value }) => (
+  <div className={styles.listItem}>
+    <span className={styles.label}>{label}:</span>
+    <span className={styles.value}>{value}</span>
+  </div>
+);
+
 const Hours = () => {
+  const { isMobile } = useResponsive();
+
   return (
-    <div className="hours-section">
-      <ScrollableSection id="hours-section" title="Hours / Tickets">
-        <OpenBanner id="open-banner" />
-        <div className="columns">
-          <div className="column hours-content">
-            <h3>Site Hours</h3>
-            <div className="hours-list">
-              <div>
-                <span className="day">Monday:</span>
-                <span className="time">Closed</span>
-              </div>
-              <div>
-                <span className="day">Tuesday:</span>
-                <span className="time">Closed</span>
-              </div>
-              <div>
-                <span className="day">Wednesday:</span>
-                <span className="time">Closed</span>
-              </div>
-              <div>
-                <span className="day">Thursday:</span>
-                <span className="time">Closed</span>
-              </div>
-              <div>
-                <span className="day">Friday:</span>
-                <span className="time">9:00 am - 4:00 pm</span>
-              </div>
-              <div>
-                <span className="day">Saturday:</span>
-                <span className="time">9:00 am - 4:00 pm</span>
-              </div>
-              <div>
-                <span className="day">Sunday:</span>
-                <span className="time">12:00 pm - 4:00 pm</span>
-              </div>
-            </div>
+    <ScrollableSection className={styles.hoursSection} id="museum-hours-section" title="Visit Us">
+      <div className={styles.cardContainer}>
+        {!isMobile && <div className={styles.imageSection} style={{ backgroundImage: `url(${entranceImage})` }} />}
+        <div className={styles.infoSection}>
+          <h2 className={styles.title}>Museum Hours</h2>
+          <OpenBanner id="open-banner" />
+          <div className={styles.horizontalLine}></div>
+          <div className={styles.listContainer}>
+            {["Monday", "Tuesday", "Wednesday", "Thursday"].map(day => (
+              <ListItem key={day} label={day} value="Closed" />
+            ))}
+            <ListItem label="Friday" value="9:00 am - 4:00 pm" />
+            <ListItem label="Saturday" value="9:00 am - 4:00 pm" />
+            <ListItem label="Sunday" value="12:00 pm - 4:00 pm" />
           </div>
-          <div className="column ticket-content">
-            <h3>Ticket Prices</h3>
-            <div className="ticket-list">
-              <div>
-                <span className="ticket-category">Regular (12-64):</span>
-                <span className="price">$8.00</span>
-              </div>
-              <div>
-                <span className="ticket-category">Youth (2-11):</span>
-                <span className="price">$4.00</span>
-              </div>
-              <div>
-                <span className="ticket-category">
-                  Reduced (65+ and motor club members):
-                </span>
-                <span className="price">$7.00</span>
-              </div>
-              <div>
-                <span className="ticket-category">Children (2 and under):</span>
-                <span className="price">Free</span>
-              </div>
-              <div className="ebt-discount">
-                <span className="ticket-category">
-                  Discounted Admission with Valid EBT Card
-                </span>
-              </div>
-            </div>
+          <div className={styles.horizontalLine}></div>
+          <div className={styles.listContainer}>
+            <ListItem label="Regular (12-64)" value="$8.00" />
+            <ListItem label="Youth (2-11)" value="$4.00" />
+            <ListItem label="Reduced (65+ and motor club members)" value="$7.00" />
+            <ListItem label="Children (2 and under)" value="Free" />
           </div>
         </div>
-      </ScrollableSection>
-    </div>
+      </div>
+    </ScrollableSection>
   );
 };
 
