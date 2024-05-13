@@ -1,41 +1,52 @@
 :root {
-    --dark-background: #26272c;
-    --dark-secondary: #333437;
-    --timberwolf: #ccc5b9;
-    --text-dark-grey: #252422;
-    --text-off-white: #efefef;
-    --text-light-grey: rgba(255, 255, 255, 0.8);
-    --text-link-grey: #999999;
-    --orange-accent: #bf8045;
+	--dark-background: #26272c;
+	--dark-secondary: #333437;
+	--timberwolf: #ccc5b9;
+	--text-dark-grey: #252422;
+	--text-off-white: #efefef;
+	--text-light-grey: rgba(255, 255, 255, 0.8);
+	--text-link-grey: #999999;
+	--orange-accent: #bf8045;
 }
 
 /* Reset CSS */
 
 body,
-h1, h2, h3, h4, h5, h6,
-p, ul, ol, div {
-  margin: 0;
-  padding: 0;
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+ul,
+ol,
+div {
+	margin: 0;
+	padding: 0;
 }
 
 body {
-    font-family: 'Inter';
-    line-height: 1.5;
-    color: var(--text-off-white);
+	font-family: 'Inter';
+	line-height: 1.5;
+	color: var(--text-off-white);
 }
 
 *,
 *::before,
 *::after {
-    box-sizing: border-box;
+	box-sizing: border-box;
 }
 
-.html {
-    height: 100%;
+html {
+	height: 100%;
+	overflow-y: scroll;
+	overflow-x: hidden;
+	-webkit-overflow-scrolling: touch;
 }
 
 /* For overscrolling */
-html, body {
-    height: 100%;
-    background-color: var(--dark-background);
+body {
+	height: 100%;
+	background-color: var(--dark-background);
 }
