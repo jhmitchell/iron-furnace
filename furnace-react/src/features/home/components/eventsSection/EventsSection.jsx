@@ -5,7 +5,7 @@ import { EventCard, getUpcomingEvents } from "/src/features/events";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 import styles from "./EventsSection.module.css";
-import useWindowSize from './useWindowSize';
+import useWindowSize from '../../services/useWindowSize';
 
 const EventsSection = () => {
   const responsive = {

@@ -1,0 +1,110 @@
+.videoSection {
+  height: calc(100vh - 70px);
+  width: 100%;
+  background-color: var(--dark-background);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.contentContainer {
+  width: 1512px;
+  max-width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.sectionTitle {
+  font-size: 2.5rem;
+  font-weight: 500;
+  color: var(--text-off-white);
+  text-align: center;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+  margin-bottom: 10px;
+}
+
+.videoContainer {
+  height: 100%;
+  width: 100%;
+  position: relative;
+}
+
+.videoCarousel {
+  position: unset;
+}
+
+.videoCarouselContainer {
+  height: 100%;
+  max-width: 100%;
+}
+
+.videoContainerItem {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0 10px; /* Add padding for gap between videos */
+}
+
+.customLeftArrow,
+.customRightArrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  cursor: pointer;
+  z-index: 1;
+}
+
+.customLeftArrow {
+  left: -80px;
+}
+
+.customRightArrow {
+  right: -80px;
+}
+
+.videoWrapper {
+  position: relative;
+  width: 100%;
+  height: 0;
+  padding-bottom: 56.25%; /* 16:9 aspect ratio */
+  margin: 0 10px; /* Add margin for gap between videos */
+  border: none; /* Remove border */
+  overflow: hidden; /* Hide any overflow */
+}
+
+.videoWrapper iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: none; /* Remove border */
+}
+
+.seeMore {
+  font-size: 1rem;
+  font-weight: 500;
+  text-align: center;
+  margin-bottom: 60px;
+  color: var(--text-link-grey);
+  cursor: pointer;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.seeMore:hover {
+  color: var(--text-off-white);
+}
+
+@media (max-width: 464px) {
+  .customLeftArrow,
+  .customRightArrow {
+    display: none;
+  }
+}
+

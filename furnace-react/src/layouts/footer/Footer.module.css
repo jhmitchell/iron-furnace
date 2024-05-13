@@ -5,28 +5,28 @@
   padding-top: 100px;
 }
 
-.footer .footer-container {
+.container {
   max-width: 1512px;
   margin: 0 auto;
   padding: 20px 20px;
 }
 
-.footer .footer-top {
+.top {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   padding-bottom: 20px;
 }
 
-.footer .footer-left {
+.left {
   flex: 1;
 }
 
-.footer .footer-right {
+.right {
   flex: 2;
 }
 
-.footer .footer-logo {
+.logo {
   width: fit-content;
   display: flex;
   flex-direction: column;
@@ -35,7 +35,7 @@
   gap: 0px;
 }
 
-.footer .footer-logo-image {
+.logoImage {
   height: 250px;
   width: 200px;
   background-image: url('/src/assets/images/full-logo-white.svg');
@@ -44,35 +44,7 @@
   background-repeat: no-repeat;
 }
 
-.footer .footer-logo-text {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  line-height: 1.2rem;
-  letter-spacing: -1px;
-  font-family: 'Ruwudu';
-  margin-bottom: 12px;
-}
-
-.footer .logo-text-historic {
-  font-size: 1rem;
-  font-weight: 300;
-  text-align: center;
-}
-
-.footer .logo-text-cornwall {
-  font-size: 1.5rem;
-  font-weight: 500;
-  text-align: center;
-}
-
-.footer .logo-text-ironfurnace {
-  font-size: 1.2rem;
-  font-weight: 500;
-  text-align: center;
-}
-
-.footer .footer-contact {
+.contact {
   height: 100%;
   display: flex;
   flex-direction: row;
@@ -81,16 +53,16 @@
   gap: 30px;
 }
 
-.footer-address,
-.footer-phone,
-.footer-mailing,
-.footer-socials {
+.address,
+.phone,
+.mailing,
+.socials {
   margin-bottom: 12px;
   font-weight: 400;
   line-height: 1.2rem;
 }
 
-.footer .footer-socials {
+.socials {
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
@@ -98,7 +70,7 @@
   gap: 5px;
 }
 
-.footer .PHMC-logo {
+.phmcLogo {
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -106,7 +78,7 @@
   gap: 5px;
 }
 
-.footer .PHMC-logo-image {
+.phmcLogoImage {
   height: 75px;
   width: 75px;
   background-image: url('/src/assets/images/phmc-logo-75.gif');
@@ -115,16 +87,15 @@
   background-repeat: no-repeat;
 }
 
-.footer .PHMC-logo-text {
+.phmcLogoText {
   font-size: 1.3rem;
   line-height: 1.3rem;
   font-weight: 400;
-  /*letter-spacing: -1px;*/
   font-family: 'adobe-garamond-pro';
   text-align: left;
 }
 
-.footer .footer-right-title {
+.rightTitle {
   font-size: 1.3rem;
   font-weight: 500;
   line-height: 1.5rem;
@@ -134,11 +105,11 @@
   justify-content: space-between;
 }
 
-.footer .footer-right-title .button {
+.rightTitle .button {
   width: 250px;
 }
 
-.footer .footer-right-links {
+.rightLinks {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -146,11 +117,11 @@
   margin-bottom: 40px;
 }
 
-.footer-sublinks {
+.sublinks {
   margin-top: 10px;
 }
 
-.footer-sublink {
+.sublink {
   display: block;
   font-size: 1rem;
   font-weight: 300;
@@ -160,12 +131,11 @@
   margin-bottom: 10px;
 }
 
-.footer-sublink:hover {
+.sublink:hover {
   opacity: 0.8;
 }
 
-/* remove link decoration */
-.footer .footer-link {
+.link {
   font-size: 1.3rem;
   font-weight: 500;
   line-height: 1.5rem;
@@ -173,17 +143,17 @@
   color: var(--text-off-white);
 }
 
-.footer .footer-link:hover {
+.link:hover {
   opacity: 0.8;
 }
 
-.footer .footer-link,
-.footer .footer-link:before,
-.footer .footer-link:after {
+.link,
+.link:before,
+.link:after {
   transition: all 0.15s ease;
 }
 
-.footer .footer-ack {
+.ack {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -192,32 +162,32 @@
   text-align: center;
 }
 
-.footer .footer-ack-element {
+.ackElement {
   height: 100%;
   flex: 1;
   display: flex;
 }
 
-.footer .horizontal-line {
+.horizontalLine {
   width: 100%;
   height: 1px;
   background: #d1d1d1;
   margin: 20px auto;
 }
 
-.footer .footer-bottom {
+.bottom {
   text-align: center;
   margin-top: 20px;
 }
 
-.footer .footer-copyright {
+.copyright {
   font-size: 0.8rem;
   font-weight: 300;
   letter-spacing: 0.5px;
   color: #d1d1d1;
 }
 
-.footer .footer-copyright .quadra {
+.copyright .quadra {
   font-weight: 700;
   background: linear-gradient(to right, #ff84be, #ffc6bf);
   background-clip: text;
@@ -230,18 +200,18 @@
     padding-top: 50px;
   }
 
-  .footer .footer-container {
+  .container {
     padding: 20px 10px;
   }
 
-  .footer .footer-top {
+  .top {
     flex-direction: column;
     justify-content: center;
     align-items: center;
     gap: 20px;
   }
 
-  .footer .footer-left {
+  .left {
     width: 100%;
     display: flex;
     flex-direction: column;
@@ -250,7 +220,7 @@
     gap: 20px;
   }
 
-  .footer .footer-right {
+  .right {
     width: 100%;
     display: flex;
     flex-direction: column;
@@ -259,7 +229,7 @@
     gap: 20px;
   }
 
-  .footer .footer-logo {
+  .logo {
     width: 100%;
     display: flex;
     flex-direction: column;
@@ -268,58 +238,21 @@
     gap: 0px;
   }
 
-  .footer .footer-logo-image {
+  .logoImage {
     height: 200px;
     width: 150px;
   }
 
-  .footer .footer-logo-text {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    line-height: 1.2rem;
-    letter-spacing: -1px;
-    font-family: 'Ruwudu';
-    margin-bottom: 12px;
-  }
-
-  .footer .logo-text-historic {
-    font-size: 0.8rem;
-    font-weight: 300;
-    text-align: center;
-  }
-
-  .footer .logo-text-cornwall {
-    font-size: 1.2rem;
-    font-weight: 500;
-    text-align: center;
-  }
-
-  .footer .logo-text-ironfurnace {
-    font-size: 1rem;
-    font-weight: 500;
-    text-align: center;
-  }
-
-  .footer .footer-contact {
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    gap: 30px;
-  }
-
-  .footer-address,
-  .footer-phone,
-  .footer-mailing,
-  .footer-socials {
+  .address,
+  .phone,
+  .mailing,
+  .socials {
     margin-bottom: 12px;
     font-weight: 400;
     line-height: 1.2rem;
   }
 
-  .footer .footer-socials {
+  .socials {
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
@@ -327,7 +260,7 @@
     gap: 5px;
   }
 
-  .footer .PHMC-logo {
+  .phmcLogo {
     display: flex;
     flex-direction: row;
     justify-content: center;
@@ -335,35 +268,35 @@
     gap: 5px;
   }
 
-  .footer .PHMC-logo-image {
+  .phmcLogoImage {
     height: 50px;
     width: 50px;
   }
 
-  .footer .PHMC-logo-text {
+  .phmcLogoText {
     font-size: 1rem;
     line-height: 1rem;
     font-weight: 400;
-    /*letter-spacing: -1px;*/
     font-family: 'adobe-garamond-pro';
     text-align: left;
   }
 
-  .footer .footer-right-title {
+  .rightTitle {
     font-size: 1rem;
     font-weight: 500;
     line-height: 1.2rem;
     margin-bottom: 20px;
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     justify-content: space-between;
+    gap: 20px;
   }
 
-  .footer .footer-right-title .button {
+  .rightTitle .button {
     width: 200px;
   }
 
-  .footer .footer-right-links {
+  .rightLinks {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -371,7 +304,7 @@
     margin-bottom: 40px;
   }
 
-  .footer .footer-link {
+  .link {
     font-size: 2rem;
     font-weight: 400;
     line-height: 1.2rem;
@@ -379,12 +312,12 @@
     margin-bottom: 10px;
   }
 
-  .footer-sublinks {
+  .sublinks {
     margin-top: 15px;
     margin-bottom: 40px;
   }
 
-  .footer-sublink {
+  .sublink {
     display: block;
     font-size: 1.2rem;
     font-weight: 300;
@@ -394,11 +327,11 @@
     margin-bottom: 10px;
   }
 
-  .footer-sublink:hover {
+  .sublink:hover {
     opacity: 0.8;
   }
 
-  .footer .footer-ack {
+  .ack {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -407,29 +340,28 @@
     text-align: center;
   }
 
-  .footer .footer-ack-element {
+  .ackElement {
     height: 100%;
     flex: 1;
     display: flex;
   }
 
-  .footer .horizontal-line {
+  .horizontalLine {
     width: 100%;
     height: 1px;
     background: #d1d1d1;
     margin: 20px auto;
   }
 
-  .footer .footer-bottom {
+  .bottom {
     text-align: center;
     margin-top: 20px;
   }
 
-  .footer .footer-bottom {
+  .bottom {
     font-size: 0.8rem;
     font-weight: 300;
     letter-spacing: 0.5px;
     color: #d1d1d1;
   }
-
 }
