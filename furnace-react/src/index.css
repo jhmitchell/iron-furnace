@@ -33,5 +33,6 @@ body {
 /* For overscrolling */
 html, body {
     height: 100%;
+    overflow: auto;
     background-color: var(--dark-background);
 }
