@@ -16,7 +16,7 @@ const Hours = () => {
   const { isMobile } = useResponsive();
 
   return (
-    <ScrollableSection className={styles.hoursSection} id="museum-hours-section" title="Visit Us">
+    <ScrollableSection className={styles.hoursSection} id="hours-section" title="Visit Us">
       <div className={styles.cardContainer}>
         {!isMobile && <div className={styles.imageSection} style={{ backgroundImage: `url(${entranceImage})` }} />}
         <div className={styles.infoSection}>

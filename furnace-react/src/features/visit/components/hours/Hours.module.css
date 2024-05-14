@@ -16,6 +16,8 @@
   max-width: 1500px;
   height: 700px;
   margin: 20px auto;
+  border-radius: 5px;
+  overflow: hidden;
 }
 
 .imageSection {

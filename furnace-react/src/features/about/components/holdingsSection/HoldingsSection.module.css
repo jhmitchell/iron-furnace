@@ -6,3 +6,16 @@
 	gap: 20px;
 	color: var(--light-text);
 }
+
+.mobileContainer {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	padding: 20px;
+}
+
+@media (max-width: 767px) {
+	.cardsContainer {
+		gap: 40px;
+	}
+}
