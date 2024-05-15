@@ -1,10 +1,13 @@
 import React from 'react';
 import { LineHeader, InfoBlock } from '/src/components/ui';
+import useResponsive from '/src/hooks/useResponsive';
 import styles from './PostContent.module.css';
 
 const PostContent = () => {
+	const { isMobile } = useResponsive();
+
 	return (
-		<div className={styles.postContent}>
+		<div className={`${styles.postContent} ${isMobile ? styles.mobilePostContent : ''}`}>
 			<LineHeader title="Introducing Our New Website" />
 			<InfoBlock margin="40px 0 0">
 				<p>
@@ -36,7 +39,7 @@ const PostContent = () => {
 			</InfoBlock>
 
 			<LineHeader title="Website Overview" />
-			<div className={styles.features}>
+			<div className={`${styles.features} ${isMobile ? styles.mobileFeatures : ''}`}>
 				<InfoBlock margin="40px 0 0">
 					<h3>Visitor Information</h3>
 					<p>Explore the rich history of Cornwall Iron Furnace.</p>

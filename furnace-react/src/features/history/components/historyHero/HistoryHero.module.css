@@ -1,6 +1,5 @@
 .historyHero {
 	height: 100%;
-	/*background-color: var(--timberwolf);*/
 	background-color: #b3a192;
 }
 
@@ -40,4 +39,23 @@
 
 .heroImgContainer img {
 	filter: brightness(0.85);
+}
+
+@media (max-width: 767px) {
+	.mobileHeroTextContainer {
+		text-align: center;
+		padding: 40px 20px;
+	}
+
+	.heroText {
+		margin: 0;
+	}
+
+	.heroText h1 {
+		font-size: 2rem;
+	}
+
+	.heroText p {
+		font-size: 1rem;
+	}
 }
