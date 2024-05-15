@@ -7,7 +7,7 @@ import useWindowSize from '../../services/useWindowSize';
 
 const VideoSection = () => {
   // List of Video IDs - will pull from backend
-  const videoIds = ["8IJu6yMUQF4", "lmb7jrxW2oY"];
+  const videoIds = ["8IJu6yMUQF4", "lmb7jrxW2oY", "0zuiKQ02ZdA", "Z3IH3X36ktE"];
   const youtubeChannelUrl = "https://www.youtube.com/@cornwallironfurnace6291";
 
   const responsive = {
