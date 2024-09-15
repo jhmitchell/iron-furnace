@@ -1,3 +1,4 @@
+from sqlalchemy import select
 from sqlalchemy.orm import Session
 from datetime import datetime, date
 from app.internal.models.events import Event, EventModel
@@ -75,17 +76,32 @@ def edit_event_db(db: Session, event_id: int, updated_event: dict):
     Raises:
         ValueError: If the event with the specified ID does not exist.
     """
-    event = db.query(EventModel).filter(EventModel.id == event_id).first()
-    if event:
-        event.title = updated_event.get("title", event.title)
-        event.description = updated_event.get("description", event.description)
-        event.link_text = updated_event.get("link_text", event.link_text)
-        
+    try:
+        # Use the select() construct
+        stmt = select(EventModel).where(EventModel.id == event_id)
+        result = db.execute(stmt).scalar_one_or_none()
+        event = result
+
+        if event is None:
+            raise ValueError(f"Event with ID {event_id} does not exist.")
+
+        # Update the event fields
+        for key, value in updated_event.items():
+            if value is not None and hasattr(event, key):
+                if key == 'event_start':
+                    # Parse event_start into datetime if necessary
+                    try:
+                        value = datetime.strptime(value, "%Y-%m-%dT%H:%M:%S")
+                    except ValueError:
+                        raise ValueError("Invalid date format for event_start")
+                setattr(event, key, value)
+
         db.commit()
         db.refresh(event)
         return event
-    else:
-        raise ValueError(f"Event with ID {event_id} does not exist.")
+    except Exception as e:
+        # Log the exception if necessary
+        raise ValueError(f"An error occurred while editing the event: {e}")
 
 
 def delete_event_db(db: Session, event_id: int):

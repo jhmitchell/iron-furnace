@@ -1,6 +1,7 @@
 import pytz
 import os
-from fastapi import APIRouter, HTTPException, UploadFile, File, Depends, Form
+import traceback
+from fastapi import APIRouter, HTTPException, UploadFile, File, Depends, Form, Path
 from sqlalchemy.orm import Session
 from typing import Optional
 from app.internal.models.events import Event
@@ -18,6 +19,7 @@ router = APIRouter()
 # Define the EST timezone
 est_timezone = pytz.timezone('US/Eastern')
 
+
 @router.get("/events")
 def get_events(db: Session = Depends(get_db)):
     """
@@ -31,6 +33,7 @@ def get_events(db: Session = Depends(get_db)):
     """
     events = get_events_db(db)
     return events
+
 
 @router.get("/events/{num_events}")
 def get_upcoming_events(num_events: int, db: Session = Depends(get_db)):
@@ -52,6 +55,7 @@ def get_upcoming_events(num_events: int, db: Session = Depends(get_db)):
             status_code=400, detail="Number of events must be at least 1")
     upcoming_events = get_upcoming_events_db(db, num_events)
     return upcoming_events
+
 
 @router.post("/events")
 async def create_event(
@@ -102,13 +106,18 @@ async def create_event(
         raise HTTPException(
             status_code=500, detail="An error occurred while creating the event.")
 
-@router.put("/events/{event_id}")
+
+@router.patch("/events/{event_id}")
 async def edit_event(
-    event_id: int,
-    title: str = Form(...),
+    event_id: int = Path(..., description="The ID of the event to edit"),
+    title: Optional[str] = Form(None),
     description: Optional[str] = Form(None),
     link_text: Optional[str] = Form(None),
+    link_url: Optional[str] = Form(None),
+    event_start: Optional[str] = Form(None),
+    category: Optional[str] = Form(None),
     pdf: Optional[UploadFile] = File(None),
+    image: Optional[UploadFile] = File(None),
     db: Session = Depends(get_db),
 ):
     """
@@ -116,10 +125,7 @@ async def edit_event(
 
     Args:
         event_id (int): The ID of the event to edit.
-        title (str): The title of the event.
-        description (Optional[str]): The description of the event.
-        link_text (Optional[str]): The text for the event link.
-        pdf (Optional[UploadFile]): The PDF file for the event.
+        All parameters are optional and will update the corresponding fields if provided.
         db (Session): The database session.
 
     Returns:
@@ -128,20 +134,37 @@ async def edit_event(
     Raises:
         HTTPException: If an error occurs while editing the event.
     """
-    event_data = {
-        "title": title,
-        "description": description,
-        "link_text": link_text,
-    }
     try:
-        edited_event = edit_event_db(db, event_id, event_data)
-        if pdf:
+        # Build the updated_event dictionary
+        updated_event = {
+            "title": title,
+            "description": description,
+            "link_text": link_text,
+            "link_url": link_url,
+            "event_start": event_start,
+            "category": category,
+        }
+
+        # Call the edit_event_db function
+        existing_event = edit_event_db(db, event_id, updated_event)
+
+        # Handle file uploads
+        if pdf and pdf.filename != '':
             await save_pdf(pdf, event_id)
-        return edited_event
+        if image and image.filename != '':
+            await save_image(image, event_id)
+
+        return existing_event
+    except ValueError as ve:
+        traceback.print_exc()
+        raise HTTPException(status_code=400, detail=str(ve))
     except Exception as e:
+        traceback.print_exc()
         raise HTTPException(
-            status_code=500, detail=f"An error occurred while editing the event: {str(e)}"
+            status_code=500,
+            detail="An internal error occurred while editing the event."
         )
+
 
 @router.delete("/events/{event_id}")
 def delete_event(event_id: int, db: Session = Depends(get_db)):
@@ -171,6 +194,7 @@ def delete_event(event_id: int, db: Session = Depends(get_db)):
         raise HTTPException(
             status_code=500, detail=f"An error occurred while deleting the event: {str(e)}")
 
+
 async def save_image(image: UploadFile, event_id: int):
     """
     Saves an uploaded image file to the server.
@@ -190,6 +214,7 @@ async def save_image(image: UploadFile, event_id: int):
         content = await image.read()
         file_object.write(content)
     return f"/static/event_images/{event_id}"
+
 
 async def save_pdf(pdf: UploadFile, event_id: int):
     """

@@ -16,7 +16,7 @@ export const getAllEvents = async () => {
 				event.image = `${EVENT_IMAGE_DIR}/${event.id}`;
 			}
 		});
-		
+
 		return data;
 	} catch (error) {
 		console.error(error);
@@ -91,22 +91,18 @@ export const deleteEvent = async (eventId) => {
 	}
 };
 
-export const editEvent = async (eventId, title, description, pdfFile, linkText) => {
+export const editEvent = async (eventId, updatedFields) => {
 	const formData = new FormData();
-	formData.append('title', title);
-	if (description) {
-		formData.append('description', description);
-	}
-	if (pdfFile) {
-		formData.append('pdf', pdfFile);
-	}
-	if (linkText) {
-		formData.append('link_text', linkText);
-	}
-	console.log(title, description, pdfFile, linkText);
+
+	Object.entries(updatedFields).forEach(([key, value]) => {
+		if (value !== null && value !== undefined && value !== '') {
+			formData.append(key, value);
+		}
+	});
+
 	try {
 		const response = await fetch(`${API_V1_PREFIX}/events/${eventId}`, {
-			method: 'PUT',
+			method: 'PATCH',
 			body: formData,
 		});
 		if (!response.ok) {
@@ -115,67 +111,67 @@ export const editEvent = async (eventId, title, description, pdfFile, linkText) 
 		const data = await response.json();
 		return data;
 	} catch (error) {
-		console.error(error);
+		console.error('Error editing event:', error);
 		throw error;
 	}
 };
 
 export const groupEventsByDate = (events) => {
-  const yearMonthMap = new Map();
+	const yearMonthMap = new Map();
 
-  events.forEach((event) => {
-    const date = new Date(event.start_date);
-    const year = date.getFullYear();
-    const month = date.toLocaleString("default", { month: "long" });
+	events.forEach((event) => {
+		const date = new Date(event.start_date);
+		const year = date.getFullYear();
+		const month = date.toLocaleString("default", { month: "long" });
 
-    if (!yearMonthMap.has(year)) {
-      yearMonthMap.set(year, new Map());
-    }
+		if (!yearMonthMap.has(year)) {
+			yearMonthMap.set(year, new Map());
+		}
 
-    const monthMap = yearMonthMap.get(year);
-    if (!monthMap.has(month)) {
-      monthMap.set(month, []);
-    }
+		const monthMap = yearMonthMap.get(year);
+		if (!monthMap.has(month)) {
+			monthMap.set(month, []);
+		}
 
-    monthMap.get(month).push(event);
-  });
+		monthMap.get(month).push(event);
+	});
 
-  const sortedYearMonthMap = new Map(
-    [...yearMonthMap.entries()].sort((a, b) => a[0] - b[0])
-  );
+	const sortedYearMonthMap = new Map(
+		[...yearMonthMap.entries()].sort((a, b) => a[0] - b[0])
+	);
 
-  sortedYearMonthMap.forEach((monthMap, year) => {
-    sortedYearMonthMap.set(
-      year,
-      new Map(
-        [...monthMap.entries()].sort((a, b) => {
-          const monthOrder = [
-            "January",
-            "February",
-            "March",
-            "April",
-            "May",
-            "June",
-            "July",
-            "August",
-            "September",
-            "October",
-            "November",
-            "December",
-          ];
-          return monthOrder.indexOf(a[0]) - monthOrder.indexOf(b[0]);
-        })
-      )
-    );
+	sortedYearMonthMap.forEach((monthMap, year) => {
+		sortedYearMonthMap.set(
+			year,
+			new Map(
+				[...monthMap.entries()].sort((a, b) => {
+					const monthOrder = [
+						"January",
+						"February",
+						"March",
+						"April",
+						"May",
+						"June",
+						"July",
+						"August",
+						"September",
+						"October",
+						"November",
+						"December",
+					];
+					return monthOrder.indexOf(a[0]) - monthOrder.indexOf(b[0]);
+				})
+			)
+		);
 
-    monthMap.forEach((events, month) => {
-      events.sort((a, b) => {
-        const dateA = new Date(a.start_date);
-        const dateB = new Date(b.start_date);
-        return dateA.getDate() - dateB.getDate();
-      });
-    });
-  });
+		monthMap.forEach((events, month) => {
+			events.sort((a, b) => {
+				const dateA = new Date(a.start_date);
+				const dateB = new Date(b.start_date);
+				return dateA.getDate() - dateB.getDate();
+			});
+		});
+	});
 
-  return sortedYearMonthMap;
+	return sortedYearMonthMap;
 };
