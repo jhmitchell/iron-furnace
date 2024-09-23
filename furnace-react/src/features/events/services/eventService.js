@@ -91,14 +91,22 @@ export const deleteEvent = async (eventId) => {
 	}
 };
 
-export const editEvent = async (eventId, updatedFields) => {
+export const editEvent = async (eventId, event, imageFile, pdfFile) => {
 	const formData = new FormData();
 
-	Object.entries(updatedFields).forEach(([key, value]) => {
+	Object.entries(event).forEach(([key, value]) => {
 		if (value !== null && value !== undefined && value !== '') {
 			formData.append(key, value);
 		}
 	});
+
+	if (imageFile) {
+		formData.append('image', imageFile);
+	}
+
+	if (pdfFile) {	
+		formData.append('pdf', pdfFile);
+	}
 
 	try {
 		const response = await fetch(`${API_V1_PREFIX}/events/${eventId}`, {

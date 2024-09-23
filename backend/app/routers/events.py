@@ -145,6 +145,8 @@ async def edit_event(
             "category": category,
         }
 
+        updated_event = {k: v for k, v in updated_event.items() if v is not None}
+
         # Call the edit_event_db function
         existing_event = edit_event_db(db, event_id, updated_event)
 
@@ -152,6 +154,7 @@ async def edit_event(
         if pdf and pdf.filename != '':
             await save_pdf(pdf, event_id)
         if image and image.filename != '':
+            print(f'Image: {image.filename}')
             await save_image(image, event_id)
 
         return existing_event
@@ -210,6 +213,7 @@ async def save_image(image: UploadFile, event_id: int):
     if not os.path.exists(directory):
         os.makedirs(directory)
     file_path = os.path.join(directory, f"{event_id}")
+    print(f'File path: {file_path}')
     with open(file_path, "wb") as file_object:
         content = await image.read()
         file_object.write(content)

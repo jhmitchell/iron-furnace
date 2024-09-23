@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { FaTrashAlt, FaPencilAlt } from "react-icons/fa";
 import { editEvent } from "/src/features/events";
 import styles from "./EventEntry.module.css";
@@ -11,25 +11,47 @@ const EventEntry = ({ event, onDelete }) => {
   const [time, setTime] = useState("");
   const [linkText, setLinkText] = useState("");
   const [pdfFile, setPdfFile] = useState(null);
+  const [imageFile, setImageFile] = useState(null);
+  const [imageURL, setImageURL] = useState(event.image || "");
 
   const handleEditToggle = () => setIsEditing(!isEditing);
+
+  useEffect(() => {
+    if (imageFile) {
+      const fileURL = URL.createObjectURL(imageFile);
+      setImageURL(fileURL);
+
+      // Cleanup function to revoke the created URL
+      return () => {
+        URL.revokeObjectURL(fileURL);
+      };
+    } else {
+      setImageURL(event.image || "");
+    }
+  }, [imageFile, event.image]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Build an object with only the fields that have values
-    const updatedFields = {};
-    if (title !== "") updatedFields.title = title;
-    if (description !== "") updatedFields.description = description;
-    if (linkText !== "") updatedFields.link_text = linkText;
-    if (pdfFile) updatedFields.pdf = pdfFile;
+    const updatedEvent = {};
+    if (title !== "") updatedEvent.title = title;
+    if (description !== "") updatedEvent.description = description;
+    if (linkText !== "") updatedEvent.link_text = linkText;
     if (date !== "" && time !== "") {
-      updatedFields.event_start = `${date}T${time}:00`;
+      updatedEvent.event_start = `${date}T${time}:00`;
     }
 
     try {
-      await editEvent(event.id, updatedFields);
+      await editEvent(event.id, updatedEvent, imageFile, pdfFile);
       setIsEditing(false);
+
+      setTitle("");
+      setDescription("");
+      setDate("");
+      setTime("");
+      setLinkText("");
+      setImageFile(null);
+      setPdfFile(null);
     } catch (error) {
       console.error("Error editing event:", error);
     }
@@ -99,8 +121,14 @@ const EventEntry = ({ event, onDelete }) => {
             onChange={(e) => setTime(e.target.value)}
             className={styles.textField}
           />
-          {/* PDF and Link Text */}
-          <p className={styles.instructions}>Attach PDF and provide link text (optional)</p>
+          <p className={styles.instructions}>Attach Image</p>
+          <input
+            type="file"
+            accept="image/*"
+            className={styles.fileInput}
+            onChange={(e) => setImageFile(e.target.files[0])}
+          />
+          <p className={styles.instructions}>Attach PDF and provide link text</p>
           <input
             type="file"
             accept="application/pdf"

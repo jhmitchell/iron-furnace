@@ -187,6 +187,13 @@
   color: #d1d1d1;
 }
 
+.copyright .admin {
+  /* remove link decoration */
+  text-decoration: none;
+  color: #d1d1d1;
+  
+}
+
 .copyright .quadra {
   font-weight: 700;
   background: linear-gradient(to right, #ff84be, #ffc6bf);
