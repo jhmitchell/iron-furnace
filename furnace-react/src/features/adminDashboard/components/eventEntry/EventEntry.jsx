@@ -5,9 +5,9 @@ import styles from "./EventEntry.module.css";
 
 const EventEntry = ({ event, onDelete }) => {
   const [isEditing, setIsEditing] = useState(false);
-  const [title, setTitle] = useState(""); // Default to empty string
-  const [description, setDescription] = useState("");
-  const [date, setDate] = useState("");
+  const [title, setTitle] = useState(event.title || "");
+  const [description, setDescription] = useState(event.description || "");
+  const [date, setDate] = useState(event.event_start ? event.event_start.split("T")[0] : "");
   const [time, setTime] = useState("");
   const [linkText, setLinkText] = useState("");
   const [pdfFile, setPdfFile] = useState(null);

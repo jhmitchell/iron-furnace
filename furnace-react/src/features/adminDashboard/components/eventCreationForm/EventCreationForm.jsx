@@ -32,7 +32,7 @@ const EventCreationForm = () => {
 
     // Placeholder values for the missing form fields
     const category = 'Default Category';
-    const link_text = 'Learn More';
+    const link_text = '';
     const link_url = 'test';
 
     setSubmissionStatus('submitting');

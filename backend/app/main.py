@@ -46,10 +46,10 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Assume the following routers are configured correctly in your project structure
+# Import routers and initialize them
 from .routers import authentication, users, hours, events
 from .internal.db.session import get_db
-from .internal.db.init import create_users_table, create_hours_table, create_holidays_table, create_events_table, create_root_user
+from .internal.db.init import create_users_table, create_hours_table, create_holidays_table, create_events_table, create_root_users
 from .internal.db.jobs import delete_expired_events
 
 app.include_router(authentication.router, prefix=f'{API_V1_PREFIX}{AUTH_PREFIX}')
@@ -83,7 +83,7 @@ async def startup_event():
         create_hours_table(db)
         create_holidays_table(db)
         create_events_table(db)
-        create_root_user(db)
+        create_root_users(db)
     finally:
         db.close()
     scheduler.start()

@@ -76,7 +76,7 @@ def create_events_table(db: Session):
     check_and_create_table(db, query, "events")
 
 
-def create_root_user(db: Session):
+def create_root_users(db: Session):
     # Get root user information from environment variables
     root_username = os.getenv("ROOT_USERNAME")
     root_first_name = os.getenv("ROOT_FIRST_NAME")
@@ -84,7 +84,14 @@ def create_root_user(db: Session):
     root_email = os.getenv("ROOT_EMAIL")
     root_password = os.getenv("ROOT_PASSWORD")
 
+    admin_username = os.getenv("ADMIN_USERNAME")
+    admin_first_name = os.getenv("ADMIN_FIRST_NAME")
+    admin_last_name = os.getenv("ADMIN_LAST_NAME")
+    admin_email = os.getenv("ADMIN_EMAIL")
+    admin_password = os.getenv("ADMIN_PASSWORD")
+
     hashed_password = hash_password(root_password)
+    hashed_password_admin = hash_password(admin_password)
 
     result = create_user(
         db,
@@ -98,3 +105,16 @@ def create_root_user(db: Session):
 
     if result['status'] == 'success':
         logger.info(f'Created root user {root_username}')
+
+    result = create_user(
+        db,
+        admin_username,
+        admin_email,
+        hashed_password_admin,
+        admin_first_name,
+        admin_last_name,
+        True
+    )
+
+    if result['status'] == 'success':
+        logger.info(f'Created admin user {admin_username}')
