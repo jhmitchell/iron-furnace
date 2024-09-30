@@ -16,6 +16,7 @@ import {
   AssociatesPage,
   EventsPage,
   EventDetailsPage,
+  QRPDF,
   UpcomingFeatures,
   UnderConstruction,
 } from './pages';
@@ -163,7 +164,9 @@ const RoutesComponent = () => {
       ],
     },
 
+    // PDF routes
     { path: "/events/:id", element: <EventDetailsPage /> },
+    { path: "/signs/:name", element: <QRPDF /> },
 
     // Test route - Protected
     { path: "/test", element: <ProtectedRoute><TestPage /></ProtectedRoute> },
