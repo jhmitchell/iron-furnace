@@ -62,6 +62,8 @@ app.mount("/static", StaticFiles(directory="static"), name="static")
 scheduler = AsyncIOScheduler()
 eastern = timezone('US/Eastern')
 
+logger.info("Setting up scheduled jobs...")
+
 @scheduler.scheduled_job("cron", hour=3, minute=0, timezone=eastern)
 async def scheduled_delete_expired_events():
     '''
