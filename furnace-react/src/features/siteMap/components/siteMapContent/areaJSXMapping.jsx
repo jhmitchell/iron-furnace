@@ -242,7 +242,7 @@ const areaJSXMapping = {
 				produced over 106 million tons of iron ore, as well as copper, cobalt, gold,
 				and silver. Mining operations closed as a result of flooding from Tropical
 				Storm Agnes. The pit continued to fill with water until it reached its full
-				capacity in 1964.
+				capacity in 1984.
 			</p>
 		</div>
 	),
