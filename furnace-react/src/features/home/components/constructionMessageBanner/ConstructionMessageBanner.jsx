@@ -7,7 +7,6 @@ const ConstructionMessageBanner = () => {
   return (
     <div className={styles.banner}>
       <FaExclamationTriangle className={styles.icon} />
-      {/*
       <span className={styles.message}>
         Website Under Construction -{' '}
         <TextLink
@@ -18,10 +17,11 @@ const ConstructionMessageBanner = () => {
           Learn more about our upcoming features
         </TextLink>
       </span>
-      */}
+      {/*
       <span className={styles.message}>
         CLOSED during January - Tours will resume February 1, 2025
       </span>
+      */}
     </div>
   );
 };
