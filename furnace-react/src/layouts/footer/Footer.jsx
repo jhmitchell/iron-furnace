@@ -109,10 +109,23 @@ const Footer = () => {
                 </div>
               </div>
               <div>
-                <Link className={styles.link}>Shop</Link>
+                <a
+                  href="https://www.storepatrailsofhistory.com/6/#/Admission"
+                  className={styles.link}
+                  target="_blank"
+                  rel="noreferrer noopener"
+                >
+                  Tickets
+                </a>
                 <div className={styles.sublinks}>
-                  <Link className={styles.sublink}>Books</Link>
-                  <Link className={styles.sublink}>Apparel</Link>
+                  <a
+                    href="https://www.storepatrailsofhistory.com/6/#/Admission"
+                    className={styles.sublink}
+                    target="_blank"
+                    rel="noreferrer noopener"
+                  >
+                    Buy Tickets
+                  </a>
                 </div>
               </div>
               <div>

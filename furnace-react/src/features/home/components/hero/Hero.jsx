@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import HeroImage from "./heroImage/HeroImage";
 import { useHours } from "/src/features/hours";
-import ConstructionMessageBanner from "../constructionMessageBanner/ConstructionMessageBanner";
+// import ConstructionMessageBanner from "../constructionMessageBanner/ConstructionMessageBanner";
 import styles from "./Hero.module.css";
 
 const Hero = () => {
@@ -14,7 +14,7 @@ const Hero = () => {
 
   return (
     <div className={styles.hero}>
-      <ConstructionMessageBanner />
+      {/* <ConstructionMessageBanner /> */}
 
       <HeroImage onImageLoad={handleImageLoad} />
 

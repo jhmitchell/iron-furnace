@@ -30,7 +30,14 @@ const Navbar = () => {
               <Link to="/about" className={styles.navLink}>ABOUT</Link>
               <Link to="/events" className={styles.navLink}>EVENTS</Link>
               <Link to="/support" className={styles.navLink}>SUPPORT</Link>
-              <Link to="/shop" className={styles.navLink}>SHOP</Link>
+              <a
+                href="https://www.storepatrailsofhistory.com/6/#/Admission"
+                className={styles.navLink}
+                target="_blank"
+                rel="noreferrer noopener"
+              >
+                ONLINE TICKETS
+              </a>
             </div>
             <div className={styles.navProfile}>
               <MembershipActions />
@@ -61,7 +68,15 @@ const Navbar = () => {
             </div>
             <div className={styles.separator}></div>
             <div className={styles.navLinks}>
-              <Link to="/shop" className={styles.navLink} onClick={toggleMenu}>Online Shop</Link>
+              <a
+                href="https://www.storepatrailsofhistory.com/6/#/Admission"
+                className={styles.navLink}
+                onClick={toggleMenu}
+                target="_blank"
+                rel="noreferrer noopener"
+              >
+                Tickets
+              </a>
               <Link to="/support" className={styles.navLink} onClick={toggleMenu}>Support Us</Link>
             </div>
             <div className={styles.separator}></div>

@@ -4,6 +4,7 @@ import ScrollableSection from '/src/layouts/scrollableSection/ScrollableSection'
 import OpenBanner from '../openBanner/OpenBanner';
 import entranceImage from '/src/assets/images/museum.jpeg';
 import useResponsive from '/src/hooks/useResponsive';
+import { Button } from '/src/components/ui';
 
 const ListItem = ({ label, value }) => (
   <div className={styles.listItem}>
@@ -37,6 +38,16 @@ const Hours = () => {
             <ListItem label="Youth (2-11)" value="$4.00" />
             <ListItem label="Reduced (65+ and motor club members)" value="$7.00" />
             <ListItem label="Children (2 and under)" value="Free" />
+          </div>
+          <div className={styles.horizontalLine}></div>
+          <div>
+            <a
+              href="https://www.storepatrailsofhistory.com/6/#/Admission"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <Button text="BUY TICKETS ONLINE" color="orange" size="medium" />
+            </a>
           </div>
         </div>
       </div>
