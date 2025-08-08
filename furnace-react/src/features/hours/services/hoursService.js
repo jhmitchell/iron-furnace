@@ -44,10 +44,16 @@ export const setHours = async (day, start_time, end_time) => {
   const formattedEndTime = end_time ? `${end_time}:00` : null;
 
   try {
+    const storedUser = localStorage.getItem('user');
+    const token = storedUser ? JSON.parse(storedUser).accessToken : null;
+    if (!token) {
+      throw new Error('Not authenticated');
+    }
     const response = await fetch(`${API_V1_PREFIX}/hours/set`, {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
       },
       body: JSON.stringify({ day, start_time: formattedStartTime, end_time: formattedEndTime })
     });
@@ -81,10 +87,16 @@ export const getHolidays = async () => {
 
 export const setHoliday = async (date, description) => {
   try {
+    const storedUser = localStorage.getItem('user');
+    const token = storedUser ? JSON.parse(storedUser).accessToken : null;
+    if (!token) {
+      throw new Error('Not authenticated');
+    }
     const response = await fetch(`${API_V1_PREFIX}/holidays/set`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`,
       },
       body: JSON.stringify({
         date,

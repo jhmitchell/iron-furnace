@@ -7,6 +7,7 @@ from app.internal.models.business_hours import Hours, Holiday
 from app.internal.db.hours import get_operating_hours
 from app.internal.db import hours as db_hours
 from app.internal.db.session import get_db
+from app.internal.token import authorize
 
 router = APIRouter()
 
@@ -126,7 +127,7 @@ def get_hours(db: Session = Depends(get_db)):
 
 
 @router.post("/hours/set")
-def set_operating_hours(hours: Hours, db: Session = Depends(get_db)):
+def set_operating_hours(hours: Hours, db: Session = Depends(get_db), current_user: dict = Depends(authorize)):
     # Validate the day
     if hours.day not in ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]:
         raise HTTPException(status_code=400, detail="Invalid day specified.")
@@ -159,7 +160,7 @@ def get_holidays(db: Session = Depends(get_db)):
 
 
 @router.post("/holidays/set")
-def set_holiday(holiday: Holiday, db: Session = Depends(get_db)):
+def set_holiday(holiday: Holiday, db: Session = Depends(get_db), current_user: dict = Depends(authorize)):
     """
     Sets or deletes a holiday based on the provided date and description.
     """

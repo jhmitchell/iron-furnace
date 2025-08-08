@@ -13,6 +13,7 @@ from app.internal.db.events import (
     get_upcoming_events_db,
     edit_event_db,
 )
+from app.internal.token import authorize
 
 router = APIRouter()
 
@@ -67,6 +68,7 @@ async def create_event(
     link_url: Optional[str] = Form(None),
     image: UploadFile = File(...),
     db: Session = Depends(get_db),
+    current_user: dict = Depends(authorize),
 ):
     """
     Creates a new event with the provided data.
@@ -119,6 +121,7 @@ async def edit_event(
     pdf: Optional[UploadFile] = File(None),
     image: Optional[UploadFile] = File(None),
     db: Session = Depends(get_db),
+    current_user: dict = Depends(authorize),
 ):
     """
     Edits an existing event with the provided data.
@@ -170,7 +173,7 @@ async def edit_event(
 
 
 @router.delete("/events/{event_id}")
-def delete_event(event_id: int, db: Session = Depends(get_db)):
+def delete_event(event_id: int, db: Session = Depends(get_db), current_user: dict = Depends(authorize)):
     """
     Deletes an event identified by its ID from the database, along with its associated image and PDF.
 

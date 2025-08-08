@@ -59,9 +59,17 @@ export const createEvent = async (event, imageFile) => {
 
 	console.log('formData:', formData);
 	try {
+    const storedUser = localStorage.getItem('user');
+    const token = storedUser ? JSON.parse(storedUser).accessToken : null;
+    if (!token) {
+      throw new Error('Not authenticated');
+    }
 		const response = await fetch(`${API_V1_PREFIX}/events`, {
 			method: 'POST',
-			body: formData,
+      body: formData,
+      headers: {
+        'Authorization': `Bearer ${token}`,
+      },
 		});
 
 		if (!response.ok) {
@@ -78,8 +86,16 @@ export const createEvent = async (event, imageFile) => {
 
 export const deleteEvent = async (eventId) => {
 	try {
-		const response = await fetch(`${API_V1_PREFIX}/events/${eventId}`, {
+    const storedUser = localStorage.getItem('user');
+    const token = storedUser ? JSON.parse(storedUser).accessToken : null;
+    if (!token) {
+      throw new Error('Not authenticated');
+    }
+    const response = await fetch(`${API_V1_PREFIX}/events/${eventId}`, {
 			method: 'DELETE',
+      headers: {
+        'Authorization': `Bearer ${token}`,
+      },
 		});
 
 		if (!response.ok) {
@@ -109,9 +125,17 @@ export const editEvent = async (eventId, event, imageFile, pdfFile) => {
 	}
 
 	try {
-		const response = await fetch(`${API_V1_PREFIX}/events/${eventId}`, {
+    const storedUser = localStorage.getItem('user');
+    const token = storedUser ? JSON.parse(storedUser).accessToken : null;
+    if (!token) {
+      throw new Error('Not authenticated');
+    }
+    const response = await fetch(`${API_V1_PREFIX}/events/${eventId}`, {
 			method: 'PATCH',
 			body: formData,
+      headers: {
+        'Authorization': `Bearer ${token}`,
+      },
 		});
 		if (!response.ok) {
 			throw new Error(`Error editing event: ${response.statusText}`);
