@@ -1,5 +1,4 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
 import { Button } from "/src/components/ui";
 import contentImage from "/src/assets/images/furnace-sign-snow.jpg"
 import "./Donate.css";
@@ -11,10 +10,8 @@ import "./Donate.css";
  * @returns {React.Element} JSX element
  */
 const Donate = () => {
-  const navigate = useNavigate();
-
   const handleDonateClick = () => {
-    navigate("/donate");
+    window.open("https://givebutter.com/supportcifa", "_blank", "noopener,noreferrer");
   }
 
   return (
