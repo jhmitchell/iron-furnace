@@ -1,0 +1,46 @@
+.container {
+  position: relative;
+  overflow: hidden;
+  background: #1a1a1a;
+}
+
+/* Animated skeleton placeholder */
+.skeleton {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    #1a1a1a 0%,
+    #2a2a2a 50%,
+    #1a1a1a 100%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.5s ease-in-out infinite;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+.skeleton.hidden {
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+/* Image with fade-in */
+.image {
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+
+.image.loaded {
+  opacity: 1;
+}
+

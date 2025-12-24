@@ -16,6 +16,8 @@
   flex-direction: row;
   gap: 100px;
   max-width: 1512px;
+  padding: 0 24px;
+  box-sizing: border-box;
 }
 
 .welcomeFlexElement {
@@ -45,16 +47,28 @@
   margin-right: 20px;
 }
 
+/* Tablet */
+@media (max-width: 1024px) {
+  .welcomeFlex {
+    gap: 40px;
+  }
+
+  .welcomeFlexElement h3 {
+    font-size: 1.25rem;
+  }
+}
+
+/* Mobile */
 @media (max-width: 768px) {
   .welcomeFlexContainer {
     height: auto;
-    padding: 60px;
+    padding: 40px 0;
   }
 
   .welcomeFlex {
     flex-direction: column;
-    gap: 20px;
-    padding: 0;
+    gap: 24px;
+    padding: 0 20px;
   }
 
   .welcome {
@@ -69,7 +83,7 @@
   }
 
   .welcome h3 {
-    font-size: 1.2rem;
+    font-size: 1.1rem;
     line-height: 1.6;
   }
 

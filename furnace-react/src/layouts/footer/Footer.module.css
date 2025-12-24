@@ -202,77 +202,194 @@
   color: transparent;
 }
 
+/* Tablet - 1200px */
 @media (max-width: 1200px) {
   .footer {
     padding-top: 50px;
   }
 
   .container {
-    padding: 20px 10px;
+    padding: 20px 24px;
   }
 
   .top {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    gap: 20px;
+    gap: 40px;
   }
 
   .left {
     width: 100%;
+  }
+
+  .contact {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 20px;
+  }
+
+  .contactRight {
     display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
-    gap: 20px;
+  }
+
+  .address,
+  .phone,
+  .mailing {
+    text-align: center;
+  }
+
+  .socials {
+    justify-content: center;
+    gap: 12px;
   }
 
   .right {
     width: 100%;
-    display: flex;
+  }
+
+  .rightTitle {
     flex-direction: column;
-    justify-content: center;
     align-items: center;
+    text-align: center;
     gap: 20px;
   }
 
-  .logo {
-    width: 100%;
+  .rightTitle p {
+    max-width: 500px;
+  }
+
+  .rightLinks {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 30px 40px;
+    justify-items: center;
+    text-align: center;
+    padding-top: 20px;
+    margin-bottom: 40px;
+  }
+
+  .rightLinks > div {
     display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
-    gap: 0px;
+  }
+
+  .sublinks {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 12px;
+  }
+
+  .ack {
+    flex-direction: column;
+    gap: 30px;
+  }
+
+  .ackElement {
+    justify-content: center;
+  }
+
+  .phmcLogoImage {
+    height: 60px;
+    width: 60px;
+  }
+
+  .phmcLogoText {
+    font-size: 1.1rem;
+    line-height: 1.2rem;
+  }
+}
+
+/* Mobile - 768px */
+@media (max-width: 768px) {
+  .footer {
+    padding-top: 40px;
+  }
+
+  .container {
+    padding: 20px;
+  }
+
+  .top {
+    gap: 32px;
   }
 
   .logoImage {
-    height: 200px;
-    width: 150px;
+    height: 180px;
+    width: 140px;
   }
 
   .address,
   .phone,
   .mailing,
   .socials {
-    margin-bottom: 12px;
-    font-weight: 400;
-    line-height: 1.2rem;
+    font-size: 0.95rem;
+    margin-bottom: 10px;
   }
 
-  .socials {
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-start;
-    align-items: center;
-    gap: 5px;
+  .socials a svg {
+    width: 28px;
+    height: 28px;
+  }
+
+  .rightTitle {
+    font-size: 1rem;
+    line-height: 1.5;
+  }
+
+  .rightTitle p {
+    max-width: 100%;
+  }
+
+  .rightLinks {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+
+  .rightLinks > div {
+    border-bottom: 1px solid rgba(209, 209, 209, 0.2);
+    padding: 24px 0;
+  }
+
+  .rightLinks > div:last-child {
+    border-bottom: none;
+  }
+
+  .link {
+    font-size: 1.4rem;
+    font-weight: 500;
+    line-height: 1.4;
+  }
+
+  .sublinks {
+    margin-top: 12px;
+    margin-bottom: 0;
+  }
+
+  .sublink {
+    font-size: 1rem;
+    line-height: 1.4;
+    margin-bottom: 8px;
+  }
+
+  .ack {
+    gap: 24px;
+    padding: 0 10px;
+  }
+
+  .ackElement {
+    font-size: 0.9rem;
+    line-height: 1.5;
   }
 
   .phmcLogo {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    gap: 5px;
+    flex-direction: column;
+    gap: 8px;
   }
 
   .phmcLogoImage {
@@ -282,93 +399,24 @@
 
   .phmcLogoText {
     font-size: 1rem;
-    line-height: 1rem;
-    font-weight: 400;
-    font-family: 'adobe-garamond-pro';
-    text-align: left;
-  }
-
-  .rightTitle {
-    font-size: 1rem;
-    font-weight: 500;
     line-height: 1.2rem;
-    margin-bottom: 20px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    gap: 20px;
-  }
-
-  .rightTitle .button {
-    width: 200px;
-  }
-
-  .rightLinks {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    padding-top: 20px;
-    margin-bottom: 40px;
-  }
-
-  .link {
-    font-size: 2rem;
-    font-weight: 400;
-    line-height: 1.2rem;
-    text-decoration: none;
-    margin-bottom: 10px;
-  }
-
-  .sublinks {
-    margin-top: 15px;
-    margin-bottom: 40px;
-  }
-
-  .sublink {
-    display: block;
-    font-size: 1.2rem;
-    font-weight: 300;
-    line-height: 1.5rem;
-    text-decoration: none;
-    color: #d1d1d1;
-    margin-bottom: 10px;
-  }
-
-  .sublink:hover {
-    opacity: 0.8;
-  }
-
-  .ack {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
-    gap: 50px;
     text-align: center;
-  }
-
-  .ackElement {
-    height: 100%;
-    flex: 1;
-    display: flex;
   }
 
   .horizontalLine {
-    width: 100%;
-    height: 1px;
-    background: #d1d1d1;
-    margin: 20px auto;
+    margin: 16px auto;
   }
 
   .bottom {
-    text-align: center;
-    margin-top: 20px;
+    margin-top: 16px;
   }
 
-  .bottom {
-    font-size: 0.8rem;
-    font-weight: 300;
-    letter-spacing: 0.5px;
-    color: #d1d1d1;
+  .copyright {
+    font-size: 0.75rem;
+    line-height: 1.6;
+  }
+
+  .copyright p {
+    margin-bottom: 4px;
   }
 }

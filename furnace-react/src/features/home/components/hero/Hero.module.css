@@ -39,8 +39,10 @@
     bottom: 30px;
     left: 50%;
     transform: translateX(-50%);
-    width: 1512px;
-    padding: 5px 0;
+    width: 100%;
+    max-width: 1512px;
+    padding: 5px 24px;
+    box-sizing: border-box;
     z-index: 2;
   }
   
@@ -67,6 +69,19 @@
     color: white;
   }
   
+  /* Tablet */
+  @media (max-width: 1024px) {
+    .hero h1 {
+      font-size: 3.5rem;
+      padding: 40px 24px 0;
+    }
+  
+    .hero h2 {
+      font-size: 1.25rem;
+      padding: 0 24px;
+    }
+  }
+
   /* Mobile */
   @media (max-width: 768px) {
     .hero {
@@ -75,12 +90,13 @@
     }
   
     .hero h1 {
-      font-size: 3rem;
-      padding-top: 0px;
+      font-size: 2.25rem;
+      padding: 0 20px;
     }
   
     .hero h2 {
-      font-size: 1.5rem;
+      font-size: 1rem;
+      padding: 0 20px;
     }
   
     .hoursContainer {
@@ -89,8 +105,18 @@
       left: 0;
       transform: translateX(0);
       width: 100%;
+      padding: 5px 20px;
       z-index: 2;
       display: flex;
       justify-content: center;
+    }
+
+    .hoursText {
+      font-size: 0.9rem;
+    }
+
+    .separator {
+      margin-left: 12px;
+      margin-right: 12px;
     }
   }

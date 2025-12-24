@@ -5,8 +5,67 @@
   width: 100%;
   overflow: hidden;
   text-decoration: none;
-  /*background-color: var(--dark-secondary);*/
   color: var(--text-off-white);
+}
+
+.imageContainer {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  background: #1a1a1a;
+}
+
+/* Animated skeleton placeholder */
+.skeleton {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    110deg,
+    #1a1a1a 0%,
+    #2a2a2a 40%,
+    #333 50%,
+    #2a2a2a 60%,
+    #1a1a1a 100%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.5s ease-in-out infinite;
+  z-index: 1;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+.skeleton.hidden {
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  pointer-events: none;
+}
+
+/* Image with fade-in and subtle zoom effect */
+.mediaImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  transform: scale(1.02);
+  transition: 
+    opacity 0.5s ease,
+    transform 0.35s ease;
+}
+
+.mediaImage.loaded {
+  opacity: 1;
+  transform: scale(1.02);
+}
+
+.mediaCard:hover .mediaImage.loaded {
+  transform: scale(1);
 }
 
 .mediaDetails {
@@ -25,18 +84,6 @@
 
 .mediaDescription {
   margin-top: 10px;
-}
-
-.mediaImage {
-  height: 400px;
-  background-size: cover;
-  background-position: center;
-  background-size: 102% auto;
-  transition: background-size 0.35s ease;
-}
-
-.mediaCard:hover .mediaImage {
-  background-size: 100% auto;
 }
 
 .linkText {
