@@ -1,19 +1,16 @@
 import React from "react";
 import { Button } from "/src/components/ui";
-import { useNavigate } from "react-router-dom";
 import "./Membership.css";
 
 /**
  * The Membership component renders the membership section, comprising of a 
- * description area and a link to the detailed membership page.
+ * description area and a link to the Givebutter membership page.
  *
  * @returns {React.Element} JSX element
  */
 const Membership = () => {
-  const navigate = useNavigate();
-
   const handleMembershipClick = () => {
-    navigate("/membership");
+    window.open("https://givebutter.com/CIFAmembership", "_blank", "noopener,noreferrer");
   }
 
   return (

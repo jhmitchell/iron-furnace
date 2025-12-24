@@ -96,9 +96,9 @@ const Footer = () => {
                   Support Us
                 </Link>
                 <div className={styles.sublinks}>
-                  <Link to="/support/membership" className={styles.sublink}>
+                  <a href="https://givebutter.com/CIFAmembership" className={styles.sublink} target="_blank" rel="noreferrer noopener">
                     Membership
-                  </Link>
+                  </a>
                   <a href="https://givebutter.com/supportcifa" className={styles.sublink} target="_blank" rel="noreferrer noopener">
                     Donate
                   </a>

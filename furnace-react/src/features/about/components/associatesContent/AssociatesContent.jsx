@@ -130,7 +130,7 @@ const AssociatesContent = () => {
 							There are various levels of membership. You may also upgrade your membership to include the Pennsylvania Heritage Foundation for an additional fee. Your support can make all the difference.
 						</p>
 						<p>
-							<TextLink to="/membership">Click here to become a member.</TextLink>
+							<TextLink to="https://givebutter.com/CIFAmembership" target="_blank">Click here to become a member.</TextLink>
 						</p>
 					</InfoBlock>
 				</ScrollableSection>

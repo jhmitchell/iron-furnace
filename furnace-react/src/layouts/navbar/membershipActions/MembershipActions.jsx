@@ -15,7 +15,7 @@ const MembershipActions = () => {
         </div>
       ) : (
         <span className={styles.membershipLinks}>
-          <Link to="/membership" className={styles.navLink}>MEMBERSHIP</Link>
+          <a href="https://givebutter.com/CIFAmembership" className={styles.navLink} target="_blank" rel="noreferrer noopener">MEMBERSHIP</a>
           <a href="https://givebutter.com/supportcifa" className={styles.button} target="_blank" rel="noreferrer noopener">
             <Button text="DONATE" color="orange" />
           </a>
