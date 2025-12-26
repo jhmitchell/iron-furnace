@@ -71,10 +71,11 @@ const Footer = () => {
                 donations.
               </p>
               <Button 
-                text="DONATE TODAY" 
+                text="DONATE" 
                 color="orange" 
                 href="https://givebutter.com/supportcifa"
                 external
+                className={styles.donateButton}
               />
             </div>
             <div className={styles.horizontalLine} />
