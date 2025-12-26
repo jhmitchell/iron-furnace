@@ -9,6 +9,7 @@ import useWindowSize from '../../services/useWindowSize';
 
 const EventsSection = () => {
   const [events, setEvents] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [scrollSnaps, setScrollSnaps] = useState([]);
   const windowSize = useWindowSize();
@@ -17,8 +18,14 @@ const EventsSection = () => {
 
   useEffect(() => {
     async function fetchEvents() {
-      const events = await getUpcomingEvents(4);
-      setEvents(events);
+      try {
+        const events = await getUpcomingEvents(4);
+        setEvents(events);
+      } catch (error) {
+        console.error('Failed to fetch events:', error);
+      } finally {
+        setIsLoading(false);
+      }
     }
     fetchEvents();
   }, []);
@@ -32,6 +39,13 @@ const EventsSection = () => {
     },
     [Autoplay({ delay: 5000, stopOnInteraction: false, stopOnMouseEnter: true })]
   );
+
+  // Reinitialize Embla when events load
+  useEffect(() => {
+    if (emblaApi && events.length > 0) {
+      emblaApi.reInit();
+    }
+  }, [emblaApi, events]);
 
   // Track selected slide for pagination dots
   const onSelect = useCallback(() => {
@@ -74,6 +88,24 @@ const EventsSection = () => {
     if (screenWidth <= 768) return '48%';  // Tablet: 2 slides with peek
     return '50%';  // Desktop: 2 slides
   };
+
+  // Don't render section if loading or no events
+  if (isLoading) {
+    return (
+      <section className={styles.eventsSection}>
+        <div className={styles.contentContainer}>
+          <h2 className={styles.sectionTitle}>Upcoming Programs and Events</h2>
+          <div className={styles.loadingContainer}>
+            <div className={styles.loadingSpinner} />
+          </div>
+        </div>
+      </section>
+    );
+  }
+
+  if (events.length === 0) {
+    return null;
+  }
 
   return (
     <section className={styles.eventsSection}>
