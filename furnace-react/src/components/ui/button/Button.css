@@ -1,56 +1,149 @@
 .button {
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   margin-top: 20px;
   border: none;
   border-radius: 5px;
   cursor: pointer;
   font-size: 1rem;
-  font-weight: 400;
-  transition: background-color 0.2s, color 0.2s;
+  font-weight: 500;
+  letter-spacing: 0.3px;
+  text-decoration: none;
+  transition: 
+    background-color 0.15s ease,
+    transform 0.1s ease,
+    box-shadow 0.15s ease;
+  /* Prevent text selection on rapid clicks */
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
 }
 
+/* Press/depress effect - the button "pushes in" */
+.button:active {
+  transform: translateY(2px);
+}
+
+/* ============================================
+   ORANGE (Primary) VARIANT
+   ============================================ */
 .button.orange {
   background-color: var(--orange-accent);
-  color: var(--text-off-white);
+  color: #fff;
+  box-shadow: 
+    0 2px 4px rgba(0, 0, 0, 0.15),
+    0 4px 8px rgba(212, 136, 58, 0.2);
 }
 
 .button.orange:hover {
-  background-color: #a66a30;
+  background-color: #c07a32;
+  box-shadow: 
+    0 4px 8px rgba(0, 0, 0, 0.2),
+    0 6px 12px rgba(212, 136, 58, 0.25);
+  transform: translateY(-1px);
 }
 
+.button.orange:active {
+  background-color: #a66a30;
+  box-shadow: 
+    0 1px 2px rgba(0, 0, 0, 0.15),
+    0 2px 4px rgba(212, 136, 58, 0.15);
+  transform: translateY(2px);
+}
+
+/* ============================================
+   TRANSPARENT (Ghost) VARIANT
+   ============================================ */
 .button.transparent {
   background-color: transparent;
   color: var(--text-off-white);
   border: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .button.transparent:hover {
-  background-color: rgba(255, 255, 255, 0.8);
-  color: black;
+  background-color: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.5);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
 }
 
-/* Size variations */
+.button.transparent:active {
+  background-color: rgba(255, 255, 255, 0.15);
+  transform: translateY(2px);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+/* ============================================
+   OUTLINE VARIANT (for light backgrounds)
+   ============================================ */
+.button.outline {
+  background-color: transparent;
+  color: var(--orange-accent);
+  border: 2px solid var(--orange-accent);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
+}
+
+.button.outline:hover {
+  background-color: var(--orange-accent);
+  color: #fff;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(212, 136, 58, 0.3);
+}
+
+.button.outline:active {
+  transform: translateY(2px);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+/* ============================================
+   SIZE VARIATIONS
+   ============================================ */
 .button.small {
-  height: 40px;
-  padding: 0 20px;
+  height: 36px;
+  padding: 0 16px;
   font-size: 0.8rem;
-  font-weight: 300;
+  font-weight: 500;
+  border-radius: 4px;
 }
 
 .button.medium {
-  height: 50px;
-  padding: 10px 20px;
-  font-size: 1rem;
+  height: 44px;
+  padding: 0 24px;
+  font-size: 0.9rem;
 }
 
 .button.large {
-  padding: 12px 24px;
-  font-size: 1.2rem;
+  height: 52px;
+  padding: 0 32px;
+  font-size: 1rem;
 }
 
+/* ============================================
+   NAVBAR VARIANT (no margin, compact)
+   ============================================ */
+.button.nav {
+  margin-top: 0;
+  height: auto;
+  padding: 10px 20px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  border-radius: 4px;
+}
+
+/* ============================================
+   DISABLED STATE
+   ============================================ */
 .button.disabled {
   background-color: #d3d3d3;
   color: #a9a9a9;
   cursor: not-allowed;
   pointer-events: none;
+  box-shadow: none;
+}
+
+.button.disabled:hover,
+.button.disabled:active {
+  transform: none;
 }

@@ -1,5 +1,4 @@
 import React from "react";
-import { Link } from "react-router-dom";
 import { Button } from "../../../../components/ui";
 import { useHours } from "/src/features/hours";
 
@@ -47,7 +46,7 @@ const Hours = () => {
       <div className="visitor-info">
         <p>Open Friday through Sunday</p>
       </div>
-      <Link to="/visit"><Button text="PLAN YOUR VISIT" color="orange"/></Link>
+      <Button text="PLAN YOUR VISIT" color="orange" to="/visit" />
     </div>
   );
 };

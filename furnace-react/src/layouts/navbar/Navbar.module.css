@@ -10,6 +10,7 @@
   display: flex;
   align-items: center;
   padding: 0 20px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
 }
 
 .navContainer {
@@ -43,12 +44,14 @@
   flex: 2;
 }
 
-.navProfile {
+.navActions {
   display: flex;
   align-items: center;
   justify-content: flex-end;
+  gap: 24px;
   flex: 1;
 }
+
 
 .navLink {
   color: var(--text-off-white);
@@ -69,11 +72,15 @@
 
 .navLinks .navLink,
 .navLinks .navLink:before,
-.navLinks .navLink:after {
+.navLinks .navLink:after,
+.navActions .navLink,
+.navActions .navLink:before,
+.navActions .navLink:after {
   transition: all 0.15s ease;
 }
 
-.navLinks .navLink:after {
+.navLinks .navLink:after,
+.navActions .navLink:after {
   position: absolute;
   bottom: -5px;
   margin: auto;
@@ -83,7 +90,8 @@
   height: 1px;
 }
 
-.navLink:hover:after {
+.navLinks .navLink:hover:after,
+.navActions .navLink:hover:after {
   width: 100%;
 }
 
@@ -105,11 +113,29 @@
 }
 
 /* ============================================
+   TABLET STYLES
+   ============================================ */
+@media (max-width: 1024px) {
+  .navLinks {
+    gap: 24px;
+  }
+
+  .navActions {
+    gap: 16px;
+  }
+}
+
+/* ============================================
    MOBILE STYLES
    ============================================ */
 @media (max-width: 769px) {
   .navbar {
     justify-content: flex-start;
+  }
+
+  .navLinks,
+  .navActions {
+    display: none;
   }
 
   .menuButton {
@@ -170,11 +196,16 @@
     position: absolute;
     top: 20px;
     right: 20px;
-    width: 44px;
-    height: 44px;
+    width: 48px;
+    height: 48px;
     border-radius: 50%;
     background: rgba(255, 255, 255, 0.08);
     transition: background 0.2s ease, transform 0.2s ease;
+    /* Ensure button is above content and tappable */
+    z-index: 10;
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+    cursor: pointer;
   }
 
   .closeButton:hover {
@@ -184,6 +215,7 @@
 
   .closeButton:active {
     transform: scale(0.95);
+    background: rgba(255, 255, 255, 0.2);
   }
 
   /* Menu content container */
@@ -226,24 +258,39 @@
     transition-delay: calc(0.1s + var(--i) * 0.05s);
   }
 
-  .primaryLink::after {
-    content: '';
-    position: absolute;
-    left: 0;
-    bottom: 8px;
-    width: 0;
-    height: 2px;
-    background: linear-gradient(90deg, #e8a54b, #d4883a);
-    transition: width 0.25s ease;
-  }
-
-  .primaryLink:hover::after,
-  .primaryLink:focus::after {
-    width: 40px;
-  }
-
+  /* Tap feedback for mobile - instant color shift */
   .primaryLink:active {
-    color: #e8a54b;
+    color: var(--orange-accent, #d4883a);
+    transform: translateX(4px);
+  }
+
+  .primaryLink {
+    transition: color 0.15s ease, transform 0.15s ease;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  /* Mobile CTA buttons container */
+  .mobileCtas {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 24px;
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+
+  .mobileMenu.open .mobileCtas {
+    opacity: 1;
+    transform: translateX(0);
+    transition: 
+      opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+      transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    transition-delay: calc(0.1s + var(--i) * 0.05s);
+  }
+
+  /* Style the Button components inside mobile CTAs */
+  .mobileCtaButton {
+    flex: 1;
+    margin-top: 0 !important;
   }
 
   /* Secondary navigation links */
@@ -264,7 +311,13 @@
     padding: 10px 0;
     opacity: 0;
     transform: translateX(-20px);
-    transition: color 0.2s ease;
+    transition: color 0.15s ease, transform 0.15s ease;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .secondaryLink:active {
+    color: var(--text-off-white);
+    transform: translateX(4px);
   }
 
   .mobileMenu.open .secondaryLink {

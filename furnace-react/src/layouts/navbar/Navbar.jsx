@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { HiMenuAlt3, HiX } from 'react-icons/hi';
 import { FaFacebookSquare, FaInstagram, FaYoutube } from 'react-icons/fa';
-import MembershipActions from './membershipActions/MembershipActions';
+import { Button } from '/src/components/ui';
 import TempLogo from '/src/assets/images/temp-logo.png';
 import styles from './Navbar.module.css';
 import useResponsive from '/src/hooks/useResponsive';
@@ -36,17 +36,23 @@ const Navbar = () => {
               <Link to="/about" className={styles.navLink}>ABOUT</Link>
               <Link to="/events" className={styles.navLink}>EVENTS</Link>
               <Link to="/support" className={styles.navLink}>SUPPORT</Link>
+            </div>
+            <div className={styles.navActions}>
               <a
                 href="https://www.storepatrailsofhistory.com/6/#/Admission"
                 className={styles.navLink}
                 target="_blank"
                 rel="noreferrer noopener"
               >
-                ONLINE TICKETS
+                TICKETS
               </a>
-            </div>
-            <div className={styles.navProfile}>
-              <MembershipActions />
+              <Button 
+                text="DONATE"
+                color="orange"
+                href="https://givebutter.com/supportcifa"
+                external
+                className="nav"
+              />
             </div>
           </div>
         </nav>
@@ -80,7 +86,12 @@ const Navbar = () => {
             <button 
               className={styles.closeButton} 
               onClick={closeMenu}
+              onTouchEnd={(e) => {
+                e.preventDefault();
+                closeMenu();
+              }}
               aria-label="Close menu"
+              type="button"
             >
               <HiX />
             </button>
@@ -122,18 +133,28 @@ const Navbar = () => {
                 </Link>
               </nav>
 
+              {/* CTA Buttons */}
+              <div className={styles.mobileCtas} style={{ '--i': 4 }}>
+                <Button 
+                  text="Buy Tickets"
+                  color="transparent"
+                  href="https://www.storepatrailsofhistory.com/6/#/Admission"
+                  external
+                  onClick={closeMenu}
+                  className={`nav ${styles.mobileCtaButton}`}
+                />
+                <Button 
+                  text="Donate"
+                  color="orange"
+                  href="https://givebutter.com/supportcifa"
+                  external
+                  onClick={closeMenu}
+                  className={`nav ${styles.mobileCtaButton}`}
+                />
+              </div>
+
               {/* Secondary navigation */}
               <div className={styles.secondaryNav}>
-                <a
-                  href="https://www.storepatrailsofhistory.com/6/#/Admission"
-                  className={styles.secondaryLink}
-                  onClick={closeMenu}
-                  target="_blank"
-                  rel="noreferrer noopener"
-                  style={{ '--i': 4 }}
-                >
-                  Buy Tickets
-                </a>
                 <Link 
                   to="/history" 
                   className={styles.secondaryLink} 

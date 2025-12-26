@@ -70,9 +70,12 @@ const Footer = () => {
                 Iron Furnace by supporting us with your tax-deductible
                 donations.
               </p>
-              <a href="https://givebutter.com/supportcifa" target="_blank" rel="noreferrer noopener">
-                <Button text="DONATE TODAY" color="orange" />
-              </a>
+              <Button 
+                text="DONATE TODAY" 
+                color="orange" 
+                href="https://givebutter.com/supportcifa"
+                external
+              />
             </div>
             <div className={styles.horizontalLine} />
             <div className={styles.rightLinks}>

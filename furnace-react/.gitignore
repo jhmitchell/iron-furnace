@@ -24,3 +24,11 @@ dist-ssr
 *.sw?
 
 .env
+
+# iCloud sync conflict duplicates
+* 2.*
+* 2
+
+# Windows Zone.Identifier metadata files
+*:Zone.Identifier
+*:Zone?2.Identifier
