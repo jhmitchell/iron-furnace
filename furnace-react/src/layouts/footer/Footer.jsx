@@ -177,7 +177,7 @@ const Footer = () => {
         <div className={styles.bottom}>
           <div className={styles.horizontalLine} />
           <div className={styles.copyright}>
-            <Link to="/admin" className={styles.admin}>Site administrator login</Link>
+            <Link to="/admin" className={styles.admin}>Web administrator login</Link>
           </div>
           <div className={styles.copyright}>
             <p>&copy; 2024 Cornwall Iron Furnace | All Rights Reserved</p>
