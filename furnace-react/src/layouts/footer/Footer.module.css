@@ -3,7 +3,7 @@
   background-color: #26272c;
   color: var(--text-off-white);
   width: 100%;
-  padding-top: 100px;
+  padding-top: 0;
 }
 
 /* Subtle noise texture */

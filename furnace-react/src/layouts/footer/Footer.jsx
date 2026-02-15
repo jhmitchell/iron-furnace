@@ -2,11 +2,13 @@ import React from "react";
 import { FaFacebookSquare, FaInstagram, FaYoutube } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { Button } from "../../components/ui";
+import SubscriptionBar from "./subscriptionBar/SubscriptionBar";
 import styles from "./Footer.module.css";
 
 const Footer = () => {
   return (
     <footer className={styles.footer}>
+      <SubscriptionBar />
       <div className={styles.container}>
         <div className={styles.top}>
           <div className={styles.left}>
