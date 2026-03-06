@@ -76,6 +76,29 @@ def create_events_table(db: Session):
     check_and_create_table(db, query, "events")
 
 
+def create_sponsors_table(db: Session):
+    query = """
+    CREATE TABLE IF NOT EXISTS sponsors (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        name VARCHAR(255) NOT NULL,
+        display_order INT NOT NULL DEFAULT 0
+    );
+    """
+    check_and_create_table(db, query, "sponsors")
+
+
+def create_board_members_table(db: Session):
+    query = """
+    CREATE TABLE IF NOT EXISTS board_members (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        name VARCHAR(255) NOT NULL,
+        title VARCHAR(255),
+        display_order INT NOT NULL DEFAULT 0
+    );
+    """
+    check_and_create_table(db, query, "board_members")
+
+
 def create_root_users(db: Session):
     # Get root user information from environment variables
     root_username = os.getenv("ROOT_USERNAME")

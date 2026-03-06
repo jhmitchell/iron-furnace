@@ -1,30 +1,38 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import styles from './AssociatesContent.module.css';
 import { TextLink, InfoBlock } from '/src/components/ui';
 import ScrollableSection from '/src/layouts/scrollableSection/ScrollableSection';
+import { getAllSponsors } from '/src/features/sponsors';
+import { getAllBoardMembers } from '/src/features/boardMembers';
 
 const AssociatesContent = () => {
+	const [sponsors, setSponsors] = useState([]);
+	const [boardMembers, setBoardMembers] = useState([]);
+
+	useEffect(() => {
+		getAllSponsors()
+			.then(setSponsors)
+			.catch(console.error);
+		getAllBoardMembers()
+			.then(setBoardMembers)
+			.catch(console.error);
+	}, []);
+
 	return (
 		<div className={styles.associatesPage}>
 			<div className={styles.associatesPageContent}>
 			<ScrollableSection id="sponsors" title="Corporate Sponsors">
 					<InfoBlock>
 						<p>
-							The following local businesses support the Cornwall Iron Furnace Associates through 
+							The following local businesses support the Cornwall Iron Furnace Associates through
 							their financial contributions at varying giving levels:
 						</p>
 					</InfoBlock>
 					<InfoBlock>
 						<div className={styles.boardMembers}>
-							<p>Technical Metal Solutions</p>
-							<p>PRL Industries, Inc.</p>
-							<p>Dechert Dynamics Corp.</p>
-							<p>Alden Management Co., Inc.</p>
-							<p>Blue Bird Inn</p>
-							<p>Bamberger's, Inc.</p>
-							<p>Keller Brothers Ford</p>
-							<p>Hamlin Golf Club</p>
-							<p>Jonestown Bank & Trust</p>
+							{sponsors.map(s => (
+								<p key={s.id}>{s.name}</p>
+							))}
 						</div>
 					</InfoBlock>
 					<InfoBlock>
@@ -32,7 +40,7 @@ const AssociatesContent = () => {
 						<TextLink to="/sponsorship">here</TextLink> for more information.
 					</InfoBlock>
 				</ScrollableSection>
-				
+
 				<ScrollableSection id="associates" title="Associates">
 					<InfoBlock>
 						<p>
@@ -86,24 +94,18 @@ const AssociatesContent = () => {
 				<ScrollableSection id="board" title="Board of Directors">
 					<InfoBlock>
 						<p>
-							New board members are nominated by the Board Nominating Committee and elected for 
+							New board members are nominated by the Board Nominating Committee and elected for
 							3-year terms by members at the Annual Membership Meeting.
 						</p>
 					</InfoBlock>
 					<InfoBlock>
-						<h3 className={styles.boardHeader}>2024 Board of Directors</h3>
+						<h3 className={styles.boardHeader}>Board of Directors</h3>
 						<div className={styles.boardMembers}>
-							<p>James Polczynski, <b>President</b></p>
-							<p>Michael A. Trump, <b>Vice President</b></p>
-							<p>Andrew Hebert, <b>Secretary</b></p>
-							<p>Kathy Donaldson, <b>Treasurer</b></p>
-							<p>Craig Ball</p>
-							<p>Michael Bernard</p>
-							<p>Rick Brouse</p>
-							<p>Catherine “Cavi” Miller</p>
-							<p>Irvin Muritz</p>
-							<p>Timothy Nieman</p>
-							<p>L. Susan Wentzel</p>
+							{boardMembers.map(m => (
+								<p key={m.id}>
+									{m.name}{m.title && <>, <b>{m.title}</b></>}
+								</p>
+							))}
 						</div>
 					</InfoBlock>
 				</ScrollableSection>

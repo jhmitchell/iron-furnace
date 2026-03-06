@@ -12,17 +12,34 @@
   color: var(--text-off-white);
   display: flex;
   flex-direction: column;
-  border-right: 1px solid #3b3c45
+  border-right: 1px solid #3b3c45;
+  padding-top: 10px;
+}
+
+.sidebarGroup {
+  margin-bottom: 8px;
+}
+
+.groupLabel {
+  display: block;
+  padding: 10px 20px 4px;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 1.2px;
+  color: #777;
+  font-weight: 600;
 }
 
 .navLink {
   color: var(--text-off-white);
   display: flex;
   align-items: center;
-  justify-content: center;
-  height: 50px;
+  gap: 10px;
+  height: 42px;
   width: 100%;
+  padding: 0 20px;
   text-decoration: none;
+  font-size: 0.92rem;
   transition: background-color 0.2s ease-in-out;
 }
 
@@ -35,6 +52,12 @@
   background-color: #565761;
 }
 
+.navIcon {
+  display: flex;
+  align-items: center;
+  font-size: 1.2rem;
+  color: #aaa;
+}
 
 .mainContent {
   flex: 1;
