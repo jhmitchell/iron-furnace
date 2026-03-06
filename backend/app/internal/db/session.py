@@ -15,6 +15,7 @@ DATABASE_URL = f"mysql+pymysql://{os.getenv('DB_USER')}:{os.getenv('DB_PASSWORD'
 # is closed after 8 hours)
 engine = create_engine(DATABASE_URL,
                        pool_recycle=3600,
+                       pool_pre_ping=True,
                        )
 
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
