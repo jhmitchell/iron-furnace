@@ -32,16 +32,17 @@
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  gap: 64px;
   padding-bottom: 20px;
 }
 
 .left {
-  flex: 1;
+  flex: 0 1 auto;
   min-width: 0;
 }
 
 .right {
-  flex: 2;
+  flex: 1;
 }
 
 .logo {
