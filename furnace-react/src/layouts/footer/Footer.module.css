@@ -72,11 +72,23 @@
 
 .address,
 .phone,
+.email,
 .mailing,
 .socials {
   margin-bottom: 12px;
   font-weight: 400;
   line-height: 1.2rem;
+}
+
+.emailLink {
+  color: var(--text-off-white);
+  text-decoration: none;
+  transition: opacity 0.15s ease;
+}
+
+.emailLink:hover {
+  opacity: 0.8;
+  text-decoration: underline;
 }
 
 .socials {

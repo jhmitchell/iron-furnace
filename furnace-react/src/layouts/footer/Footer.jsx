@@ -29,6 +29,14 @@ const Footer = () => {
                   Cornwall, PA 17016
                 </div>
                 <div className={styles.phone}>717-272-9711</div>
+                <div className={styles.email}>
+                  <a
+                    href="mailto:cornwallironfurnace@gmail.com"
+                    className={styles.emailLink}
+                  >
+                    cornwallironfurnace@gmail.com
+                  </a>
+                </div>
                 <div className={styles.mailing}>
                   Mailing Address:
                   <br />
@@ -139,6 +147,12 @@ const Footer = () => {
               <div>
                 <Link className={styles.link}>Contact Us</Link>
                 <div className={styles.sublinks}>
+                  <a
+                    href="mailto:cornwallironfurnace@gmail.com"
+                    className={styles.sublink}
+                  >
+                    Email Us
+                  </a>
                   <Link className={styles.sublink}>Private Events</Link>
                   <Link className={styles.sublink}>Group Tours</Link>
                   <Link className={styles.sublink}>School Tours</Link>
