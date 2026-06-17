@@ -37,6 +37,7 @@
 
 .left {
   flex: 1;
+  min-width: 0;
 }
 
 .right {
@@ -70,6 +71,10 @@
   gap: 30px;
 }
 
+.contactRight {
+  min-width: 0;
+}
+
 .address,
 .phone,
 .email,
@@ -78,6 +83,10 @@
   margin-bottom: 12px;
   font-weight: 400;
   line-height: 1.2rem;
+}
+
+.email {
+  overflow-wrap: anywhere;
 }
 
 .emailLink {
