@@ -14,7 +14,7 @@ const SupportPage = () => {
     { name: 'MEMBERSHIP', subroute: 'membership', id: 'membership-section' },
     { name: 'DONATE', subroute: 'donate', id: 'donate-section' },
     { name: 'VOLUNTEER', subroute: 'volunteer', id: 'volunteer-section'},
-    { name: 'CORPORATE SPONSORSHIP', subroute: 'sponsorship', id: 'sponsorship-section'}
+    { name: 'SPONSORSHIP', subroute: 'sponsorship', id: 'sponsorship-section'}
   ];
 
   return (

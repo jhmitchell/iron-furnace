@@ -120,7 +120,7 @@ const Footer = () => {
                     Volunteer
                   </Link>
                   <Link to="/support/sponsorship" className={styles.sublink}>
-                    Corporate Sponsorship
+                    Sponsorship
                   </Link>
                 </div>
               </div>
