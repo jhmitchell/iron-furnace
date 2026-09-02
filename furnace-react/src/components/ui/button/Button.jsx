@@ -6,7 +6,7 @@ import "./Button.css";
  * A versatile button component that can render as a button, anchor, or React Router Link.
  * 
  * @param {string} text - Button label text
- * @param {string} color - Color variant: "orange" | "transparent" | "outline"
+ * @param {string} color - Color variant: "orange" | "transparent" | "outline" | "holiday"
  * @param {string} size - Size variant: "small" | "medium" | "large"
  * @param {string} to - Internal route (uses React Router Link)
  * @param {string} href - External URL (uses anchor tag)

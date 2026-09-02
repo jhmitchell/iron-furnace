@@ -46,6 +46,13 @@ const Navbar = () => {
               >
                 TICKETS
               </a>
+              <Button
+                text="SPONSOR"
+                color="holiday"
+                href="https://givebutter.com/historic-holidays-event-sponsorship-ojpfhv"
+                external
+                className="nav"
+              />
               <Button 
                 text="DONATE"
                 color="orange"
@@ -139,6 +146,14 @@ const Navbar = () => {
                   text="Buy Tickets"
                   color="transparent"
                   href="https://www.storepatrailsofhistory.com/6/#/Admission"
+                  external
+                  onClick={closeMenu}
+                  className={`nav ${styles.mobileCtaButton}`}
+                />
+                <Button
+                  text="Sponsor"
+                  color="holiday"
+                  href="https://givebutter.com/historic-holidays-event-sponsorship-ojpfhv"
                   external
                   onClick={closeMenu}
                   className={`nav ${styles.mobileCtaButton}`}

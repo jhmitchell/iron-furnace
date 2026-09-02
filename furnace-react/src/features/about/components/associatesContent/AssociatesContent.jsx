@@ -37,7 +37,7 @@ const AssociatesContent = () => {
 					</InfoBlock>
 					<InfoBlock>
 						If your business is interested in becoming a corporate partner, click {" "}
-						<TextLink to="/sponsorship">here</TextLink> for more information.
+						<TextLink to="https://givebutter.com/historic-holidays-event-sponsorship-ojpfhv" target="_blank">here</TextLink> for more information.
 					</InfoBlock>
 				</ScrollableSection>
 

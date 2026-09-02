@@ -14,7 +14,7 @@ const Sponsorship = () => {
     <div className="sponsorship-section" id="sponsorship-section">
       <div className="description-content">
         <div className="left-side-content">
-          <h2 className="left-aligned-title">Corporate Sponsorship Opportunities</h2>
+          <h2 className="left-aligned-title">Sponsorship Opportunities</h2>
           <div className="text-content">
             <p>
               Sponsorship provides a unique opportunity for businesses and individuals 
@@ -22,7 +22,12 @@ const Sponsorship = () => {
               Your sponsorship helps maintain our site and extend our educational outreach.
             </p>
             <div className="sponsorship-options">
-              <Button color="orange" text="BECOME A SPONSOR" />
+              <Button
+                color="orange"
+                text="BECOME A SPONSOR"
+                href="https://givebutter.com/historic-holidays-event-sponsorship-ojpfhv"
+                external
+              />
             </div>
           </div>
         </div>
