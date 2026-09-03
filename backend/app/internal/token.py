@@ -159,11 +159,18 @@ async def get_current_user(token: Annotated[str, Depends(oauth2_scheme)], db: Se
         if current_utc_timestamp > expires:
             raise credentials_exception
  
-        user = get_user(db, member_id=username)
-        if user is None:
+        result = get_user(db, member_id=username)
+        if result['status'] != 'success':
             raise credentials_exception
-        
-        return user
+
+        if result['user'].get('disabled'):
+            raise HTTPException(
+                status_code=status.HTTP_401_UNAUTHORIZED,
+                detail="This account has been disabled",
+                headers={"WWW-Authenticate": "Bearer"},
+            )
+
+        return result
 
     except JWTError:
         raise credentials_exception

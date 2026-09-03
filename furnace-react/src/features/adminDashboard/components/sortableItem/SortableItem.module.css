@@ -1,0 +1,19 @@
+.dragHandle {
+	display: flex;
+	align-items: center;
+	color: #777;
+	cursor: grab;
+	touch-action: none;
+}
+
+.dragHandle:hover {
+	color: var(--text-off-white);
+}
+
+.dragging {
+	position: relative;
+	z-index: 2;
+	border-color: var(--orange-accent);
+	box-shadow: 0 6px 18px rgba(0, 0, 0, 0.35);
+	cursor: grabbing;
+}

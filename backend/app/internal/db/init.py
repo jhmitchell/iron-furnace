@@ -2,7 +2,7 @@ import os
 import logging
 from sqlalchemy import text
 from sqlalchemy.orm import Session
-from app.internal.db.users import create_user
+from app.internal.db.users import create_user, get_user, update_user
 from app.internal.token import hash_password
 
 logging.basicConfig(level=logging.INFO)
@@ -99,6 +99,19 @@ def create_board_members_table(db: Session):
     check_and_create_table(db, query, "board_members")
 
 
+def create_banner_table(db: Session):
+    query = """
+    CREATE TABLE IF NOT EXISTS banner (
+        id INT PRIMARY KEY,
+        message TEXT NOT NULL,
+        link_text VARCHAR(255),
+        link_url VARCHAR(255),
+        updated_at DATETIME NOT NULL
+    );
+    """
+    check_and_create_table(db, query, "banner")
+
+
 def create_root_users(db: Session):
     # Get root user information from environment variables
     root_username = os.getenv("ROOT_USERNAME")
@@ -123,7 +136,7 @@ def create_root_users(db: Session):
         hashed_password,
         root_first_name,
         root_last_name,
-        True
+        False
     )
 
     if result['status'] == 'success':
@@ -136,8 +149,19 @@ def create_root_users(db: Session):
         hashed_password_admin,
         admin_first_name,
         admin_last_name,
-        True
+        False
     )
 
     if result['status'] == 'success':
         logger.info(f'Created admin user {admin_username}')
+
+    # The disabled flag is now enforced at login. Earlier versions seeded these
+    # accounts with disabled=True by mistake, so make sure the configured
+    # root/admin accounts are usable.
+    for member_id in (root_username, admin_username):
+        if not member_id:
+            continue
+        existing = get_user(db, member_id)
+        if existing['status'] == 'success' and existing['user'].get('disabled'):
+            update_user(db, member_id, disabled=False)
+            logger.info(f'Re-enabled account {member_id}')

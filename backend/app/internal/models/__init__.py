@@ -4,3 +4,4 @@ from . import users
 from . import business_hours
 from . import sponsors
 from . import board_members
+from . import banner

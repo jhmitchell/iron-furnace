@@ -119,6 +119,22 @@ def authenticate_user(db: Session, member_id: str, password: str) -> Dict[str, U
     except Exception as e:
         return {'status': 'error', 'detail': str(e)}
 
+def clear_refresh_token(db: Session, member_id: str) -> Dict[str, str]:
+    """Revokes the stored refresh token so it can no longer be exchanged for access tokens."""
+    try:
+        user = db.query(User).filter(User.member_id == member_id).first()
+        if not user:
+            return {'status': 'fail', 'detail': 'User not found.'}
+
+        user.refresh_token = None
+        user.refresh_token_expires_at = None
+        db.commit()
+        return {'status': 'success', 'detail': 'Refresh token revoked.'}
+    except Exception as e:
+        db.rollback()
+        return {'status': 'error', 'detail': str(e)}
+
+
 def store_refresh_token(db: Session, member_id: str, refresh_token: str, expires_at: datetime) -> Dict[str, Union[Dict, str]]:
     try:
         user = db.query(User).filter(User.member_id == member_id).first()

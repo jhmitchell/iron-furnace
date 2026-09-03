@@ -1,0 +1,25 @@
+.addForm {
+	display: flex;
+	align-items: flex-end;
+	gap: 12px;
+	margin-bottom: 18px;
+}
+
+.dateField {
+	flex: 0 0 165px;
+}
+
+.addButton {
+	flex-shrink: 0;
+	height: 38px;
+}
+
+@media (max-width: 600px) {
+	.addForm {
+		flex-wrap: wrap;
+	}
+
+	.dateField {
+		flex-basis: 100%;
+	}
+}

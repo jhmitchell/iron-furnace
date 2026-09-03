@@ -1,13 +1,14 @@
 import React from 'react';
 import { NavLink, Outlet, useNavigate } from 'react-router-dom';
-import { MdDashboard, MdEvent, MdHandshake, MdGroups, MdSchedule } from 'react-icons/md';
+import { MdDashboard, MdEvent, MdHandshake, MdGroups, MdSchedule, MdCampaign, MdOpenInNew } from 'react-icons/md';
 import styles from './AdminDashboard.module.css';
 import { useAuth } from '/src/features/authentication';
 
-const DashLink = ({ to, icon, children }) => {
+const DashLink = ({ to, icon, end = false, children }) => {
 	return (
 		<NavLink
 			to={to}
+			end={end}
 			className={({ isActive }) => isActive ? `${styles.navLink} ${styles.activeNavLink}` : styles.navLink}
 		>
 			{icon && <span className={styles.navIcon}>{icon}</span>}
@@ -27,7 +28,7 @@ const SidebarGroup = ({ label, children }) => {
 
 const AdminDashboard = () => {
 	const navigate = useNavigate();
-	const { logoutUser } = useAuth();
+	const { user, logoutUser } = useAuth();
 
 	const handleLogout = () => {
 		logoutUser();
@@ -37,10 +38,15 @@ const AdminDashboard = () => {
 	return (
 		<div className={styles.adminDashboard}>
 			<nav className={styles.sidebar}>
+				<div className={styles.brand}>
+					<span className={styles.brandTitle}>Cornwall Iron Furnace</span>
+					<span className={styles.brandSub}>Admin dashboard</span>
+				</div>
 				<SidebarGroup label="Overview">
-					<DashLink to="/admin/" icon={<MdDashboard />}>Dashboard</DashLink>
+					<DashLink to="/admin/" icon={<MdDashboard />} end>Dashboard</DashLink>
 				</SidebarGroup>
 				<SidebarGroup label="Content">
+					<DashLink to="/admin/banner" icon={<MdCampaign />}>Banner</DashLink>
 					<DashLink to="/admin/events" icon={<MdEvent />}>Events</DashLink>
 					<DashLink to="/admin/sponsors" icon={<MdHandshake />}>Sponsors</DashLink>
 					<DashLink to="/admin/board" icon={<MdGroups />}>Board</DashLink>
@@ -51,6 +57,12 @@ const AdminDashboard = () => {
 			</nav>
 			<div className={styles.mainContent}>
 				<header className={styles.topBar}>
+					<a href="/" target="_blank" rel="noopener noreferrer" className={styles.viewSite}>
+						<MdOpenInNew /> View website
+					</a>
+					<span className={styles.userInfo}>
+						Signed in as <strong>{user?.username}</strong>
+					</span>
 					<button onClick={handleLogout} className={styles.logoutButton}>Logout</button>
 				</header>
 				<div className={styles.content}>

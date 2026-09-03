@@ -1,0 +1,21 @@
+.preview {
+	background: #16171b;
+	border: 1px solid #3b3c45;
+	border-radius: 8px;
+	overflow: hidden;
+	margin-bottom: 20px;
+	min-height: 48px;
+}
+
+.previewEmpty {
+	padding: 14px 16px;
+	color: #777;
+	font-size: 0.9rem;
+	text-align: center;
+}
+
+.charCount {
+	align-self: flex-end;
+	font-size: 0.75rem;
+	color: #777;
+}

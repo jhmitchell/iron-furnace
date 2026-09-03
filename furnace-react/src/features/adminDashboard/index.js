@@ -3,3 +3,4 @@ export { default as AdminOperatingHours } from './components/adminOperatingHours
 export { default as AdminEvents } from './components/adminEvents/AdminEvents';
 export { default as AdminSponsors } from './components/adminSponsors/AdminSponsors';
 export { default as AdminBoard } from './components/adminBoard/AdminBoard';
+export { default as AdminBanner } from './components/adminBanner/AdminBanner';

@@ -1,0 +1,446 @@
+/*
+  Shared admin dashboard styles. Every admin page composes these classes so
+  the pages read as one product: dark cards on the #292a30 content area,
+  orange primary actions, muted secondary actions, and consistent list rows.
+*/
+
+/* Page scaffolding */
+.page {
+	max-width: 1100px;
+}
+
+.pageNarrow {
+	max-width: 720px;
+}
+
+.pageHeader {
+	display: flex;
+	align-items: flex-start;
+	justify-content: space-between;
+	gap: 16px;
+	flex-wrap: wrap;
+	margin-bottom: 24px;
+}
+
+.pageTitle {
+	color: var(--text-off-white);
+	font-size: 1.5rem;
+	font-weight: 600;
+	margin-bottom: 6px;
+}
+
+.pageDescription {
+	color: #aaa;
+	font-size: 0.92rem;
+	max-width: 640px;
+}
+
+.pageActions {
+	display: flex;
+	gap: 10px;
+	flex-wrap: wrap;
+}
+
+.stack {
+	display: flex;
+	flex-direction: column;
+	gap: 20px;
+}
+
+.grid2 {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+	gap: 20px;
+	align-items: start;
+}
+
+/* Cards */
+.card {
+	background: #1f2026;
+	border: 1px solid #3b3c45;
+	border-radius: 10px;
+	padding: 20px 22px;
+}
+
+.cardHeader {
+	display: flex;
+	align-items: flex-start;
+	justify-content: space-between;
+	gap: 12px;
+	margin-bottom: 16px;
+}
+
+.cardTitle {
+	color: var(--text-off-white);
+	font-size: 1.05rem;
+	font-weight: 600;
+}
+
+.cardDescription {
+	color: #999;
+	font-size: 0.85rem;
+	margin-top: 2px;
+}
+
+.sectionLabel {
+	font-size: 0.7rem;
+	text-transform: uppercase;
+	letter-spacing: 1.2px;
+	color: #777;
+	font-weight: 600;
+	margin-bottom: 6px;
+}
+
+.spaceTop {
+	margin-top: 16px;
+}
+
+/* Forms */
+.form {
+	display: flex;
+	flex-direction: column;
+	gap: 16px;
+}
+
+.row {
+	display: flex;
+	gap: 16px;
+	align-items: flex-start;
+}
+
+.field {
+	display: flex;
+	flex-direction: column;
+	gap: 6px;
+	flex: 1;
+	min-width: 0;
+}
+
+.label {
+	font-size: 0.85rem;
+	color: #ccc;
+	font-weight: 500;
+}
+
+.input,
+.textarea,
+.select {
+	width: 100%;
+	padding: 8px 12px;
+	border-radius: 6px;
+	border: 1px solid #555;
+	background: #2a2b33;
+	color: var(--text-off-white);
+	font-size: 0.95rem;
+	font-family: inherit;
+	color-scheme: dark;
+}
+
+.input::placeholder,
+.textarea::placeholder {
+	color: #777;
+}
+
+.input:focus,
+.textarea:focus,
+.select:focus {
+	outline: none;
+	border-color: var(--orange-accent);
+}
+
+.input:disabled,
+.textarea:disabled,
+.select:disabled {
+	opacity: 0.6;
+}
+
+.inputSmall {
+	padding: 5px 10px;
+	font-size: 0.9rem;
+}
+
+.textarea {
+	resize: vertical;
+	min-height: 72px;
+}
+
+.fileInput {
+	color: #bbb;
+	font-size: 0.9rem;
+}
+
+.fileInput::file-selector-button {
+	margin-right: 10px;
+	padding: 6px 12px;
+	border: 1px solid #555;
+	border-radius: 6px;
+	background: #3b3c45;
+	color: var(--text-off-white);
+	font-family: inherit;
+	font-size: 0.85rem;
+	cursor: pointer;
+}
+
+.fileInput::file-selector-button:hover {
+	background: #4a4b55;
+}
+
+.hint {
+	font-size: 0.78rem;
+	color: #777;
+}
+
+.fieldError {
+	color: #ff8a94;
+	font-size: 0.8rem;
+}
+
+/* Buttons */
+.actions {
+	display: flex;
+	gap: 10px;
+	flex-wrap: wrap;
+	align-items: center;
+}
+
+.button {
+	display: inline-flex;
+	align-items: center;
+	gap: 6px;
+	padding: 8px 18px;
+	border: none;
+	border-radius: 6px;
+	cursor: pointer;
+	font-size: 0.93rem;
+	font-family: inherit;
+	text-decoration: none;
+	line-height: 1.4;
+	transition: background-color 0.2s;
+}
+
+.button:disabled {
+	opacity: 0.5;
+	cursor: not-allowed;
+}
+
+.buttonSmall {
+	padding: 5px 12px;
+	font-size: 0.85rem;
+}
+
+.buttonPrimary {
+	background: var(--orange-accent);
+	color: var(--text-off-white);
+}
+
+.buttonPrimary:not(:disabled):hover {
+	background-color: rgb(161, 113, 59);
+}
+
+.buttonSecondary {
+	background: #4a4b55;
+	color: var(--text-off-white);
+}
+
+.buttonSecondary:not(:disabled):hover {
+	background-color: #5a5b66;
+}
+
+.buttonDanger {
+	background: #8f2f2f;
+	color: white;
+}
+
+.buttonDanger:not(:disabled):hover {
+	background-color: #a83838;
+}
+
+.pushRight {
+	margin-left: auto;
+}
+
+.iconButton {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	padding: 6px;
+	border: none;
+	border-radius: 6px;
+	background: none;
+	color: #aaa;
+	cursor: pointer;
+	font-size: 1.1rem;
+	line-height: 1;
+	transition: background-color 0.15s, color 0.15s;
+}
+
+.iconButton:not(:disabled):hover {
+	background: rgba(255, 255, 255, 0.08);
+	color: var(--text-off-white);
+}
+
+.iconButton:disabled {
+	opacity: 0.4;
+	cursor: not-allowed;
+}
+
+.iconButtonDanger {
+	color: #e57373;
+}
+
+.iconButtonDanger:not(:disabled):hover {
+	background: rgba(220, 53, 69, 0.15);
+	color: #ff8a94;
+}
+
+/* Lists */
+.list {
+	display: flex;
+	flex-direction: column;
+	gap: 6px;
+}
+
+.listItem {
+	display: flex;
+	align-items: center;
+	gap: 12px;
+	padding: 10px 14px;
+	background: #2a2b33;
+	border: 1px solid #3b3c45;
+	border-radius: 8px;
+	color: var(--text-off-white);
+}
+
+.listItemMain {
+	flex: 1;
+	min-width: 0;
+	font-size: 0.95rem;
+}
+
+.listItemMeta {
+	color: #999;
+	font-size: 0.82rem;
+}
+
+.listItemActions {
+	display: flex;
+	align-items: center;
+	gap: 2px;
+	flex-shrink: 0;
+}
+
+.countPill {
+	display: inline-block;
+	min-width: 26px;
+	padding: 2px 9px;
+	border-radius: 999px;
+	background: #3b3c45;
+	color: #ccc;
+	font-size: 0.8rem;
+	font-weight: 600;
+	text-align: center;
+}
+
+.emptyState {
+	padding: 22px 16px;
+	text-align: center;
+	color: #777;
+	font-size: 0.9rem;
+	border: 1px dashed #3b3c45;
+	border-radius: 8px;
+}
+
+/* Badges and status */
+.badge {
+	display: inline-block;
+	padding: 4px 10px;
+	border-radius: 999px;
+	font-size: 0.75rem;
+	font-weight: 600;
+	letter-spacing: 0.4px;
+	text-transform: uppercase;
+	white-space: nowrap;
+}
+
+.badgeLive {
+	background: rgba(76, 175, 80, 0.18);
+	color: #7ed984;
+	border: 1px solid rgba(76, 175, 80, 0.5);
+}
+
+.badgeOff {
+	background: rgba(255, 255, 255, 0.06);
+	color: #aaa;
+	border: 1px solid #555;
+}
+
+.badgeClosed {
+	background: rgba(220, 53, 69, 0.15);
+	color: #ff8a94;
+	border: 1px solid rgba(220, 53, 69, 0.4);
+}
+
+.status {
+	padding: 10px 14px;
+	border-radius: 6px;
+	font-size: 0.9rem;
+}
+
+.statusSuccess {
+	background: rgba(76, 175, 80, 0.15);
+	color: #7ed984;
+	border: 1px solid rgba(76, 175, 80, 0.4);
+}
+
+.statusError {
+	background: rgba(220, 53, 69, 0.15);
+	color: #ff8a94;
+	border: 1px solid rgba(220, 53, 69, 0.4);
+}
+
+@media (max-width: 768px) {
+	.row {
+		flex-direction: column;
+	}
+
+	.grid2 {
+		grid-template-columns: 1fr;
+	}
+
+	.pushRight {
+		margin-left: 0;
+	}
+}
+
+/* Date badge (holidays, events) */
+.dateBadge {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	flex-shrink: 0;
+	width: 46px;
+	padding: 4px 0;
+	background: #1f2026;
+	border: 1px solid #3b3c45;
+	border-radius: 6px;
+	line-height: 1.1;
+}
+
+.dateBadgeMonth {
+	font-size: 0.65rem;
+	font-weight: 600;
+	letter-spacing: 0.8px;
+	text-transform: uppercase;
+	color: var(--orange-accent);
+}
+
+.dateBadgeDay {
+	font-size: 1.15rem;
+	font-weight: 700;
+	color: var(--text-off-white);
+}
+
+.past {
+	opacity: 0.55;
+}

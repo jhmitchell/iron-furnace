@@ -18,6 +18,7 @@ from ..internal.db.users import (
     create_user,
     get_user,
     store_refresh_token,
+    clear_refresh_token,
 )
 from datetime import datetime, timedelta, timezone
 from dotenv import load_dotenv
@@ -29,6 +30,17 @@ load_dotenv()
 # Read the values from the .env file
 ACCESS_TOKEN_EXPIRE_MINUTES = int(os.getenv("ACCESS_TOKEN_EXPIRE_MINUTES"))
 REFRESH_TOKEN_EXPIRE_DAYS = int(os.getenv("REFRESH_TOKEN_EXPIRE_DAYS"))
+
+# Only send the refresh cookie over HTTPS outside local development
+COOKIE_SECURE = os.getenv("ENV", "dev") != "dev"
+
+
+def disabled_account_exception() -> HTTPException:
+    return HTTPException(
+        status_code=status.HTTP_401_UNAUTHORIZED,
+        detail="This account has been disabled",
+        headers={"WWW-Authenticate": "Bearer"},
+    )
 
 router = APIRouter()
 
@@ -57,6 +69,8 @@ async def login_for_access_token(
         )
     
     user = result['user']
+    if user.get('disabled'):
+        raise disabled_account_exception()
 
     # Create an access token with a specified expiration time
     access_token_expires = timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
@@ -93,6 +107,7 @@ async def login_for_access_token(
         value=refresh_token,
         expires=refresh_token_expires_at,
         httponly=True,
+        secure=COOKIE_SECURE,
         samesite="Strict",
     )
 
@@ -140,6 +155,8 @@ async def refresh_access_token(refresh_token: str = Cookie(None), db: Session = 
         )
     
     user = result['user']
+    if user.get('disabled'):
+        raise disabled_account_exception()
 
     # Create a new access token
     access_token_expires = timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
@@ -175,9 +192,32 @@ async def refresh_access_token(refresh_token: str = Cookie(None), db: Session = 
         value=new_refresh_token,
         expires=refresh_token_expires_at,
         httponly=True,
+        secure=COOKIE_SECURE,
         samesite="Strict",
     )
 
+    return response
+
+
+@router.post("/logout")
+async def logout(refresh_token: str = Cookie(None), db: Session = Depends(get_db)):
+    """
+    Ends the session: revokes the stored refresh token (so the cookie can no
+    longer be exchanged for new access tokens) and clears the cookie. Safe to
+    call without a cookie or with an already-invalid one.
+    """
+    if refresh_token:
+        username = verify_refresh_token(refresh_token, db)
+        if username:
+            clear_refresh_token(db, username)
+
+    response = JSONResponse(content={"message": "Logged out."})
+    response.delete_cookie(
+        key="refresh_token",
+        httponly=True,
+        secure=COOKIE_SECURE,
+        samesite="Strict",
+    )
     return response
 
 

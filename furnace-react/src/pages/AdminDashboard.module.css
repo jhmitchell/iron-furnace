@@ -16,6 +16,27 @@
   padding-top: 10px;
 }
 
+.brand {
+  display: flex;
+  flex-direction: column;
+  padding: 8px 20px 16px;
+  margin-bottom: 8px;
+  border-bottom: 1px solid #3b3c45;
+}
+
+.brandTitle {
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: var(--text-off-white);
+}
+
+.brandSub {
+  color: #777;
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
 .sidebarGroup {
   margin-bottom: 8px;
 }
@@ -63,15 +84,43 @@
   flex: 1;
   display: flex;
   flex-direction: column;
+  min-width: 0;
+  min-height: 0;
 }
 
 .topBar {
   background-color: var(--dark-background);
-  padding: 1rem;
+  padding: 0.75rem 1.5rem;
   display: flex;
   align-items: center;
   justify-content: flex-end;
+  gap: 18px;
   border-bottom: 1px solid #3b3c45;
+}
+
+.viewSite {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-right: auto;
+  color: #aaa;
+  font-size: 0.9rem;
+  text-decoration: none;
+  transition: color 0.15s;
+}
+
+.viewSite:hover {
+  color: var(--text-off-white);
+}
+
+.userInfo {
+  color: #aaa;
+  font-size: 0.9rem;
+}
+
+.userInfo strong {
+  color: var(--text-off-white);
+  font-weight: 600;
 }
 
 .logoutButton {
@@ -91,6 +140,60 @@
 
 .content {
   flex-grow: 1;
+  min-height: 0;
   padding: 2rem;
   overflow-y: auto;
+}
+
+/* Small screens: sidebar becomes a horizontal strip above the content */
+@media (max-width: 768px) {
+  .adminDashboard {
+    flex-direction: column;
+    height: auto;
+    min-height: 100vh;
+  }
+
+  .sidebar {
+    width: 100%;
+    flex-direction: row;
+    align-items: center;
+    overflow-x: auto;
+    padding: 6px 8px;
+    border-right: none;
+    border-bottom: 1px solid #3b3c45;
+  }
+
+  .brand {
+    display: none;
+  }
+
+  .sidebarGroup {
+    display: flex;
+    margin-bottom: 0;
+  }
+
+  .groupLabel {
+    display: none;
+  }
+
+  .navLink {
+    height: 38px;
+    padding: 0 12px;
+    border-radius: 6px;
+    white-space: nowrap;
+  }
+
+  .topBar {
+    flex-wrap: wrap;
+    gap: 10px;
+    padding: 0.75rem 1rem;
+  }
+
+  .userInfo {
+    display: none;
+  }
+
+  .content {
+    padding: 1.25rem 1rem;
+  }
 }

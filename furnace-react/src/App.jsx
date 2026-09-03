@@ -22,7 +22,7 @@ import {
 } from './pages';
 import ProtectedRoute from "./components/protectedRoute/ProtectedRoute";
 import { AuthProvider } from "./features/authentication";
-import { AdminOverview, AdminOperatingHours, AdminEvents, AdminSponsors, AdminBoard } from "./features/adminDashboard";
+import { AdminOverview, AdminOperatingHours, AdminEvents, AdminSponsors, AdminBoard, AdminBanner } from "./features/adminDashboard";
 import "./App.css";
 
 /**
@@ -159,6 +159,7 @@ const RoutesComponent = () => {
             { path: "events", element: <AdminEvents /> },
             { path: "sponsors", element: <AdminSponsors /> },
             { path: "board", element: <AdminBoard /> },
+            { path: "banner", element: <AdminBanner /> },
           ]
         },
         // ... other protected routes ...

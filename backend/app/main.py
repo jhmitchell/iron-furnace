@@ -34,7 +34,13 @@ else:
 
 logger = logging.getLogger(__name__)
 
-app = FastAPI()
+# Interactive API docs are only exposed in local development
+IS_DEV = env == "dev"
+app = FastAPI(
+    docs_url="/docs" if IS_DEV else None,
+    redoc_url="/redoc" if IS_DEV else None,
+    openapi_url="/openapi.json" if IS_DEV else None,
+)
 
 # Define CORS settings based on the environment
 origins = [client_url] if client_url else []
@@ -47,9 +53,9 @@ app.add_middleware(
 )
 
 # Import routers and initialize them
-from .routers import authentication, users, hours, events, sponsors, board_members
+from .routers import authentication, users, hours, events, sponsors, board_members, banner
 from .internal.db.session import get_db
-from .internal.db.init import create_users_table, create_hours_table, create_holidays_table, create_events_table, create_sponsors_table, create_board_members_table, create_root_users
+from .internal.db.init import create_users_table, create_hours_table, create_holidays_table, create_events_table, create_sponsors_table, create_board_members_table, create_banner_table, create_root_users
 from .internal.db.jobs import delete_expired_events
 
 app.include_router(authentication.router, prefix=f'{API_V1_PREFIX}{AUTH_PREFIX}')
@@ -58,6 +64,7 @@ app.include_router(hours.router, prefix=f'{API_V1_PREFIX}')
 app.include_router(events.router, prefix=f'{API_V1_PREFIX}')
 app.include_router(sponsors.router, prefix=f'{API_V1_PREFIX}')
 app.include_router(board_members.router, prefix=f'{API_V1_PREFIX}')
+app.include_router(banner.router, prefix=f'{API_V1_PREFIX}')
 
 app.mount("/static", StaticFiles(directory="static"), name="static")
 
@@ -89,6 +96,7 @@ async def startup_event():
         create_events_table(db)
         create_sponsors_table(db)
         create_board_members_table(db)
+        create_banner_table(db)
         create_root_users(db)
     finally:
         db.close()

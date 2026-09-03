@@ -3,6 +3,7 @@ import { DndContext, closestCenter, PointerSensor, useSensor, useSensors } from 
 import { SortableContext, verticalListSortingStrategy, arrayMove } from '@dnd-kit/sortable';
 import { getAllSponsors, createSponsor, editSponsor, deleteSponsor, reorderSponsors } from '/src/features/sponsors';
 import SortableItem from '../sortableItem/SortableItem';
+import { AdminPage, AdminCard, StatusMessage, EmptyState, ui } from '../ui';
 import styles from './AdminSponsors.module.css';
 
 const AdminSponsors = () => {
@@ -10,6 +11,7 @@ const AdminSponsors = () => {
 	const [newName, setNewName] = useState('');
 	const [editingId, setEditingId] = useState(null);
 	const [editName, setEditName] = useState('');
+	const [status, setStatus] = useState(null);
 
 	const sensors = useSensors(
 		useSensor(PointerSensor, { activationConstraint: { distance: 5 } })
@@ -20,7 +22,7 @@ const AdminSponsors = () => {
 			const data = await getAllSponsors();
 			setSponsors(data);
 		} catch (error) {
-			console.error(error);
+			setStatus({ type: 'error', text: 'Failed to load sponsors.' });
 		}
 	};
 
@@ -31,34 +33,40 @@ const AdminSponsors = () => {
 	const handleCreate = async (e) => {
 		e.preventDefault();
 		if (!newName.trim()) return;
+		setStatus(null);
 		try {
 			await createSponsor({ name: newName.trim() });
 			setNewName('');
 			fetchSponsors();
+			setStatus({ type: 'success', text: 'Sponsor added.' });
 		} catch (error) {
-			alert('Failed to create sponsor.');
+			setStatus({ type: 'error', text: 'Failed to add the sponsor.' });
 		}
 	};
 
 	const handleEdit = async (id) => {
 		if (!editName.trim()) return;
+		setStatus(null);
 		try {
 			await editSponsor(id, { name: editName.trim() });
 			setEditingId(null);
 			setEditName('');
 			fetchSponsors();
+			setStatus({ type: 'success', text: 'Sponsor updated.' });
 		} catch (error) {
-			alert('Failed to edit sponsor.');
+			setStatus({ type: 'error', text: 'Failed to update the sponsor.' });
 		}
 	};
 
-	const handleDelete = async (id) => {
-		if (!confirm('Delete this sponsor?')) return;
+	const handleDelete = async (sponsor) => {
+		if (!window.confirm(`Delete "${sponsor.name}"?`)) return;
+		setStatus(null);
 		try {
-			await deleteSponsor(id);
+			await deleteSponsor(sponsor.id);
 			fetchSponsors();
+			setStatus({ type: 'success', text: 'Sponsor deleted.' });
 		} catch (error) {
-			alert('Failed to delete sponsor.');
+			setStatus({ type: 'error', text: 'Failed to delete the sponsor.' });
 		}
 	};
 
@@ -74,7 +82,7 @@ const AdminSponsors = () => {
 		try {
 			await reorderSponsors(reordered.map(s => s.id));
 		} catch (error) {
-			console.error('Failed to save order:', error);
+			setStatus({ type: 'error', text: 'Failed to save the new order.' });
 			fetchSponsors();
 		}
 	};
@@ -90,53 +98,71 @@ const AdminSponsors = () => {
 	};
 
 	return (
-		<div className={styles.container}>
-			<h2>Manage Sponsors</h2>
+		<AdminPage
+			narrow
+			title="Sponsors"
+			description="Sponsor names shown on the website. Drag a row by its handle to change the display order."
+		>
+			<div className={ui.stack}>
+				<AdminCard title="Add a sponsor">
+					<form onSubmit={handleCreate} className={styles.createForm}>
+						<input
+							type="text"
+							className={ui.input}
+							value={newName}
+							onChange={(e) => setNewName(e.target.value)}
+							placeholder="Sponsor name"
+							aria-label="Sponsor name"
+						/>
+						<button type="submit" className={`${ui.button} ${ui.buttonPrimary}`} disabled={!newName.trim()}>
+							Add
+						</button>
+					</form>
+				</AdminCard>
 
-			<form onSubmit={handleCreate} className={styles.createForm}>
-				<input
-					type="text"
-					value={newName}
-					onChange={(e) => setNewName(e.target.value)}
-					placeholder="New sponsor name"
-					className={styles.input}
-				/>
-				<button type="submit" className={styles.addButton}>Add</button>
-			</form>
-
-			<DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
-				<SortableContext items={sponsors.map(s => s.id)} strategy={verticalListSortingStrategy}>
-					{sponsors.map((sponsor) => (
-						<SortableItem
-							key={sponsor.id}
-							id={sponsor.id}
-							onEdit={() => startEdit(sponsor)}
-							onDelete={() => handleDelete(sponsor.id)}
-						>
-							{editingId === sponsor.id ? (
-								<span className={styles.editRow}>
-									<input
-										type="text"
-										value={editName}
-										onChange={(e) => setEditName(e.target.value)}
-										className={styles.editInput}
-										autoFocus
-										onKeyDown={(e) => {
-											if (e.key === 'Enter') handleEdit(sponsor.id);
-											if (e.key === 'Escape') cancelEdit();
-										}}
-									/>
-									<button className={styles.saveButton} onClick={() => handleEdit(sponsor.id)}>Save</button>
-									<button className={styles.cancelButton} onClick={cancelEdit}>Cancel</button>
-								</span>
-							) : (
-								sponsor.name
-							)}
-						</SortableItem>
-					))}
-				</SortableContext>
-			</DndContext>
-		</div>
+				<AdminCard title="Current sponsors" aside={<span className={ui.countPill}>{sponsors.length}</span>}>
+					{sponsors.length === 0 ? (
+						<EmptyState>No sponsors yet. Add one above.</EmptyState>
+					) : (
+						<DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
+							<SortableContext items={sponsors.map(s => s.id)} strategy={verticalListSortingStrategy}>
+								<div className={ui.list}>
+									{sponsors.map((sponsor) => (
+										<SortableItem
+											key={sponsor.id}
+											id={sponsor.id}
+											onEdit={() => startEdit(sponsor)}
+											onDelete={() => handleDelete(sponsor)}
+										>
+											{editingId === sponsor.id ? (
+												<span className={styles.editRow}>
+													<input
+														type="text"
+														className={`${ui.input} ${ui.inputSmall}`}
+														value={editName}
+														onChange={(e) => setEditName(e.target.value)}
+														autoFocus
+														onKeyDown={(e) => {
+															if (e.key === 'Enter') handleEdit(sponsor.id);
+															if (e.key === 'Escape') cancelEdit();
+														}}
+													/>
+													<button type="button" className={`${ui.button} ${ui.buttonPrimary} ${ui.buttonSmall}`} onClick={() => handleEdit(sponsor.id)}>Save</button>
+													<button type="button" className={`${ui.button} ${ui.buttonSecondary} ${ui.buttonSmall}`} onClick={cancelEdit}>Cancel</button>
+												</span>
+											) : (
+												sponsor.name
+											)}
+										</SortableItem>
+									))}
+								</div>
+							</SortableContext>
+						</DndContext>
+					)}
+					<StatusMessage status={status} className={ui.spaceTop} />
+				</AdminCard>
+			</div>
+		</AdminPage>
 	);
 };
 

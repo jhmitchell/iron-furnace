@@ -3,6 +3,7 @@ import { DndContext, closestCenter, PointerSensor, useSensor, useSensors } from 
 import { SortableContext, verticalListSortingStrategy, arrayMove } from '@dnd-kit/sortable';
 import { getAllBoardMembers, createBoardMember, editBoardMember, deleteBoardMember, reorderBoardMembers } from '/src/features/boardMembers';
 import SortableItem from '../sortableItem/SortableItem';
+import { AdminPage, AdminCard, StatusMessage, EmptyState, ui } from '../ui';
 import styles from './AdminBoard.module.css';
 
 const AdminBoard = () => {
@@ -12,6 +13,7 @@ const AdminBoard = () => {
 	const [editingId, setEditingId] = useState(null);
 	const [editName, setEditName] = useState('');
 	const [editTitle, setEditTitle] = useState('');
+	const [status, setStatus] = useState(null);
 
 	const sensors = useSensors(
 		useSensor(PointerSensor, { activationConstraint: { distance: 5 } })
@@ -22,7 +24,7 @@ const AdminBoard = () => {
 			const data = await getAllBoardMembers();
 			setMembers(data);
 		} catch (error) {
-			console.error(error);
+			setStatus({ type: 'error', text: 'Failed to load board members.' });
 		}
 	};
 
@@ -33,6 +35,7 @@ const AdminBoard = () => {
 	const handleCreate = async (e) => {
 		e.preventDefault();
 		if (!newName.trim()) return;
+		setStatus(null);
 		try {
 			await createBoardMember({
 				name: newName.trim(),
@@ -41,13 +44,15 @@ const AdminBoard = () => {
 			setNewName('');
 			setNewTitle('');
 			fetchMembers();
+			setStatus({ type: 'success', text: 'Board member added.' });
 		} catch (error) {
-			alert('Failed to create board member.');
+			setStatus({ type: 'error', text: 'Failed to add the board member.' });
 		}
 	};
 
 	const handleEdit = async (id) => {
 		if (!editName.trim()) return;
+		setStatus(null);
 		try {
 			await editBoardMember(id, {
 				name: editName.trim(),
@@ -57,18 +62,21 @@ const AdminBoard = () => {
 			setEditName('');
 			setEditTitle('');
 			fetchMembers();
+			setStatus({ type: 'success', text: 'Board member updated.' });
 		} catch (error) {
-			alert('Failed to edit board member.');
+			setStatus({ type: 'error', text: 'Failed to update the board member.' });
 		}
 	};
 
-	const handleDelete = async (id) => {
-		if (!confirm('Delete this board member?')) return;
+	const handleDelete = async (member) => {
+		if (!window.confirm(`Remove ${member.name} from the board?`)) return;
+		setStatus(null);
 		try {
-			await deleteBoardMember(id);
+			await deleteBoardMember(member.id);
 			fetchMembers();
+			setStatus({ type: 'success', text: 'Board member removed.' });
 		} catch (error) {
-			alert('Failed to delete board member.');
+			setStatus({ type: 'error', text: 'Failed to remove the board member.' });
 		}
 	};
 
@@ -84,7 +92,7 @@ const AdminBoard = () => {
 		try {
 			await reorderBoardMembers(reordered.map(m => m.id));
 		} catch (error) {
-			console.error('Failed to save order:', error);
+			setStatus({ type: 'error', text: 'Failed to save the new order.' });
 			fetchMembers();
 		}
 	};
@@ -101,80 +109,94 @@ const AdminBoard = () => {
 		setEditTitle('');
 	};
 
-	const formatMember = (member) => {
-		if (member.title) {
-			return <>{member.name}, <b>{member.title}</b></>;
-		}
-		return member.name;
+	const handleEditKeys = (id) => (e) => {
+		if (e.key === 'Enter') handleEdit(id);
+		if (e.key === 'Escape') cancelEdit();
 	};
 
 	return (
-		<div className={styles.container}>
-			<h2>Manage Board of Directors</h2>
+		<AdminPage
+			narrow
+			title="Board of Directors"
+			description="Board members shown on the website, in this order. Drag a row by its handle to reorder."
+		>
+			<div className={ui.stack}>
+				<AdminCard title="Add a board member">
+					<form onSubmit={handleCreate} className={styles.createForm}>
+						<input
+							type="text"
+							className={ui.input}
+							value={newName}
+							onChange={(e) => setNewName(e.target.value)}
+							placeholder="Name"
+							aria-label="Name"
+						/>
+						<input
+							type="text"
+							className={ui.input}
+							value={newTitle}
+							onChange={(e) => setNewTitle(e.target.value)}
+							placeholder="Title (optional), e.g. President"
+							aria-label="Title (optional)"
+						/>
+						<button type="submit" className={`${ui.button} ${ui.buttonPrimary}`} disabled={!newName.trim()}>
+							Add
+						</button>
+					</form>
+				</AdminCard>
 
-			<form onSubmit={handleCreate} className={styles.createForm}>
-				<input
-					type="text"
-					value={newName}
-					onChange={(e) => setNewName(e.target.value)}
-					placeholder="Name"
-					className={styles.input}
-				/>
-				<input
-					type="text"
-					value={newTitle}
-					onChange={(e) => setNewTitle(e.target.value)}
-					placeholder="Title (optional)"
-					className={styles.input}
-				/>
-				<button type="submit" className={styles.addButton}>Add</button>
-			</form>
-
-			<DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
-				<SortableContext items={members.map(m => m.id)} strategy={verticalListSortingStrategy}>
-					{members.map((member) => (
-						<SortableItem
-							key={member.id}
-							id={member.id}
-							onEdit={() => startEdit(member)}
-							onDelete={() => handleDelete(member.id)}
-						>
-							{editingId === member.id ? (
-								<span className={styles.editRow}>
-									<input
-										type="text"
-										value={editName}
-										onChange={(e) => setEditName(e.target.value)}
-										className={styles.editInput}
-										placeholder="Name"
-										autoFocus
-										onKeyDown={(e) => {
-											if (e.key === 'Enter') handleEdit(member.id);
-											if (e.key === 'Escape') cancelEdit();
-										}}
-									/>
-									<input
-										type="text"
-										value={editTitle}
-										onChange={(e) => setEditTitle(e.target.value)}
-										className={styles.editInput}
-										placeholder="Title (optional)"
-										onKeyDown={(e) => {
-											if (e.key === 'Enter') handleEdit(member.id);
-											if (e.key === 'Escape') cancelEdit();
-										}}
-									/>
-									<button className={styles.saveButton} onClick={() => handleEdit(member.id)}>Save</button>
-									<button className={styles.cancelButton} onClick={cancelEdit}>Cancel</button>
-								</span>
-							) : (
-								formatMember(member)
-							)}
-						</SortableItem>
-					))}
-				</SortableContext>
-			</DndContext>
-		</div>
+				<AdminCard title="Current board" aside={<span className={ui.countPill}>{members.length}</span>}>
+					{members.length === 0 ? (
+						<EmptyState>No board members yet. Add one above.</EmptyState>
+					) : (
+						<DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
+							<SortableContext items={members.map(m => m.id)} strategy={verticalListSortingStrategy}>
+								<div className={ui.list}>
+									{members.map((member) => (
+										<SortableItem
+											key={member.id}
+											id={member.id}
+											onEdit={() => startEdit(member)}
+											onDelete={() => handleDelete(member)}
+										>
+											{editingId === member.id ? (
+												<span className={styles.editRow}>
+													<input
+														type="text"
+														className={`${ui.input} ${ui.inputSmall}`}
+														value={editName}
+														onChange={(e) => setEditName(e.target.value)}
+														placeholder="Name"
+														autoFocus
+														onKeyDown={handleEditKeys(member.id)}
+													/>
+													<input
+														type="text"
+														className={`${ui.input} ${ui.inputSmall}`}
+														value={editTitle}
+														onChange={(e) => setEditTitle(e.target.value)}
+														placeholder="Title (optional)"
+														onKeyDown={handleEditKeys(member.id)}
+													/>
+													<button type="button" className={`${ui.button} ${ui.buttonPrimary} ${ui.buttonSmall}`} onClick={() => handleEdit(member.id)}>Save</button>
+													<button type="button" className={`${ui.button} ${ui.buttonSecondary} ${ui.buttonSmall}`} onClick={cancelEdit}>Cancel</button>
+												</span>
+											) : (
+												<>
+													<span className={styles.memberName}>{member.name}</span>
+													{member.title && <span className={styles.memberTitle}>{member.title}</span>}
+												</>
+											)}
+										</SortableItem>
+									))}
+								</div>
+							</SortableContext>
+						</DndContext>
+					)}
+					<StatusMessage status={status} className={ui.spaceTop} />
+				</AdminCard>
+			</div>
+		</AdminPage>
 	);
 };
 
