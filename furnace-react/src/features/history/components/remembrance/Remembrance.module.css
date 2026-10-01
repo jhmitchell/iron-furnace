@@ -1,0 +1,50 @@
+/* A deeper, quieter band between the paper of Chapter I and the furnace interlude. */
+.section {
+	position: relative;
+	padding: clamp(80px, 11vw, 140px) 0;
+	background-color: #d9ccb4;
+	background-image:
+		radial-gradient(80% 120% at 50% 50%, transparent 40%, rgba(80, 55, 30, 0.14)),
+		var(--paper-noise);
+	color: var(--ink);
+	border-top: 1px solid rgba(60, 40, 25, 0.18);
+}
+
+/* Centred on the page itself (not offset by the timeline), and narrow enough to clear it. */
+.frame {
+	padding: 0 var(--gutter);
+}
+
+.content {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	max-width: 44rem;
+	margin: 0 auto;
+	text-align: center;
+}
+
+.mark {
+	width: 1px;
+	height: 48px;
+	background: rgba(42, 37, 32, 0.45);
+}
+
+.title {
+	margin-top: 28px;
+	font-family: var(--sans);
+	font-size: 0.8rem;
+	font-weight: 600;
+	letter-spacing: 0.2em;
+	text-transform: uppercase;
+	color: var(--ink-soft);
+}
+
+.text {
+	margin: 22px 0 28px;
+	font-size: clamp(1.5rem, 2.8vw, 2.1rem);
+	line-height: 1.45;
+	font-style: italic;
+	color: var(--ink);
+	text-wrap: balance;
+}

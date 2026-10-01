@@ -1,0 +1,226 @@
+.hero {
+	position: relative;
+	isolation: isolate;
+	min-height: calc(100vh - 70px);
+	min-height: calc(100svh - 70px);
+	display: flex;
+	align-items: flex-end;
+	padding: clamp(96px, 14vh, 180px) 0 clamp(64px, 12vh, 140px);
+	background: var(--iron);
+	overflow: hidden;
+}
+
+/* The 1934 photograph, toned dark and slowly settling into place. */
+.photo {
+	position: absolute;
+	inset: 0;
+	z-index: -4;
+}
+
+.photo img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	object-position: 50% 40%;
+	filter: grayscale(1) sepia(0.45) brightness(0.42) contrast(1.15);
+	transform: scale(1.12);
+	animation: settle 26s cubic-bezier(0.2, 0.6, 0.2, 1) forwards;
+}
+
+@keyframes settle {
+	to {
+		transform: scale(1);
+	}
+}
+
+/* Darken the edges so the title sits on near-black, and fade into the page below. */
+.shade {
+	position: absolute;
+	inset: 0;
+	z-index: -3;
+	background:
+		linear-gradient(180deg, rgba(22, 22, 26, 0.75) 0%, rgba(22, 22, 26, 0.15) 35%, rgba(22, 22, 26, 0.55) 70%, var(--iron) 100%),
+		linear-gradient(90deg, rgba(22, 22, 26, 0.85) 0%, rgba(22, 22, 26, 0.2) 60%, rgba(22, 22, 26, 0.5) 100%);
+}
+
+/* Firelight from below, breathing slowly. */
+.glow {
+	position: absolute;
+	inset: auto -20% -35% -20%;
+	height: 85%;
+	z-index: -2;
+	background:
+		radial-gradient(45% 55% at 50% 100%, rgba(255, 130, 45, 0.42), transparent 70%),
+		radial-gradient(70% 60% at 50% 110%, rgba(255, 80, 20, 0.25), transparent 75%);
+	mix-blend-mode: screen;
+	animation: breathe 9s ease-in-out infinite;
+}
+
+@keyframes breathe {
+	0%,
+	100% {
+		opacity: 0.75;
+		transform: scale(1);
+	}
+	50% {
+		opacity: 1;
+		transform: scale(1.05);
+	}
+}
+
+.embers {
+	position: absolute;
+	inset: 0;
+	z-index: -1;
+	width: 100%;
+	height: 100%;
+}
+
+.content {
+	position: relative;
+}
+
+.title {
+	display: flex;
+	flex-direction: column;
+	font-size: clamp(3.6rem, 12vw, 10.5rem);
+	line-height: 0.9;
+	letter-spacing: -0.02em;
+	color: var(--bone);
+	text-shadow: 0 6px 40px rgba(0, 0, 0, 0.6);
+}
+
+.titleLine {
+	display: block;
+	animation: rise 1.4s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+
+.titleLine + .titleLine {
+	animation-delay: 0.25s;
+}
+
+/* "Cornwall" glows like metal from the furnace, its heat shifting slowly. */
+.titleAccent {
+	font-style: italic;
+	padding-right: 0.08em;
+	background: linear-gradient(100deg, #ffe0a8 0%, #f6a24f 30%, #d4642a 55%, #f6a24f 80%, #ffe0a8 100%);
+	background-size: 220% 100%;
+	-webkit-background-clip: text;
+	background-clip: text;
+	color: transparent;
+	text-shadow: none;
+	filter: drop-shadow(0 0 30px rgba(255, 120, 40, 0.35));
+	animation:
+		rise 1.4s cubic-bezier(0.2, 0.7, 0.2, 1) 0.25s both,
+		heat 12s ease-in-out 1.6s infinite alternate;
+}
+
+@keyframes rise {
+	from {
+		opacity: 0;
+		transform: translateY(28px);
+	}
+	to {
+		opacity: 1;
+		transform: none;
+	}
+}
+
+@keyframes heat {
+	from {
+		background-position: 0% 50%;
+	}
+	to {
+		background-position: 100% 50%;
+	}
+}
+
+.subtitle {
+	margin-top: clamp(24px, 3vw, 36px);
+	max-width: 36rem;
+	font-size: clamp(1.25rem, 2vw, 1.6rem);
+	line-height: 1.5;
+	color: var(--bone-soft);
+	animation: rise 1.4s cubic-bezier(0.2, 0.7, 0.2, 1) 0.55s both;
+}
+
+.begin {
+	display: inline-flex;
+	align-items: center;
+	gap: 14px;
+	margin-top: clamp(32px, 4vw, 48px);
+	padding: 14px 22px;
+	border: 1px solid rgba(191, 128, 69, 0.6);
+	border-radius: 999px;
+	background: rgba(22, 22, 26, 0.35);
+	backdrop-filter: blur(4px);
+	-webkit-backdrop-filter: blur(4px);
+	font-family: var(--sans);
+	font-size: 0.82rem;
+	font-weight: 600;
+	letter-spacing: 0.12em;
+	text-transform: uppercase;
+	text-decoration: none;
+	color: var(--bone) !important;
+	animation: rise 1.4s cubic-bezier(0.2, 0.7, 0.2, 1) 0.8s both;
+	transition:
+		background-color 0.25s ease,
+		border-color 0.25s ease;
+}
+
+.begin:hover {
+	background: rgba(191, 128, 69, 0.18);
+	border-color: var(--copper);
+}
+
+.beginArrow {
+	width: 9px;
+	height: 9px;
+	border-right: 2px solid var(--copper);
+	border-bottom: 2px solid var(--copper);
+	transform: translateY(-2px) rotate(45deg);
+	animation: nudge 2.4s ease-in-out infinite;
+}
+
+@keyframes nudge {
+	0%,
+	100% {
+		transform: translateY(-3px) rotate(45deg);
+	}
+	50% {
+		transform: translateY(2px) rotate(45deg);
+	}
+}
+
+.credit {
+	position: absolute;
+	right: var(--gutter);
+	bottom: 18px;
+	font-family: var(--sans);
+	font-size: 0.68rem;
+	letter-spacing: 0.06em;
+	color: rgba(232, 220, 196, 0.4);
+}
+
+@media (max-width: 640px) {
+	.credit {
+		left: var(--gutter);
+		right: auto;
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.photo img {
+		transform: none;
+		animation: none;
+	}
+
+	.glow,
+	.beginArrow,
+	.titleLine,
+	.titleAccent,
+	.subtitle,
+	.begin {
+		animation: none;
+	}
+}

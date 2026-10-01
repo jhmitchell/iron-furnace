@@ -1,0 +1,231 @@
+.quoteSection {
+	padding: clamp(88px, 12vw, 160px) 0;
+	background:
+		radial-gradient(60% 70% at 50% 120%, rgba(255, 120, 40, 0.14), transparent 70%),
+		var(--iron);
+	color: var(--bone);
+}
+
+.quote {
+	max-width: 54rem;
+	margin: 0 auto;
+	text-align: center;
+}
+
+.quoteLead {
+	font-family: var(--sans);
+	font-size: 0.8rem;
+	font-weight: 600;
+	letter-spacing: 0.2em;
+	text-transform: uppercase;
+	color: var(--copper);
+}
+
+.quoteText {
+	margin: 26px 0 0;
+	font-size: clamp(1.6rem, 3.4vw, 2.6rem);
+	line-height: 1.35;
+	font-style: italic;
+	color: var(--bone);
+	text-wrap: balance;
+}
+
+.quoteCite {
+	margin-top: 28px;
+	font-family: var(--sans);
+	font-size: 0.85rem;
+	letter-spacing: 0.06em;
+	color: rgba(232, 220, 196, 0.65);
+}
+
+.quoteCite::before {
+	content: '';
+	display: block;
+	width: 48px;
+	height: 1px;
+	margin: 0 auto 18px;
+	background: var(--copper);
+}
+
+.visit {
+	padding: clamp(56px, 8vw, 88px) 0;
+	background: linear-gradient(120deg, #2a1d14, #3a2416 55%, #4a2a16);
+	color: var(--bone);
+}
+
+.visitInner {
+	display: grid;
+	grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr);
+	gap: 32px clamp(32px, 5vw, 80px);
+	align-items: center;
+}
+
+.visitTitle {
+	font-size: clamp(2.2rem, 5vw, 3.6rem);
+	line-height: 1.05;
+}
+
+.visitText {
+	margin-top: 16px;
+	max-width: 36rem;
+	font-size: 1.2rem;
+	line-height: 1.6;
+	color: var(--bone-soft);
+}
+
+.visitActions {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 14px 18px;
+}
+
+.primary,
+.secondary {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	min-height: 48px;
+	padding: 12px 24px;
+	border-radius: 4px;
+	font-family: var(--sans);
+	font-size: 0.85rem;
+	font-weight: 600;
+	letter-spacing: 0.1em;
+	text-transform: uppercase;
+	text-decoration: none;
+	transition:
+		background-color 0.2s ease,
+		color 0.2s ease;
+}
+
+.primary {
+	background: var(--copper);
+	color: #1a120b !important;
+}
+
+.primary:hover {
+	background: #d0945a;
+}
+
+.secondary {
+	border: 1px solid rgba(232, 220, 196, 0.5);
+	color: var(--bone) !important;
+}
+
+.secondary:hover {
+	background: rgba(232, 220, 196, 0.1);
+}
+
+.tertiary {
+	flex-basis: 100%;
+	font-family: var(--sans);
+	font-size: 0.88rem;
+	font-weight: 600;
+	color: var(--copper) !important;
+	text-decoration: none;
+}
+
+.tertiary:hover {
+	text-decoration: underline;
+}
+
+.sources {
+	padding: clamp(64px, 9vw, 112px) 0 clamp(72px, 10vw, 120px);
+}
+
+.sourcesTitle {
+	font-size: clamp(2rem, 4vw, 3rem);
+	line-height: 1.1;
+	color: var(--ink);
+}
+
+.sourceGrid {
+	display: grid;
+	grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+	gap: clamp(32px, 5vw, 72px);
+	margin-top: 36px;
+}
+
+.listTitle {
+	margin-top: 32px;
+	font-family: var(--sans);
+	font-size: 0.75rem;
+	font-weight: 600;
+	letter-spacing: 0.16em;
+	text-transform: uppercase;
+	color: var(--copper-deep);
+}
+
+.sourceGrid > div > .listTitle:first-child,
+.citeBox .listTitle {
+	margin-top: 0;
+}
+
+.list {
+	margin: 14px 0 0;
+	padding-left: 1.2em;
+	display: grid;
+	gap: 10px;
+	font-size: 1.05rem;
+	line-height: 1.55;
+	color: var(--ink);
+}
+
+.list a {
+	color: var(--rust);
+	text-decoration-thickness: 1px;
+	text-underline-offset: 3px;
+}
+
+.citeBox {
+	margin-bottom: 32px;
+	padding: 22px 24px;
+	border: 1px solid var(--paper-line);
+	border-radius: 6px;
+	background: rgba(255, 252, 245, 0.55);
+}
+
+.citeText {
+	margin-top: 12px;
+	font-size: 1.02rem;
+	line-height: 1.55;
+	color: var(--ink);
+}
+
+.copy {
+	margin-top: 14px;
+	min-height: 40px;
+	padding: 8px 16px;
+	border: 1px solid var(--rust);
+	border-radius: 4px;
+	background: transparent;
+	color: var(--rust);
+	font-family: var(--sans);
+	font-size: 0.8rem;
+	font-weight: 600;
+	cursor: pointer;
+}
+
+.copy:hover {
+	background: rgba(148, 64, 27, 0.08);
+}
+
+.corrections {
+	margin-top: 28px;
+	font-family: var(--sans);
+	font-size: 0.88rem;
+	line-height: 1.6;
+	color: var(--ink-soft);
+}
+
+.corrections a {
+	color: var(--rust);
+}
+
+@media (max-width: 860px) {
+	.visitInner,
+	.sourceGrid {
+		grid-template-columns: minmax(0, 1fr);
+	}
+}

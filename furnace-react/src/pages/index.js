@@ -6,6 +6,7 @@ export { default as AboutPage } from './AboutPage';
 export { default as AssociatesPage } from './AssociatesPage';
 export { default as SiteMapPage } from './SiteMapPage';
 export { default as HistoryPage } from './HistoryPage';
+export { default as HistoryStoryPage } from './HistoryStoryPage';
 export { default as TestPage } from './TestPage';
 export { default as Membership } from './Membership';
 export { default as Accessibility } from './Accessibility';

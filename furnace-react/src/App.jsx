@@ -7,6 +7,7 @@ import {
   VisitPage,
   AboutPage,
   HistoryPage,
+  HistoryStoryPage,
   SiteMapPage,
   NotFound,
   TestPage,
@@ -128,6 +129,12 @@ const RoutesComponent = () => {
     {
       path: "/history",
       element: <HistoryPage />,
+    },
+
+    // The new history story, previewed here until it replaces /history.
+    {
+      path: "/history2",
+      element: <HistoryStoryPage />,
     },
 
     {

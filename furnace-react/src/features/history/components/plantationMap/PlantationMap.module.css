@@ -1,0 +1,582 @@
+.section {
+	padding: clamp(72px, 10vw, 128px) 0;
+	background:
+		radial-gradient(70% 50% at 20% 10%, rgba(191, 128, 69, 0.08), transparent 70%),
+		var(--iron-2);
+	color: var(--bone);
+}
+
+.intro {
+	max-width: 46rem;
+}
+
+.kicker {
+	font-family: var(--sans);
+	font-size: 0.78rem;
+	font-weight: 600;
+	letter-spacing: 0.2em;
+	text-transform: uppercase;
+	color: var(--copper);
+}
+
+.title {
+	margin-top: 16px;
+	font-size: clamp(2.5rem, 6vw, 4.4rem);
+	line-height: 1.02;
+}
+
+.dek {
+	margin-top: 20px;
+	font-size: 1.25rem;
+	line-height: 1.55;
+	color: var(--bone-soft);
+}
+
+.layout {
+	display: grid;
+	grid-template-columns: minmax(0, 1.45fr) minmax(0, 1fr);
+	gap: clamp(24px, 4vw, 48px);
+	align-items: start;
+	margin-top: clamp(32px, 5vw, 56px);
+}
+
+.flows {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 8px;
+	margin-bottom: 14px;
+}
+
+.flowChip {
+	--chip: #c0592c;
+	display: inline-flex;
+	align-items: center;
+	gap: 8px;
+	min-height: 38px;
+	padding: 6px 14px;
+	border: 1px solid var(--iron-line);
+	border-radius: 999px;
+	background: transparent;
+	color: rgba(232, 220, 196, 0.7);
+	font-family: var(--sans);
+	font-size: 0.82rem;
+	font-weight: 500;
+	cursor: pointer;
+	transition:
+		background-color 0.25s ease,
+		color 0.25s ease,
+		border-color 0.25s ease;
+}
+
+.flowChip:hover {
+	color: var(--bone);
+}
+
+.flowSwatch {
+	width: 18px;
+	height: 4px;
+	border-radius: 2px;
+	background: var(--chip);
+	opacity: 0.5;
+}
+
+.flowOn {
+	border-color: var(--chip);
+	background: rgba(255, 255, 255, 0.05);
+	color: var(--bone);
+}
+
+.flowOn .flowSwatch {
+	opacity: 1;
+}
+
+.chip_ore {
+	--chip: #c0592c;
+}
+
+.chip_charcoal {
+	--chip: #b7aea2;
+}
+
+.chip_iron {
+	--chip: #ff9f45;
+}
+
+.chip_rail {
+	--chip: #8fb3c4;
+}
+
+/* The parchment sheet. */
+.sheet {
+	border-radius: 4px;
+	background-color: #ece2cc;
+	background-image:
+		radial-gradient(120% 90% at 50% 50%, transparent 55%, rgba(110, 80, 40, 0.28)),
+		var(--paper-noise);
+	box-shadow:
+		0 24px 50px rgba(0, 0, 0, 0.45),
+		0 2px 6px rgba(0, 0, 0, 0.3);
+	padding: 6px;
+}
+
+.map {
+	display: block;
+	width: 100%;
+	height: auto;
+	font-family: var(--serif);
+}
+
+.border {
+	fill: none;
+	stroke: #3b3027;
+	stroke-width: 2.5;
+}
+
+.borderInner {
+	fill: none;
+	stroke: #3b3027;
+	stroke-width: 0.8;
+}
+
+.tree path {
+	fill: rgba(78, 96, 60, 0.35);
+	stroke: #4f5a3b;
+	stroke-width: 1.1;
+}
+
+.tree path:first-child {
+	fill: none;
+}
+
+.hachure line {
+	stroke: #6a5a48;
+	stroke-width: 1;
+}
+
+.roadEdge {
+	fill: none;
+	stroke: #6a5a48;
+	stroke-width: 13;
+	stroke-linecap: round;
+}
+
+.road {
+	fill: none;
+	stroke: #ece2cc;
+	stroke-width: 10;
+	stroke-linecap: round;
+}
+
+.roadName {
+	font-size: 12px;
+	font-style: italic;
+	fill: #6a5a48;
+}
+
+.pit {
+	fill: #a9bcc0;
+	stroke: #3b3027;
+	stroke-width: 1.4;
+}
+
+.building {
+	fill: url(#pm-hatch);
+	stroke: #2e251d;
+	stroke-width: 1.6;
+}
+
+.trestle {
+	fill: none;
+	stroke: #2e251d;
+	stroke-width: 2.4;
+	stroke-linecap: round;
+}
+
+.flow {
+	fill: none;
+	stroke-width: 4;
+	stroke-linecap: round;
+	stroke-dasharray: 2 10;
+	opacity: 0;
+	transition: opacity 0.4s ease;
+	animation: march 1.4s linear infinite;
+}
+
+.flowVisible {
+	opacity: 1;
+}
+
+.flow_ore {
+	stroke: #b14d22;
+}
+
+.flow_charcoal {
+	stroke: #2a2420;
+}
+
+.flow_iron {
+	stroke: #e8741f;
+	stroke-width: 5;
+}
+
+.flow_rail {
+	stroke: #3f6b80;
+	stroke-dasharray: 12 6;
+	stroke-width: 3.5;
+}
+
+@keyframes march {
+	to {
+		stroke-dashoffset: -24;
+	}
+}
+
+.offMap text {
+	font-size: 14px;
+	fill: #2e251d;
+}
+
+.offMap .offSub {
+	font-size: 11.5px;
+	font-style: italic;
+	fill: #6a5a48;
+}
+
+.offArrow {
+	fill: none;
+	stroke: #2e251d;
+	stroke-width: 1.8;
+	stroke-linecap: round;
+	stroke-linejoin: round;
+}
+
+.offMap .forestLabel {
+	font-size: 12px;
+	font-style: italic;
+	letter-spacing: 0.08em;
+	fill: #4f5a3b;
+}
+
+.cartouche rect {
+	fill: #f3ead6;
+	stroke: #2e251d;
+	stroke-width: 1.4;
+}
+
+.cartoucheTitle {
+	font-size: 17px;
+	font-weight: 600;
+	letter-spacing: 0.18em;
+	text-transform: uppercase;
+	fill: #2e251d;
+}
+
+.cartoucheSub {
+	font-size: 11.5px;
+	font-style: italic;
+	fill: #5d4c3c;
+}
+
+.compass circle {
+	fill: none;
+	stroke: #2e251d;
+	stroke-width: 1;
+}
+
+.compass path {
+	fill: #f3ead6;
+	stroke: #2e251d;
+	stroke-width: 1;
+}
+
+.compass .compassNorth {
+	fill: #2e251d;
+}
+
+.compass text {
+	font-size: 12px;
+	font-weight: 600;
+	fill: #2e251d;
+}
+
+.marker {
+	cursor: pointer;
+	outline: none;
+}
+
+.markerHalo {
+	fill: rgba(148, 64, 27, 0);
+	transition: fill 0.25s ease;
+}
+
+.markerDot {
+	fill: #f6eedd;
+	stroke: #94401b;
+	stroke-width: 2;
+	transition:
+		fill 0.25s ease,
+		stroke 0.25s ease;
+}
+
+.markerNum {
+	font-family: var(--sans);
+	font-size: 11.5px;
+	font-weight: 700;
+	fill: #94401b;
+	font-variant-numeric: lining-nums;
+	pointer-events: none;
+}
+
+.marker:hover .markerHalo,
+.marker:focus-visible .markerHalo {
+	fill: rgba(148, 64, 27, 0.18);
+}
+
+.marker:focus-visible .markerDot {
+	stroke-width: 3;
+}
+
+.markerOn .markerDot {
+	fill: #94401b;
+	stroke: #2e251d;
+}
+
+.markerOn .markerNum {
+	fill: #fbf3e6;
+}
+
+.markerOn .markerHalo {
+	fill: rgba(148, 64, 27, 0.22);
+	animation: pulse 2s ease-in-out infinite;
+	transform-box: fill-box;
+	transform-origin: center;
+}
+
+@keyframes pulse {
+	0%,
+	100% {
+		transform: scale(1);
+	}
+	50% {
+		transform: scale(1.25);
+	}
+}
+
+.mapNote {
+	margin-top: 12px;
+	font-family: var(--sans);
+	font-size: 0.75rem;
+	color: rgba(232, 220, 196, 0.5);
+}
+
+/* Detail panel. */
+.panel {
+	position: sticky;
+	top: 90px;
+}
+
+.panelNav {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	margin-bottom: 14px;
+	font-family: var(--sans);
+	font-size: 0.8rem;
+	color: rgba(232, 220, 196, 0.6);
+	font-variant-numeric: lining-nums;
+}
+
+.panelNav button {
+	width: 40px;
+	height: 40px;
+	border: 1px solid var(--iron-line);
+	border-radius: 50%;
+	background: transparent;
+	color: var(--bone);
+	font-size: 1rem;
+	cursor: pointer;
+}
+
+.panelNav button:hover {
+	background: rgba(191, 128, 69, 0.18);
+}
+
+.card {
+	animation: cardIn 0.45s ease both;
+}
+
+@keyframes cardIn {
+	from {
+		opacity: 0;
+		transform: translateY(8px);
+	}
+	to {
+		opacity: 1;
+		transform: none;
+	}
+}
+
+.cardRole {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	font-family: var(--sans);
+	font-size: 0.74rem;
+	font-weight: 600;
+	letter-spacing: 0.12em;
+	text-transform: uppercase;
+	color: var(--copper);
+}
+
+.cardNum {
+	display: inline-grid;
+	place-items: center;
+	width: 24px;
+	height: 24px;
+	border-radius: 50%;
+	background: #94401b;
+	color: #fbf3e6;
+	letter-spacing: 0;
+	font-variant-numeric: lining-nums;
+}
+
+.cardTitle {
+	margin-top: 10px;
+	font-size: clamp(1.8rem, 2.8vw, 2.3rem);
+	line-height: 1.1;
+}
+
+.cardPhoto {
+	position: relative;
+	margin: 16px 0 0;
+	border-radius: 6px;
+	overflow: hidden;
+	aspect-ratio: 16 / 10;
+	background: #111;
+}
+
+.cardPhoto img {
+	display: block;
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+}
+
+.cardPhoto figcaption {
+	position: absolute;
+	left: 10px;
+	top: 10px;
+	padding: 3px 9px;
+	border-radius: 999px;
+	background: rgba(14, 14, 17, 0.75);
+	font-family: var(--sans);
+	font-size: 0.68rem;
+	font-weight: 600;
+	letter-spacing: 0.1em;
+	text-transform: uppercase;
+	color: var(--bone);
+}
+
+.cardText {
+	margin-top: 14px;
+	font-size: 1.1rem;
+	line-height: 1.6;
+	color: var(--bone-soft);
+}
+
+.cardLink,
+.mapLink {
+	display: inline-block;
+	margin-top: 14px;
+	font-family: var(--sans);
+	font-size: 0.85rem;
+	font-weight: 600;
+	color: var(--copper) !important;
+	text-decoration: none;
+}
+
+.cardLink:hover,
+.mapLink:hover {
+	text-decoration: underline;
+}
+
+.flowNotes {
+	margin: 22px 0 0;
+	padding: 18px 0 0;
+	border-top: 1px solid var(--iron-line);
+	list-style: none;
+	display: grid;
+	gap: 10px;
+	font-family: var(--sans);
+	font-size: 0.82rem;
+	line-height: 1.5;
+	color: rgba(232, 220, 196, 0.72);
+}
+
+.flowNotes li {
+	padding-left: 14px;
+	border-left: 3px solid var(--note, #c0592c);
+}
+
+.flowNotes strong {
+	color: var(--bone);
+}
+
+.note_ore {
+	--note: #c0592c;
+}
+
+.note_charcoal {
+	--note: #b7aea2;
+}
+
+.note_iron {
+	--note: #ff9f45;
+}
+
+.note_rail {
+	--note: #8fb3c4;
+}
+
+.flowNotes:empty {
+	display: none;
+}
+
+@media (max-width: 960px) {
+	.layout {
+		grid-template-columns: minmax(0, 1fr);
+	}
+
+	.panel {
+		position: static;
+	}
+}
+
+/* Bigger markers on phones, where the whole map is only a few hundred pixels wide. */
+@media (max-width: 640px) {
+	.markerHalo {
+		r: 28px;
+	}
+
+	.markerDot {
+		r: 19px;
+	}
+
+	.markerNum {
+		font-size: 19px;
+	}
+
+	.cartouche,
+	.compass,
+	.roadName {
+		display: none;
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.flow,
+	.markerOn .markerHalo,
+	.card {
+		animation: none;
+	}
+}
