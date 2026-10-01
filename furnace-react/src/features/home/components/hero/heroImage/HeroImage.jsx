@@ -1,20 +1,30 @@
-import React from "react";
+import React, { useState } from "react";
 import heroImage from "../../../../../assets/images/entrance.webp";
-import "./HeroImage.css";
+import styles from "./HeroImage.module.css";
 
 const HeroImage = ({ onImageLoad }) => {
-  // Define a filter to decrease the contrast of the image, making it blend
-  // in more seamlessly with the page content, increasing readability
-  const filter = "contrast(0.90)";
+  const [isLoaded, setIsLoaded] = useState(false);
 
   const handleImageLoad = () => {
-    onImageLoad && onImageLoad();
-  }
+    setIsLoaded(true);
+    onImageLoad?.();
+  };
 
   return (
-    <div className="hero-image">
-      <div className="overlay" />
-      <img src={heroImage} alt="Hero" style={{ filter: filter }} onLoad={handleImageLoad}/>
+    <div className={styles.heroImage}>
+      {/* Skeleton placeholder */}
+      <div className={`${styles.skeleton} ${isLoaded ? styles.hidden : ""}`} />
+      
+      {/* Gradient overlay */}
+      <div className={styles.overlay} />
+      
+      {/* Hero image with fade-in */}
+      <img
+        src={heroImage}
+        alt="Cornwall Iron Furnace entrance"
+        className={`${styles.image} ${isLoaded ? styles.loaded : ""}`}
+        onLoad={handleImageLoad}
+      />
     </div>
   );
 };

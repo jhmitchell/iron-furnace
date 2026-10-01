@@ -29,8 +29,32 @@ export const loginService = async (username, password) => {
   }
 };
 
+/**
+ * Ends the server-side session: revokes the refresh token and clears its cookie.
+ * Failures are logged but not thrown, since the client clears its own state regardless.
+ */
 export const logoutService = async () => {
-  console.log('logoutService');
+  try {
+    await fetch(`${API_V1_PREFIX}${AUTH_PREFIX}/logout`, { method: 'POST' });
+  } catch (error) {
+    console.error('Logout request failed:', error);
+  }
+};
+
+/**
+ * Exchanges the HttpOnly refresh cookie for a new access token.
+ * @returns {Promise<string>} The new access token.
+ */
+export const refreshTokenService = async () => {
+  const response = await fetch(`${API_V1_PREFIX}${AUTH_PREFIX}/token/refresh`, { method: 'POST' });
+  if (!response.ok) {
+    throw new Error(`Token refresh failed: ${response.status}`);
+  }
+  const { access_token } = await response.json();
+  if (!access_token) {
+    throw new Error('Token refresh returned no access token');
+  }
+  return access_token;
 };
 
 export const validateTokenService = async () => {

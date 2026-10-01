@@ -24,11 +24,6 @@ const AccessibilityContent = () => {
                 {" "}
                 717-272-9711{" "}
             </a>
-            or email
-            <a href="mailto:memery@pa.gov" className="accessibility-link">
-                {" "}
-                memery@pa.gov{" "}
-            </a>
             in advance.
             </p>
         </div>

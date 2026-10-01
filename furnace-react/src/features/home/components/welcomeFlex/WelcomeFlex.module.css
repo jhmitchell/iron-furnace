@@ -1,21 +1,36 @@
 .welcomeFlexContainer {
+  position: relative;
   width: 100%;
   height: 200px;
   display: flex;
   justify-content: center;
   align-items: flex-start;
   background-color: var(--dark-secondary);
-  /*background: linear-gradient(to bottom, var(--dark-secondary), var(--dark-background));*/
   padding: 20px 0px;
 }
 
+/* Subtle noise texture */
+.welcomeFlexContainer::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  opacity: 0.035;
+  pointer-events: none;
+  z-index: 0;
+}
+
 .welcomeFlex {
+  position: relative;
+  z-index: 1;
   width: 100%;
   height: 100%;
   display: flex;
   flex-direction: row;
   gap: 100px;
   max-width: 1512px;
+  padding: 0 24px;
+  box-sizing: border-box;
 }
 
 .welcomeFlexElement {
@@ -45,16 +60,28 @@
   margin-right: 20px;
 }
 
+/* Tablet */
+@media (max-width: 1024px) {
+  .welcomeFlex {
+    gap: 40px;
+  }
+
+  .welcomeFlexElement h3 {
+    font-size: 1.25rem;
+  }
+}
+
+/* Mobile */
 @media (max-width: 768px) {
   .welcomeFlexContainer {
     height: auto;
-    padding: 60px;
+    padding: 40px 0;
   }
 
   .welcomeFlex {
     flex-direction: column;
-    gap: 20px;
-    padding: 0;
+    gap: 24px;
+    padding: 0 20px;
   }
 
   .welcome {
@@ -69,7 +96,7 @@
   }
 
   .welcome h3 {
-    font-size: 1.2rem;
+    font-size: 1.1rem;
     line-height: 1.6;
   }
 

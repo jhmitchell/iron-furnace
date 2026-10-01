@@ -18,6 +18,7 @@ from ..internal.db.users import (
     create_user,
     get_user,
     store_refresh_token,
+    clear_refresh_token,
 )
 from datetime import datetime, timedelta, timezone
 from dotenv import load_dotenv
@@ -29,6 +30,17 @@ load_dotenv()
 # Read the values from the .env file
 ACCESS_TOKEN_EXPIRE_MINUTES = int(os.getenv("ACCESS_TOKEN_EXPIRE_MINUTES"))
 REFRESH_TOKEN_EXPIRE_DAYS = int(os.getenv("REFRESH_TOKEN_EXPIRE_DAYS"))
+
+# Only send the refresh cookie over HTTPS outside local development
+COOKIE_SECURE = os.getenv("ENV", "dev") != "dev"
+
+
+def disabled_account_exception() -> HTTPException:
+    return HTTPException(
+        status_code=status.HTTP_401_UNAUTHORIZED,
+        detail="This account has been disabled",
+        headers={"WWW-Authenticate": "Bearer"},
+    )
 
 router = APIRouter()
 
@@ -57,6 +69,8 @@ async def login_for_access_token(
         )
     
     user = result['user']
+    if user.get('disabled'):
+        raise disabled_account_exception()
 
     # Create an access token with a specified expiration time
     access_token_expires = timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
@@ -93,6 +107,7 @@ async def login_for_access_token(
         value=refresh_token,
         expires=refresh_token_expires_at,
         httponly=True,
+        secure=COOKIE_SECURE,
         samesite="Strict",
     )
 
@@ -140,6 +155,8 @@ async def refresh_access_token(refresh_token: str = Cookie(None), db: Session = 
         )
     
     user = result['user']
+    if user.get('disabled'):
+        raise disabled_account_exception()
 
     # Create a new access token
     access_token_expires = timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
@@ -175,54 +192,81 @@ async def refresh_access_token(refresh_token: str = Cookie(None), db: Session = 
         value=new_refresh_token,
         expires=refresh_token_expires_at,
         httponly=True,
+        secure=COOKIE_SECURE,
         samesite="Strict",
     )
 
     return response
 
 
-@router.post("/register", response_model=TokenSchema)
-async def register_and_login(
-        user: UserCreateSchema,
-        db: Session = Depends(get_db)):
+@router.post("/logout")
+async def logout(refresh_token: str = Cookie(None), db: Session = Depends(get_db)):
     """
-    This endpoint registers a new user with the provided username, password, 
-    email, first name, last name, and optional disabled flag. If registration 
-    is successful, the user is also logged in using the login_for_access_token 
-    function, which returns an access token.
-
-    :param user: User creation object containing member_id, email, password, 
-                 first_name, last_name, and optional disabled flag.
-    :param form_data: OAuth2PasswordRequestForm object containing the user's 
-                      username and password for the OAuth2 flow.
-    :param db: SQLAlchemy Session object for database interaction.
-    :return: JSON response containing the access token and token type.
-    :raises HTTPException: If registration fails or if other errors occur.
+    Ends the session: revokes the stored refresh token (so the cookie can no
+    longer be exchanged for new access tokens) and clears the cookie. Safe to
+    call without a cookie or with an already-invalid one.
     """
-    # Hash the user password
-    hashed_password = hash_password(user.password)
+    if refresh_token:
+        username = verify_refresh_token(refresh_token, db)
+        if username:
+            clear_refresh_token(db, username)
 
-    # Create the user in the database
-    created_user_result = create_user(
-        db,
-        member_id=user.member_id,
-        email=user.email,
-        hashed_password=hashed_password,
-        first_name=user.first_name,
-        last_name=user.last_name,
-        disabled=user.disabled
+    response = JSONResponse(content={"message": "Logged out."})
+    response.delete_cookie(
+        key="refresh_token",
+        httponly=True,
+        secure=COOKIE_SECURE,
+        samesite="Strict",
     )
+    return response
 
-    if created_user_result['status'] != 'success':
-        raise HTTPException(
-            status_code=status.HTTP_400_BAD_REQUEST,
-            detail=created_user_result.get(
-                'detail', 'An error occurred during registration.')
-        )
 
-    # Construct the OAuth2PasswordRequestForm object
-    form_data = OAuth2PasswordRequestForm(
-        username=user.member_id, password=user.password, scope="", grant_type="password")
-
-    # Log the user in and return the access token
-    return await login_for_access_token(form_data=form_data, db=db)
+# TODO: Re-enable once admin panel UI for account creation is built.
+#       When re-enabling, add Depends(authorize) to require admin auth,
+#       and remove the auto-login behavior (the creating admin != the new user).
+#
+# @router.post("/register", response_model=TokenSchema)
+# async def register_and_login(
+#         user: UserCreateSchema,
+#         db: Session = Depends(get_db)):
+#     """
+#     This endpoint registers a new user with the provided username, password,
+#     email, first name, last name, and optional disabled flag. If registration
+#     is successful, the user is also logged in using the login_for_access_token
+#     function, which returns an access token.
+#
+#     :param user: User creation object containing member_id, email, password,
+#                  first_name, last_name, and optional disabled flag.
+#     :param form_data: OAuth2PasswordRequestForm object containing the user's
+#                       username and password for the OAuth2 flow.
+#     :param db: SQLAlchemy Session object for database interaction.
+#     :return: JSON response containing the access token and token type.
+#     :raises HTTPException: If registration fails or if other errors occur.
+#     """
+#     # Hash the user password
+#     hashed_password = hash_password(user.password)
+#
+#     # Create the user in the database
+#     created_user_result = create_user(
+#         db,
+#         member_id=user.member_id,
+#         email=user.email,
+#         hashed_password=hashed_password,
+#         first_name=user.first_name,
+#         last_name=user.last_name,
+#         disabled=user.disabled
+#     )
+#
+#     if created_user_result['status'] != 'success':
+#         raise HTTPException(
+#             status_code=status.HTTP_400_BAD_REQUEST,
+#             detail=created_user_result.get(
+#                 'detail', 'An error occurred during registration.')
+#         )
+#
+#     # Construct the OAuth2PasswordRequestForm object
+#     form_data = OAuth2PasswordRequestForm(
+#         username=user.member_id, password=user.password, scope="", grant_type="password")
+#
+#     # Log the user in and return the access token
+#     return await login_for_access_token(form_data=form_data, db=db)

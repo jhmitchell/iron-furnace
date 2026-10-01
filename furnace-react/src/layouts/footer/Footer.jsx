@@ -2,11 +2,13 @@ import React from "react";
 import { FaFacebookSquare, FaInstagram, FaYoutube } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { Button } from "../../components/ui";
+import SubscriptionBar from "./subscriptionBar/SubscriptionBar";
 import styles from "./Footer.module.css";
 
 const Footer = () => {
   return (
     <footer className={styles.footer}>
+      <SubscriptionBar />
       <div className={styles.container}>
         <div className={styles.top}>
           <div className={styles.left}>
@@ -27,6 +29,14 @@ const Footer = () => {
                   Cornwall, PA 17016
                 </div>
                 <div className={styles.phone}>717-272-9711</div>
+                <div className={styles.email}>
+                  <a
+                    href="mailto:cornwallironfurnace@gmail.com"
+                    className={styles.emailLink}
+                  >
+                    cornwallironfurnace@gmail.com
+                  </a>
+                </div>
                 <div className={styles.mailing}>
                   Mailing Address:
                   <br />
@@ -70,9 +80,13 @@ const Footer = () => {
                 Iron Furnace by supporting us with your tax-deductible
                 donations.
               </p>
-              <a href="https://givebutter.com/supportcifa" target="_blank" rel="noreferrer noopener">
-                <Button text="DONATE TODAY" color="orange" />
-              </a>
+              <Button 
+                text="DONATE" 
+                color="orange" 
+                href="https://givebutter.com/supportcifa"
+                external
+                className={styles.donateButton}
+              />
             </div>
             <div className={styles.horizontalLine} />
             <div className={styles.rightLinks}>
@@ -96,9 +110,9 @@ const Footer = () => {
                   Support Us
                 </Link>
                 <div className={styles.sublinks}>
-                  <Link to="/support/membership" className={styles.sublink}>
+                  <a href="https://givebutter.com/CIFAmembership" className={styles.sublink} target="_blank" rel="noreferrer noopener">
                     Membership
-                  </Link>
+                  </a>
                   <a href="https://givebutter.com/supportcifa" className={styles.sublink} target="_blank" rel="noreferrer noopener">
                     Donate
                   </a>
@@ -106,7 +120,7 @@ const Footer = () => {
                     Volunteer
                   </Link>
                   <Link to="/support/sponsorship" className={styles.sublink}>
-                    Corporate Sponsorship
+                    Sponsorship
                   </Link>
                 </div>
               </div>
@@ -133,6 +147,12 @@ const Footer = () => {
               <div>
                 <Link className={styles.link}>Contact Us</Link>
                 <div className={styles.sublinks}>
+                  <a
+                    href="mailto:cornwallironfurnace@gmail.com"
+                    className={styles.sublink}
+                  >
+                    Email Us
+                  </a>
                   <Link className={styles.sublink}>Private Events</Link>
                   <Link className={styles.sublink}>Group Tours</Link>
                   <Link className={styles.sublink}>School Tours</Link>
@@ -171,7 +191,7 @@ const Footer = () => {
         <div className={styles.bottom}>
           <div className={styles.horizontalLine} />
           <div className={styles.copyright}>
-            <Link to="/admin" className={styles.admin}>Site administrator login</Link>
+            <Link to="/admin" className={styles.admin}>Web administrator login</Link>
           </div>
           <div className={styles.copyright}>
             <p>&copy; 2024 Cornwall Iron Furnace | All Rights Reserved</p>

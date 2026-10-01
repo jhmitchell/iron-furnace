@@ -9,3 +9,4 @@ export { default as InfoBlock } from './infoBlock/InfoBlock';
 export { default as PictureLink } from './pictureLink/PictureLink';
 export { default as PictureLinkContainer } from './pictureLinkContainer/PictureLinkContainer';
 export { default as HorizontalPictureCard } from './horizontalPictureCard/HorizontalPictureCard';
+export { default as ProgressiveImage } from './progressiveImage/ProgressiveImage';

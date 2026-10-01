@@ -10,10 +10,6 @@ import "./Donate.css";
  * @returns {React.Element} JSX element
  */
 const Donate = () => {
-  const handleDonateClick = () => {
-    window.open("https://givebutter.com/supportcifa", "_blank", "noopener,noreferrer");
-  }
-
   return (
     <div className="donate-section" id="donate-section">
       <div className="description-content">
@@ -31,7 +27,12 @@ const Donate = () => {
               Every donation, no matter the amount, makes a significant impact.
             </p>
             <div className="donate-options">
-            <Button color="orange" text="DONATE NOW" onClick={handleDonateClick}/>
+              <Button 
+                text="DONATE NOW" 
+                color="orange" 
+                href="https://givebutter.com/supportcifa"
+                external
+              />
             </div>
           </div>
         </div>

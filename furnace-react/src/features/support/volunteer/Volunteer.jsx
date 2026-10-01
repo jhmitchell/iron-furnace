@@ -32,9 +32,12 @@ const Volunteer = () => {
             <div className="contact-box">
               <p>
                 To learn more about volunteering at the Cornwall Iron Furnace,
-                contact our Site Administrator, Michael Emery, at{" "}
-                <a href="tel:717-272-9711">717-272-9711</a> or{" "}
-                <a href="mailto:memery@pa.gov">memery@pa.gov</a>.
+                contact our Site Administrator at{" "}
+                <a href="tel:717-272-9711">717-272-9711</a> or email us at{" "}
+                <a href="mailto:cornwallironfurnace@gmail.com">
+                  cornwallironfurnace@gmail.com
+                </a>
+                .
               </p>
             </div>
           </div>
