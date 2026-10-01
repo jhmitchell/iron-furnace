@@ -5,7 +5,7 @@ import { PictureLink, PictureLinkContainer, InfoBlock } from '/src/components/ui
 import styles from './HistorySection.module.css';
 import OldImg from '/src/assets/images/history-old-furnace.jpg';
 import MapImg from '/src/assets/images/history-map.jpeg';
-import AssociatesImg from '/src/assets/images/history-associates.jpg';
+import AssociatesImg from '/src/assets/images/history-associates.webp';
 
 const HistorySection = () => (
 	<ScrollableSection id="history-section" title="About the Furnace">

@@ -3,13 +3,13 @@ import PhotoAlbum from "react-photo-album";
 import ScrollableSection from "/src/layouts/scrollableSection/ScrollableSection";
 
 import FurnaceImg from "/src/assets/images/furnace-top.webp";
-import AbattoirWindow from "/src/assets/images/abattoir-window-min.jpg";
-import RoundWindow from "/src/assets/images/round-window-min.jpg";
+import AbattoirWindow from "/src/assets/images/abattoir-window-min.webp";
+import RoundWindow from "/src/assets/images/round-window-min.webp";
 import BlacksmithShop from "/src/assets/images/blacksmith-shop-min.jpg";
 import BigWheel from "/src/assets/images/big-wheel-min.jpg";
 import Bell from "/src/assets/images/bell-min.jpg";
-import GothicWindow from "/src/assets/images/gothic-window-min.jpg";
-import Cannon from "/src/assets/images/cannon-min.jpg";
+import GothicWindow from "/src/assets/images/gothic-window-min.webp";
+import Cannon from "/src/assets/images/cannon-min.webp";
 import BrickArch from "/src/assets/images/brick-arch-min.jpg";
 import OilLamps from "/src/assets/images/oil-lamps-min.jpg";
 

@@ -1,6 +1,6 @@
 import React from 'react';
 import { TwoColumn } from '/src/layouts';
-import WheelImg from '/src/assets/images/history-wheel.jpeg';
+import WheelImg from '/src/assets/images/history-wheel.webp';
 import styles from './HistoryHero.module.css';
 import useResponsive from '/src/hooks/useResponsive';
 

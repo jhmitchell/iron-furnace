@@ -2,9 +2,9 @@ import React from 'react';
 import ScrollableSection from '/src/layouts/scrollableSection/ScrollableSection';
 import TwoColumn from '/src/layouts/twoColumn/TwoColumn';
 import styles from './HoldingsSection.module.css';
-import TongsImg from '/src/assets/images/collections-tongs.png';
+import TongsImg from '/src/assets/images/collections-tongs.webp';
 import TurnpikeImg from '/src/assets/images/collections-turnpike.jpg';
-import CollectionsBookImg from '/src/assets/images/collections-book.png';
+import CollectionsBookImg from '/src/assets/images/collections-book.webp';
 import { HorizontalPictureCard, StyledLink, InfoBlock } from '/src/components/ui';
 import useResponsive from '/src/hooks/useResponsive';
 
