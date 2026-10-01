@@ -1,0 +1,28 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Start: backend",
+      "type": "shell",
+      "command": "./run.sh",
+      "options": { "cwd": "${workspaceFolder}/backend" },
+      "isBackground": true,
+      "problemMatcher": [],
+      "presentation": { "group": "app", "panel": "dedicated" }
+    },
+    {
+      "label": "Start: frontend",
+      "type": "shell",
+      "command": "npm run dev",
+      "options": { "cwd": "${workspaceFolder}/furnace-react" },
+      "isBackground": true,
+      "problemMatcher": [],
+      "presentation": { "group": "app", "panel": "dedicated" }
+    },
+    {
+      "label": "Start: frontend + backend",
+      "dependsOn": ["Start: backend", "Start: frontend"],
+      "problemMatcher": []
+    }
+  ]
+}

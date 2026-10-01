@@ -1,0 +1,72 @@
+name: iron-furnace
+
+services:
+  app:
+    build:
+      context: ..
+      dockerfile: .devcontainer/Dockerfile
+    command: sleep infinity
+    volumes:
+      - ..:/workspace:cached
+      # Keep node_modules inside Docker (much faster than the Windows filesystem)
+      - node_modules:/workspace/furnace-react/node_modules
+    ports:
+      - "127.0.0.1:3000:3000" # Vite dev server (frontend)
+      - "127.0.0.1:3001:3001" # FastAPI (backend)
+    environment:
+      # Local development values only. These are NOT production settings;
+      # production values live in cPanel > Setup Python App.
+      ENV: development
+      CLIENT_URL: http://localhost:3000
+      API_V1_PREFIX: /api/v1
+      AUTH_PREFIX: /auth
+      SECRET_KEY: dev-only-secret-key-not-used-in-production
+      ALGORITHM: HS256
+      ACCESS_TOKEN_EXPIRE_MINUTES: "30"
+      REFRESH_TOKEN_EXPIRE_DAYS: "7"
+      DB_HOST: db
+      DB_NAME: cornwall
+      DB_USER: webmaster
+      DB_PASSWORD: devpassword
+      # Local test accounts, created on first backend start
+      ROOT_USERNAME: devroot
+      ROOT_PASSWORD: devroot-password
+      ROOT_EMAIL: devroot@example.test
+      ROOT_FIRST_NAME: Dev
+      ROOT_LAST_NAME: Root
+      ADMIN_USERNAME: devadmin
+      ADMIN_PASSWORD: devadmin-password
+      ADMIN_EMAIL: devadmin@example.test
+      ADMIN_FIRST_NAME: Dev
+      ADMIN_LAST_NAME: Admin
+      # backend/run.sh uses this virtualenv (baked into the image)
+      VENV_PATH: /opt/venv
+      # File-change detection across the Windows/macOS -> Linux bind mount.
+      # (uvicorn --reload already polls file timestamps; Vite needs this flag.)
+      VITE_USE_POLLING: "true"
+    depends_on:
+      db:
+        condition: service_healthy
+
+  db:
+    # Production runs MariaDB 10.11
+    image: mariadb:10.11
+    restart: unless-stopped
+    environment:
+      MARIADB_DATABASE: cornwall
+      MARIADB_USER: webmaster
+      MARIADB_PASSWORD: devpassword
+      MARIADB_ROOT_PASSWORD: devroot
+    volumes:
+      - db_data:/var/lib/mysql
+    ports:
+      - "127.0.0.1:3307:3306" # for DB GUI tools on the host (e.g. MySQL Workbench)
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+volumes:
+  node_modules:
+  db_data:

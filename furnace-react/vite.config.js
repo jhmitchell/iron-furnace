@@ -11,5 +11,7 @@ export default defineConfig({
     },
     port: 3000,
     host: true,
+    // In the dev container, file events don't cross the Windows -> Linux bind mount
+    watch: process.env.VITE_USE_POLLING === 'true' ? { usePolling: true, interval: 300 } : undefined,
   },
 });
