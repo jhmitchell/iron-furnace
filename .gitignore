@@ -1,0 +1,4 @@
+# Windows "downloaded from the internet" metadata that WSL exposes as real files.
+# The ':' makes these paths impossible to check out on Windows.
+*:Zone.Identifier
+*Zone.Identifier
