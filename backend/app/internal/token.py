@@ -1,7 +1,9 @@
+import hmac
 import os
+import secrets
 from dotenv import load_dotenv
 
-from datetime import datetime, timedelta, timezone
+from datetime import datetime, timedelta
 from jose import JWTError, jwt
 from passlib.context import CryptContext
 from typing import Union, Dict
@@ -23,6 +25,10 @@ ALGORITHM = os.getenv("ALGORITHM")
 ACCESS_TOKEN_EXPIRE_MINUTES = int(os.getenv("ACCESS_TOKEN_EXPIRE_MINUTES"))
 API_V1_PREFIX = os.getenv("API_V1_PREFIX")
 AUTH_PREFIX = os.getenv("AUTH_PREFIX")
+
+# Values of the "type" claim
+ACCESS_TOKEN_TYPE = "access"
+REFRESH_TOKEN_TYPE = "refresh"
 
 # Password context for hashing and verifying passwords
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
@@ -66,26 +72,37 @@ def get_user_refresh_token(username: str, db: Session) -> Union[str, None]:
     return user['refresh_token']
 
 
-def verify_refresh_token(refresh_token: str, db: Session) -> str:
+def verify_refresh_token(refresh_token: str, db: Session) -> Union[str, None]:
     """
     Verifies the provided refresh token, checks if it's expired, and returns the username.
+
+    The token must be a valid, unexpired JWT that is not an access token, and it must be
+    the refresh token currently stored for that user (so rotated or revoked tokens fail).
 
     :param refresh_token: Refresh token to verify
     :return: Username if the token is valid, None otherwise
     """
     try:
-        # Decode the JWT to get the payload
-        payload = jwt.decode(refresh_token, SECRET_KEY, algorithms=[ALGORITHM])
-        username = payload.get("sub")
-
-        # Verify if the token exists in the database
-        stored_refresh_token = get_user_refresh_token(username=username, db=db)
-        if refresh_token != stored_refresh_token:
-            return None
-
-        return username
+        # Decode the JWT to get the payload (this also rejects expired tokens)
+        payload = jwt.decode(refresh_token, SECRET_KEY, algorithms=[ALGORITHM],
+                             options={"require_exp": True})
     except JWTError:
         return None
+
+    username = payload.get("sub")
+    # Access tokens can never be used as refresh tokens. (Refresh tokens issued before
+    # token types were added have no "type" claim; they are still accepted until they
+    # rotate, because they must also match the copy stored in the database.)
+    if not username or payload.get("type") == ACCESS_TOKEN_TYPE:
+        return None
+
+    # Verify the token is the one currently stored for this user
+    stored_refresh_token = get_user_refresh_token(username=username, db=db)
+    if not stored_refresh_token or not hmac.compare_digest(
+            refresh_token.encode(), stored_refresh_token.encode()):
+        return None
+
+    return username
 
 
 def get_password_hash(password: str) -> str:
@@ -98,12 +115,15 @@ def get_password_hash(password: str) -> str:
     return pwd_context.hash(password)
 
 
-def create_token(data: dict, expires_delta: Union[timedelta, None] = None) -> str:
+def create_token(data: dict, expires_delta: Union[timedelta, None] = None,
+                 token_type: Union[str, None] = None) -> str:
     """
     Create a jwt token.
 
     :param data: Data to include in the token
     :param expires_delta: Expiration time for the token
+    :param token_type: ACCESS_TOKEN_TYPE or REFRESH_TOKEN_TYPE, stored in the "type" claim
+        so one kind of token can't be used as the other
     :return: Encoded JWT token
     """
     to_encode = data.copy()
@@ -112,6 +132,12 @@ def create_token(data: dict, expires_delta: Union[timedelta, None] = None) -> st
     else:
         expire = datetime.utcnow() + timedelta(minutes=15)
     to_encode.update({"exp": expire})
+    if token_type:
+        to_encode["type"] = token_type
+    # A short random ID makes every token unique, even two issued in the same second
+    # (otherwise a refresh in the same second as sign-in would "rotate" to the same token).
+    # Kept short because refresh tokens are stored in a VARCHAR(255) column.
+    to_encode["jti"] = secrets.token_urlsafe(8)
     encoded_jwt = jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)
     return encoded_jwt
 
@@ -146,19 +172,20 @@ async def get_current_user(token: Annotated[str, Depends(oauth2_scheme)], db: Se
         headers={"WWW-Authenticate": "Bearer"},
     )
     try:
-        payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
+        # jwt.decode verifies the signature and rejects expired tokens
+        payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM],
+                             options={"require_exp": True})
         username: str = payload.get("sub")
-        expires: int = payload.get("exp")
 
         # Check if the token has a username
         if username is None:
             raise credentials_exception
 
-        # Check if the token is expired
-        current_utc_timestamp = datetime.now(timezone.utc).timestamp()
-        if current_utc_timestamp > expires:
+        # Refresh tokens (long-lived, meant only for the HttpOnly cookie) are not
+        # accepted as access tokens.
+        if payload.get("type") == REFRESH_TOKEN_TYPE:
             raise credentials_exception
- 
+
         result = get_user(db, member_id=username)
         if result['status'] != 'success':
             raise credentials_exception

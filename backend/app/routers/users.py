@@ -14,28 +14,19 @@ async def read_users_me(current_user: UserSchema = Depends(authorize)):
     and returns the user's information if authentication is successful.
     """
     
-    try:
-        # current_user is a dict containing the user's information
-        # construct a PublicUserSchema object from the dict
-        status = current_user['status']
-        if status != 'success' or not current_user['user']:
-            raise HTTPException(
-                status_code=status.HTTP_401_UNAUTHORIZED,
-                detail=current_user['detail']
-            )
-        
-        user = current_user['user']
-        UserResponse = PublicUserSchema(
-            member_id=user['member_id'],
-            email=user['email'],
-            first_name=user['first_name'],
-            last_name=user['last_name']
-        )
-
-        return UserResponse
-    
-    except Exception as e:
+    # authorize() has already rejected missing, invalid, expired and disabled-account
+    # tokens with a 401; current_user is {'status': 'success', 'user': {...}}.
+    user = current_user.get('user') if current_user.get('status') == 'success' else None
+    if not user:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
-            detail='Could not validate credentials'
+            detail='Could not validate credentials',
+            headers={"WWW-Authenticate": "Bearer"},
         )
+
+    return PublicUserSchema(
+        member_id=user['member_id'],
+        email=user['email'],
+        first_name=user['first_name'],
+        last_name=user['last_name']
+    )

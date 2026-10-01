@@ -1,0 +1,89 @@
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 18px;
+}
+
+.label {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--text-off-white);
+}
+
+.control {
+  position: relative;
+}
+
+.input {
+  width: 100%;
+  height: 46px;
+  padding: 0 14px;
+  /* 16px or more stops iOS Safari from zooming in when the field is focused */
+  font-size: 1rem;
+  font-family: inherit;
+  color: var(--text-off-white);
+  background-color: var(--dark-background);
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  border-radius: 8px;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.hasTrailing .input {
+  padding-right: 52px;
+}
+
+.input:hover {
+  border-color: rgba(255, 255, 255, 0.38);
+}
+
+.input:focus {
+  outline: none;
+}
+
+.input:focus-visible,
+.input:focus {
+  border-color: var(--orange-accent);
+  box-shadow: 0 0 0 3px rgba(191, 128, 69, 0.4);
+}
+
+.input.invalid {
+  border-color: #ff8a80;
+}
+
+.input.invalid:focus {
+  box-shadow: 0 0 0 3px rgba(255, 138, 128, 0.35);
+}
+
+/* Keep browser autofill from painting a light background on the dark field */
+.input:-webkit-autofill,
+.input:-webkit-autofill:hover,
+.input:-webkit-autofill:focus {
+  -webkit-text-fill-color: var(--text-off-white);
+  caret-color: var(--text-off-white);
+  box-shadow: 0 0 0 1000px var(--dark-background) inset;
+  transition: background-color 9999s ease-out 0s;
+}
+
+.input:-webkit-autofill:focus {
+  box-shadow:
+    0 0 0 1000px var(--dark-background) inset,
+    0 0 0 3px rgba(191, 128, 69, 0.4);
+}
+
+.error {
+  font-size: 0.85rem;
+  color: #ff8a80;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .input {
+    transition: none;
+  }
+}
+
+@media (forced-colors: active) {
+  .input:focus {
+    outline: 2px solid Highlight;
+  }
+}
