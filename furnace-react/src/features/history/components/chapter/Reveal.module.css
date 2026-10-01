@@ -1,0 +1,26 @@
+.reveal {
+	opacity: 0;
+	transform: translateY(18px);
+	transition:
+		opacity 0.8s ease,
+		transform 0.9s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+.shown {
+	opacity: 1;
+	transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.reveal {
+		transform: none;
+		transition: opacity 0.3s linear;
+	}
+}
+
+@media print {
+	.reveal {
+		opacity: 1;
+		transform: none;
+	}
+}

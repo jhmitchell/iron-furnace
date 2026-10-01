@@ -1,0 +1,135 @@
+.epilogue {
+	padding: clamp(28px, 4vw, 48px);
+	border-radius: 6px;
+	background:
+		linear-gradient(160deg, rgba(95, 127, 140, 0.16), rgba(95, 127, 140, 0.04)),
+		rgba(255, 252, 245, 0.4);
+	border: 1px solid var(--paper-line);
+}
+
+.top {
+	display: grid;
+	grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+	gap: clamp(24px, 4vw, 56px);
+}
+
+.images {
+	display: grid;
+	grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+	gap: clamp(16px, 3vw, 32px);
+	margin-top: clamp(28px, 4vw, 44px);
+}
+
+.image {
+	margin: 0;
+}
+
+.image img {
+	display: block;
+	width: 100%;
+	height: auto;
+	aspect-ratio: 4 / 3;
+	object-fit: cover;
+	padding: 8px;
+	background: #f8f3e8;
+	box-shadow: 0 10px 24px rgba(40, 50, 55, 0.18);
+}
+
+.mapLink {
+	position: relative;
+	display: block;
+}
+
+.zoom {
+	position: absolute;
+	right: 16px;
+	bottom: 16px;
+	padding: 4px 10px;
+	border-radius: 999px;
+	background: rgba(20, 16, 12, 0.78);
+	color: #f3ead6;
+	font-family: var(--sans);
+	font-size: 0.72rem;
+	font-weight: 600;
+}
+
+.image figcaption {
+	display: flex;
+	flex-direction: column;
+	gap: 4px;
+	margin-top: 12px;
+	font-size: 1rem;
+	font-style: italic;
+	line-height: 1.45;
+	color: var(--ink-soft);
+}
+
+.image figcaption span {
+	font-family: var(--sans);
+	font-size: 0.72rem;
+	font-style: normal;
+	color: rgba(93, 82, 71, 0.85);
+}
+
+.kicker {
+	font-family: var(--sans);
+	font-size: 0.75rem;
+	font-weight: 600;
+	letter-spacing: 0.18em;
+	text-transform: uppercase;
+	color: #4b6874;
+}
+
+.title {
+	margin-top: 10px;
+	font-size: clamp(1.8rem, 3.2vw, 2.5rem);
+	line-height: 1.1;
+	color: var(--ink);
+}
+
+.text {
+	margin-top: 16px;
+	font-size: 1.15rem;
+	line-height: 1.65;
+	color: var(--ink);
+}
+
+.facts {
+	display: grid;
+	gap: 0;
+	margin: 0;
+	align-content: center;
+}
+
+.fact {
+	display: flex;
+	flex-direction: column-reverse;
+	padding: 16px 0;
+	border-top: 1px solid var(--paper-line);
+}
+
+.fact:first-child {
+	border-top: 0;
+}
+
+.fact dd {
+	margin: 0;
+	font-size: clamp(2rem, 4vw, 2.8rem);
+	line-height: 1.05;
+	color: #34525e;
+	font-variant-numeric: lining-nums;
+}
+
+.fact dt {
+	margin-top: 4px;
+	font-family: var(--sans);
+	font-size: 0.85rem;
+	color: var(--ink-soft);
+}
+
+@media (max-width: 760px) {
+	.top,
+	.images {
+		grid-template-columns: minmax(0, 1fr);
+	}
+}

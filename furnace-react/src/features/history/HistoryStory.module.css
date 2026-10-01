@@ -1,0 +1,182 @@
+/*
+ * Design tokens for the history story. Everything inside .story inherits these.
+ * "Paper" sections carry the written history; "iron" sections hold the interactive pieces.
+ */
+.story {
+	--paper: #efe8da;
+	--paper-deep: #e5dac5;
+	--paper-line: rgba(70, 50, 30, 0.2);
+	--ink: #2a2520;
+	--ink-soft: #5d5247;
+	--rust: #94401b;
+	--copper: #bf8045;
+	--copper-deep: #9a6331;
+	--ember: #ff8a3d;
+	--ember-hot: #ffd27a;
+	--iron: #16161a;
+	--iron-2: #1f1f24;
+	--iron-line: rgba(232, 220, 196, 0.16);
+	--bone: #e8dcc4;
+	--bone-soft: rgba(232, 220, 196, 0.72);
+
+	--serif: 'EB Garamond', 'adobe-garamond-pro', Garamond, Georgia, serif;
+	--sans: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+
+	/* Room on the left for the timeline rail on wide screens. */
+	--rail-space: 0px;
+	--gutter: 20px;
+	--content: 1160px;
+	--sticky-top: 90px;
+
+	--paper-noise: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 .32  0 0 0 0 .22  0 0 0 0 .12  0 0 0 .09 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+
+	position: relative;
+	font-family: var(--serif);
+	background: var(--iron);
+	color: var(--bone);
+	/* Old-style figures read naturally inside running text. */
+	font-variant-numeric: oldstyle-nums proportional-nums;
+	overflow-x: clip;
+}
+
+@media (min-width: 768px) {
+	.story {
+		--gutter: 40px;
+	}
+}
+
+@media (min-width: 1280px) {
+	.story {
+		--rail-space: 190px;
+	}
+}
+
+.story :global(::selection) {
+	background: rgba(191, 128, 69, 0.35);
+}
+
+/* Zero specificity, so component styles can override it. */
+:where(.story) :where(h1, h2, h3, h4) {
+	font-family: var(--serif);
+	font-weight: 500;
+	letter-spacing: -0.005em;
+}
+
+.story section[id],
+.story header[id] {
+	scroll-margin-top: 70px;
+}
+
+.story a {
+	color: inherit;
+}
+
+.story :focus-visible {
+	outline: 2px solid var(--copper);
+	outline-offset: 3px;
+	border-radius: 2px;
+}
+
+/* Wrapper that keeps content clear of the rail and centred. */
+.inner {
+	width: 100%;
+	max-width: calc(var(--content) + var(--rail-space) + var(--gutter) * 2);
+	margin: 0 auto;
+	padding-left: calc(var(--gutter) + var(--rail-space));
+	padding-right: var(--gutter);
+}
+
+.paper {
+	position: relative;
+	background-color: var(--paper);
+	background-image: var(--paper-noise);
+	color: var(--ink);
+}
+
+/* A soft torn-edge shadow where paper meets iron. */
+.paper::before,
+.paper::after {
+	content: '';
+	position: absolute;
+	left: 0;
+	right: 0;
+	height: 18px;
+	pointer-events: none;
+}
+
+.paper::before {
+	top: 0;
+	background: linear-gradient(rgba(0, 0, 0, 0.18), transparent);
+}
+
+.paper::after {
+	bottom: 0;
+	background: linear-gradient(transparent, rgba(0, 0, 0, 0.12));
+}
+
+/* No seam where one paper section follows another. */
+.paper:has(+ .paper)::after,
+.paper + .paper::before {
+	display: none;
+}
+
+.prologue {
+	padding: clamp(72px, 10vw, 128px) 0 clamp(56px, 8vw, 96px);
+}
+
+.prologueLead {
+	max-width: 46rem;
+	font-size: clamp(1.55rem, 2.6vw, 2.15rem);
+	line-height: 1.4;
+	color: var(--ink);
+}
+
+.prologueLead em {
+	color: var(--rust);
+	font-style: italic;
+}
+
+.prologueBody {
+	margin-top: 32px;
+	max-width: 40rem;
+	font-size: 1.25rem;
+	line-height: 1.7;
+	color: var(--ink-soft);
+}
+
+.prologueBody + .prologueBody {
+	margin-top: 1em;
+}
+
+.landmarks {
+	margin-top: 48px;
+	display: flex;
+	flex-wrap: wrap;
+	gap: 12px 28px;
+	font-family: var(--sans);
+	font-size: 0.78rem;
+	letter-spacing: 0.08em;
+	text-transform: uppercase;
+	color: var(--ink-soft);
+	list-style: none;
+	padding: 0;
+}
+
+.landmarks li {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+}
+
+.landmarks li::before {
+	content: '';
+	width: 7px;
+	height: 7px;
+	transform: rotate(45deg);
+	background: var(--copper);
+}
+
+.landmarks strong {
+	font-weight: 600;
+	color: var(--ink);
+}

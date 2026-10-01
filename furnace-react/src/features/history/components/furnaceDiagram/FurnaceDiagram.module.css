@@ -1,0 +1,1152 @@
+/* ---------- Section layout ---------- */
+.section {
+	position: relative;
+	padding: clamp(72px, 10vw, 128px) 0 clamp(48px, 8vw, 96px);
+	background:
+		radial-gradient(60% 40% at 75% 30%, rgba(255, 120, 40, 0.07), transparent 70%),
+		linear-gradient(rgba(232, 220, 196, 0.025) 1px, transparent 1px) 0 0 / 100% 32px,
+		var(--iron);
+	color: var(--bone);
+}
+
+.intro {
+	display: grid;
+	grid-template-columns: minmax(0, 46rem) minmax(0, 15rem);
+	justify-content: space-between;
+	align-items: end;
+	gap: 32px 48px;
+}
+
+.engraving {
+	margin: 0;
+}
+
+.engraving img {
+	display: block;
+	width: 100%;
+	height: auto;
+	max-height: 300px;
+	object-fit: cover;
+	object-position: top;
+	padding: 8px;
+	background: #ece2cc;
+	filter: sepia(0.25);
+	box-shadow: 0 16px 36px rgba(0, 0, 0, 0.5);
+	transform: rotate(-1.5deg);
+}
+
+.engraving figcaption {
+	display: flex;
+	flex-direction: column;
+	gap: 4px;
+	margin-top: 14px;
+	font-size: 0.95rem;
+	font-style: italic;
+	color: var(--bone-soft);
+}
+
+.engraving figcaption span {
+	font-family: var(--sans);
+	font-size: 0.7rem;
+	font-style: normal;
+	color: rgba(232, 220, 196, 0.45);
+}
+
+@media (max-width: 899px) {
+	.intro {
+		grid-template-columns: minmax(0, 1fr);
+	}
+
+	.engraving {
+		display: none;
+	}
+}
+
+.kicker {
+	font-family: var(--sans);
+	font-size: 0.78rem;
+	font-weight: 600;
+	letter-spacing: 0.2em;
+	text-transform: uppercase;
+	color: var(--copper);
+}
+
+.title {
+	margin-top: 16px;
+	font-size: clamp(2.5rem, 6vw, 4.4rem);
+	line-height: 1.02;
+	color: var(--bone);
+}
+
+.dek {
+	margin-top: 20px;
+	font-size: 1.25rem;
+	line-height: 1.55;
+	color: var(--bone-soft);
+}
+
+.stage {
+	display: grid;
+	grid-template-columns: minmax(0, 0.72fr) minmax(0, 1.5fr);
+	gap: clamp(28px, 4vw, 56px);
+	margin-top: clamp(32px, 5vw, 56px);
+}
+
+.cards {
+	padding: 22vh 0 30vh;
+}
+
+.card {
+	min-height: 64vh;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	opacity: 0.32;
+	transition: opacity 0.5s ease;
+}
+
+.cardActive {
+	opacity: 1;
+}
+
+.stepNumber {
+	font-family: var(--sans);
+	font-size: 0.75rem;
+	font-weight: 600;
+	letter-spacing: 0.16em;
+	text-transform: uppercase;
+	color: var(--copper);
+	font-variant-numeric: lining-nums;
+}
+
+.cardTitle {
+	margin-top: 10px;
+	font-size: clamp(1.8rem, 2.6vw, 2.3rem);
+	line-height: 1.1;
+	color: var(--bone);
+}
+
+.cardText {
+	margin-top: 16px;
+	font-size: 1.16rem;
+	line-height: 1.65;
+	color: var(--bone-soft);
+}
+
+.materials {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 10px 18px;
+	margin-top: 22px;
+	padding: 0;
+	list-style: none;
+	font-family: var(--sans);
+	font-size: 0.85rem;
+	color: var(--bone);
+}
+
+.materials li {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+}
+
+.swatch {
+	width: 22px;
+	height: 12px;
+	border-radius: 2px;
+	border: 1px solid rgba(232, 220, 196, 0.3);
+}
+
+.swatch.ore {
+	background: #7d3a1c;
+}
+
+.swatch.charcoal {
+	background: #262220;
+}
+
+.swatch.limestone {
+	background: #a8a294;
+}
+
+.figureColumn {
+	position: relative;
+}
+
+.figure {
+	position: sticky;
+	top: 86px;
+	margin: 0;
+	display: flex;
+	flex-direction: column;
+	gap: 12px;
+	max-height: calc(100vh - 100px);
+}
+
+.toolbar {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	justify-content: space-between;
+	gap: 12px 20px;
+}
+
+.eraSwitch {
+	display: inline-flex;
+	padding: 4px;
+	border: 1px solid var(--iron-line);
+	border-radius: 999px;
+	background: rgba(255, 255, 255, 0.03);
+}
+
+.eraButton {
+	display: flex;
+	align-items: baseline;
+	gap: 8px;
+	min-height: 40px;
+	padding: 6px 16px;
+	border: 0;
+	border-radius: 999px;
+	background: transparent;
+	color: rgba(232, 220, 196, 0.65);
+	font-family: var(--sans);
+	font-size: 0.8rem;
+	cursor: pointer;
+	transition:
+		background-color 0.25s ease,
+		color 0.25s ease;
+}
+
+.eraButton:hover {
+	color: var(--bone);
+}
+
+.eraButtonOn {
+	background: var(--copper);
+	color: #1a120b;
+}
+
+.eraButtonOn:hover {
+	color: #1a120b;
+}
+
+.eraYear {
+	font-family: var(--serif);
+	font-size: 1.05rem;
+	font-weight: 600;
+	font-variant-numeric: lining-nums;
+}
+
+.eraLabel {
+	font-weight: 500;
+}
+
+.stepTitle {
+	font-family: var(--sans);
+	font-size: 0.85rem;
+	color: rgba(232, 220, 196, 0.75);
+}
+
+.stepTitle span {
+	display: inline-grid;
+	place-items: center;
+	width: 22px;
+	height: 22px;
+	margin-right: 6px;
+	border-radius: 50%;
+	background: rgba(255, 138, 61, 0.18);
+	color: #ffb27a;
+	font-size: 0.75rem;
+	font-weight: 600;
+}
+
+.svgWrap {
+	position: relative;
+	border: 1px solid var(--iron-line);
+	border-radius: 14px;
+	background:
+		radial-gradient(70% 70% at 55% 70%, rgba(255, 120, 40, 0.06), transparent 70%),
+		#121215;
+	overflow: hidden;
+	min-height: 0;
+}
+
+.svg {
+	display: block;
+	width: 100%;
+	height: auto;
+	max-height: calc(100vh - 250px);
+}
+
+.legend {
+	margin: 0;
+	padding: 0 0 0 4px;
+	list-style: none;
+	counter-reset: legend;
+	display: flex;
+	flex-wrap: wrap;
+	gap: 6px 16px;
+	font-family: var(--sans);
+	font-size: 0.8rem;
+	color: rgba(232, 220, 196, 0.85);
+}
+
+.legend li {
+	counter-increment: legend;
+	display: flex;
+	align-items: center;
+	gap: 6px;
+}
+
+.legend li::before {
+	content: counter(legend);
+	display: inline-grid;
+	place-items: center;
+	width: 18px;
+	height: 18px;
+	border-radius: 50%;
+	background: #ff8a3d;
+	color: #1a120b;
+	font-size: 0.68rem;
+	font-weight: 700;
+}
+
+.controls {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 14px;
+}
+
+.arrow {
+	display: grid;
+	place-items: center;
+	width: 40px;
+	height: 40px;
+	border: 1px solid var(--iron-line);
+	border-radius: 50%;
+	background: transparent;
+	color: var(--bone);
+	font-size: 1rem;
+	cursor: pointer;
+	transition:
+		background-color 0.2s ease,
+		opacity 0.2s ease;
+}
+
+.arrow:hover:not(:disabled) {
+	background: rgba(191, 128, 69, 0.18);
+}
+
+.arrow:disabled {
+	opacity: 0.3;
+	cursor: default;
+}
+
+.dots {
+	display: flex;
+	gap: 4px;
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+.dot {
+	display: grid;
+	place-items: center;
+	width: 28px;
+	height: 28px;
+	border: 0;
+	background: transparent;
+	cursor: pointer;
+}
+
+.dot::after {
+	content: '';
+	width: 9px;
+	height: 9px;
+	border-radius: 50%;
+	background: rgba(232, 220, 196, 0.3);
+	transition:
+		background-color 0.25s ease,
+		transform 0.25s ease,
+		box-shadow 0.25s ease;
+}
+
+.dot:hover::after {
+	background: rgba(232, 220, 196, 0.6);
+}
+
+.dotOn::after {
+	background: #ff8a3d;
+	transform: scale(1.25);
+	box-shadow: 0 0 10px rgba(255, 138, 61, 0.8);
+}
+
+.caption {
+	font-family: var(--sans);
+	font-size: 0.74rem;
+	line-height: 1.5;
+	text-align: center;
+	color: rgba(232, 220, 196, 0.45);
+}
+
+/* ---------- Drawing ---------- */
+.part {
+	transition: opacity 0.6s ease;
+	opacity: 0.55;
+}
+
+.lit {
+	opacity: 1;
+}
+
+.ghost {
+	opacity: 0;
+}
+
+.ghost.lit {
+	opacity: 1;
+}
+
+.era {
+	opacity: 0;
+	transition: opacity 0.7s ease;
+	pointer-events: none;
+}
+
+.eraOn {
+	opacity: 1;
+}
+
+.groundLine {
+	stroke: rgba(232, 220, 196, 0.3);
+	stroke-width: 1.5;
+}
+
+.contour {
+	fill: none;
+	stroke: rgba(232, 220, 196, 0.35);
+	stroke-width: 1.5;
+}
+
+.pit {
+	fill: #0d0d10;
+	stroke: rgba(232, 220, 196, 0.12);
+}
+
+.oreTrail {
+	fill: none;
+	stroke: #c0592c;
+	stroke-width: 3;
+	stroke-dasharray: 2 7;
+	stroke-linecap: round;
+}
+
+.building {
+	fill: #26231f;
+	stroke: rgba(232, 220, 196, 0.6);
+	stroke-width: 1.4;
+}
+
+.roomWall {
+	fill: rgba(232, 220, 196, 0.035);
+	stroke: rgba(232, 220, 196, 0.55);
+	stroke-width: 1.4;
+}
+
+.room {
+	fill: #0f0e11;
+	stroke: rgba(232, 220, 196, 0.22);
+}
+
+.roof {
+	fill: none;
+	stroke: var(--bone);
+	stroke-width: 3;
+	stroke-linecap: round;
+	stroke-linejoin: round;
+}
+
+.door {
+	fill: #121114;
+	stroke: rgba(232, 220, 196, 0.5);
+}
+
+.window {
+	fill: none;
+	stroke: rgba(232, 220, 196, 0.55);
+	stroke-width: 1.2;
+}
+
+.deck {
+	stroke: #8c6a48;
+	stroke-width: 6;
+	stroke-linecap: round;
+}
+
+.truss,
+.post {
+	fill: none;
+	stroke: rgba(232, 220, 196, 0.45);
+	stroke-width: 1.4;
+}
+
+.flume {
+	stroke: #6f5236;
+	stroke-width: 9;
+	stroke-linecap: round;
+}
+
+.water {
+	fill: none;
+	stroke: #78bdf0;
+	stroke-width: 3.5;
+	stroke-linecap: round;
+	stroke-dasharray: 7 9;
+}
+
+.wood .rim {
+	fill: none;
+	stroke: #a57d55;
+	stroke-width: 6;
+}
+
+.wood .rimInner {
+	fill: none;
+	stroke: #a57d55;
+	stroke-width: 2;
+}
+
+.spokes line {
+	stroke: #a57d55;
+	stroke-width: 4;
+	stroke-linecap: round;
+}
+
+.metal .spokes line {
+	stroke: #8f969c;
+}
+
+.buckets rect {
+	fill: #5f4630;
+}
+
+.teeth {
+	fill: #8a6542;
+}
+
+.metal .teeth {
+	fill: #8f969c;
+}
+
+.hub {
+	fill: #cfa77e;
+}
+
+.metal .hub {
+	fill: #b9c0c5;
+}
+
+.crankPin {
+	fill: #e9e0d2;
+}
+
+.flywheel {
+	fill: none;
+	stroke: #8f969c;
+	stroke-width: 6;
+}
+
+.cylinder {
+	fill: #474b50;
+	stroke: #a8afb5;
+	stroke-width: 1.5;
+}
+
+.piston {
+	fill: #d4d8dc;
+}
+
+.rod {
+	stroke: #cdd1d5;
+	stroke-width: 3.5;
+	stroke-linecap: round;
+}
+
+.tub {
+	fill: #5b4330;
+	stroke: #c9a27a;
+	stroke-width: 1.5;
+}
+
+.hoops {
+	stroke: #1d1b1a;
+	stroke-width: 4;
+}
+
+.bellows {
+	fill: #6b4a30;
+	stroke: #c9a27a;
+	stroke-width: 1.4;
+	stroke-linejoin: round;
+}
+
+.nozzle {
+	fill: none;
+	stroke: #8f969c;
+	stroke-width: 4;
+	stroke-linecap: round;
+}
+
+.blastPipe {
+	fill: none;
+	stroke: #6e757a;
+	stroke-width: 8;
+	stroke-linejoin: round;
+	stroke-linecap: round;
+}
+
+.valve {
+	fill: #9aa1a7;
+}
+
+.steamPipe {
+	fill: none;
+	stroke: #a7aeb4;
+	stroke-width: 3;
+	stroke-linejoin: round;
+	stroke-dasharray: 1 0;
+}
+
+.airFlow {
+	fill: none;
+	stroke: #9fd3ff;
+	stroke-width: 3;
+	stroke-linecap: round;
+	stroke-dasharray: 8 12;
+}
+
+.cartBody {
+	fill: #6b4f36;
+	stroke: #d1aa80;
+	stroke-width: 1.4;
+}
+
+.cartWheel {
+	fill: #1f1d1c;
+	stroke: #d1aa80;
+	stroke-width: 1.4;
+}
+
+.cartHandle {
+	stroke: #d1aa80;
+	stroke-width: 2;
+}
+
+.cart,
+.barrow {
+	opacity: 0;
+}
+
+.brickwork {
+	stroke: rgba(0, 0, 0, 0.45);
+}
+
+.boiler {
+	fill: #60666b;
+	stroke: #ccd1d5;
+	stroke-width: 2;
+}
+
+.heatWaves path {
+	fill: none;
+	stroke: #ffb25a;
+	stroke-width: 2.5;
+	stroke-linecap: round;
+}
+
+.smoke {
+	filter: blur(6px);
+}
+
+.smoke circle {
+	fill: rgba(205, 198, 190, 0.16);
+	transform-box: fill-box;
+	transform-origin: center;
+}
+
+.flames path {
+	fill: #ff9a3c;
+	transform-box: fill-box;
+	transform-origin: 50% 100%;
+}
+
+.flames path:nth-child(2) {
+	fill: #ffc46b;
+}
+
+.stack {
+	stroke: rgba(232, 220, 196, 0.5);
+	stroke-width: 1.5;
+}
+
+.stackGroup {
+	opacity: 0.85;
+}
+
+.stackGroup.lit {
+	opacity: 1;
+}
+
+.arch {
+	fill: #0e0d10;
+	stroke: rgba(232, 220, 196, 0.35);
+	stroke-width: 1.2;
+}
+
+.bosh {
+	fill: #0d0c0e;
+}
+
+.lining {
+	fill: none;
+	stroke: #b5643a;
+	stroke-width: 3.5;
+	stroke-linejoin: round;
+}
+
+.charcoal {
+	fill: #29241f;
+}
+
+.ore {
+	fill: #7d3a1c;
+}
+
+.limestone {
+	fill: #8e887b;
+}
+
+.slag {
+	fill: #6a2f17;
+}
+
+.iron {
+	filter: drop-shadow(0 0 6px rgba(255, 170, 80, 0.8));
+}
+
+.mouth {
+	opacity: 0.9;
+}
+
+.floor {
+	stroke: rgba(232, 220, 196, 0.25);
+	stroke-width: 1.2;
+}
+
+.channel {
+	fill: none;
+	stroke: #261f19;
+	stroke-width: 5;
+	stroke-linecap: round;
+}
+
+.flask {
+	fill: #2a231c;
+	stroke: rgba(232, 220, 196, 0.35);
+}
+
+.molten {
+	fill: none;
+	stroke: #ffb347;
+	stroke-width: 3.6;
+	stroke-linecap: round;
+	stroke-dasharray: 100;
+	stroke-dashoffset: 100;
+	filter: drop-shadow(0 0 4px rgba(255, 150, 60, 0.9));
+}
+
+/* ---------- Labels ---------- */
+.labels {
+	animation: labelsIn 0.6s ease both;
+}
+
+.labelBox {
+	fill: rgba(14, 14, 17, 0.9);
+	stroke: rgba(191, 128, 69, 0.7);
+	stroke-width: 1.2;
+}
+
+.labelText {
+	fill: var(--bone);
+	font-family: var(--sans);
+	font-size: 17px;
+	font-weight: 500;
+	font-variant-numeric: lining-nums;
+}
+
+.labelLeader {
+	stroke: rgba(255, 160, 90, 0.85);
+	stroke-width: 1.5;
+}
+
+.labelDot {
+	fill: #ff8a3d;
+	stroke: #1a120b;
+	stroke-width: 1.5;
+}
+
+.labelArrow {
+	fill: none;
+	stroke: #ff8a3d;
+	stroke-width: 2.5;
+	stroke-linecap: round;
+	stroke-linejoin: round;
+}
+
+.marker {
+	fill: #ff8a3d;
+	stroke: #1a120b;
+	stroke-width: 2;
+	filter: drop-shadow(0 0 4px rgba(255, 138, 61, 0.7));
+}
+
+.markerText {
+	fill: #1a120b;
+	font-family: var(--sans);
+	font-weight: 700;
+	font-variant-numeric: lining-nums;
+}
+
+@keyframes labelsIn {
+	from {
+		opacity: 0;
+	}
+	to {
+		opacity: 1;
+	}
+}
+
+/* ---------- Motion (only while the drawing is on screen) ---------- */
+.animated .chargeLayers {
+	animation: descend 6s linear infinite;
+}
+
+.animated .backglow {
+	animation: flicker 5s ease-in-out infinite;
+}
+
+.animated .heat {
+	animation: flicker 2.6s ease-in-out infinite;
+}
+
+.animated .mouth {
+	animation: flicker 1.8s ease-in-out infinite;
+}
+
+.animated .iron {
+	animation: simmer 3s ease-in-out infinite;
+}
+
+.animated .water {
+	animation: flow 0.9s linear infinite;
+}
+
+.animated .airFlow {
+	animation: flow 0.8s linear infinite;
+}
+
+.animated .flames path {
+	animation: lick 0.9s ease-in-out infinite alternate;
+}
+
+.animated .flames path:nth-child(2) {
+	animation-duration: 0.7s;
+	animation-delay: -0.3s;
+}
+
+.animated .flames path:nth-child(3) {
+	animation-duration: 1.1s;
+	animation-delay: -0.6s;
+}
+
+.animated .smoke circle {
+	animation: rise 6s ease-in infinite;
+}
+
+.animated .smoke circle:nth-child(2) {
+	animation-delay: -2s;
+}
+
+.animated .smoke circle:nth-child(3) {
+	animation-delay: -4s;
+}
+
+.animated .heatWaves path {
+	animation: shimmer 1.6s ease-in-out infinite;
+}
+
+.animated .heatWaves path:nth-child(2) {
+	animation-delay: -0.8s;
+}
+
+.animated .travelRebuilt {
+	animation: travelRebuilt 9s ease-in-out infinite;
+}
+
+.animated .travelEarly {
+	animation: travelEarly 8s ease-in-out infinite;
+}
+
+.svg[data-step='casting'] .molten {
+	animation: pour 7s ease-in-out infinite;
+}
+
+.svg[data-step='casting'] .moltenPig {
+	animation-name: pourPig;
+}
+
+.svg:not(.animated) * {
+	animation-play-state: paused;
+}
+
+@keyframes descend {
+	from {
+		transform: translateY(0);
+	}
+	to {
+		transform: translateY(30px);
+	}
+}
+
+@keyframes flicker {
+	0%,
+	100% {
+		opacity: 0.88;
+	}
+	30% {
+		opacity: 1;
+	}
+	55% {
+		opacity: 0.8;
+	}
+	80% {
+		opacity: 0.97;
+	}
+}
+
+@keyframes simmer {
+	0%,
+	100% {
+		filter: drop-shadow(0 0 5px rgba(255, 170, 80, 0.7));
+	}
+	50% {
+		filter: drop-shadow(0 0 10px rgba(255, 190, 100, 0.95));
+	}
+}
+
+@keyframes flow {
+	to {
+		stroke-dashoffset: -20;
+	}
+}
+
+@keyframes lick {
+	from {
+		transform: scaleY(0.82) skewX(-3deg);
+	}
+	to {
+		transform: scaleY(1.08) skewX(3deg);
+	}
+}
+
+@keyframes rise {
+	0% {
+		transform: translate(0, 30px) scale(0.6);
+		opacity: 0;
+	}
+	30% {
+		opacity: 1;
+	}
+	100% {
+		transform: translate(16px, -50px) scale(1.4);
+		opacity: 0;
+	}
+}
+
+@keyframes shimmer {
+	0%,
+	100% {
+		transform: translateY(0);
+		opacity: 0.4;
+	}
+	50% {
+		transform: translateY(-5px);
+		opacity: 1;
+	}
+}
+
+@keyframes travelRebuilt {
+	0% {
+		transform: translate(150px, 246px);
+		opacity: 0;
+	}
+	8% {
+		opacity: 1;
+	}
+	62% {
+		transform: translate(584px, 246px);
+	}
+	72% {
+		transform: translate(592px, 248px) rotate(38deg);
+		opacity: 1;
+	}
+	82%,
+	100% {
+		transform: translate(592px, 248px) rotate(38deg);
+		opacity: 0;
+	}
+}
+
+@keyframes travelEarly {
+	0% {
+		transform: translate(200px, 246px);
+		opacity: 0;
+	}
+	8% {
+		opacity: 1;
+	}
+	60% {
+		transform: translate(574px, 246px);
+	}
+	70% {
+		transform: translate(584px, 248px) rotate(30deg);
+		opacity: 1;
+	}
+	80%,
+	100% {
+		transform: translate(584px, 248px) rotate(30deg);
+		opacity: 0;
+	}
+}
+
+@keyframes pour {
+	0% {
+		stroke-dashoffset: 100;
+		stroke: #fff0b8;
+	}
+	35% {
+		stroke-dashoffset: 0;
+		stroke: #ffb347;
+	}
+	70% {
+		stroke-dashoffset: 0;
+		stroke: #b8562a;
+		filter: drop-shadow(0 0 2px rgba(255, 120, 40, 0.5));
+	}
+	100% {
+		stroke-dashoffset: 0;
+		stroke: #4a3a30;
+		filter: none;
+	}
+}
+
+@keyframes pourPig {
+	0%,
+	20% {
+		stroke-dashoffset: 100;
+		stroke: #fff0b8;
+	}
+	45% {
+		stroke-dashoffset: 0;
+		stroke: #ffb347;
+	}
+	75% {
+		stroke-dashoffset: 0;
+		stroke: #b8562a;
+	}
+	100% {
+		stroke-dashoffset: 0;
+		stroke: #4a3a30;
+		filter: none;
+	}
+}
+
+/* ---------- Narrow screens: drawing pinned above the steps ---------- */
+@media (max-width: 899px) {
+	.stage {
+		grid-template-columns: minmax(0, 1fr);
+		gap: 0;
+	}
+
+	.figureColumn {
+		order: -1;
+		position: sticky;
+		top: 70px;
+		z-index: 2;
+		margin: 0 calc(var(--gutter) * -1);
+		padding: 10px var(--gutter) 10px;
+		background: var(--iron);
+		box-shadow: 0 10px 18px -6px rgba(0, 0, 0, 0.7);
+	}
+
+	.controls {
+		gap: 6px;
+	}
+
+	.arrow {
+		width: 36px;
+		height: 36px;
+	}
+
+	.figure {
+		position: static;
+		max-height: none;
+		gap: 8px;
+	}
+
+	.toolbar {
+		justify-content: center;
+	}
+
+	.stepTitle {
+		display: none;
+	}
+
+	.eraButton {
+		min-height: 36px;
+		padding: 4px 12px;
+		font-size: 0.74rem;
+	}
+
+	.svg {
+		max-height: none;
+	}
+
+	.caption {
+		display: none;
+	}
+
+	.cards {
+		padding: 8vh 0 24vh;
+	}
+
+	.card {
+		min-height: 75vh;
+		justify-content: flex-end;
+		padding-bottom: 6vh;
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.svg[data-step='casting'] .molten {
+		animation: none;
+		stroke-dashoffset: 0;
+	}
+
+	.labels {
+		animation: none;
+	}
+}
