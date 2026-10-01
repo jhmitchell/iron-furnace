@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
 import styles from './AssociatesContent.module.css';
-import { TextLink, InfoBlock } from '/src/components/ui';
+import { TextLink, InfoBlock, Button } from '/src/components/ui';
 import ScrollableSection from '/src/layouts/scrollableSection/ScrollableSection';
-import { getAllSponsors } from '/src/features/sponsors';
+import { getAllSponsors, SponsorGrid } from '/src/features/sponsors';
 import { getAllBoardMembers } from '/src/features/boardMembers';
 
 const AssociatesContent = () => {
@@ -29,15 +29,18 @@ const AssociatesContent = () => {
 						</p>
 					</InfoBlock>
 					<InfoBlock>
-						<div className={styles.boardMembers}>
-							{sponsors.map(s => (
-								<p key={s.id}>{s.name}</p>
-							))}
-						</div>
+						<SponsorGrid sponsors={sponsors} className={styles.sponsorGrid} />
 					</InfoBlock>
 					<InfoBlock>
-						If your business is interested in becoming a corporate partner, click {" "}
-						<TextLink to="https://givebutter.com/historic-holidays-event-sponsorship-ojpfhv" target="_blank">here</TextLink> for more information.
+						<p>If your business is interested in becoming a corporate partner, we'd love to hear from you.</p>
+						<div className={styles.sponsorCta}>
+							<Button
+								color="orange"
+								text="BECOME A SPONSOR"
+								href="https://givebutter.com/historic-holidays-event-sponsorship-ojpfhv"
+								external
+							/>
+						</div>
 					</InfoBlock>
 				</ScrollableSection>
 
