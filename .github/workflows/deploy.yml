@@ -1,0 +1,161 @@
+name: Build and deploy
+
+# Every push/PR: build the frontend and smoke-test the backend.
+# Pushes to main and manual runs: also upload the release to the server and run
+# the deploy script. For now the only mode is "dry-run", which reports what a deploy
+# would change and changes nothing live. See deploy/README.md.
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: What to do on the server
+        type: choice
+        options: [dry-run]
+        default: dry-run
+
+permissions:
+  contents: read
+
+# Explicit bash = "bash -eo pipefail" (fail on any error, including inside pipes)
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  frontend:
+    name: Build frontend
+    runs-on: ubuntu-24.04
+    defaults:
+      run:
+        shell: bash
+        working-directory: furnace-react
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: furnace-react/package-lock.json
+      - run: cp .env.example .env
+      - run: npm ci --no-audit --no-fund
+      - run: npm run build
+      - uses: actions/upload-artifact@v7
+        with:
+          name: frontend
+          path: furnace-react/dist/
+          include-hidden-files: true
+          retention-days: 14
+
+  backend:
+    name: Smoke-test backend (Python 3.9, MariaDB 10.11)
+    runs-on: ubuntu-24.04
+    # Same Python as production (cPanel Python App 3.9)
+    container: python:3.9-slim-bookworm
+    services:
+      db:
+        image: mariadb:10.11
+        env:
+          MARIADB_DATABASE: cornwall
+          MARIADB_USER: webmaster
+          MARIADB_PASSWORD: ci-password
+          MARIADB_ROOT_PASSWORD: ci-root-password
+        options: >-
+          --health-cmd="healthcheck.sh --connect --innodb_initialized"
+          --health-interval=5s --health-timeout=5s --health-retries=20
+    env:
+      # CI-only values (not production settings)
+      DB_HOST: db
+      DB_NAME: cornwall
+      DB_USER: webmaster
+      DB_PASSWORD: ci-password
+      SECRET_KEY: ci-only-secret-key
+      ALGORITHM: HS256
+      ACCESS_TOKEN_EXPIRE_MINUTES: "30"
+      REFRESH_TOKEN_EXPIRE_DAYS: "7"
+      API_V1_PREFIX: /api/v1
+      AUTH_PREFIX: /auth
+    steps:
+      - uses: actions/checkout@v7
+      - run: pip install --no-cache-dir -r backend/requirements.txt
+      - name: Load the app the way Passenger does and request a few endpoints
+        working-directory: backend
+        run: python ../deploy/smoke_test.py
+
+  deploy:
+    name: Deploy (${{ inputs.mode || 'dry-run' }})
+    needs: [frontend, backend]
+    if: github.event_name == 'workflow_dispatch' || (github.event_name == 'push' && github.ref == 'refs/heads/main')
+    runs-on: ubuntu-24.04
+    # Never run two deploys at once
+    concurrency:
+      group: production
+      cancel-in-progress: false
+    env:
+      MODE: ${{ inputs.mode || 'dry-run' }}
+      RELEASE_ID: ${{ github.sha }}
+      DEPLOY_SSH_KEY: ${{ secrets.DEPLOY_SSH_KEY }}
+    steps:
+      - name: Check deploy key is configured
+        id: key
+        run: |
+          if [ -z "$DEPLOY_SSH_KEY" ]; then
+            echo "::warning::DEPLOY_SSH_KEY secret is not set; skipping the server step. See deploy/README.md."
+            echo "ok=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "ok=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - uses: actions/checkout@v7
+        if: steps.key.outputs.ok == 'true'
+
+      - uses: actions/download-artifact@v8
+        if: steps.key.outputs.ok == 'true'
+        with:
+          name: frontend
+          path: release/frontend
+
+      - name: Assemble release
+        if: steps.key.outputs.ok == 'true'
+        run: |
+          git archive HEAD backend | tar -x -C release
+          mkdir -p release/deploy
+          cp deploy/remote.sh deploy/smoke_test.py release/deploy/
+          echo "$RELEASE_ID $(date -u +%FT%TZ) run ${{ github.run_id }}" > release/RELEASE
+          test -f release/frontend/index.html
+          echo "frontend: $(find release/frontend -type f | wc -l) files, backend: $(find release/backend -type f | wc -l) files"
+
+      - name: Configure SSH
+        if: steps.key.outputs.ok == 'true'
+        run: |
+          install -m 700 -d ~/.ssh
+          printf '%s\n' "$DEPLOY_SSH_KEY" > ~/.ssh/deploy_key
+          chmod 600 ~/.ssh/deploy_key
+          # Pinned server host key (SHA256:tc4aclLTOeISTR2QdhETiVeN1ZBkzvRe5WjmUjlMAz4)
+          echo "cornwallironfurnace.org ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHnQJyr0I4YWvIRGNSbb6dOAh1ZuHb/pBLdpzojeEIHy" > ~/.ssh/known_hosts
+          cat > ~/.ssh/config <<'EOF'
+          Host prod
+            HostName cornwallironfurnace.org
+            User p6qv8hi06h6k
+            IdentityFile ~/.ssh/deploy_key
+            IdentitiesOnly yes
+            StrictHostKeyChecking yes
+            ConnectTimeout 20
+          EOF
+
+      - name: Upload release to ~/deploy/releases
+        if: steps.key.outputs.ok == 'true'
+        run: |
+          ssh prod "mkdir -p deploy/releases/$RELEASE_ID"
+          rsync -rlc --delete -e ssh release/ "prod:deploy/releases/$RELEASE_ID/"
+          # Keep only the 5 most recent releases (only touches ~/deploy/releases)
+          ssh prod 'cd ~/deploy/releases && ls -1t | grep -E "^[0-9a-f]{40}$" | tail -n +6 | xargs -r rm -rf --'
+
+      - name: Run deploy script (${{ env.MODE }})
+        if: steps.key.outputs.ok == 'true'
+        run: |
+          ssh prod "bash deploy/releases/$RELEASE_ID/deploy/remote.sh $MODE" | tee report.txt
+          { echo "## Server report ($MODE)"; echo '```'; cat report.txt; echo '```'; } >> "$GITHUB_STEP_SUMMARY"
