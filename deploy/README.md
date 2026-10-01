@@ -11,8 +11,9 @@ Production runs on GoDaddy cPanel shared hosting:
 | Uploaded files (event images, PDFs, QR PDFs) | `~/backend/static/` | the admin dashboard; **production data** |
 | Database | MariaDB `cornwall` | the app; cPanel *MySQL Databases* |
 
-How Passenger runs the backend: `passenger_wsgi.py` → `wsgi.py` → `app/main.py`.
-FastAPI is an ASGI app and Passenger only speaks WSGI, so `wsgi.py` wraps it with `a2wsgi`.
+How Passenger runs the backend: it loads `backend/passenger_wsgi.py` (the startup file set in
+cPanel *Setup Python App*), which wraps the FastAPI app (`app/main.py`) with `a2wsgi`, because
+FastAPI is an ASGI app and Passenger only speaks WSGI.
 
 ## How a deploy works
 

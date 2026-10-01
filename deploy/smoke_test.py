@@ -1,8 +1,8 @@
 """Smoke-test the backend exactly the way production loads it.
 
-Passenger imports backend/passenger_wsgi.py, which loads wsgi.py, which wraps the
-FastAPI app (app.main) for WSGI using a2wsgi. This script does the same and sends a
-few GET requests through that WSGI `application`.
+Passenger imports backend/passenger_wsgi.py, which wraps the FastAPI app (app.main) for
+WSGI using a2wsgi. This script does the same and sends a few GET requests through that
+WSGI `application`.
 
 Run from the backend/ directory with the backend's environment variables set and a
 reachable database:
