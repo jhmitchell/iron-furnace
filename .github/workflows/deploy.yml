@@ -161,5 +161,6 @@ jobs:
       - name: Run deploy script (${{ env.MODE }})
         if: steps.key.outputs.ok == 'true'
         run: |
-          ssh prod "bash deploy/releases/$RELEASE_ID/deploy/remote.sh $MODE" | tee report.txt
+          # The report is also kept on the server in ~/deploy/last-report.txt
+          ssh prod "set -o pipefail; bash deploy/releases/$RELEASE_ID/deploy/remote.sh $MODE 2>&1 | tee deploy/last-report.txt" | tee report.txt
           { echo "## Server report ($MODE)"; echo '```'; cat report.txt; echo '```'; } >> "$GITHUB_STEP_SUMMARY"
