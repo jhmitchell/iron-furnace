@@ -1,3 +1,4 @@
+import logging
 from pydantic import BaseModel
 from typing import Union, Dict
 from sqlalchemy.exc import IntegrityError
@@ -7,8 +8,15 @@ from passlib.context import CryptContext
 
 from app.internal.models.users import User, UserSchema
 
+logger = logging.getLogger(__name__)
+
 # Initialize CryptContext
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
+
+# Checked against when the username doesn't exist, so that an unknown username takes as
+# long to reject as a wrong password (no timing difference to probe usernames with).
+# It is the bcrypt hash (same cost as real ones) of a random value nobody knows.
+_DUMMY_HASH = "$2b$12$d7yri/yP997MzqGKwAGzOepmS7eUABMmyUe111g9EJtsMP4T7Pvm6"
 
 
 # Helper function to map User attributes to a Python dictionary
@@ -106,18 +114,32 @@ def delete_user(db: Session, member_id: str) -> Dict[str, str]:
         return {'status': 'error', 'detail': str(e)}
 
 def authenticate_user(db: Session, member_id: str, password: str) -> Dict[str, Union[Dict, str]]:
+    """
+    Check a username and password.
+
+    Returns {'status': 'success', 'user': ...} on a match, {'status': 'fail'} for an
+    unknown user or a wrong password (indistinguishable to the caller, and both cost one
+    bcrypt check so response times don't reveal which usernames exist), or
+    {'status': 'error'} if the database could not be queried.
+    """
     try:
-        result = get_user(db, member_id)
-        if result['status'] != 'success':
-            return result
+        user = db.query(User).filter(User.member_id == member_id).first()
+    except Exception:
+        logger.exception("Database error while looking up a user for sign-in")
+        db.rollback()
+        return {'status': 'error', 'detail': 'Authentication unavailable.'}
 
-        user_dict = result['user']
-        if not pwd_context.verify(password, user_dict['hashed_password']):
-            return {'status': 'fail', 'detail': 'Authentication failed.'}
+    hashed_password = user.hashed_password if user and user.hashed_password else _DUMMY_HASH
+    try:
+        password_ok = pwd_context.verify(password, hashed_password)
+    except Exception:
+        # e.g. a password longer than passlib accepts, or a malformed stored hash
+        password_ok = False
 
-        return {'status': 'success', 'user': user_dict}
-    except Exception as e:
-        return {'status': 'error', 'detail': str(e)}
+    if not user or not password_ok:
+        return {'status': 'fail', 'detail': 'Authentication failed.'}
+
+    return {'status': 'success', 'user': user_to_dict(user)}
 
 def clear_refresh_token(db: Session, member_id: str) -> Dict[str, str]:
     """Revokes the stored refresh token so it can no longer be exchanged for access tokens."""
