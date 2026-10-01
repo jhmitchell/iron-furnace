@@ -30,8 +30,11 @@ LIVE_WEB="${LIVE_WEB:-$HOME/public_html}"
 LIVE_API="${LIVE_API:-$HOME/backend}"
 SNAPSHOTS="${SNAPSHOTS:-$HOME/deploy/snapshots}"
 HISTORY="${HISTORY:-$HOME/deploy/history.log}"
-VENV="$HOME/virtualenv/backend/3.9"
 HTACCESS="$HOME/public_html/.htaccess" # cPanel-managed; only read, never written
+# The Python environment Passenger actually uses (e.g. ~/virtualenv/backend/3.11), read from
+# the PassengerPython line, so deploys follow Python version changes made in cPanel.
+PASSENGER_PYTHON="$(sed -n 's/^PassengerPython "\(.*\)"$/\1/p' "$HTACCESS" | head -1)"
+VENV="$(dirname "$(dirname "$PASSENGER_PYTHON")")"
 APP_ROOT_EXPECTED="${APP_ROOT_EXPECTED:-$LIVE_API}"
 SITE_URL="https://cornwallironfurnace.org"
 KEEP_SNAPSHOTS=5
@@ -67,11 +70,13 @@ esac
 
 echo "Release: $(cat "$RELEASE/RELEASE" 2>/dev/null || echo unknown)"
 echo "Mode:    $MODE$($REHEARSAL && echo '  (REHEARSAL against scratch copies)')"
+echo "Python:  $VENV"
 echo
 
 # --- Safety checks: refuse to run if anything looks unexpected ---------------
 [ -d "$LIVE_WEB" ] || die "$LIVE_WEB not found"
 [ -d "$LIVE_API" ] || die "$LIVE_API not found"
+[ -n "$PASSENGER_PYTHON" ] || die "no PassengerPython line in $HTACCESS"
 [ -x "$VENV/bin/python" ] || die "Python virtualenv $VENV not found"
 # Make sure Passenger really serves the backend from where we deploy it
 # (guards against deploying into a folder nothing uses).

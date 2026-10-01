@@ -55,10 +55,14 @@ jobs:
           retention-days: 14
 
   backend:
-    name: Smoke-test backend (Python 3.9, MariaDB 10.11)
+    name: Smoke-test backend (Python ${{ matrix.python }}, MariaDB 10.11)
     runs-on: ubuntu-24.04
-    # Same Python as production (cPanel Python App 3.9)
-    container: python:3.9-slim-bookworm
+    strategy:
+      fail-fast: false
+      matrix:
+        # Production runs 3.9 (cPanel Python App); 3.11 is being verified before upgrading it
+        python: ["3.9", "3.11"]
+    container: python:${{ matrix.python }}-slim-bookworm
     services:
       db:
         image: mariadb:10.11
