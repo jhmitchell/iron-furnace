@@ -1,4 +1,3 @@
-import React from 'react';
 import { TwoColumn } from '/src/layouts';
 import WheelImg from '/src/assets/images/history-wheel.webp';
 import styles from './HistoryHero.module.css';

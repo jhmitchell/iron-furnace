@@ -1,4 +1,3 @@
-import React from "react";
 import styles from "./InfoBlock.module.css";
 
 const InfoBlock = ({ children, id, margin }) => {

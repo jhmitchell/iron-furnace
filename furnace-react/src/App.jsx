@@ -10,7 +10,6 @@ import {
   SiteMapPage,
   NotFound,
   TestPage,
-  Membership,
   Accessibility,
   AssociatesPage,
   EventsPage,

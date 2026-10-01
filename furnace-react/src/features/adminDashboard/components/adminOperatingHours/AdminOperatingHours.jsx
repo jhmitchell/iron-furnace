@@ -1,4 +1,3 @@
-import React from 'react';
 import HoursCard from '../hoursCard/HoursCard';
 import HolidaysCard from '../holidaysCard/HolidaysCard';
 import { AdminPage, AdminCard, ui } from '../ui';

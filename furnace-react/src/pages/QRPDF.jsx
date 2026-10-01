@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import styles from './QRPDF.module.css';
 
-const QRPDF = () => {
+const QrPdf = () => {
   /*
   PDF naming convention:
   The PDF will be available at /signs/{name}
@@ -41,4 +41,4 @@ const QRPDF = () => {
   );
 };
 
-export default QRPDF;
+export default QrPdf;

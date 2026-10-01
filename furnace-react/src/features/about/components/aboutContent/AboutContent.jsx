@@ -1,4 +1,3 @@
-import React from 'react';
 import styles from './AboutContent.module.css';
 
 import HistorySection from '../historySection/HistorySection';

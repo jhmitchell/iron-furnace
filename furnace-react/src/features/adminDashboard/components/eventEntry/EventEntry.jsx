@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { MdEdit, MdDelete } from 'react-icons/md';
 import { editEvent } from '/src/features/events';
 import { DateBadge, StatusMessage, ui } from '../ui';

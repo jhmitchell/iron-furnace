@@ -1,4 +1,3 @@
-import React from "react";
 import "./MembershipContent.css";
 
 const MembershipContent = () => {

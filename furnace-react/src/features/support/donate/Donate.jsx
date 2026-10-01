@@ -1,4 +1,3 @@
-import React from "react";
 import { Button } from "/src/components/ui";
 import contentImage from "/src/assets/images/furnace-sign-snow.webp"
 import "./Donate.css";

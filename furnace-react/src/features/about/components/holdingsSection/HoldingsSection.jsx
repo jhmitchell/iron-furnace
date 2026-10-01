@@ -1,4 +1,3 @@
-import React from 'react';
 import ScrollableSection from '/src/layouts/scrollableSection/ScrollableSection';
 import TwoColumn from '/src/layouts/twoColumn/TwoColumn';
 import styles from './HoldingsSection.module.css';

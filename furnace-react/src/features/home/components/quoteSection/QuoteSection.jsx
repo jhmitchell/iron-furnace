@@ -1,5 +1,4 @@
 // QuoteSection.js
-import React from "react";
 import styles from "./QuoteSection.module.css";
 import QuoteImage from "/src/assets/images/entrance.webp";
 

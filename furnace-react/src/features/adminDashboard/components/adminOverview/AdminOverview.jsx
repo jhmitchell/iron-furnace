@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { MdCampaign, MdSchedule, MdEvent, MdHandshake, MdGroups, MdArrowForward, MdOpenInNew } from 'react-icons/md';
 import { useAuth } from '/src/features/authentication';

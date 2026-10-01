@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { HiChevronLeft, HiChevronRight } from 'react-icons/hi2';
 import { EventCard, getUpcomingEvents } from "/src/features/events";

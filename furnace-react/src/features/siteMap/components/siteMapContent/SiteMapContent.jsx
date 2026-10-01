@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import SiteMap from '/src/assets/maps/SiteMap';
 import areaJSXMapping from './areaJSXMapping';
 import styles from './SiteMapContent.module.css';

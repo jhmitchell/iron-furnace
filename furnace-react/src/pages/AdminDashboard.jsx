@@ -1,4 +1,3 @@
-import React from 'react';
 import { NavLink, Outlet, useNavigate } from 'react-router-dom';
 import { MdDashboard, MdEvent, MdHandshake, MdGroups, MdSchedule, MdCampaign, MdOpenInNew } from 'react-icons/md';
 import styles from './AdminDashboard.module.css';

@@ -1,4 +1,3 @@
-import React from 'react';
 import HorizontalLine from '../horizontalLine/HorizontalLine';
 import styles from './LineHeader.module.css';
 

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { MdEdit, MdDelete } from 'react-icons/md';
 import { getAllHours, setHours } from '/src/features/hours';
 import { StatusMessage, ui } from '../ui';
