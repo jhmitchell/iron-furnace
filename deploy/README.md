@@ -33,20 +33,52 @@ checking that Passenger really serves the backend from `~/backend`.
 | Mode | Effect |
 |---|---|
 | `dry-run` | Reports what would be added/changed in `public_html` and `backend`, which files exist only on the server, and which Python packages would change. **Changes nothing live.** |
+| `deploy` | 1. Snapshots everything a deploy may change into `~/deploy/snapshots/` and verifies the copy. 2. Installs Python packages only if `requirements.txt` changed. 3. Copies the backend, then the frontend assets, then `index.html` last (never deletes files). 4. Restarts Passenger. 5. Health check (up to ~2 min): the homepage must serve the new build and the API must respond. **If anything fails, the snapshot is restored automatically** and re-checked. |
+| `rollback` | Restores a snapshot (default: the newest, i.e. the version before the last deploy). The current state is snapshotted first, so a rollback can itself be undone. |
 
-Real deploys (with a pre-deploy snapshot, health check and automatic rollback) will be
-added as a separate mode after the dry runs have been reviewed.
+The last 5 snapshots and 5 uploaded releases are kept. Only one deploy/rollback can run at a time.
 
-### Never touched by a deploy
+### Never touched by a deploy or rollback
 
 - `public_html/.htaccess` (cPanel-managed: Passenger config, environment variables, HTTPS redirect)
 - `public_html/.well-known/`, `cgi-bin/`, `404.shtml`, `static`
 - `backend/static/` (uploads), `backend/tmp/`, `backend/public/`, `backend/.env`, `*.log`
+- the database, and the Python virtualenv (except installing pinned requirements)
 
 ### Running it manually
 
-GitHub → **Actions** → **Build and deploy** → **Run workflow** → choose the mode.
-The server report appears in the run's summary page.
+GitHub → **Actions** → **Build and deploy** → **Run workflow** → choose the branch (`main`)
+and the mode. To roll back, choose `rollback` and optionally a snapshot name from
+`~/deploy/snapshots/` (empty = the version before the last deploy).
+
+## Where to see what happened
+
+| Where | What |
+|---|---|
+| GitHub → **Actions** tab → a run → **Summary** | The full **server report** for that run (what changed, health check, rollback if any) and the exit code. A red ❌ on a commit or in the Actions list means something failed; the error message says whether the site was left unchanged/restored. |
+| GitHub email | Failed runs email whoever pushed/triggered them (GitHub → *Settings* → *Notifications* → *Actions*). |
+| `README.md` badge | Green/red status of the latest run on `main`. |
+| Server `~/deploy/history.log` | One line per deploy/rollback: time, mode, commit, result. |
+| Server `~/deploy/last-report.txt` | The latest server report (same text as in GitHub). |
+| Server `~/deploy/snapshots/` | The previous versions you can roll back to. |
+
+Exit codes: `0` success · `1` didn't go through, live site unchanged or restored ·
+`2` **automatic rollback failed** (run `rollback`, or restore the off-server backup) ·
+`255` SSH connection lost (the deploy still finishes on the server; check the files above).
+
+## Rehearsing changes to `remote.sh`
+
+Before changing how deploys work, rehearse against scratch copies on the server. These
+overrides make `remote.sh` operate on copies (Python packages are never touched in a
+rehearsal, and `FORCE_HEALTH_FAIL=1` simulates a failed health check to exercise the rollback):
+
+```bash
+R=~/deploy/rehearsal
+rsync -a --exclude=/.htaccess ~/public_html/ $R/public_html/ && rsync -a ~/backend/ $R/backend/
+LIVE_WEB=$R/public_html LIVE_API=$R/backend SNAPSHOTS=$R/snapshots HISTORY=$R/history.log \
+  APP_ROOT_EXPECTED=$HOME/backend bash <release>/deploy/remote.sh deploy
+rm -rf $R
+```
 
 ## One-time setup
 

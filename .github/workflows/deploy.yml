@@ -1,9 +1,8 @@
 name: Build and deploy
 
 # Every push/PR: build the frontend and smoke-test the backend.
-# Pushes to main and manual runs: also upload the release to the server and run
-# the deploy script. For now the only mode is "dry-run", which reports what a deploy
-# would change and changes nothing live. See deploy/README.md.
+# Pushes to main: also upload the release to the server and run deploy/remote.sh
+# in PUSH_MODE. Manual runs ("Run workflow"): choose the mode. See deploy/README.md.
 
 on:
   push:
@@ -12,10 +11,14 @@ on:
   workflow_dispatch:
     inputs:
       mode:
-        description: What to do on the server
+        description: "dry-run: report only | deploy: deploy this commit | rollback: restore a snapshot"
         type: choice
-        options: [dry-run]
+        options: [dry-run, deploy, rollback]
         default: dry-run
+      snapshot:
+        description: "rollback only: snapshot name (empty = the newest, i.e. the version before the last deploy)"
+        type: string
+        required: false
 
 permissions:
   contents: read
@@ -90,6 +93,7 @@ jobs:
           python ../deploy/smoke_test.py --init-schema
 
   deploy:
+    # The fallback ('dry-run') is what pushes to main do; keep both in sync.
     name: Deploy (${{ inputs.mode || 'dry-run' }})
     needs: [frontend, backend]
     if: github.event_name == 'workflow_dispatch' || (github.event_name == 'push' && github.ref == 'refs/heads/main')
@@ -100,6 +104,7 @@ jobs:
       cancel-in-progress: false
     env:
       MODE: ${{ inputs.mode || 'dry-run' }}
+      SNAPSHOT: ${{ inputs.snapshot }}
       RELEASE_ID: ${{ github.sha }}
       DEPLOY_SSH_KEY: ${{ secrets.DEPLOY_SSH_KEY }}
     steps:
@@ -161,6 +166,34 @@ jobs:
       - name: Run deploy script (${{ env.MODE }})
         if: steps.key.outputs.ok == 'true'
         run: |
-          # The report is also kept on the server in ~/deploy/last-report.txt
-          ssh prod "set -o pipefail; bash deploy/releases/$RELEASE_ID/deploy/remote.sh $MODE 2>&1 | tee deploy/last-report.txt" | tee report.txt
-          { echo "## Server report ($MODE)"; echo '```'; cat report.txt; echo '```'; } >> "$GITHUB_STEP_SUMMARY"
+          if [ -n "$SNAPSHOT" ] && ! [[ "$SNAPSHOT" =~ ^[0-9A-Za-z._-]+$ ]]; then
+            echo "::error::Invalid snapshot name"; exit 1
+          fi
+          # The server writes its report to ~/deploy/last-report.txt first, so a deploy
+          # (and any automatic rollback) always runs to completion even if this
+          # connection drops. Then the report is printed here.
+          set +e
+          ssh prod "bash deploy/releases/$RELEASE_ID/deploy/remote.sh $MODE $SNAPSHOT > deploy/last-report.txt 2>&1 < /dev/null; code=\$?; cat deploy/last-report.txt; exit \$code" > report.txt
+          code=$?
+          set -e
+          cat report.txt
+          { echo "## Server report: $MODE (exit code $code)"; echo '```'; cat report.txt; echo '```'; } >> "$GITHUB_STEP_SUMMARY"
+          case $code in
+            0) ;;
+            1) echo "::error::Deploy did not go through. The live site was left unchanged or automatically restored to its previous version. See the server report." ;;
+            2) echo "::error::AUTOMATIC ROLLBACK FAILED. The site may be broken: run this workflow with mode 'rollback', or restore the off-server backup." ;;
+            255) echo "::error::Lost the SSH connection. The deploy keeps running on the server; check ~/deploy/last-report.txt and ~/deploy/history.log." ;;
+            *) echo "::error::The deploy script could not run (exit code $code)." ;;
+          esac
+          exit $code
+
+      - name: Check the live site from outside
+        if: steps.key.outputs.ok == 'true' && env.MODE != 'dry-run'
+        run: |
+          fail=0
+          for path in / /api/v1/hours/status /api/v1/events; do
+            code=$(curl -s -o /dev/null -w '%{http_code}' --max-time 30 "https://cornwallironfurnace.org$path" || true)
+            echo "$code  https://cornwallironfurnace.org$path"
+            [ "$code" = 200 ] || fail=1
+          done
+          exit $fail

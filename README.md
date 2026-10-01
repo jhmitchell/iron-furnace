@@ -1,5 +1,7 @@
 # Iron Furnace
 
+[![Build and deploy](https://github.com/jhmitchell/iron-furnace/actions/workflows/deploy.yml/badge.svg?branch=main)](https://github.com/jhmitchell/iron-furnace/actions/workflows/deploy.yml)
+
 Website for the [Cornwall Iron Furnace](https://cornwallironfurnace.org) in Cornwall, PA.
 
 | Part | Tech | Folder |
@@ -39,3 +41,9 @@ Notes:
   docker compose -f .devcontainer/docker-compose.yml exec -T db mariadb -u root -pdevroot cornwall < path/to/dump.sql
   ```
 - Uploaded files are stored in `backend/static/` (gitignored).
+
+## Deployment
+
+Pushing to `main` builds, tests and deploys automatically via GitHub Actions, with a
+snapshot, health check and automatic rollback. Never build or copy files on the server by
+hand. Details, manual runs/rollbacks and where to see reports: [deploy/README.md](deploy/README.md).
