@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types -- this project doesn't use PropTypes */
 import { useEffect, useRef, useState } from 'react';
 import { Formik, Form, useFormikContext } from 'formik';
 import { MdErrorOutline, MdVisibility, MdVisibilityOff } from 'react-icons/md';

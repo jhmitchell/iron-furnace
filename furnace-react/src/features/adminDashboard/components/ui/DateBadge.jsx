@@ -1,4 +1,3 @@
-import React from 'react';
 import ui from './admin.module.css';
 
 /** Compact month/day calendar tile used in list rows. */

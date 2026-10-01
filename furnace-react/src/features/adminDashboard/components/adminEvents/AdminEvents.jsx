@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { getAllEvents, deleteEvent } from '/src/features/events';
 import EventEntry from '../eventEntry/EventEntry';
 import EventCreationForm from '../eventCreationForm/EventCreationForm';

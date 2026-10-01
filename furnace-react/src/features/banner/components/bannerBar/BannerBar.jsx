@@ -1,4 +1,3 @@
-import React from 'react';
 import { FaExclamationTriangle } from 'react-icons/fa';
 import { TextLink } from '/src/components/ui';
 import styles from './BannerBar.module.css';

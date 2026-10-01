@@ -1,4 +1,3 @@
-import React from 'react';
 import styles from './HorizontalPictureCard.module.css';
 
 const HorizontalPictureCard = ({ image, children }) => {

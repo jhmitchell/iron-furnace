@@ -1,4 +1,4 @@
-import React, { forwardRef } from 'react';
+import { forwardRef } from 'react';
 import styles from './SecondaryNavbar.module.css';
 
 const SecondaryNavbar = forwardRef((props, ref) => {
@@ -9,5 +9,7 @@ const SecondaryNavbar = forwardRef((props, ref) => {
     </nav>
   );
 });
+
+SecondaryNavbar.displayName = 'SecondaryNavbar';
 
 export default SecondaryNavbar;

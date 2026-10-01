@@ -1,4 +1,3 @@
-import React from 'react';
 import styles from './TwoColumn.module.css';
 
 const TwoColumn = ({ leftContent, rightContent, className }) => {

@@ -1,4 +1,3 @@
-import React from 'react';
 import styles from './Hours.module.css';
 import ScrollableSection from '/src/layouts/scrollableSection/ScrollableSection';
 import OpenBanner from '../openBanner/OpenBanner';

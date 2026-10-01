@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types -- this project doesn't use PropTypes */
 import { createContext, useState, useEffect, useCallback, useMemo, useRef } from "react";
 import {
   AuthError,

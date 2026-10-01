@@ -1,4 +1,3 @@
-import React from 'react';
 import MainLayout from '/src/layouts/MainLayout';
 import SectionNavigator from '/src/layouts/sectionNavigator/SectionNavigator';
 import { VisitHero, Hours, TourTimes, Accessibility } from '/src/features/visit';

@@ -1,4 +1,3 @@
-import React from "react";
 import { useHours } from "/src/features/hours";
 import styles from "./OpenBanner.module.css";
 

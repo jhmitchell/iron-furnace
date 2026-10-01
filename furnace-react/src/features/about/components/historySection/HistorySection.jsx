@@ -1,8 +1,6 @@
-import React from 'react';
 import ScrollableSection from '/src/layouts/scrollableSection/ScrollableSection';
 import { PictureLink, PictureLinkContainer, InfoBlock } from '/src/components/ui';
 
-import styles from './HistorySection.module.css';
 import OldImg from '/src/assets/images/history-old-furnace.jpg';
 import MapImg from '/src/assets/images/history-map.jpeg';
 import AssociatesImg from '/src/assets/images/history-associates.webp';

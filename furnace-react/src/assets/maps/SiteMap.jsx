@@ -1,4 +1,3 @@
-import React from "react";
 import InteractiveArea from "./InteractiveArea";
 
 const SiteMap = ({ className, handleAreaClick }) => {

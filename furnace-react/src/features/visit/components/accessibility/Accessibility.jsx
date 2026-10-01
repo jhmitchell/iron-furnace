@@ -1,5 +1,3 @@
-import React from "react";
-import { NavLink } from "react-router-dom";
 import { TextLink } from "/src/components/ui";
 import ScrollableSection from "/src/layouts/scrollableSection/ScrollableSection";
 import "./Accessibility.css";

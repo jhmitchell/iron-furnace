@@ -1,4 +1,3 @@
-import React from "react";
 import styles from "./HistoryBlock.module.css";
 
 const HistoryBlock = ({ children, id, margin }) => {

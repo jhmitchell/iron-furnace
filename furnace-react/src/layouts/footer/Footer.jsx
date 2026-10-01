@@ -1,4 +1,3 @@
-import React from "react";
 import { FaFacebookSquare, FaInstagram, FaYoutube } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { Button } from "../../components/ui";
@@ -166,7 +165,7 @@ const Footer = () => {
             <a
               href="https://www.phmc.pa.gov/"
               target="_blank"
-              rel="noopener"
+              rel="noopener noreferrer"
               className={styles.phmcLogoImage}
             />
             <div className={styles.phmcLogoText}>

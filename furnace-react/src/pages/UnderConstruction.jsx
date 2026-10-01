@@ -1,4 +1,3 @@
-import React from 'react';
 import { ArrowTextLink, TextLink } from '../components/ui';
 import { FaTools } from 'react-icons/fa';
 import styles from './UnderConstruction.module.css';

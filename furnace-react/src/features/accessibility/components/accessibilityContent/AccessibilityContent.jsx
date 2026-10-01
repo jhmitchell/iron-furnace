@@ -1,4 +1,3 @@
-import React from "react";
 import { Expander } from "/src/components";
 import { TextLink } from "/src/components/ui";
 import "./AccessibilityContent.css";

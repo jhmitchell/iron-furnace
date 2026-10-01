@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import styles from './AssociatesContent.module.css';
 import { TextLink, InfoBlock } from '/src/components/ui';
 import ScrollableSection from '/src/layouts/scrollableSection/ScrollableSection';

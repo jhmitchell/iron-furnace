@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { HiChevronLeft, HiChevronRight } from 'react-icons/hi2';
 import useEmblaCarousel from 'embla-carousel-react';
 import Autoplay from 'embla-carousel-autoplay';
@@ -51,14 +51,6 @@ const VideoSection = () => {
   const scrollTo = useCallback((index) => {
     if (emblaApi) emblaApi.scrollTo(index);
   }, [emblaApi]);
-
-  const calculateVideoHeight = () => {
-    const fullScreenHeight = 400;
-    const minHeight = 200;
-    const screenWidth = windowSize.width || window.innerWidth;
-    const calculatedHeight = (screenWidth / 1920) * fullScreenHeight;
-    return Math.max(calculatedHeight, minHeight);
-  };
 
   // Calculate slide width based on screen size
   const getSlideWidth = () => {

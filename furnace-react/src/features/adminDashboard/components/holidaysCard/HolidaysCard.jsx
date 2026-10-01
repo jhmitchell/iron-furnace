@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { getHolidays, setHoliday } from '/src/features/hours';
 import HolidayEntry from '../holidayEntry/HolidayEntry';
 import { formatHolidayDate } from '../../utils/dates';

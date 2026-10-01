@@ -1,5 +1,4 @@
-import React from "react";
-import { Button, ArrowTextLink } from "/src/components/ui";
+import { ArrowTextLink } from "/src/components/ui";
 import Hours from "../hours/Hours";
 import styles from "./WelcomeFlex.module.css";
 

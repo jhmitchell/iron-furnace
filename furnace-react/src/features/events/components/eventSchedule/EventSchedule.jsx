@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { getAllEvents, groupEventsByDate } from "../../services/eventService";
 import EventDetailCard from "../eventDetailCard/EventDetailCard";
 import styles from "./EventSchedule.module.css";
