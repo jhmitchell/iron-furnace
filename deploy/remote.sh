@@ -48,7 +48,7 @@ WEB_EXCLUDES=(
   --exclude='/static'       # reserved for serving uploads directly (future)
 )
 API_EXCLUDES=(
-  --exclude='/static/'      # uploaded files: PRODUCTION DATA
+  --exclude='/static'       # uploaded files: PRODUCTION DATA (a folder or a link to ~/uploads)
   --exclude='/tmp/'         # Passenger (tmp/restart.txt)
   --exclude='/public/'      # cPanel Python app directory
   --exclude='/.env'

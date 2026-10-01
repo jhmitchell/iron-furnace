@@ -11,9 +11,16 @@ Production runs on GoDaddy cPanel shared hosting:
 | Uploaded files (event images, PDFs, QR PDFs) | `~/backend/static/` | the admin dashboard; **production data** |
 | Database | MariaDB `cornwall` | the app; cPanel *MySQL Databases* |
 
-How Passenger runs the backend: it loads `backend/passenger_wsgi.py` (the startup file set in
-cPanel *Setup Python App*), which wraps the FastAPI app (`app/main.py`) with `a2wsgi`, because
-FastAPI is an ASGI app and Passenger only speaks WSGI.
+How Passenger runs the backend: `backend/passenger_wsgi.py` loads `backend/wsgi.py` (the startup
+file named in cPanel *Setup Python App*), which wraps the FastAPI app (`app/main.py`) with `a2wsgi`,
+because FastAPI is an ASGI app and Passenger only speaks WSGI. cPanel may regenerate
+`passenger_wsgi.py` as its own `imp`-based stub; that is harmless because it also loads `wsgi.py`.
+
+> **Do not change the Python app in cPanel (or with `cloudlinux-selector set`) casually.** On
+> 2026-10-01 doing so rewrote `.htaccess` without the environment variables and overwrote
+> `passenger_wsgi.py`, taking the API down. If a change there is needed: back up
+> `public_html/.htaccess` (restore it with mode 664) and `~/.cl.selector/`, then verify both pages
+> and `/api/v1/*` respond 200.
 
 ## How a deploy works
 
