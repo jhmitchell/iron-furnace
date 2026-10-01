@@ -6,10 +6,17 @@ Production runs on GoDaddy cPanel shared hosting:
 |---|---|---|
 | Built frontend (React) | `~/public_html/` | this deploy |
 | Backend code (FastAPI) | `~/backend/` (Passenger app root) | this deploy |
-| Python packages | `~/virtualenv/backend/3.9/` | cPanel *Setup Python App* |
+| Python environments | `~/virtualenv/backend/3.11/` (configured) and `3.9/` (kept) | cPanel *Setup Python App*; deploys install the pinned packages into both |
 | Backend settings and secrets | cPanel *Setup Python App* → environment variables (written into `~/public_html/.htaccess`) | cPanel, by hand |
-| Uploaded files (event images, PDFs, QR PDFs) | `~/backend/static/` | the admin dashboard; **production data** |
+| Uploaded files (event images, PDFs, QR PDFs) | `~/uploads/` (`~/backend/static` and `~/public_html/static` are links to it, so Apache serves them directly) | the admin dashboard; **production data** |
+| Log rotation | cron, nightly 03:17 server time: `backend/scripts/rotate_logs.sh` (archives in `~/logs/archive/`) | `crontab -l` |
 | Database | MariaDB `cornwall` | the app; cPanel *MySQL Databases* |
+
+Python version: on 2026-10-01 the app was switched to Python 3.11 in cPanel, but Passenger kept
+running 3.9 (its Python setting comes from GoDaddy's server-level web configuration, which is
+refreshed on the host's schedule). Both environments are complete, so the switch-over is seamless
+whenever it happens. Check which one runs with
+`ps -u $(whoami) -o args | grep -oE 'python3\.[0-9]+_bin'`.
 
 How Passenger runs the backend: `backend/passenger_wsgi.py` loads `backend/wsgi.py` (the startup
 file named in cPanel *Setup Python App*), which wraps the FastAPI app (`app/main.py`) with `a2wsgi`,
