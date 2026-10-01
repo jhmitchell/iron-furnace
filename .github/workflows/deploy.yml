@@ -1,8 +1,9 @@
 name: Build and deploy
 
 # Every push/PR: build the frontend and smoke-test the backend.
-# Pushes to main: also upload the release to the server and run deploy/remote.sh
-# in PUSH_MODE. Manual runs ("Run workflow"): choose the mode. See deploy/README.md.
+# Pushes to main: also upload the release to the server and DEPLOY it (deploy/remote.sh)
+# with snapshot, health check and automatic rollback. Manual runs ("Run workflow"):
+# choose dry-run, deploy or rollback. See deploy/README.md.
 
 on:
   push:
@@ -93,8 +94,8 @@ jobs:
           python ../deploy/smoke_test.py --init-schema
 
   deploy:
-    # The fallback ('dry-run') is what pushes to main do; keep both in sync.
-    name: Deploy (${{ inputs.mode || 'dry-run' }})
+    # The fallback ('deploy') is what pushes to main do; keep both in sync.
+    name: Deploy (${{ inputs.mode || 'deploy' }})
     needs: [frontend, backend]
     if: github.event_name == 'workflow_dispatch' || (github.event_name == 'push' && github.ref == 'refs/heads/main')
     runs-on: ubuntu-24.04
@@ -103,7 +104,7 @@ jobs:
       group: production
       cancel-in-progress: false
     env:
-      MODE: ${{ inputs.mode || 'dry-run' }}
+      MODE: ${{ inputs.mode || 'deploy' }}
       SNAPSHOT: ${{ inputs.snapshot }}
       RELEASE_ID: ${{ github.sha }}
       DEPLOY_SSH_KEY: ${{ secrets.DEPLOY_SSH_KEY }}
