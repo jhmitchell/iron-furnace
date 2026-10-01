@@ -1,8 +1,12 @@
+import logging
 import pytz
 import os
 import traceback
+from io import BytesIO
 from fastapi import APIRouter, HTTPException, UploadFile, File, Depends, Form, Path
+from PIL import Image, ImageOps
 from sqlalchemy.orm import Session
+from starlette.concurrency import run_in_threadpool
 from typing import Optional
 from app.internal.models.events import Event
 from app.internal.db.session import get_db
@@ -16,6 +20,11 @@ from app.internal.db.events import (
 from app.internal.token import authorize
 
 router = APIRouter()
+logger = logging.getLogger(__name__)
+
+# Uploaded event photos are resized to at most this width (wider than any layout on the site)
+MAX_IMAGE_WIDTH = 1920
+WEBP_QUALITY = 82
 
 # Define the EST timezone
 est_timezone = pytz.timezone('US/Eastern')
@@ -157,7 +166,6 @@ async def edit_event(
         if pdf and pdf.filename != '':
             await save_pdf(pdf, event_id)
         if image and image.filename != '':
-            print(f'Image: {image.filename}')
             await save_image(image, event_id)
 
         return existing_event
@@ -216,11 +224,45 @@ async def save_image(image: UploadFile, event_id: int):
     if not os.path.exists(directory):
         os.makedirs(directory)
     file_path = os.path.join(directory, f"{event_id}")
-    print(f'File path: {file_path}')
+    content = await image.read()
+    # Image processing is CPU-heavy; keep it off the event loop
+    content = await run_in_threadpool(shrink_image, content)
     with open(file_path, "wb") as file_object:
-        content = await image.read()
         file_object.write(content)
     return f"/static/event_images/{event_id}"
+
+
+def shrink_image(content: bytes) -> bytes:
+    """
+    Makes uploaded photos web-sized: applies the camera's rotation, resizes anything wider
+    than MAX_IMAGE_WIDTH, and re-encodes as WebP. Returns the original bytes unchanged if
+    the file can't be read as an image, is animated, or wouldn't get smaller, so an upload
+    never fails because of this step.
+
+    The file keeps its extensionless name (/static/event_images/<id>); browsers detect the
+    image format from its contents.
+    """
+    try:
+        with Image.open(BytesIO(content)) as img:
+            if getattr(img, "is_animated", False):
+                return content
+            img = ImageOps.exif_transpose(img)
+            if img.width > MAX_IMAGE_WIDTH:
+                height = round(img.height * MAX_IMAGE_WIDTH / img.width)
+                img = img.resize((MAX_IMAGE_WIDTH, height), Image.LANCZOS)
+            if img.mode not in ("RGB", "RGBA"):
+                img = img.convert("RGBA" if "A" in img.getbands() else "RGB")
+            out = BytesIO()
+            img.save(out, "WEBP", quality=WEBP_QUALITY, method=6)
+    except Exception:
+        logger.warning("Could not process uploaded image; saving it unchanged", exc_info=True)
+        return content
+
+    result = out.getvalue()
+    if len(result) >= len(content):
+        return content
+    logger.info("Uploaded image reduced from %d to %d bytes", len(content), len(result))
+    return result
 
 
 async def save_pdf(pdf: UploadFile, event_id: int):
