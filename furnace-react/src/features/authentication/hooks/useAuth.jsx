@@ -10,20 +10,13 @@ const useAuth = () => {
 
   const { user, loading, isProcessing, login, logout } = context;
 
-  const loginUser = (credentials) => {
-    login(credentials);
-  };
-
-  const logoutUser = () => {
-    logout();
-  };
-
   return {
     user,
     loading,
     isProcessing,
-    loginUser,
-    logoutUser,
+    /** Resolves to { ok: true } or { ok: false, error, retryAfter }; see AuthProvider. */
+    loginUser: login,
+    logoutUser: logout,
   };
 };
 

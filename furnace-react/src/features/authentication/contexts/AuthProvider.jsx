@@ -1,128 +1,236 @@
-import React, { createContext, useState, useEffect, useCallback } from "react";
-import { loginService, logoutService, refreshTokenService, validateTokenService } from "../services/authService";
+/* eslint-disable react/prop-types -- this project doesn't use PropTypes */
+import { createContext, useState, useEffect, useCallback, useMemo, useRef } from "react";
+import {
+  AuthError,
+  loginService,
+  logoutService,
+  refreshTokenService,
+  validateTokenService,
+} from "../services/authService";
+import {
+  STORAGE_KEY,
+  readStoredSession,
+  writeStoredSession,
+  clearStoredSession,
+  tokenExpiresAt,
+  tokenSubject,
+} from "../utils/session";
 
 export const AuthContext = createContext();
 
-// Access tokens live for 30 minutes; refresh well before that while signed in.
-const REFRESH_INTERVAL_MS = 20 * 60 * 1000;
+// How often to check whether the access token needs refreshing while signed in.
+const CHECK_INTERVAL_MS = 60 * 1000;
+// Refresh when the access token (30 minutes) has less than this left.
+const REFRESH_BEFORE_EXPIRY_MS = 5 * 60 * 1000;
+// For a token whose expiry can't be read: refresh this often.
+const FALLBACK_REFRESH_INTERVAL_MS = 20 * 60 * 1000;
+// Serializes refreshes across tabs (each refresh rotates the shared refresh cookie).
+const REFRESH_LOCK_NAME = "cif-auth-refresh";
+
+/** The server said this session is over (as opposed to a network or server hiccup). */
+const isSessionOver = (error) =>
+  error instanceof AuthError && (error.kind === "invalid" || error.kind === "disabled");
+
+const needsRefresh = (session, lastRefreshAt) => {
+  const expiresAt = tokenExpiresAt(session.accessToken);
+  if (expiresAt) return expiresAt - Date.now() < REFRESH_BEFORE_EXPIRY_MS;
+  return Date.now() - lastRefreshAt >= FALLBACK_REFRESH_INTERVAL_MS;
+};
+
+const withRefreshLock = (callback) =>
+  typeof navigator !== "undefined" && navigator.locks?.request
+    ? navigator.locks.request(REFRESH_LOCK_NAME, callback)
+    : callback();
 
 const AuthProvider = ({ children }) => {
   /**
-   * State variables explained:
-   * - user: Holds the current authenticated user data, null if not authenticated.
-   * - loading: A boolean indicating if the initial token validation is in progress.
-   * - isProcessing: A boolean indicating if any API calls (like login) are in progress.
+   * - user: { username, accessToken } while signed in, otherwise null.
+   * - loading: true until the stored session (if any) has been checked on page load.
+   * - isProcessing: true while a sign-in request is in progress.
    */
-
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const [isProcessing, setIsProcessing] = useState(false);
 
+  const refreshInFlight = useRef(null);
+  const lastRefreshAt = useRef(Date.now());
+  // Bumped on sign-out, so a refresh that finishes afterwards can't sign the user back in.
+  const generation = useRef(0);
+
+  const startSession = useCallback((accessToken, fallbackUsername) => {
+    const session = { username: tokenSubject(accessToken) || fallbackUsername, accessToken };
+    writeStoredSession(session);
+    lastRefreshAt.current = Date.now();
+    setUser(session);
+    return session;
+  }, []);
+
   const clearSession = useCallback(() => {
-    localStorage.removeItem("user");
+    generation.current += 1;
+    clearStoredSession();
     setUser(null);
   }, []);
 
-  // Use the HttpOnly refresh cookie to obtain a fresh access token.
-  // Throws if the cookie is missing, expired, revoked, or the account is disabled.
-  const refreshSession = useCallback(async (username) => {
-    const accessToken = await refreshTokenService();
-    const refreshed = { username, accessToken };
-    localStorage.setItem("user", JSON.stringify(refreshed));
-    setUser(refreshed);
-    return refreshed;
-  }, []);
+  /**
+   * Exchanges the HttpOnly refresh cookie for a new access token. One refresh at a time
+   * per tab, and across tabs via the Web Locks API: if another tab refreshed while this
+   * one waited, its fresh token is used instead of rotating the cookie again.
+   * Rejects with an AuthError.
+   */
+  const refreshSession = useCallback(({ force = false } = {}) => {
+    if (refreshInFlight.current) return refreshInFlight.current;
 
-  // On load: validate the stored access token; if it is expired or rejected,
-  // try to refresh it before giving up and signing the user out.
+    const startedIn = generation.current;
+    const run = withRefreshLock(async () => {
+      const stored = readStoredSession();
+      if (!force && stored && !needsRefresh(stored, lastRefreshAt.current)) {
+        setUser((current) => (current?.accessToken === stored.accessToken ? current : stored));
+        return stored;
+      }
+      const accessToken = await refreshTokenService();
+      if (generation.current !== startedIn) {
+        throw new AuthError("invalid"); // signed out meanwhile
+      }
+      return startSession(accessToken, stored?.username);
+    });
+
+    refreshInFlight.current = run.finally(() => {
+      refreshInFlight.current = null;
+    });
+    return refreshInFlight.current;
+  }, [startSession]);
+
+  // On page load: check the stored access token with the server. If it has expired or
+  // was rejected, try the refresh cookie. Only sign out when the server says the session
+  // is over; on a network or server error keep the session and retry later.
   useEffect(() => {
-    const initAndValidateUser = async () => {
-      const storedUser = localStorage.getItem("user");
-      if (!storedUser) {
-        setUser(null);
-        setLoading(false);
+    let cancelled = false;
+
+    const init = async () => {
+      const stored = readStoredSession();
+      if (!stored) {
+        clearStoredSession(); // drop anything unreadable
         return;
       }
 
-      let parsedUser;
-      try {
-        parsedUser = JSON.parse(storedUser);
-      } catch (error) {
-        clearSession();
-        setLoading(false);
-        return;
-      }
-
-      try {
-        const validation = await validateTokenService(parsedUser.accessToken);
-        if (validation && validation.member_id) {
-          setUser(parsedUser);
-          setLoading(false);
+      const expiresAt = tokenExpiresAt(stored.accessToken);
+      const stillValid = !expiresAt || expiresAt - Date.now() > 30 * 1000;
+      if (stillValid) {
+        try {
+          await validateTokenService(stored.accessToken);
+          if (!cancelled) setUser(stored);
           return;
+        } catch (error) {
+          if (cancelled) return;
+          if (!isSessionOver(error)) {
+            setUser(stored);
+            return;
+          }
+          if (error.kind === "disabled") {
+            clearSession();
+            return;
+          }
+          // "invalid": fall through to a refresh
         }
-      } catch (error) {
-        // Fall through and attempt a refresh
       }
 
       try {
-        await refreshSession(parsedUser.username);
+        await refreshSession({ force: true });
       } catch (error) {
-        clearSession();
+        if (cancelled) return;
+        if (isSessionOver(error)) clearSession();
+        else setUser(stored);
       }
-      setLoading(false);
     };
 
-    initAndValidateUser();
+    init().finally(() => {
+      if (!cancelled) setLoading(false);
+    });
+
+    return () => {
+      cancelled = true;
+    };
   }, [clearSession, refreshSession]);
 
-  // Keep the session alive while signed in; sign out if the refresh is rejected.
+  // While signed in: refresh shortly before the access token expires. Also check when the
+  // tab becomes visible again or the connection comes back (timers are paused or slowed
+  // while a laptop sleeps or a tab is in the background).
+  const signedIn = Boolean(user);
   useEffect(() => {
-    if (!user) return undefined;
+    if (!signedIn) return undefined;
 
-    const intervalId = setInterval(() => {
-      refreshSession(user.username).catch(() => clearSession());
-    }, REFRESH_INTERVAL_MS);
+    const keepAlive = () => {
+      const stored = readStoredSession();
+      if (!stored || !needsRefresh(stored, lastRefreshAt.current)) return;
+      refreshSession().catch((error) => {
+        if (isSessionOver(error)) clearSession();
+        // Network/server errors: try again on the next check
+      });
+    };
+    const onVisibilityChange = () => {
+      if (document.visibilityState === "visible") keepAlive();
+    };
 
-    return () => clearInterval(intervalId);
-  }, [user, refreshSession, clearSession]);
+    const intervalId = setInterval(keepAlive, CHECK_INTERVAL_MS);
+    document.addEventListener("visibilitychange", onVisibilityChange);
+    window.addEventListener("online", keepAlive);
+    return () => {
+      clearInterval(intervalId);
+      document.removeEventListener("visibilitychange", onVisibilityChange);
+      window.removeEventListener("online", keepAlive);
+    };
+  }, [signedIn, refreshSession, clearSession]);
 
-  const login = async (credentials) => {
-    setIsProcessing(true); // Start API processing
+  // Keep tabs in sync: signing in, refreshing or signing out in one tab updates the others.
+  useEffect(() => {
+    const onStorage = (event) => {
+      if (event.key !== STORAGE_KEY && event.key !== null) return;
+      const stored = readStoredSession();
+      if (!stored) generation.current += 1;
+      setUser((current) => {
+        if (!stored) return null;
+        return current?.accessToken === stored.accessToken ? current : stored;
+      });
+    };
+    window.addEventListener("storage", onStorage);
+    return () => window.removeEventListener("storage", onStorage);
+  }, []);
+
+  /**
+   * Signs in. Resolves to { ok: true } or { ok: false, error, retryAfter }, where error is
+   * an AuthError kind ("invalid", "disabled", "rate_limited", "server", "network").
+   * Never rejects and never logs credentials.
+   */
+  const login = useCallback(async ({ username, password }) => {
+    setIsProcessing(true);
     try {
-      const { username, password } = credentials;
-      const result = await loginService(username, password);
-
-      if (result && result.access_token) {
-        // Set the user information and the access token
-        const newUser = {
-          username,
-          accessToken: result.access_token,
-        };
-
-        localStorage.setItem("user", JSON.stringify(newUser)); // store user to localStorage
-        setUser(newUser);
-      }
+      const { access_token } = await loginService(username, password);
+      startSession(access_token, username);
+      return { ok: true };
     } catch (error) {
-      console.error("Error during login: ", error);
-      // Handle error accordingly
+      return {
+        ok: false,
+        error: error instanceof AuthError ? error.kind : "server",
+        retryAfter: error instanceof AuthError ? error.retryAfter : null,
+      };
     } finally {
-      setIsProcessing(false); // End API processing
+      setIsProcessing(false);
     }
-  };
+  }, [startSession]);
 
-  const logout = () => {
-    // Revoke the refresh token server-side (fire and forget), then clear local state
-    logoutService();
+  /** Signs out here and revokes the refresh token on the server. */
+  const logout = useCallback(() => {
+    const revoked = logoutService(); // sends the refresh cookie before local state is cleared
     clearSession();
-  };
+    return revoked;
+  }, [clearSession]);
 
-  return (
-    <AuthContext.Provider
-      value={{ user, loading, isProcessing, login, logout }}
-    >
-      {children}
-    </AuthContext.Provider>
+  const value = useMemo(
+    () => ({ user, loading, isProcessing, login, logout }),
+    [user, loading, isProcessing, login, logout]
   );
+
+  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };
 
 export default AuthProvider;
