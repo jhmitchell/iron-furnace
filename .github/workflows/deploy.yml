@@ -83,7 +83,8 @@ jobs:
       - run: pip install --no-cache-dir -r backend/requirements.txt
       - name: Load the app the way Passenger does and request a few endpoints
         working-directory: backend
-        run: python ../deploy/smoke_test.py
+        # --init-schema: the CI database starts empty
+        run: python ../deploy/smoke_test.py --init-schema
 
   deploy:
     name: Deploy (${{ inputs.mode || 'dry-run' }})

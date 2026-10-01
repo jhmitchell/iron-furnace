@@ -7,7 +7,11 @@ few GET requests through that WSGI `application`.
 Run from the backend/ directory with the backend's environment variables set and a
 reachable database:
 
-    cd backend && python ../deploy/smoke_test.py
+    cd backend && python ../deploy/smoke_test.py [--init-schema]
+
+--init-schema creates the tables that FastAPI's startup handler would create. Use it
+against an empty database (CI). Under Passenger that startup handler never runs, so
+production relies on its tables already existing.
 """
 import os
 import sys
@@ -15,6 +19,19 @@ from wsgiref.util import setup_testing_defaults
 
 sys.path.insert(0, os.getcwd())
 import passenger_wsgi  # noqa: E402  (must be imported after the path setup)
+
+if "--init-schema" in sys.argv:
+    from app.internal.db.init import (create_events_table, create_holidays_table,
+                                      create_hours_table, create_users_table)
+    from app.internal.db.session import get_db
+
+    db = next(get_db())
+    try:
+        for create_table in (create_users_table, create_hours_table,
+                             create_holidays_table, create_events_table):
+            create_table(db)
+    finally:
+        db.close()
 
 PATHS = [
     "/api/v1/hours/status",
