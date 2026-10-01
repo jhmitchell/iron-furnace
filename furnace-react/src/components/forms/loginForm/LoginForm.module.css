@@ -1,0 +1,97 @@
+.form {
+  display: flex;
+  flex-direction: column;
+}
+
+.alert {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin-bottom: 20px;
+  padding: 12px 14px;
+  font-size: 0.9rem;
+  line-height: 1.45;
+  color: #ffd2cc;
+  background-color: rgba(255, 138, 128, 0.1);
+  border: 1px solid rgba(255, 138, 128, 0.45);
+  border-radius: 8px;
+}
+
+.alertIcon {
+  flex-shrink: 0;
+  margin-top: 1px;
+  font-size: 1.2rem;
+  color: #ff8a80;
+}
+
+.reveal {
+  position: absolute;
+  top: 50%;
+  right: 4px;
+  transform: translateY(-50%);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  /* 44px touch target */
+  width: 44px;
+  height: 38px;
+  padding: 0;
+  font-size: 1.3rem;
+  color: var(--text-light-grey);
+  background: transparent;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.reveal:hover {
+  color: var(--text-off-white);
+  background-color: rgba(255, 255, 255, 0.06);
+}
+
+.reveal:focus {
+  outline: none;
+}
+
+.reveal:focus-visible {
+  outline: 2px solid var(--orange-accent);
+  outline-offset: 0;
+  color: var(--text-off-white);
+}
+
+.reveal[aria-pressed='true'] {
+  color: var(--orange-accent);
+}
+
+/* Always in the page (live regions must exist before their text changes); takes no
+   space while empty */
+.hint {
+  font-size: 0.85rem;
+  color: #f2c48d;
+}
+
+.hint:empty {
+  margin-top: -6px;
+}
+
+.submit {
+  margin-top: 8px;
+}
+
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+@media (forced-colors: active) {
+  .reveal:focus-visible {
+    outline-color: Highlight;
+  }
+}
