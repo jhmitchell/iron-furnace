@@ -40,7 +40,7 @@ const QrPdf = () => {
 
   const homeLink = (
     <Link to="/" className={styles.homeLink}>
-      Cornwall Iron Furnace
+      Visit our website<span aria-hidden="true"> →</span>
     </Link>
   );
 
