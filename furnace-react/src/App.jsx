@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { lazy, Suspense, useEffect } from "react";
 import { BrowserRouter as Router, useRoutes, useLocation } from "react-router-dom";
 import {
   HomePage,
@@ -12,7 +12,6 @@ import {
   TestPage,
   Membership,
   Accessibility,
-  AdminDashboard,
   AssociatesPage,
   EventsPage,
   EventDetailsPage,
@@ -22,8 +21,25 @@ import {
 } from './pages';
 import ProtectedRoute from "./components/protectedRoute/ProtectedRoute";
 import { AuthProvider } from "./features/authentication";
-import { AdminOverview, AdminOperatingHours, AdminEvents, AdminSponsors, AdminBoard, AdminBanner } from "./features/adminDashboard";
 import "./App.css";
+
+// The admin dashboard is only used by site admins, so it is split into its own file
+// that the browser downloads only when someone opens /admin.
+const AdminDashboard = lazy(() => import("./pages/AdminDashboard"));
+const adminPage = (name) =>
+  lazy(() => import("./features/adminDashboard").then((module) => ({ default: module[name] })));
+const AdminOverview = adminPage("AdminOverview");
+const AdminOperatingHours = adminPage("AdminOperatingHours");
+const AdminEvents = adminPage("AdminEvents");
+const AdminSponsors = adminPage("AdminSponsors");
+const AdminBoard = adminPage("AdminBoard");
+const AdminBanner = adminPage("AdminBanner");
+
+const AdminLoading = () => (
+  <p role="status" style={{ padding: "4rem 1rem", textAlign: "center" }}>
+    Loading…
+  </p>
+);
 
 /**
  * RoutesComponent is responsible for defining the routes. If a route
@@ -152,7 +168,11 @@ const RoutesComponent = () => {
       children: [
         { 
           path: "", 
-          element: <AdminDashboard />,
+          element: (
+            <Suspense fallback={<AdminLoading />}>
+              <AdminDashboard />
+            </Suspense>
+          ),
           children: [
             { index: true, element: <AdminOverview /> },
             { path: "hours", element: <AdminOperatingHours /> },

@@ -1,7 +1,7 @@
 import React from "react";
 import MediaCard from "/src/components/ui/mediaCard/MediaCard";
 import styles from "./EventCard.module.css";
-import DefaultEventImage from "/src/assets/images/chandelier.jpeg";
+import DefaultEventImage from "/src/assets/images/chandelier.webp";
 
 const EventCard = ({ event, imageHeight }) => {
   const defaultTitle = "Event Unavailable";

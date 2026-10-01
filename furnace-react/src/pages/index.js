@@ -9,7 +9,6 @@ export { default as HistoryPage } from './HistoryPage';
 export { default as TestPage } from './TestPage';
 export { default as Membership } from './Membership';
 export { default as Accessibility } from './Accessibility';
-export { default as AdminDashboard } from './AdminDashboard';
 export { default as EventsPage } from './EventsPage';
 export { default as EventDetailsPage } from './EventDetailsPage';
 export { default as QRPDF } from './QRPDF';

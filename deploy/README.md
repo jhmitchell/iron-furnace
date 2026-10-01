@@ -11,8 +11,9 @@ Production runs on GoDaddy cPanel shared hosting:
 | Uploaded files (event images, PDFs, QR PDFs) | `~/backend/static/` | the admin dashboard; **production data** |
 | Database | MariaDB `cornwall` | the app; cPanel *MySQL Databases* |
 
-How Passenger runs the backend: `passenger_wsgi.py` → `wsgi.py` → `app/main.py`.
-FastAPI is an ASGI app and Passenger only speaks WSGI, so `wsgi.py` wraps it with `a2wsgi`.
+How Passenger runs the backend: it loads `backend/passenger_wsgi.py` (the startup file set in
+cPanel *Setup Python App*), which wraps the FastAPI app (`app/main.py`) with `a2wsgi`, because
+FastAPI is an ASGI app and Passenger only speaks WSGI.
 
 ## How a deploy works
 
@@ -92,3 +93,22 @@ The workflow connects with a dedicated SSH key:
    `-----BEGIN`/`END` lines).
 
 To revoke: delete or deauthorize the key in cPanel and delete the GitHub secret.
+
+## Browser caching
+
+- `public_html/assets/.htaccess` (deployed from `furnace-react/public/assets/.htaccess`):
+  built files have content hashes in their names, so they are cached for a year (`immutable`).
+- `index.html` must always be re-checked so visitors get new deploys immediately. That rule
+  lives in the cPanel-managed `public_html/.htaccess`, *outside* cPanel's marked sections
+  (cPanel only rewrites its own `# DO NOT REMOVE ... BEGIN/END` blocks). It was added by hand,
+  with a backup, between these markers:
+
+  ```apache
+  # BEGIN iron-furnace: index.html caching
+  <IfModule mod_headers.c>
+    <FilesMatch "^index\.html$">
+      Header set Cache-Control "no-cache"
+    </FilesMatch>
+  </IfModule>
+  # END iron-furnace: index.html caching
+  ```
