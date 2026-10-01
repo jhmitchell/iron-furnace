@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { getBanner, setBanner, deleteBanner, BannerBar } from '/src/features/banner';
 import { AdminPage, AdminCard, StatusMessage, ui } from '../ui';
 import styles from './AdminBanner.module.css';

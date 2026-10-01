@@ -196,7 +196,7 @@ export const groupEventsByDate = (events) => {
 			)
 		);
 
-		monthMap.forEach((events, month) => {
+		monthMap.forEach((events) => {
 			events.sort((a, b) => {
 				const dateA = new Date(a.start_date);
 				const dateB = new Date(b.start_date);

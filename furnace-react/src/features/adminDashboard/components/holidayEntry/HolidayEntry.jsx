@@ -1,4 +1,3 @@
-import React from 'react';
 import { MdDelete } from 'react-icons/md';
 import { DateBadge, ui } from '../ui';
 import { parseLocalDate, formatHolidayDate } from '../../utils/dates';

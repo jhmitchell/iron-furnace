@@ -16,8 +16,14 @@ def common_test_setup(mock_time_str, holidays):
             12, 0), 'close_time': time(16, 0)},
     ]
 
+    # The database returns holiday dates as datetime.date objects
+    holidays = [
+        {**holiday, 'holiday_date': datetime.strptime(holiday['holiday_date'], '%Y-%m-%d').date()}
+        for holiday in holidays
+    ]
+
     # Mocking the get_operating_hours function
-    def mock_get_operating_hours():
+    def mock_get_operating_hours(db):
         return operating_hours, holidays
 
     # Set the EST timezone
@@ -27,11 +33,11 @@ def common_test_setup(mock_time_str, holidays):
     mock_time = datetime.strptime(mock_time_str, '%Y-%m-%d %H:%M:%S')
     mock_time = est_timezone.localize(mock_time)
 
-    with patch('app.internal.db.get_operating_hours', mock_get_operating_hours):
+    with patch('app.routers.hours.get_operating_hours', mock_get_operating_hours):
         with patch('app.routers.hours.datetime') as mock_datetime:
             mock_datetime.now.return_value = mock_time
             mock_datetime.strptime = datetime.strptime
-            return get_status()
+            return get_status(db=None)
 
 
 @pytest.mark.parametrize("mock_time_str,holidays,expected_result", [

@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from "react";
+import { useState, useCallback } from "react";
 import "../../../components/ui/button/Button.css";
 import styles from "./SubscriptionBar.module.css";
 

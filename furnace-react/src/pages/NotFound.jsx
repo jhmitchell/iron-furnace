@@ -1,4 +1,3 @@
-import React from 'react';
 import { ArrowTextLink } from '../components/ui';
 import styles from './NotFound.module.css';
 

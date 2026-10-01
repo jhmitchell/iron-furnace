@@ -1,4 +1,3 @@
-import React from 'react';
 import { Navbar } from '/src/layouts';
 
 import { SiteMapContent } from '/src/features/siteMap';

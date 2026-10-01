@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types -- this project doesn't use PropTypes */
 import { useFormikContext } from 'formik';
 import styles from './FormikSubmit.module.css';
 

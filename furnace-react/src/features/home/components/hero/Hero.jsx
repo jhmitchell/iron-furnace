@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import HeroImage from "./heroImage/HeroImage";
 import { useHours } from "/src/features/hours";
 import { AnnouncementBanner } from "/src/features/banner";

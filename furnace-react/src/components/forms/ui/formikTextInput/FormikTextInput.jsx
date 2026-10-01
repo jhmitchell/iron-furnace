@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types -- this project doesn't use PropTypes */
 import { useField } from "formik";
 import styles from "./FormikTextInput.module.css";
 

@@ -1,4 +1,4 @@
-import React, { createContext, useState, useEffect, useContext } from "react";
+import { createContext, useState, useEffect, useContext } from "react";
 
 const ResponsiveContext = createContext();
 
@@ -23,5 +23,7 @@ export const ResponsiveProvider = ({ children }) => {
   );
 };
 
+// A context file conventionally exports its hook next to the provider
+// eslint-disable-next-line react-refresh/only-export-components
 export const useResponsive = () => useContext(ResponsiveContext);
 export { ResponsiveContext };

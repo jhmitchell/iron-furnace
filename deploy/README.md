@@ -126,3 +126,20 @@ To revoke: delete or deauthorize the key in cPanel and delete the GitHub secret.
   </IfModule>
   # END iron-furnace: index.html caching
   ```
+
+## QR-code signs
+
+Signs at the furnace have QR codes pointing to `https://cornwallironfurnace.org/signs/<name>`
+(for example `/signs/furnaces/`). That page shows an image of the sign (fast, pinch-to-zoom on
+phones) and an **Open as PDF** button; phones can't show a PDF embedded in a page.
+
+To add or update a sign, put two files in `~/uploads/qr/` on the server (names: lowercase
+letters, digits and hyphens):
+
+- `<name>.pdf`, the sign itself. For big print posters, shrink it first; e.g. with Ghostscript:
+  `gs -sDEVICE=pdfwrite -dPDFSETTINGS=/ebook -dNOPAUSE -dBATCH -sOutputFile=<name>.pdf original.pdf`
+- `<name>.webp`, an image of it about 2000 px wide, e.g. `pdftoppm -png -singlefile -scale-to-x 2000
+  -scale-to-y -1 <name>.pdf <name>` and convert the PNG to WebP (quality 80).
+
+Without the image, the page falls back to embedding the PDF (which works on computers only).
+The original print-quality PDFs of the current signs are in `~/uploads-pre-migration-20261001/qr/`.

@@ -1,4 +1,3 @@
-import React from 'react';
 import { useBanner } from '../../hooks/useBanner';
 import BannerBar from '../bannerBar/BannerBar';
 import styles from './AnnouncementBanner.module.css';

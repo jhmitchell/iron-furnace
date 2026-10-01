@@ -1,4 +1,3 @@
-import React from 'react';
 import LineHeader from '/src/components/ui/lineHeader/LineHeader';
 import styles from './ScrollableSection.module.css';
 

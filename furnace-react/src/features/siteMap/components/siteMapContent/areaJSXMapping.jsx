@@ -38,7 +38,7 @@ const areaJSXMapping = {
 				Center offers interpretative exhibits on mining, charcoal making,
 				and ironmaking and gives the visitor a glimpse of the huge spaces
 				needed to contain the fuel used in the smelting process. Also
- 				located in this space is a display of mineral and ore samples
+				located in this space is a display of mineral and ore samples
 				collected from the Cornwall mines.
 			</p>
 		</div>

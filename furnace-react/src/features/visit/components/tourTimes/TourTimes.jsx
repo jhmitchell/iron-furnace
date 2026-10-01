@@ -1,4 +1,3 @@
-import React from "react";
 import { TextLink } from "/src/components/ui";
 import ScrollableSection from "/src/layouts/scrollableSection/ScrollableSection";
 import "./TourTimes.css";

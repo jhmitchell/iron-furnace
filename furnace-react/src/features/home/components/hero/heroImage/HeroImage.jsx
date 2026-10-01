@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import heroImage from "../../../../../assets/images/entrance.webp";
 import styles from "./HeroImage.module.css";
 

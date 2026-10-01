@@ -1,5 +1,3 @@
-import React from "react";
-import { Button } from "/src/components/ui";
 import "./Volunteer.css";
 import contentImage from "/src/assets/images/furnace-top.webp"
 

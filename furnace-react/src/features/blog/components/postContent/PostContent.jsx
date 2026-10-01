@@ -1,4 +1,3 @@
-import React from 'react';
 import { LineHeader, InfoBlock } from '/src/components/ui';
 import useResponsive from '/src/hooks/useResponsive';
 import styles from './PostContent.module.css';
