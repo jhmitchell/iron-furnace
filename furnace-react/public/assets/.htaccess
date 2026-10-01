@@ -1,0 +1,7 @@
+# Deployed to public_html/assets/. Built files have a hash of their content in their
+# names (e.g. index-BnAcDQwX.js), so a given file never changes: browsers may keep them
+# for a year without re-checking. (index.html, which points to the current files, is
+# set to always re-check in the main .htaccess; see deploy/README.md.)
+<IfModule mod_headers.c>
+  Header set Cache-Control "public, max-age=31536000, immutable"
+</IfModule>

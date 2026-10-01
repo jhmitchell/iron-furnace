@@ -93,3 +93,22 @@ The workflow connects with a dedicated SSH key:
    `-----BEGIN`/`END` lines).
 
 To revoke: delete or deauthorize the key in cPanel and delete the GitHub secret.
+
+## Browser caching
+
+- `public_html/assets/.htaccess` (deployed from `furnace-react/public/assets/.htaccess`):
+  built files have content hashes in their names, so they are cached for a year (`immutable`).
+- `index.html` must always be re-checked so visitors get new deploys immediately. That rule
+  lives in the cPanel-managed `public_html/.htaccess`, *outside* cPanel's marked sections
+  (cPanel only rewrites its own `# DO NOT REMOVE ... BEGIN/END` blocks). It was added by hand,
+  with a backup, between these markers:
+
+  ```apache
+  # BEGIN iron-furnace: index.html caching
+  <IfModule mod_headers.c>
+    <FilesMatch "^index\.html$">
+      Header set Cache-Control "no-cache"
+    </FilesMatch>
+  </IfModule>
+  # END iron-furnace: index.html caching
+  ```
