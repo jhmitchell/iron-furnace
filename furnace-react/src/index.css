@@ -41,7 +41,13 @@ body {
 
 html {
 	height: 100%;
-	overflow-y: scroll;
+	/* Scrollbar only when the page is taller than the window... */
+	overflow-y: auto;
 	overflow-x: hidden;
+	/* ...but always reserve its space, so the layout doesn't shift sideways
+	   when navigating between short and long pages. */
+	scrollbar-gutter: stable;
+	/* Dark scrollbar to match the site (default is light grey on Windows). */
+	scrollbar-color: #5c5d63 var(--dark-background);
 	-webkit-overflow-scrolling: touch;
 }
