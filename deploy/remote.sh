@@ -92,10 +92,20 @@ fi
 main_js() { grep -o 'assets/index-[^"]*\.js' "$1" | head -1 || true; }
 
 # --- Python packages ------------------------------------------------------------
-# Prints requirement lines that aren't installed at exactly the pinned version.
+# Every Python environment of the app (e.g. .../backend/3.9 and .../backend/3.11). Pinned
+# packages are installed into all of them, so the app works whichever one Passenger runs:
+# after a Python version change in cPanel, Passenger can keep using the old environment
+# until the host reloads its web server configuration.
+ALL_VENVS=()
+for v in "$(dirname "$VENV")"/*/; do
+  v="${v%/}"; [ -x "$v/bin/pip" ] && ALL_VENVS+=("$v")
+done
+
+# Prints requirement lines that aren't installed at exactly the pinned version in
+# environment $2 (default: $VENV).
 missing_requirements() {
-  local installed req
-  installed="$("$VENV/bin/pip" freeze 2>/dev/null | tr 'A-Z_' 'a-z-')"
+  local installed req venv="${2:-$VENV}"
+  installed="$("$venv/bin/pip" freeze 2>/dev/null | tr 'A-Z_' 'a-z-')"
   while IFS= read -r req; do
     req="${req%%#*}"; req="$(tr -d '[:space:]' <<<"$req")"
     [ -z "$req" ] && continue
@@ -128,10 +138,13 @@ report_sync() {
 dry_run() {
   report_sync "Frontend" "$RELEASE/frontend/" "$LIVE_WEB/" "${WEB_EXCLUDES[@]}"
   report_sync "Backend"  "$RELEASE/backend/"  "$LIVE_API/" "${API_EXCLUDES[@]}"
-  echo "=== Python packages: $VENV"
-  local missing; missing="$(missing_requirements "$RELEASE/backend/requirements.txt")"
-  if [ -n "$missing" ]; then sed 's/^/  would install: /' <<<"$missing"
-  else echo "  all requirements already installed at the pinned versions"; fi
+  local v missing
+  for v in "${ALL_VENVS[@]}"; do
+    echo "=== Python packages: $v$([ "$v" = "$VENV" ] && echo '  (configured in .htaccess)')"
+    missing="$(missing_requirements "$RELEASE/backend/requirements.txt" "$v")"
+    if [ -n "$missing" ]; then sed 's/^/  would install: /' <<<"$missing"
+    else echo "  all requirements already installed at the pinned versions"; fi
+  done
   echo
   echo "Dry run complete. Nothing on the server was changed."
 }
@@ -212,18 +225,18 @@ health_check() {
 }
 
 apply_release() {
-  local missing
-  missing="$(missing_requirements "$RELEASE/backend/requirements.txt")"
-  if [ -n "$missing" ]; then
-    if $REHEARSAL; then
-      log "rehearsal: would install Python packages: $(tr '\n' ' ' <<<"$missing")"
+  local v missing
+  for v in "${ALL_VENVS[@]}"; do
+    missing="$(missing_requirements "$RELEASE/backend/requirements.txt" "$v")"
+    if [ -z "$missing" ]; then
+      log "Python packages ($(basename "$v")): no changes"
+    elif $REHEARSAL; then
+      log "rehearsal: would install into $(basename "$v"): $(tr '\n' ' ' <<<"$missing")"
     else
-      log "installing Python packages: $(tr '\n' ' ' <<<"$missing")"
-      "$VENV/bin/pip" install --quiet -r "$RELEASE/backend/requirements.txt" || return 1
+      log "installing Python packages into $(basename "$v"): $(tr '\n' ' ' <<<"$missing")"
+      "$v/bin/pip" install --quiet --disable-pip-version-check -r "$RELEASE/backend/requirements.txt" || return 1
     fi
-  else
-    log "Python packages: no changes"
-  fi
+  done
 
   log "copying backend (no deletions)"
   rsync -rlc --chmod=D755,F644 --delay-updates --itemize-changes "${API_EXCLUDES[@]}" \
