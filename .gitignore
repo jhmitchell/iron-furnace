@@ -2,3 +2,6 @@
 # The ':' makes these paths impossible to check out on Windows.
 *:Zone.Identifier
 *Zone.Identifier
+
+# Dependencies (each app has its own)
+node_modules/
