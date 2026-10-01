@@ -1,12 +1,9 @@
 import os
 from dotenv import load_dotenv
 import logging
-from logging.handlers import RotatingFileHandler
-from pytz import timezone
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
-from apscheduler.schedulers.asyncio import AsyncIOScheduler
 
 # Load the .env file
 load_dotenv()
@@ -18,19 +15,13 @@ API_V1_PREFIX = os.getenv("API_V1_PREFIX")
 AUTH_PREFIX = os.getenv("AUTH_PREFIX")
 LOG_FILE = os.getenv("LOG_FILE")
 
-# Initialize logging
-if LOG_FILE:
-    log_handler = logging.FileHandler(LOG_FILE)
-    log_handler.setLevel(logging.INFO)
-    logger = logging.getLogger()
-    logger.setLevel(logging.INFO)
-    logger.addHandler(log_handler)
-    print(f'Logging to {LOG_FILE}')
-else:
-    logger = logging.getLogger()
-    logger.setLevel(logging.INFO)
-    logger.addHandler(logging.StreamHandler())
-    print('Logging to console')
+# Initialize logging. In production LOG_FILE is set (app.log); it is rotated nightly by
+# backend/scripts/rotate_logs.sh (cron), which is safe with several Passenger processes.
+log_handler = logging.FileHandler(LOG_FILE) if LOG_FILE else logging.StreamHandler()
+log_handler.setFormatter(logging.Formatter("%(asctime)s %(levelname)s %(name)s: %(message)s"))
+root_logger = logging.getLogger()
+root_logger.setLevel(logging.INFO)
+root_logger.addHandler(log_handler)
 
 logger = logging.getLogger(__name__)
 
@@ -56,7 +47,6 @@ app.add_middleware(
 from .routers import authentication, users, hours, events, sponsors, board_members, banner
 from .internal.db.session import get_db
 from .internal.db.init import create_users_table, create_hours_table, create_holidays_table, create_events_table, create_sponsors_table, create_board_members_table, create_banner_table, create_root_users
-from .internal.db.jobs import delete_expired_events
 
 app.include_router(authentication.router, prefix=f'{API_V1_PREFIX}{AUTH_PREFIX}')
 app.include_router(users.router, prefix=f'{API_V1_PREFIX}')
@@ -68,22 +58,12 @@ app.include_router(banner.router, prefix=f'{API_V1_PREFIX}')
 
 app.mount("/static", StaticFiles(directory="static"), name="static")
 
-scheduler = AsyncIOScheduler()
-eastern = timezone('US/Eastern')
+# Note: there is no scheduled cleanup of expired events. FastAPI startup events never run
+# under Passenger (a2wsgi), so the old in-process scheduler never started. Past events are
+# deliberately kept for now; app.internal.db.jobs.delete_expired_events() exists if a
+# cPanel cron job is ever wanted.
 
-logger.info("Setting up scheduled jobs...")
-
-@scheduler.scheduled_job("cron", hour=3, minute=0, timezone=eastern)
-async def scheduled_delete_expired_events():
-    '''
-    Scheduled job to delete expired events every day at midnight ET.
-    '''
-    db = next(get_db())
-    try:
-        delete_expired_events(db)
-    finally:
-        db.close()
-
+# Runs under uvicorn (local development) only; production tables already exist.
 @app.on_event("startup")
 async def startup_event():
     logger.info("Initializing FastAPI server...")
@@ -100,5 +80,4 @@ async def startup_event():
         create_root_users(db)
     finally:
         db.close()
-    scheduler.start()
     logger.info(f'Initialized server in {env} mode')
