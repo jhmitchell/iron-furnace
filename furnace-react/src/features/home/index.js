@@ -3,3 +3,4 @@ export { default as WelcomeFlex } from './components/welcomeFlex/WelcomeFlex';
 export { default as QuoteSection } from './components/quoteSection/QuoteSection';
 export { default as EventsSection } from './components/eventsSection/EventsSection';
 export { default as VideoSection } from './components/videoSection/VideoSection';
+export { default as SponsorsSection } from './components/sponsorsSection/SponsorsSection';

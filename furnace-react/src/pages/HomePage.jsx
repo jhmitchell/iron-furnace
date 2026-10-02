@@ -1,4 +1,4 @@
-import { Hero, WelcomeFlex, QuoteSection, EventsSection, VideoSection } from "../features/home";
+import { Hero, WelcomeFlex, QuoteSection, EventsSection, VideoSection, SponsorsSection } from "../features/home";
 import MainLayout from "../layouts/MainLayout";
 import "./HomePage.css";
 
@@ -13,6 +13,7 @@ const HomePage = () => {
         <EventsSection />
         <QuoteSection />
         <VideoSection />
+        <SponsorsSection />
       </div>
     </MainLayout>
   );

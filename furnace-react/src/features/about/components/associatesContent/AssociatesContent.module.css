@@ -25,6 +25,14 @@
   margin-bottom: 8px;
 }
 
+.sponsorGrid {
+  margin-bottom: 8px;
+}
+
+.sponsorCta {
+  margin-top: 16px;
+}
+
 .boardHeader {
   color: var(--accent-color);
   font-size: 1.2em;

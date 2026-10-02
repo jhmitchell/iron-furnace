@@ -1,0 +1,56 @@
+.sponsorGridContainer {
+	container-type: inline-size;
+	width: 100%;
+}
+
+/* Flex rather than grid so a partial last row stays centered */
+.sponsorGrid {
+	--columns: 2;
+	--gap: 12px;
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	gap: var(--gap);
+}
+
+.sponsorCard {
+	flex: 0 0 calc((100% - (var(--columns) - 1) * var(--gap)) / var(--columns));
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	min-height: 80px;
+	padding: 14px 10px;
+	box-sizing: border-box;
+	background-color: var(--dark-background);
+	border: 1px solid rgba(255, 255, 255, 0.08);
+	border-top: 3px solid var(--orange-accent);
+	border-radius: 8px;
+	color: var(--text-off-white);
+	font-size: 0.95rem;
+	font-weight: 500;
+	line-height: 1.35;
+	text-align: center;
+	overflow-wrap: break-word;
+}
+
+@container (min-width: 560px) {
+	.sponsorGrid {
+		--columns: 3;
+		--gap: 16px;
+	}
+
+	.sponsorCard {
+		min-height: 96px;
+		padding: 20px;
+		font-size: 1.1rem;
+	}
+}
+
+@container (min-width: 900px) {
+	.sponsorGrid {
+		--columns: 4;
+	}
+}
