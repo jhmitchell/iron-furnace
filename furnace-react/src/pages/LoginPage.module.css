@@ -64,12 +64,6 @@
   color: var(--text-off-white);
 }
 
-.subtitle {
-  margin-top: 8px;
-  font-size: 0.9rem;
-  color: var(--text-light-grey);
-}
-
 .checking {
   padding: 24px 0 8px;
   text-align: center;
