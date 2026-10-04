@@ -12,6 +12,7 @@ from app.internal.db.session import get_db
 from app.internal.models.users import UserSchema, UserCreateSchema
 from app.internal.models.token import TokenSchema
 from ..internal import login_throttle
+from ..internal.environment import IS_DEV
 from ..internal.token import (
     ACCESS_TOKEN_TYPE,
     REFRESH_TOKEN_TYPE,
@@ -39,8 +40,9 @@ logger = logging.getLogger(__name__)
 ACCESS_TOKEN_EXPIRE_MINUTES = int(os.getenv("ACCESS_TOKEN_EXPIRE_MINUTES"))
 REFRESH_TOKEN_EXPIRE_DAYS = int(os.getenv("REFRESH_TOKEN_EXPIRE_DAYS"))
 
-# Only send the refresh cookie over HTTPS outside local development
-COOKIE_SECURE = os.getenv("ENV", "dev") != "dev"
+# Only send the refresh cookie over HTTPS, except in local development (plain
+# http://localhost, where some browsers ignore Secure cookies). An unset ENV means production.
+COOKIE_SECURE = not IS_DEV
 
 # Anything longer is rejected without checking (bcrypt only uses the first 72 bytes anyway)
 MAX_USERNAME_LENGTH = 255
