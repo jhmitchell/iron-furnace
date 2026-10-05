@@ -10,8 +10,14 @@ How each request is classified (per day, per IP address and kind of user agent):
 
   scanner  asked for attack paths (.php, /.env, /wp-admin, ...) or is a known security scanner
   bot      says it is a bot / script in its user agent (Googlebot, GPTBot, curl, ...)
-  human    a browser that ran the site: the site's JavaScript calls /api/v1/ on every page
-  scraper  claims to be a browser but never ran the site's JavaScript
+  human    likely a person: a browser that loaded a page, ran the site's JavaScript (which
+           calls /api/v1/ on every page), and stayed 5+ seconds or opened a second page
+  scraper  "unverified": claims to be a browser but doesn't meet that bar (never ran the
+           site, only called the API, or left within seconds, as headless bots do)
+
+Logs can't prove a visitor is a person; the site's own tracker (collect.py) can, and is
+what the rest of the Stats page uses. When these rules change, bump CLASSIFIER_VERSION and
+every stored day is counted again from the logs that are still available.
 """
 import gzip
 import logging
@@ -38,11 +44,16 @@ logger = logging.getLogger(__name__)
 LINE = re.compile(r'^(\S+) \S+ \S+ \[([^\]]+)\] "(?:(\S+) (\S+)[^"]*|[^"]*)" (\d{3}) (\S+) "[^"]*" "([^"]*)"')
 MONTHS = {m: i for i, m in enumerate(
     ("Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"), start=1)}
+# A page of the site (not the API, a built asset, an upload, or a file)
+PAGE_PATH = re.compile(r"^/(?!api/|assets/|static/)[^.]*$")
 ARCHIVE_NAME = re.compile(r"-(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)-(\d{4})\.gz$")
 
 CLASSES = ("human", "bot", "scanner", "scraper")
 HITS_RETENTION = timedelta(days=760)   # raw tracker events: a little over two years
 MIN_INTERVAL_SECONDS = 15 * 60          # don't re-check the logs more often than this
+CLASSIFIER_VERSION = 2                  # bump when the classification rules change
+HUMAN_MIN_SECONDS = 5
+META_DAY = date(1970, 1, 1)             # stats_log_daily row holding CLASSIFIER_VERSION
 RETRY_DAYS = 400                        # missing days older than this are given up on
 _lock = threading.Lock()
 _last_run = 0.0
@@ -89,7 +100,8 @@ def _local_day(date_hour: str, offset: str) -> Optional[date]:
 
 def summarize(lines: Iterable[str], days: Set[date]) -> Dict[date, list]:
     """Count requests per day (only `days`) into StatsLogDaily rows (not yet saved)."""
-    # (day, ip, bot name or "") -> [requests, bytes, probed, ran_js, group]
+    # (day, ip, bot name or "") -> [requests, bytes, probed, ran_js, pages, first, last]
+    # (first/last: seconds since midnight server time, for how long a browser stayed)
     seen: Dict[tuple, list] = {}
     bot_info: Dict[str, str] = {}
     statuses: Dict[date, Counter] = defaultdict(Counter)   # day -> {"all": n, "5xx": n}
@@ -109,15 +121,23 @@ def summarize(lines: Iterable[str], days: Set[date]) -> Dict[date, list]:
         name = found[0] if found else ""
         if found:
             bot_info[name] = found[1]
+        try:
+            second = int(stamp[12:14]) * 3600 + int(stamp[15:17]) * 60 + int(stamp[18:20])
+        except ValueError:
+            second = 0
         entry = seen.get((day, ip, name))
         if entry is None:
-            entry = seen[(day, ip, name)] = [0, 0, False, False]
+            entry = seen[(day, ip, name)] = [0, 0, False, False, set(), second, second]
         entry[0] += 1
         entry[1] += int(size) if size.isdigit() else 0
+        entry[5] = min(entry[5], second)
+        entry[6] = max(entry[6], second)
         if bots.is_probe(path):
             entry[2] = True
         elif path.startswith("/api/v1/"):
             entry[3] = True
+        elif PAGE_PATH.match(path) and len(entry[4]) < 3:
+            entry[4].add(path)
 
     # day -> {(kind, name): [set of ips, requests, bytes, group]}
     totals: Dict[date, dict] = defaultdict(dict)
@@ -128,13 +148,13 @@ def summarize(lines: Iterable[str], days: Set[date]) -> Dict[date, list]:
         row[1] += requests
         row[2] += size
 
-    for (day, ip, name), (requests, size, probed, ran_js) in seen.items():
+    for (day, ip, name), (requests, size, probed, ran_js, pages, first, last) in seen.items():
         group = bot_info.get(name)
         if probed or group == "scanner":
             cls = "scanner"
         elif name:
             cls = "bot"
-        elif ran_js:
+        elif ran_js and pages and (last - first >= HUMAN_MIN_SECONDS or len(pages) >= 2):
             cls = "human"
         else:
             cls = "scraper"
@@ -184,6 +204,7 @@ def update(db: Session, today: Optional[date] = None, force: bool = False) -> in
     today = today or datetime.now(LOCAL_TZ).date()
     try:
         purge_old_hits(db)
+        recount_if_rules_changed(db)
         stored = {row[0] for row in db.query(StatsLogDaily.day).filter(StatsLogDaily.kind == "class").distinct()}
 
         # Days the logs can cover: from the oldest archive month up to yesterday
@@ -222,6 +243,19 @@ def update(db: Session, today: Optional[date] = None, force: bool = False) -> in
         db.rollback()
         logger.exception("Could not update server log stats")
         return 0
+
+
+def recount_if_rules_changed(db: Session) -> None:
+    """Days counted with older rules are deleted, so they are counted again (from the logs
+    cPanel still has) with the current ones."""
+    meta = db.get(StatsLogDaily, (META_DAY, "meta", "version"))
+    if meta is not None and meta.visitors == CLASSIFIER_VERSION:
+        return
+    db.query(StatsLogDaily).delete(synchronize_session=False)
+    db.add(StatsLogDaily(day=META_DAY, kind="meta", name="version", visitors=CLASSIFIER_VERSION,
+                         requests=0, bytes=0))
+    db.commit()
+    logger.info("Stats: log classification rules changed (v%d); recounting", CLASSIFIER_VERSION)
 
 
 def purge_old_hits(db: Session) -> None:

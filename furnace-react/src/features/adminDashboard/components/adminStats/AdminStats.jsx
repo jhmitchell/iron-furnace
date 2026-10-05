@@ -30,10 +30,10 @@ const SOURCE_HINTS = {
 };
 
 const VISIT_TYPES = [
-  { key: 'human', label: 'People', color: '#bf8045', hint: 'Browsers that loaded and ran the website' },
+  { key: 'human', label: 'Likely people', color: '#bf8045', hint: 'Browsers that loaded a page, ran the website, and stayed 5+ seconds or opened another page' },
   { key: 'bot', label: 'Declared bots', color: '#3987e5', hint: 'Identify themselves: search engines, AI crawlers, link previews' },
   { key: 'scanner', label: 'Attack scanners', color: '#199e70', hint: 'Probing for WordPress, PHP or password files' },
-  { key: 'scraper', label: 'Disguised bots', color: '#9085e9', hint: 'Claim to be a browser but never run the website' },
+  { key: 'scraper', label: 'Unverified', color: '#9085e9', hint: 'Look like a browser, but never ran the website or left within seconds (typical of bots that pose as browsers)' },
 ];
 
 const BOT_GROUPS = {
@@ -615,14 +615,14 @@ const VisitTypes = ({ data }) => {
 
   return (
     <Section id="visit-types" title="Visit types"
-      aside={t.through && <span className={styles.asideMeta}>Server logs through {shortDate(t.through)}</span>}>
+      aside={t.from && <span className={styles.asideMeta}>{shortDate(t.from)} – {shortDate(t.through)}</span>}>
       {total === 0 ? <Empty>Available after the first full day</Empty> : (
         <>
           <div className={styles.typesHead}>
             <div className={styles.hero}>
               <span className={styles.heroValue}>{pct(t.visitors.human || 0, total)}</span>
-              <span className={styles.heroLabel}>real people</span>
-              <span className={styles.muted}>{formatNumber(t.visitors.human || 0)} of {formatNumber(total)} unique addresses</span>
+              <span className={styles.heroLabel}>likely people</span>
+              <span className={styles.muted}>{formatNumber(t.visitors.human || 0)} of {formatNumber(total)} daily addresses</span>
             </div>
             <div className={styles.typesShare}>
               <div className={styles.shareBar} aria-hidden="true">
@@ -644,7 +644,7 @@ const VisitTypes = ({ data }) => {
           </div>
 
           <div className={styles.chartHeader}>
-            <span className={styles.chartLabel}>Unique addresses per day</span>
+            <span className={styles.chartLabel}>Addresses per day</span>
             <TableToggle shown={table} onToggle={() => setTable(!table)} />
           </div>
           {table ? (
