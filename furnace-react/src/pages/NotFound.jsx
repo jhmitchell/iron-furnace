@@ -1,7 +1,11 @@
 import { ArrowTextLink } from '../components/ui';
+import { markNotFound } from '/src/features/stats';
 import styles from './NotFound.module.css';
 
 const NotFound = () => {
+  // Tells the visit counter this address doesn't exist (helps find broken links)
+  markNotFound();
+
   return (
     <div className={styles.notFoundPage}>
       <div className={styles.textFlex}>

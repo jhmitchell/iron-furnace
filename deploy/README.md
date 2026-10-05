@@ -143,3 +143,26 @@ letters, digits and hyphens):
 
 Without the image, the page falls back to embedding the PDF (which works on computers only).
 The original print-quality PDFs of the current signs are in `~/uploads-pre-migration-20261001/qr/`.
+
+## Website stats
+
+The admin dashboard's **Stats** page (`/admin/stats`) has two sources; nothing needs setting up
+on the server:
+
+- **The site's own visit counter** (`furnace-react/src/features/stats/tracker.js` →
+  `POST /api/v1/stats/hit|engage`, stored in `stats_hits`). No cookies, no third parties, no IP
+  addresses stored: visitors are a daily-salted hash (`stats_salts`, deleted after each day).
+  Do Not Track / Global Privacy Control browsers and browsers that signed in to the admin
+  dashboard aren't counted. Raw events are kept about two years.
+- **Server log totals** (people vs bots, which bots, server errors) in `stats_log_daily`. When
+  someone opens the Stats page, any finished days not counted yet are read from cPanel's access
+  logs (`~/access-logs/` and the monthly archives in `~/logs/`) — about 2 seconds for a month.
+  The raw logs aren't copied. If nobody opens the page for over a year, the oldest days are
+  skipped.
+
+The tables are created automatically on the first deploy (SQLAlchemy `create_all`). To turn the
+counter off, remove the `trackPageView` call in `furnace-react/src/App.jsx`.
+
+Suggested sentence for a privacy page: *“We count visits with our own cookie-free statistics. We
+don't store IP addresses or share the data with anyone, and browsers that send Do Not Track or
+Global Privacy Control aren't counted.”*

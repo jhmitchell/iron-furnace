@@ -44,7 +44,7 @@ app.add_middleware(
 )
 
 # Import routers and initialize them
-from .routers import authentication, users, hours, events, sponsors, board_members, banner
+from .routers import authentication, users, hours, events, sponsors, board_members, banner, stats
 from .internal.db.session import get_db
 from .internal.db.init import create_users_table, create_hours_table, create_holidays_table, create_events_table, create_sponsors_table, create_board_members_table, create_banner_table, create_root_users
 
@@ -55,6 +55,7 @@ app.include_router(events.router, prefix=f'{API_V1_PREFIX}')
 app.include_router(sponsors.router, prefix=f'{API_V1_PREFIX}')
 app.include_router(board_members.router, prefix=f'{API_V1_PREFIX}')
 app.include_router(banner.router, prefix=f'{API_V1_PREFIX}')
+app.include_router(stats.router, prefix=f'{API_V1_PREFIX}')
 
 app.mount("/static", StaticFiles(directory="static"), name="static")
 
