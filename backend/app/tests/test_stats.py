@@ -92,8 +92,11 @@ def log_line(ip, path, ua, when="04/Oct/2026:12:00:00 -0400", status=200):
 def test_log_summary_classes():
     day = date(2026, 10, 4)
     lines = [
-        log_line("1.1.1.1", "/", CHROME), log_line("1.1.1.1", "/api/v1/hours/status", CHROME),  # human
+        log_line("1.1.1.1", "/", CHROME),                                                        # human:
+        log_line("1.1.1.1", "/api/v1/hours/status", CHROME, when="04/Oct/2026:12:00:40 -0400"),  # stayed 40s
         log_line("2.2.2.2", "/", CHROME),                                                        # scraper
+        log_line("6.6.6.6", "/", CHROME), log_line("6.6.6.6", "/api/v1/hours/status", CHROME),  # left at once
+        log_line("7.7.7.7", "/api/v1/hours/status", CHROME),                                     # API only
         log_line("3.3.3.3", "/wp-login.php", CHROME), log_line("3.3.3.3", "/.env", CHROME),      # scanner
         log_line("4.4.4.4", "/", "Mozilla/5.0 (compatible; Googlebot/2.1)"),                     # bot
         log_line("4.4.4.4", "/visit", "Mozilla/5.0 (compatible; Googlebot/2.1)", status=503),
@@ -101,11 +104,11 @@ def test_log_summary_classes():
     ]
     rows = logs.summarize(lines, {day})[day]
     classes = {r.name: r.visitors for r in rows if r.kind == "class"}
-    assert classes == {"human": 1, "scraper": 1, "scanner": 1, "bot": 1}
+    assert classes == {"human": 1, "scraper": 3, "scanner": 1, "bot": 1}
     bot_rows = [r for r in rows if r.kind == "bot"]
     assert [(r.name, r.requests, r.grp) for r in bot_rows] == [("Googlebot", 2, "search")]
     status = {r.name: r.requests for r in rows if r.kind == "status"}
-    assert status == {"all": 7, "5xx": 1}
+    assert status == {"all": 10, "5xx": 1}
 
 
 def test_log_days_use_museum_time():

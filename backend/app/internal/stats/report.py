@@ -566,9 +566,11 @@ def traffic(db: Session, start: date, end: date) -> dict:
     groups = Counter()
     for b in bots.values():
         groups[b["group"] or "other"] += b["requests"]
-    last = db.query(StatsLogDaily.day).order_by(StatsLogDaily.day.desc()).first()
+    counted = sorted(by_day)
     return {
-        "through": last[0].isoformat() if last else None,
+        # The days of the period the logs actually cover
+        "from": counted[0].isoformat() if counted else None,
+        "through": counted[-1].isoformat() if counted else None,
         "daily": [{"date": d.isoformat(), **v} for d, v in sorted(by_day.items())],
         "visitors": dict(visitors),
         "requests": dict(requests),
