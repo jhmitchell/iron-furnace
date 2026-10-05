@@ -13,6 +13,7 @@ reachable database:
 against an empty database (CI). Under Passenger that startup handler never runs, so
 production relies on its tables already existing.
 """
+import io
 import os
 import sys
 from wsgiref.util import setup_testing_defaults
@@ -41,10 +42,14 @@ PATHS = [
 ]
 
 
-def get(path):
+def get(path, body=None):
+    """GET path, or POST body (bytes) to it."""
     environ = {}
     setup_testing_defaults(environ)
     environ.update({"REQUEST_METHOD": "GET", "PATH_INFO": path, "QUERY_STRING": ""})
+    if body is not None:
+        environ.update({"REQUEST_METHOD": "POST", "CONTENT_TYPE": "text/plain",
+                        "CONTENT_LENGTH": str(len(body)), "wsgi.input": io.BytesIO(body)})
     result = {}
 
     def start_response(status, headers, exc_info=None):
@@ -60,5 +65,11 @@ for path in PATHS:
     ok = status.startswith("200")
     failed |= not ok
     print(f"{'OK  ' if ok else 'FAIL'} {status:<20} {path}  ({len(body)} bytes)")
+
+# The site's visit counter (POST with a body read asynchronously through a2wsgi)
+status, _ = get("/api/v1/stats/hit", b'{"kind":"pageview","path":"/","id":"smoketest000"}')
+ok = status.startswith("204")
+failed |= not ok
+print(f"{'OK  ' if ok else 'FAIL'} {status:<20} POST /api/v1/stats/hit")
 
 sys.exit(1 if failed else 0)

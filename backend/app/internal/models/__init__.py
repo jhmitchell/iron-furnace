@@ -5,3 +5,4 @@ from . import business_hours
 from . import sponsors
 from . import board_members
 from . import banner
+from . import stats

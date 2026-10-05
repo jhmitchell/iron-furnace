@@ -16,7 +16,7 @@ const BannerBar = ({ message, linkText, linkUrl, className = '' }) => {
   const isExternal = hasLink && /^https?:\/\//i.test(linkUrl);
 
   return (
-    <div className={`${styles.bar} ${className}`.trim()} role="region" aria-label="Announcement">
+    <div className={`${styles.bar} ${className}`.trim()} role="region" aria-label="Announcement" data-stats-zone="banner">
       <div className={styles.inner}>
         <FaExclamationTriangle className={styles.icon} aria-hidden="true" />
         <p className={styles.text}>

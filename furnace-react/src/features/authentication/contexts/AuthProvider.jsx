@@ -14,6 +14,7 @@ import {
   tokenExpiresAt,
   tokenSubject,
 } from "../utils/session";
+import { setIgnoreThisBrowser } from "/src/features/stats";
 
 export const AuthContext = createContext();
 
@@ -205,6 +206,8 @@ const AuthProvider = ({ children }) => {
     try {
       const { access_token } = await loginService(username, password);
       startSession(access_token, username);
+      // Staff browsing the site shouldn't count as visitors (can be undone on the Stats page)
+      setIgnoreThisBrowser(true);
       return { ok: true };
     } catch (error) {
       return {

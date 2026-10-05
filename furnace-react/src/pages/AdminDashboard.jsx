@@ -1,5 +1,5 @@
 import { NavLink, Outlet, useNavigate } from 'react-router-dom';
-import { MdDashboard, MdEvent, MdHandshake, MdGroups, MdSchedule, MdCampaign, MdOpenInNew } from 'react-icons/md';
+import { MdDashboard, MdEvent, MdHandshake, MdGroups, MdSchedule, MdCampaign, MdOpenInNew, MdInsights } from 'react-icons/md';
 import styles from './AdminDashboard.module.css';
 import { useAuth } from '/src/features/authentication';
 
@@ -43,6 +43,7 @@ const AdminDashboard = () => {
 				</div>
 				<SidebarGroup label="Overview">
 					<DashLink to="/admin/" icon={<MdDashboard />} end>Dashboard</DashLink>
+					<DashLink to="/admin/stats" icon={<MdInsights />}>Stats</DashLink>
 				</SidebarGroup>
 				<SidebarGroup label="Content">
 					<DashLink to="/admin/banner" icon={<MdCampaign />}>Banner</DashLink>

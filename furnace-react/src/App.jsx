@@ -21,6 +21,7 @@ import {
 } from './pages';
 import ProtectedRoute from "./components/protectedRoute/ProtectedRoute";
 import { AuthProvider } from "./features/authentication";
+import { trackPageView } from "./features/stats";
 import "./App.css";
 
 // The admin dashboard is only used by site admins, so it is split into its own file
@@ -34,6 +35,7 @@ const AdminEvents = adminPage("AdminEvents");
 const AdminSponsors = adminPage("AdminSponsors");
 const AdminBoard = adminPage("AdminBoard");
 const AdminBanner = adminPage("AdminBanner");
+const AdminStats = adminPage("AdminStats");
 
 const AdminLoading = () => (
   <p role="status" style={{ padding: "4rem 1rem", textAlign: "center" }}>
@@ -56,6 +58,11 @@ const RoutesComponent = () => {
       behavior: "instant",
     });
   }, [location]);
+
+  // Count the page view once the page has rendered (so the 404 page can mark itself)
+  useEffect(() => {
+    trackPageView(location.pathname);
+  }, [location.pathname]);
 
   const routes = useRoutes([
     { path: "/", element: <HomePage /> },
@@ -186,6 +193,7 @@ const RoutesComponent = () => {
             { path: "sponsors", element: <AdminSponsors /> },
             { path: "board", element: <AdminBoard /> },
             { path: "banner", element: <AdminBanner /> },
+            { path: "stats", element: <AdminStats /> },
           ]
         },
         // ... other protected routes ...
