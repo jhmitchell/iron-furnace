@@ -218,7 +218,7 @@ const AdminStats = () => {
             <Sources data={data} applyFilter={applyFilter} />
           </div>
           <div className={styles.threeUp}>
-            <Signs data={data} applyFilter={applyFilter} />
+            <Signs data={data} />
             <Devices data={data} applyFilter={applyFilter} />
             <Weekdays data={data} />
           </div>
@@ -527,10 +527,8 @@ const Sources = ({ data, applyFilter }) => {
   );
 };
 
-const Signs = ({ data, applyFilter }) => (
-  <Section id="signs" title="QR signs" aside={data.signs.length > 0 && (
-    <button type="button" className={styles.linkButton} onClick={() => applyFilter('source', 'QR code')}>Filter</button>
-  )}>
+const Signs = ({ data }) => (
+  <Section id="signs" title="QR signs">
     {data.signs.length === 0 ? <Empty /> : (
       <table className={styles.table}>
         <thead>
