@@ -5,11 +5,12 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 
+from .internal.environment import IS_DEV
+
 # Load the .env file
 load_dotenv()
 
 # Read the environment variables
-env = os.getenv("ENV")
 client_url = os.getenv("CLIENT_URL")
 API_V1_PREFIX = os.getenv("API_V1_PREFIX")
 AUTH_PREFIX = os.getenv("AUTH_PREFIX")
@@ -26,7 +27,6 @@ root_logger.addHandler(log_handler)
 logger = logging.getLogger(__name__)
 
 # Interactive API docs are only exposed in local development
-IS_DEV = env == "dev"
 app = FastAPI(
     docs_url="/docs" if IS_DEV else None,
     redoc_url="/redoc" if IS_DEV else None,
@@ -81,4 +81,4 @@ async def startup_event():
         create_root_users(db)
     finally:
         db.close()
-    logger.info(f'Initialized server in {env} mode')
+    logger.info(f'Initialized server in {"development" if IS_DEV else "production"} mode')
