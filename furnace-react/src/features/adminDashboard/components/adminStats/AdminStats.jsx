@@ -1,52 +1,50 @@
 import { useEffect, useMemo, useState } from 'react';
 import {
-  MdArrowDownward, MdArrowUpward, MdCheckCircle, MdClose, MdErrorOutline, MdInfoOutline,
-  MdLightbulbOutline, MdRemove, MdWarningAmber,
+  MdArrowDownward, MdArrowUpward, MdCheckCircle, MdClose, MdErrorOutline, MdHelpOutline, MdRemove, MdWarningAmber,
 } from 'react-icons/md';
 import { isBrowserIgnored, setIgnoreThisBrowser } from '/src/features/stats';
-import { AdminPage, AdminCard, EmptyState, ui } from '../ui';
+import { AdminPage, AdminCard, ui } from '../ui';
 import { getStatsHealth, getStatsReport } from './statsService';
 import { ColumnChart, InlineBar, ShareBar, Sparkline, StackedColumns } from './charts';
 import { bucketLabel, formatNumber, parseDay, shortDate } from './format';
 import styles from './AdminStats.module.css';
 
 const RANGES = [
-  { id: '7d', label: 'Last 7 days' },
-  { id: '30d', label: 'Last 30 days' },
-  { id: '90d', label: 'Last 90 days' },
-  { id: '12m', label: 'Last 12 months' },
+  { id: '7d', label: '7 days' },
+  { id: '30d', label: '30 days' },
+  { id: '90d', label: '90 days' },
+  { id: '12m', label: '12 months' },
 ];
 
 const METRICS = [
   { id: 'visitors', label: 'Visitors', unit: 'visitors', hint: 'Counted once per day' },
-  { id: 'engaged_visits', label: 'Engaged visits', unit: 'engaged visits', hint: 'Looked at 2+ pages, stayed 10+ seconds, or clicked something important' },
-  { id: 'planned_visits', label: 'Planned a visit', unit: 'visits', hint: 'Looked at hours, tours or directions, or called' },
-  { id: 'action_visits', label: 'Took action', unit: 'visits', hint: 'Clicked Donate, Membership, Sponsorship, an event link, directions, call or email' },
+  { id: 'engaged_visits', label: 'Engaged visits', unit: 'engaged visits', hint: '2+ pages, 10+ seconds active, or a key action' },
+  { id: 'planned_visits', label: 'Planned a visit', unit: 'visits', hint: 'Viewed hours, tours or directions, or called' },
+  { id: 'action_visits', label: 'Took action', unit: 'visits', hint: 'Donate, membership, sponsorship, event link, directions, call or email' },
 ];
 
-const SOURCE_HELP = {
-  Direct: 'No referring website: bookmarks, typed addresses, and many links opened from the Facebook or Instagram apps or from texts.',
-  'QR code': 'Visits that started on a sign page (/signs/…).',
-  'AI assistants': 'ChatGPT, Perplexity, Gemini, Copilot and similar.',
-  Campaign: 'Links tagged with ?utm_source=… or ?utm_campaign=…',
+const SOURCE_HINTS = {
+  Direct: 'No referrer: bookmarks, typed addresses, app and text-message links',
+  'QR code': 'Visits that started on a sign page',
+  Campaign: 'Links tagged with utm_source or utm_campaign',
 };
 
-const TRAFFIC_SERIES = [
-  { key: 'human', label: 'People', color: '#bf8045' },
-  { key: 'bot', label: 'Bots that say so', color: '#3987e5' },
-  { key: 'scanner', label: 'Hacking attempts', color: '#199e70' },
-  { key: 'scraper', label: 'Disguised bots', color: '#9085e9' },
+const VISIT_TYPES = [
+  { key: 'human', label: 'People', color: '#bf8045', hint: 'Browsers that loaded and ran the website' },
+  { key: 'bot', label: 'Declared bots', color: '#3987e5', hint: 'Identify themselves: search engines, AI crawlers, link previews' },
+  { key: 'scanner', label: 'Attack scanners', color: '#199e70', hint: 'Probing for WordPress, PHP or password files' },
+  { key: 'scraper', label: 'Disguised bots', color: '#9085e9', hint: 'Claim to be a browser but never run the website' },
 ];
 
 const BOT_GROUPS = {
-  search: 'Search engines',
-  ai: 'AI companies',
-  seo: 'Marketing / SEO tools',
-  preview: 'Link previews',
-  monitor: 'Monitors & feed readers',
-  tool: 'Scripts & tools',
-  scanner: 'Security scanners',
-  other: 'Other bots',
+  search: 'Search',
+  ai: 'AI',
+  seo: 'SEO',
+  preview: 'Link preview',
+  monitor: 'Monitor',
+  tool: 'Script',
+  scanner: 'Scanner',
+  other: 'Other',
 };
 
 const DEVICE_COLORS = { phone: '#bf8045', desktop: '#3987e5', tablet: '#199e70' };
@@ -58,7 +56,7 @@ const timeAgo = (iso) => {
   if (minutes < 1) return 'just now';
   if (minutes < 60) return `${minutes} min ago`;
   const hours = Math.round(minutes / 60);
-  if (hours < 24) return `${hours} hour${hours === 1 ? '' : 's'} ago`;
+  if (hours < 24) return `${hours} h ago`;
   const days = Math.round(hours / 24);
   return `${days} day${days === 1 ? '' : 's'} ago`;
 };
@@ -83,7 +81,7 @@ const bytes = (n) => {
 
 const pct = (part, whole) => (whole ? `${Math.round((100 * part) / whole)}%` : '—');
 
-/** "+12" / "−3" with an arrow that is only colored when the change is more than noise. */
+/** "+12" / "−3"; the arrow is only colored when the change is larger than normal variation. */
 const Change = ({ now, before, z, goodWhenUp = true }) => {
   if (now === null || before === null || now === undefined || before === undefined) return null;
   const diff = now - before;
@@ -91,22 +89,22 @@ const Change = ({ now, before, z, goodWhenUp = true }) => {
   const tone = !real || diff === 0 ? 'neutral' : (diff > 0) === goodWhenUp ? 'good' : 'bad';
   const Icon = diff > 0 ? MdArrowUpward : diff < 0 ? MdArrowDownward : MdRemove;
   return (
-    <span className={`${styles.change} ${styles[`change_${tone}`]}`}>
+    <span className={`${styles.change} ${styles[`change_${tone}`]}`}
+      title={real ? undefined : 'Within normal variation'}>
       <Icon aria-hidden="true" />
       {diff > 0 ? '+' : diff < 0 ? '−' : ''}
       {formatNumber(Math.abs(diff))}
-      <span className={styles.srOnly}>{real ? '' : ' (within normal variation)'}</span>
     </span>
   );
 };
 
 const Status = ({ level }) => {
   const map = {
-    ok: [MdCheckCircle, 'Fine', styles.statusOk],
+    ok: [MdCheckCircle, 'OK', styles.statusOk],
     warn: [MdWarningAmber, 'Watch', styles.statusWarn],
-    bad: [MdErrorOutline, 'Act now', styles.statusBad],
+    bad: [MdErrorOutline, 'Action needed', styles.statusBad],
   };
-  const [Icon, word, cls] = map[level] || [MdInfoOutline, 'Unknown', styles.statusUnknown];
+  const [Icon, word, cls] = map[level] || [MdHelpOutline, 'Unknown', styles.statusUnknown];
   return (
     <span className={`${styles.status} ${cls}`}>
       <Icon aria-hidden="true" /> {word}
@@ -114,17 +112,19 @@ const Status = ({ level }) => {
   );
 };
 
-const Section = ({ id, title, description, aside, children }) => (
+const Section = ({ id, title, aside, children }) => (
   <section id={`stats-${id}`} className={styles.section}>
-    <AdminCard title={title} description={description} aside={aside}>
+    <AdminCard title={title} aside={aside}>
       {children}
     </AdminCard>
   </section>
 );
 
+const Empty = ({ children = 'No data for this period' }) => <p className={styles.empty}>{children}</p>;
+
 const TableToggle = ({ shown, onToggle }) => (
   <button type="button" className={styles.linkButton} onClick={onToggle} aria-expanded={shown}>
-    {shown ? 'Hide table' : 'Show as table'}
+    {shown ? 'Chart' : 'Table'}
   </button>
 );
 
@@ -138,7 +138,6 @@ const AdminStats = () => {
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
   const [health, setHealth] = useState(null);
-  const [showTable, setShowTable] = useState(false);
   const [ignored, setIgnored] = useState(isBrowserIgnored());
 
   useEffect(() => {
@@ -164,183 +163,137 @@ const AdminStats = () => {
     return () => controller.abort();
   }, []);
 
-  const applyFilter = (key, value) => {
-    setFilter({ key, value });
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
+  const applyFilter = (key, value) => setFilter({ key, value });
 
   const toggleIgnored = () => {
     setIgnoreThisBrowser(!ignored);
     setIgnored(!ignored);
   };
 
-  const rangeLabel = RANGES.find((r) => r.id === range).label.toLowerCase();
+  const countingSince = data?.tracking_since && parseDay(data.tracking_since) > parseDay(data.previous.start)
+    ? data.tracking_since : null;
 
   return (
-    <AdminPage title="Stats" description="How people use the website, counted without cookies.">
-      {/* Controls: one row above everything they affect */}
+    <AdminPage title="Stats">
       <div className={styles.controls}>
-        <nav aria-label="Period" className={styles.ranges}>
+        <div className={styles.segmented} role="group" aria-label="Period">
           {RANGES.map((r) => (
             <button
               key={r.id}
               type="button"
-              className={`${styles.rangeLink} ${range === r.id ? styles.rangeActive : ''}`}
+              className={range === r.id ? styles.segmentActive : ''}
               aria-pressed={range === r.id}
               onClick={() => setRange(r.id)}
             >
               {r.label}
             </button>
           ))}
-        </nav>
-        {data?.last_visit && (
-          <span className={styles.lastVisit}>Last visit {timeAgo(data.last_visit)}</span>
-        )}
-      </div>
-      {filter && (
-        <div className={styles.filterRow}>
+        </div>
+        {filter && (
           <span className={styles.filterChip}>
-            {filter.key === 'page' ? 'Visits that viewed' : filter.key === 'source' ? 'Visits from' : 'Visits on'}{' '}
-            <strong>{filter.key === 'device' ? DEVICE_LABELS[filter.value] : filter.value}</strong>
+            {filter.key === 'device' ? DEVICE_LABELS[filter.value] : filter.value}
             <button type="button" onClick={() => setFilter(null)} aria-label="Remove filter">
               <MdClose aria-hidden="true" />
             </button>
           </span>
-        </div>
-      )}
+        )}
+        <span className={styles.controlsMeta}>
+          {countingSince && <span>Counting since {shortDate(countingSince)}</span>}
+          {data?.last_visit && <span>Last visit {timeAgo(data.last_visit)}</span>}
+        </span>
+      </div>
 
       {error && <p className={`${ui.status} ${ui.statusError}`}>{error}</p>}
-      {!data && loading && <p className={styles.loading} role="status">Loading stats…</p>}
+      {!data && loading && <p className={styles.loading} role="status">Loading…</p>}
 
       {data && (
         <div className={`${styles.body} ${loading ? styles.refreshing : ''}`} aria-busy={loading}>
-          <StatsBody
-            data={data}
-            metric={metric}
-            setMetric={setMetric}
-            rangeLabel={rangeLabel}
-            showTable={showTable}
-            setShowTable={setShowTable}
-            applyFilter={applyFilter}
-            health={health}
-          />
-          <footer className={styles.about}>
-            <h3>How we count</h3>
-            <p>
-              The website counts visits itself: no cookies, no outside companies, and no IP addresses are
-              stored. A visitor is recognized only within one day, so someone who visits on three days
-              counts three times. Visits are only counted when they show a sign of a person (a tap,
-              scroll, click or a second page); programs that load pages without doing anything are left
-              out ({formatNumber(data.suspect_visits)} in this period). Browsers with “Do Not Track” or
-              “Global Privacy Control” turned on are never counted. Changes are only highlighted when they
-              are larger than normal day-to-day variation.
-            </p>
-            <label className={styles.ignoreToggle}>
-              <input type="checkbox" checked={!ignored} onChange={toggleIgnored} />
-              Count my own visits from this browser{' '}
-              <span className={styles.muted}>
-                (off automatically after signing in, so staff don’t inflate the numbers)
-              </span>
-            </label>
-          </footer>
+          <Overview data={data} metric={metric} setMetric={setMetric} />
+          <div className={styles.twoUp}>
+            <Events data={data} applyFilter={applyFilter} />
+            <Actions data={data} />
+          </div>
+          <div className={styles.twoUp}>
+            <Pages data={data} applyFilter={applyFilter} />
+            <Sources data={data} applyFilter={applyFilter} />
+          </div>
+          <div className={styles.threeUp}>
+            <Signs data={data} applyFilter={applyFilter} />
+            <Devices data={data} applyFilter={applyFilter} />
+            <Weekdays data={data} />
+          </div>
+          {data.not_found.length > 0 && <NotFound data={data} />}
+          <VisitTypes data={data} />
+          <Server data={data} health={health} />
+          <label className={styles.ignoreToggle}>
+            <input type="checkbox" checked={!ignored} onChange={toggleIgnored} />
+            Count visits from this browser
+          </label>
         </div>
       )}
     </AdminPage>
   );
 };
 
-const StatsBody = ({ data, metric, setMetric, rangeLabel, showTable, setShowTable, applyFilter, health }) => {
+// --- Sections -------------------------------------------------------------------------------
+
+const Overview = ({ data, metric, setMetric }) => {
+  const [table, setTable] = useState(false);
   const { summary: s, previous_summary: p, change, chart } = data;
-  const todayIndex = data.range.bucket === 'day' ? chart.buckets.indexOf(data.range.today)
-    : chart.buckets.length - 1;
-  const days = data.range.days;
-  const trackingStarted = data.tracking_since && parseDay(data.tracking_since) > parseDay(data.previous.start);
-  const metricInfo = METRICS.find((m) => m.id === metric);
+  const todayIndex = data.range.bucket === 'day' ? chart.buckets.indexOf(data.range.today) : chart.buckets.length - 1;
+  const info = METRICS.find((m) => m.id === metric);
 
   return (
-    <>
-      {trackingStarted && (
-        <p className={styles.notice}>
-          <MdInfoOutline aria-hidden="true" /> Visit counting started on {shortDate(data.tracking_since)}.
-          Comparisons with earlier days aren’t meaningful yet.
-        </p>
-      )}
-      {!data.tracking_since && (
-        <EmptyState>No visits have been counted yet. Numbers appear here as soon as people visit the website.</EmptyState>
-      )}
-
-      {/* What we're seeing */}
-      {data.insights.length > 0 && (
-        <section className={styles.insights} aria-labelledby="insights-heading">
-          <h3 id="insights-heading" className={styles.insightsTitle}>
-            <MdLightbulbOutline aria-hidden="true" /> What we’re seeing
-          </h3>
-          <ul>
-            {data.insights.map((item) => {
-              const Icon = item.tone === 'warn' ? MdWarningAmber : item.tone === 'good' ? MdCheckCircle : MdInfoOutline;
-              return (
-                <li key={item.title} className={styles[`insight_${item.tone}`]}>
-                  <Icon className={styles.insightIcon} aria-hidden="true" />
-                  <div>
-                    <p className={styles.insightTitle}>{item.title}</p>
-                    {item.detail && <p className={styles.insightDetail}>{item.detail}</p>}
-                    <p className={styles.insightLinks}>
-                      {item.filter && (
-                        <button type="button" className={styles.linkButton}
-                          onClick={() => applyFilter(item.filter.key, item.filter.value)}>
-                          Show only these visits
-                        </button>
-                      )}
-                      {item.section && item.section !== 'overview' && (
-                        <a href={`#stats-${item.section}`} className={styles.linkButton}>Details</a>
-                      )}
-                    </p>
-                  </div>
-                </li>
-              );
-            })}
-          </ul>
-        </section>
-      )}
-
-      {/* Headline numbers: each one switches the chart */}
-      <section id="stats-overview" className={`${ui.card} ${styles.overview}`} aria-label="Overview">
-        <div className={styles.tiles} role="tablist" aria-label="Chart shows">
-          {METRICS.map((m) => {
-            const value = s[m.id];
-            const rate = m.id === 'engaged_visits' && s.visits ? ` (${pct(value, s.visits)} of visits)` : '';
-            return (
-              <button
-                key={m.id}
-                type="button"
-                role="tab"
-                aria-selected={metric === m.id}
-                className={`${styles.tile} ${metric === m.id ? styles.tileActive : ''}`}
-                onClick={() => setMetric(m.id)}
-                title={m.hint}
-              >
-                <span className={styles.tileLabel}>{m.label}</span>
-                <span className={styles.tileValue}>{formatNumber(value)}</span>
-                <span className={styles.tileMeta}>
-                  <Change now={value} before={p[m.id]} z={change[m.id]} />
-                  <span className={styles.muted}>
-                    {rate || ` vs ${formatNumber(p[m.id])} before`}
-                  </span>
-                </span>
-              </button>
-            );
-          })}
-        </div>
-        <div className={styles.chartHeader}>
-          <p className={styles.chartCaption}>
-            {metricInfo.label} per {data.range.bucket}, {rangeLabel}.{' '}
-            <span className={styles.muted}>
-              Faint line: the {days} days before. Hollow {data.range.bucket}: not over yet.
-              {chart.events.length > 0 && ' Triangles: events.'}
+    <section id="stats-overview" className={`${ui.card} ${styles.overview}`} aria-label="Overview">
+      <div className={styles.tiles} role="tablist" aria-label="Chart">
+        {METRICS.map((m) => (
+          <button
+            key={m.id}
+            type="button"
+            role="tab"
+            aria-selected={metric === m.id}
+            className={`${styles.tile} ${metric === m.id ? styles.tileActive : ''}`}
+            onClick={() => setMetric(m.id)}
+            title={m.hint}
+          >
+            <span className={styles.tileLabel}>{m.label}</span>
+            <span className={styles.tileValue}>{formatNumber(s[m.id])}</span>
+            <span className={styles.tileMeta}>
+              <Change now={s[m.id]} before={p[m.id]} z={change[m.id]} />
+              <span className={styles.muted}>vs {formatNumber(p[m.id])}</span>
             </span>
-          </p>
-          <TableToggle shown={showTable} onToggle={() => setShowTable(!showTable)} />
+          </button>
+        ))}
+      </div>
+
+      <div className={styles.chartHeader}>
+        <ul className={styles.chartKey} aria-label="Chart key">
+          <li><span className={styles.keyBar} aria-hidden="true" />{info.label}</li>
+          <li><span className={styles.keyLine} aria-hidden="true" />Previous {data.range.days} days</li>
+          {chart.events.length > 0 && <li><span className={styles.keyMarker} aria-hidden="true" />Event</li>}
+        </ul>
+        <TableToggle shown={table} onToggle={() => setTable(!table)} />
+      </div>
+      {table ? (
+        <div className={styles.tableScroll}>
+          <table className={styles.table}>
+            <thead>
+              <tr>
+                <th>{data.range.bucket === 'week' ? 'Week' : 'Day'}</th>
+                {METRICS.map((m) => <th key={m.id} className={styles.num}>{m.label}</th>)}
+              </tr>
+            </thead>
+            <tbody>
+              {chart.buckets.map((b, i) => (
+                <tr key={b}>
+                  <td>{bucketLabel(b, data.range.bucket)}</td>
+                  {METRICS.map((m) => <td key={m.id} className={styles.num}>{formatNumber(chart.current[m.id][i])}</td>)}
+                </tr>
+              ))}
+            </tbody>
+          </table>
         </div>
+      ) : (
         <ColumnChart
           buckets={chart.buckets}
           values={chart.current[metric]}
@@ -348,137 +301,52 @@ const StatsBody = ({ data, metric, setMetric, rangeLabel, showTable, setShowTabl
           bucket={data.range.bucket}
           todayIndex={todayIndex}
           markers={chart.events}
-          label={`${metricInfo.label} per ${data.range.bucket}, ${rangeLabel}`}
-          unit={metricInfo.unit}
+          label={`${info.label} per ${data.range.bucket}`}
+          unit={info.unit}
         />
-        {showTable && (
-          <div className={styles.tableScroll}>
-            <table className={styles.table}>
-              <thead>
-                <tr><th>{data.range.bucket === 'week' ? 'Week' : 'Day'}</th>{METRICS.map((m) => <th key={m.id} className={styles.num}>{m.label}</th>)}</tr>
-              </thead>
-              <tbody>
-                {chart.buckets.map((b, i) => (
-                  <tr key={b}>
-                    <td>{bucketLabel(b, data.range.bucket)}</td>
-                    {METRICS.map((m) => <td key={m.id} className={styles.num}>{formatNumber(chart.current[m.id][i])}</td>)}
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        )}
-        <p className={styles.summaryLine}>
-          {formatNumber(s.visits)} visits and {formatNumber(s.pageviews)} page views. A typical visit lasts{' '}
-          {duration(s.median_visit_seconds)} of active time.
-        </p>
-      </section>
-
-      <Actions data={data} />
-      <div className={styles.twoUp}>
-        <Signs data={data} applyFilter={applyFilter} />
-        <Events data={data} applyFilter={applyFilter} />
-      </div>
-      <Pages data={data} applyFilter={applyFilter} />
-      <Sources data={data} applyFilter={applyFilter} />
-      <div className={styles.twoUp}>
-        <Devices data={data} applyFilter={applyFilter} />
-        <Weekdays data={data} />
-      </div>
-      <NotFound data={data} />
-      <BehindTheScenes data={data} health={health} />
-    </>
-  );
-};
-
-// --- Sections -------------------------------------------------------------------------------
-
-const Actions = ({ data }) => {
-  const visits = data.summary.visits;
-  const rows = data.actions;
-  return (
-    <Section id="actions" title="What people did"
-      description="Clicks on links that matter. “Visits” counts each visit once, however many times it clicked.">
-      {rows.length === 0 ? (
-        <EmptyState>No clicks on outside links in this period.</EmptyState>
-      ) : (
-        <div className={styles.tableScroll}>
-          <table className={styles.table}>
-            <thead>
-              <tr>
-                <th>Action</th>
-                <th className={styles.num}>Visits</th>
-                <th className={styles.num}>Change</th>
-                <th className={styles.hideSmall}>Trend</th>
-                <th className={styles.hideSmall}>Mostly clicked on</th>
-              </tr>
-            </thead>
-            <tbody>
-              {rows.map((row) => (
-                <tr key={row.action} className={row.key ? '' : styles.secondaryRow}>
-                  <td>{row.action}</td>
-                  <td className={styles.num}>
-                    {formatNumber(row.visits)} <span className={styles.muted}>of {formatNumber(visits)}</span>
-                  </td>
-                  <td className={styles.num}><Change now={row.visits} before={row.previous_visits} z={row.z} /></td>
-                  <td className={styles.hideSmall}><Sparkline values={row.series} /></td>
-                  <td className={styles.hideSmall}>
-                    {row.top_pages[0]?.name}
-                    {row.zones.navbar ? <span className={styles.muted}> · {row.zones.navbar} from the menu</span> : null}
-                    {row.zones.banner ? <span className={styles.muted}> · {row.zones.banner} from the banner</span> : null}
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
       )}
-      <p className={styles.footnote}>
-        Donations and memberships are completed on Givebutter, so this shows interest (clicks), not
-        gifts. Givebutter’s own reports show what was given.
-      </p>
-    </Section>
+
+      <dl className={styles.secondary}>
+        <div><dt>Visits</dt><dd>{formatNumber(s.visits)}</dd></div>
+        <div><dt>Page views</dt><dd>{formatNumber(s.pageviews)}</dd></div>
+        <div><dt>Engaged</dt><dd>{s.visits ? pct(s.engaged_visits, s.visits) : '—'}</dd></div>
+        <div><dt>Typical visit</dt><dd>{duration(s.median_visit_seconds)}</dd></div>
+      </dl>
+    </section>
   );
 };
 
-const Signs = ({ data, applyFilter }) => (
-  <Section id="signs" title="Signs on the grounds"
-    description="QR codes on the signs. A scan is a visit that started on the sign’s page."
-    aside={data.signs.length > 0 && (
-      <button type="button" className={styles.linkButton} onClick={() => applyFilter('source', 'QR code')}>
-        QR visits only
-      </button>
-    )}>
-    {data.signs.length === 0 ? (
-      <EmptyState>No sign scans in this period.</EmptyState>
-    ) : (
+const Events = ({ data, applyFilter }) => (
+  <Section id="events" title="Events">
+    {data.events.length === 0 ? <Empty /> : (
       <div className={styles.tableScroll}>
         <table className={styles.table}>
           <thead>
             <tr>
-              <th>Sign</th>
-              <th className={styles.num}>Scans</th>
-              <th className={styles.hideSmall}>Trend</th>
-              <th className={styles.num} title="Opened the sign as a PDF">PDF</th>
-              <th className={styles.num} title="Went on to look at other pages of the website">Kept browsing</th>
+              <th>Event</th>
+              <th className={styles.num}>Viewers</th>
+              <th className={styles.num}>Link clicks</th>
             </tr>
           </thead>
           <tbody>
-            {data.signs.map((row) => (
-              <tr key={row.sign}>
-                <td>
-                  <span className={styles.capitalize}>{row.sign.replace(/-/g, ' ')}</span>
-                  <span className={styles.subline}>
-                    {row.last_scan ? `Last scan ${shortDate(row.last_scan)}` : 'No scans yet'}
-                    {row.days_since_scan > 30 && <span className={styles.flag}> · none in {row.days_since_scan} days</span>}
-                  </span>
-                </td>
-                <td className={styles.num}>{formatNumber(row.scans)}</td>
-                <td className={styles.hideSmall}><Sparkline values={row.series} /></td>
-                <td className={styles.num}>{formatNumber(row.pdf_opens)}</td>
-                <td className={styles.num}>{formatNumber(row.explored)}</td>
-              </tr>
-            ))}
+            {data.events.map((event) => {
+              const d = event.days_until;
+              const when = d === null ? '' : d === 0 ? 'Today' : d > 0 ? `In ${d} day${d === 1 ? '' : 's'}` : `${-d} day${d === -1 ? '' : 's'} ago`;
+              return (
+                <tr key={event.id}>
+                  <td>
+                    <button type="button" className={styles.rowButton} onClick={() => applyFilter('page', `/events/${event.id}`)}>
+                      {event.title}
+                    </button>
+                    <span className={styles.subline}>
+                      {event.start ? `${shortDate(event.start.slice(0, 10))} · ${when}` : 'Deleted'}
+                    </span>
+                  </td>
+                  <td className={styles.num}>{formatNumber(event.visitors)}</td>
+                  <td className={styles.num}>{event.has_link ? formatNumber(event.link_clicks) : <span className={styles.muted}>—</span>}</td>
+                </tr>
+              );
+            })}
           </tbody>
         </table>
       </div>
@@ -486,121 +354,114 @@ const Signs = ({ data, applyFilter }) => (
   </Section>
 );
 
-const Events = ({ data, applyFilter }) => (
-  <Section id="events" title="Events" description="Interest in each event’s page. Upcoming events first.">
-    {data.events.length === 0 ? (
-      <EmptyState>No event pages were viewed in this period.</EmptyState>
-    ) : (
-      <ul className={styles.eventList}>
-        {data.events.map((event) => {
-          const d = event.days_until;
-          const when = d === null ? '' : d === 0 ? 'today' : d > 0 ? `in ${d} day${d === 1 ? '' : 's'}` : `${-d} day${d === -1 ? '' : 's'} ago`;
-          return (
-            <li key={event.id}>
-              <button type="button" className={styles.eventButton} onClick={() => applyFilter('page', `/events/${event.id}`)}>
-                <span className={styles.eventTitle}>{event.title}</span>
-                <span className={styles.muted}>{event.start ? `${shortDate(event.start.slice(0, 10))} · ${when}` : ''}</span>
-              </button>
-              {event.visitors === 0 ? (
-                <span className={`${styles.eventNumbers} ${styles.muted}`}>No views yet</span>
-              ) : (
-                <span className={styles.eventNumbers}>
-                  <strong>{formatNumber(event.visitors)}</strong> viewed
-                  {event.has_link && <> · <strong>{formatNumber(event.link_clicks)}</strong> clicked the link</>}
-                </span>
-              )}
-            </li>
-          );
-        })}
-      </ul>
-    )}
-  </Section>
-);
-
-const Pages = ({ data, applyFilter }) => {
-  const [all, setAll] = useState(false);
-  const max = Math.max(1, ...data.pages.map((r) => r.visitors));
+const Actions = ({ data }) => {
+  const visits = data.summary.visits;
   return (
-    <Section id="pages" title="Pages" description="Select a page to see only the visits that viewed it.">
-      {data.pages.length === 0 ? (
-        <EmptyState>No page views in this period.</EmptyState>
-      ) : (
-        <div className={styles.twoUpInner}>
+    <Section id="actions" title="Actions">
+      {data.actions.length === 0 ? <Empty /> : (
+        <>
           <div className={styles.tableScroll}>
             <table className={styles.table}>
-              <caption className={styles.caption}>Most viewed</caption>
               <thead>
                 <tr>
-                  <th>Page</th>
-                  <th className={styles.num}>Visitors</th>
-                  <th className={`${styles.num} ${styles.hideSmall}`}>Typical time</th>
-                  <th className={styles.hideSmall}>Trend</th>
+                  <th>Action</th>
+                  <th className={styles.num}>Visits</th>
+                  <th className={styles.num}>Change</th>
+                  <th className={styles.hideSmall} aria-label="Trend" />
                 </tr>
               </thead>
               <tbody>
-                {data.pages.slice(0, all ? undefined : 10).map((row) => (
-                  <tr key={row.path}>
-                    <td>
-                      <button type="button" className={styles.rowButton} onClick={() => applyFilter('page', row.path)}>
-                        {row.name}
-                      </button>
-                      <InlineBar value={row.visitors} max={max} />
+                {data.actions.map((row) => (
+                  <tr key={row.action} className={row.key ? '' : styles.secondaryRow}
+                    title={row.top_pages[0] ? `Mostly from ${row.top_pages[0].name}` : undefined}>
+                    <td>{row.action}</td>
+                    <td className={styles.num}>
+                      {formatNumber(row.visits)} <span className={styles.muted}>{pct(row.visits, visits)}</span>
                     </td>
-                    <td className={styles.num}>{formatNumber(row.visitors)}</td>
-                    <td className={`${styles.num} ${styles.hideSmall}`}>{duration(row.median_seconds)}</td>
+                    <td className={styles.num}><Change now={row.visits} before={row.previous_visits} z={row.z} /></td>
                     <td className={styles.hideSmall}><Sparkline values={row.series} /></td>
                   </tr>
                 ))}
               </tbody>
             </table>
-            {data.pages.length > 10 && (
-              <p className={styles.footnoteLinks}>
-                <button type="button" className={styles.linkButton} onClick={() => setAll(!all)}>
-                  {all ? 'Show top 10' : `Show all ${data.pages.length} pages`}
-                </button>
-              </p>
-            )}
           </div>
-          <div id="stats-landing" className={styles.tableScroll}>
+          <p className={styles.footnote}>Donate, Membership and Sponsorship are clicks to Givebutter, not completed gifts.</p>
+        </>
+      )}
+    </Section>
+  );
+};
+
+const Pages = ({ data, applyFilter }) => {
+  const [view, setView] = useState('top');
+  const [all, setAll] = useState(false);
+  const rows = view === 'top' ? data.pages : data.landing_pages;
+  const max = Math.max(1, ...rows.map((r) => (view === 'top' ? r.visitors : r.visits)));
+  const shown = rows.slice(0, all ? undefined : 10);
+  return (
+    <Section id="pages" title="Pages" aside={(
+      <div className={styles.miniTabs} role="group" aria-label="Pages view">
+        <button type="button" aria-pressed={view === 'top'} onClick={() => setView('top')}>Top</button>
+        <button type="button" aria-pressed={view === 'entry'} onClick={() => setView('entry')}>Entry</button>
+      </div>
+    )}>
+      {rows.length === 0 ? <Empty /> : (
+        <>
+          <div className={styles.tableScroll}>
             <table className={styles.table}>
-              <caption className={styles.caption}>Where visits start</caption>
               <thead>
                 <tr>
-                  <th>First page</th>
-                  <th className={styles.num}>Visits</th>
-                  <th className={styles.num}>Engaged</th>
+                  <th>Page</th>
+                  <th className={styles.num}>{view === 'top' ? 'Visitors' : 'Visits'}</th>
+                  <th className={styles.num}>{view === 'top' ? 'Time' : 'Engaged'}</th>
+                  {view === 'top' && <th className={styles.hideSmall} aria-label="Trend" />}
                 </tr>
               </thead>
               <tbody>
-                {data.landing_pages.slice(0, 10).map((row) => (
+                {shown.map((row) => (
                   <tr key={row.path}>
-                    <td>{row.name}</td>
-                    <td className={styles.num}>{formatNumber(row.visits)}</td>
-                    <td className={styles.num}>{pct(row.engaged, row.visits)}</td>
+                    <td>
+                      <button type="button" className={styles.rowButton} onClick={() => applyFilter('page', row.path)}>
+                        {row.name}
+                      </button>
+                      <InlineBar value={view === 'top' ? row.visitors : row.visits} max={max} />
+                    </td>
+                    <td className={styles.num}>{formatNumber(view === 'top' ? row.visitors : row.visits)}</td>
+                    <td className={styles.num}>{view === 'top' ? duration(row.median_seconds) : pct(row.engaged, row.visits)}</td>
+                    {view === 'top' && <td className={styles.hideSmall}><Sparkline values={row.series} /></td>}
                   </tr>
                 ))}
               </tbody>
             </table>
           </div>
-        </div>
+          {rows.length > 10 && (
+            <button type="button" className={`${styles.linkButton} ${styles.more}`} onClick={() => setAll(!all)}>
+              {all ? 'Show fewer' : `Show all ${rows.length}`}
+            </button>
+          )}
+        </>
       )}
     </Section>
   );
 };
 
 const Sources = ({ data, applyFilter }) => {
+  const [view, setView] = useState('channels');
   const max = Math.max(1, ...data.sources.map((r) => r.visits));
   return (
-    <Section id="sources" title="How people found the website">
-      {data.sources.length === 0 ? (
-        <EmptyState>No visits in this period.</EmptyState>
-      ) : (
-        <div className={styles.twoUpInner}>
+    <Section id="sources" title="Sources" aside={(
+      <div className={styles.miniTabs} role="group" aria-label="Sources view">
+        <button type="button" aria-pressed={view === 'channels'} onClick={() => setView('channels')}>Channels</button>
+        <button type="button" aria-pressed={view === 'sites'} onClick={() => setView('sites')}>Websites</button>
+      </div>
+    )}>
+      {data.sources.length === 0 ? <Empty /> : view === 'channels' ? (
+        <>
           <div className={styles.tableScroll}>
             <table className={styles.table}>
               <thead>
                 <tr>
-                  <th>Source</th>
+                  <th>Channel</th>
                   <th className={styles.num}>Visits</th>
                   <th className={styles.num}>Change</th>
                   <th className={`${styles.num} ${styles.hideSmall}`}>Engaged</th>
@@ -611,7 +472,7 @@ const Sources = ({ data, applyFilter }) => {
                   <tr key={row.source}>
                     <td>
                       <button type="button" className={styles.rowButton} onClick={() => applyFilter('source', row.source)}
-                        title={SOURCE_HELP[row.source]}>
+                        title={SOURCE_HINTS[row.source]}>
                         {row.source}
                       </button>
                       <InlineBar value={row.visits} max={max} />
@@ -623,66 +484,90 @@ const Sources = ({ data, applyFilter }) => {
                 ))}
               </tbody>
             </table>
+          </div>
+          {data.sources.some((r) => r.source === 'Direct') && (
             <p className={styles.footnote}>
-              “Direct” also includes most visits from the Facebook and Instagram apps and from text messages,
-              which hide where they came from. Adding <code>?utm_source=facebook</code> to links you post
-              makes them show up as a campaign.
+              Direct includes links opened from the Facebook and Instagram apps and text messages, which hide
+              their source. Add <code>?utm_source=facebook</code> to shared links to track them.
             </p>
-          </div>
-          <div className={styles.tableScroll}>
-            <table className={styles.table}>
-              <caption className={styles.caption}>Websites that sent visits</caption>
-              <thead>
-                <tr><th>Website</th><th className={styles.num}>Visits</th></tr>
-              </thead>
-              <tbody>
-                {data.referrers.length === 0 && (
-                  <tr><td colSpan={2} className={styles.muted}>None in this period.</td></tr>
-                )}
-                {data.referrers.map((row) => (
-                  <tr key={row.referrer}>
-                    <td>
-                      {row.referrer}{' '}
-                      <span className={styles.muted}>{row.source}</span>
-                      {row.new && row.source === 'Other websites' && <span className={styles.newBadge}>New</span>}
-                    </td>
-                    <td className={styles.num}>{formatNumber(row.visits)}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-            {data.campaigns.length > 0 && (
-              <table className={styles.table}>
-                <caption className={styles.caption}>Campaigns</caption>
-                <tbody>
-                  {data.campaigns.map((row) => (
-                    <tr key={row.campaign}><td>{row.campaign}</td><td className={styles.num}>{formatNumber(row.visits)}</td></tr>
-                  ))}
-                </tbody>
-              </table>
-            )}
-          </div>
+          )}
+        </>
+      ) : (
+        <div className={styles.tableScroll}>
+          <table className={styles.table}>
+            <thead>
+              <tr><th>Website</th><th>Channel</th><th className={styles.num}>Visits</th></tr>
+            </thead>
+            <tbody>
+              {data.referrers.length === 0 && data.campaigns.length === 0 && (
+                <tr><td colSpan={3}><Empty /></td></tr>
+              )}
+              {data.referrers.map((row) => (
+                <tr key={row.referrer}>
+                  <td>
+                    {row.referrer}
+                    {row.new && row.source === 'Other websites' && <span className={styles.newBadge}>New</span>}
+                  </td>
+                  <td className={styles.muted}>{row.source}</td>
+                  <td className={styles.num}>{formatNumber(row.visits)}</td>
+                </tr>
+              ))}
+              {data.campaigns.map((row) => (
+                <tr key={`c-${row.campaign}`}>
+                  <td>{row.campaign}</td>
+                  <td className={styles.muted}>Campaign</td>
+                  <td className={styles.num}>{formatNumber(row.visits)}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
         </div>
       )}
     </Section>
   );
 };
 
+const Signs = ({ data, applyFilter }) => (
+  <Section id="signs" title="QR signs" aside={data.signs.length > 0 && (
+    <button type="button" className={styles.linkButton} onClick={() => applyFilter('source', 'QR code')}>Filter</button>
+  )}>
+    {data.signs.length === 0 ? <Empty /> : (
+      <table className={styles.table}>
+        <thead>
+          <tr>
+            <th>Sign</th>
+            <th className={styles.num}>Scans</th>
+            <th className={styles.num} title="Opened the sign as a PDF">PDF</th>
+            <th className={styles.num} title="Went on to other pages of the website">Browsed</th>
+          </tr>
+        </thead>
+        <tbody>
+          {data.signs.map((row) => (
+            <tr key={row.sign}>
+              <td>
+                <span className={styles.capitalize}>{row.sign.replace(/-/g, ' ')}</span>
+                <span className={`${styles.subline} ${row.days_since_scan > 30 ? styles.flag : ''}`}>
+                  {row.last_scan ? `Last ${shortDate(row.last_scan)}` : 'Never scanned'}
+                </span>
+              </td>
+              <td className={styles.num}>{formatNumber(row.scans)}</td>
+              <td className={styles.num}>{formatNumber(row.pdf_opens)}</td>
+              <td className={styles.num}>{formatNumber(row.explored)}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    )}
+  </Section>
+);
+
 const Devices = ({ data, applyFilter }) => (
   <Section id="devices" title="Devices">
-    {data.devices.length === 0 ? (
-      <EmptyState>No visits in this period.</EmptyState>
-    ) : (
-      <>
-        <ShareBar parts={data.devices.map((d) => ({ label: DEVICE_LABELS[d.device], value: d.visits, color: DEVICE_COLORS[d.device] }))} />
-        <p className={styles.footnoteLinks}>
-          {data.devices.map((d) => (
-            <button key={d.device} type="button" className={styles.linkButton} onClick={() => applyFilter('device', d.device)}>
-              Only {DEVICE_LABELS[d.device].toLowerCase()} visits
-            </button>
-          ))}
-        </p>
-      </>
+    {data.devices.length === 0 ? <Empty /> : (
+      <ShareBar
+        parts={data.devices.map((d) => ({ key: d.device, label: DEVICE_LABELS[d.device], value: d.visits, color: DEVICE_COLORS[d.device] }))}
+        onSelect={(key) => applyFilter('device', key)}
+      />
     )}
   </Section>
 );
@@ -690,11 +575,11 @@ const Devices = ({ data, applyFilter }) => (
 const Weekdays = ({ data }) => {
   const max = Math.max(1, ...data.weekdays.map((d) => d.visits));
   return (
-    <Section id="when" title="Busiest days" description="Visits by day of the week, museum time.">
+    <Section id="when" title="Day of week">
       <table className={styles.table}>
         <tbody>
           {data.weekdays.map((d) => (
-            <tr key={d.day}>
+            <tr key={d.day} className={styles.compactRow}>
               <td className={styles.dayCell}>{d.day}</td>
               <td className={styles.barCell}><InlineBar value={d.visits} max={max} /></td>
               <td className={styles.num}>{formatNumber(d.visits)}</td>
@@ -707,183 +592,172 @@ const Weekdays = ({ data }) => {
 };
 
 const NotFound = ({ data }) => (
-  <Section id="not-found" title="Broken links people hit"
-    description="Addresses on this site that don't exist. Fix the link where it came from, or ask for a redirect.">
-    {data.not_found.length === 0 ? (
-      <EmptyState>None in this period. 🎉</EmptyState>
-    ) : (
-      <table className={styles.table}>
-        <thead><tr><th>Address</th><th className={styles.num}>Times</th><th>Came from</th></tr></thead>
-        <tbody>
-          {data.not_found.map((row) => (
-            <tr key={row.path}>
-              <td><code>{row.path}</code></td>
-              <td className={styles.num}>{formatNumber(row.views)}</td>
-              <td>{row.came_from}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    )}
+  <Section id="not-found" title="Broken links">
+    <table className={styles.table}>
+      <thead><tr><th>Address</th><th>Referred by</th><th className={styles.num}>Hits</th></tr></thead>
+      <tbody>
+        {data.not_found.map((row) => (
+          <tr key={row.path}>
+            <td><code>{row.path}</code></td>
+            <td className={styles.muted}>{row.came_from}</td>
+            <td className={styles.num}>{formatNumber(row.views)}</td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
   </Section>
 );
 
-const BehindTheScenes = ({ data, health }) => {
+const VisitTypes = ({ data }) => {
   const t = data.traffic;
-  const total = Object.values(t.visitors).reduce((a, b) => a + b, 0);
-  const daily = t.daily;
-  const groups = Object.entries(t.bot_groups).sort((a, b) => b[1] - a[1]);
-  const errorRate = t.all_requests ? t.server_errors / t.all_requests : null;
   const [table, setTable] = useState(false);
-  const series = useMemo(() => TRAFFIC_SERIES.map((s) => ({ ...s, values: daily.map((d) => d[s.key]) })), [daily]);
+  const total = VISIT_TYPES.reduce((sum, v) => sum + (t.visitors[v.key] || 0), 0);
+  const series = useMemo(() => VISIT_TYPES.map((v) => ({ ...v, values: t.daily.map((d) => d[v.key]) })), [t.daily]);
+  const maxBot = Math.max(1, ...t.bots.map((b) => b.requests));
 
   return (
-    <details id="stats-bots" className={`${ui.card} ${styles.behind}`}>
-      <summary>
-        <span className={styles.behindTitle}>Behind the scenes</span>
-        <span className={styles.muted}>Bots and automated traffic, and the server’s health</span>
-      </summary>
-
-      <h4 className={styles.subheading}>Who else visits the server</h4>
-      {total === 0 ? (
-        <EmptyState>Server log totals appear here after the first full day.</EmptyState>
-      ) : (
+    <Section id="visit-types" title="Visit types"
+      aside={t.through && <span className={styles.asideMeta}>Server logs through {shortDate(t.through)}</span>}>
+      {total === 0 ? <Empty>Available after the first full day</Empty> : (
         <>
-          <p className={styles.behindLead}>
-            Of {formatNumber(total)} different addresses that contacted the server in this period, about{' '}
-            <strong>{pct(t.visitors.human || 0, total)}</strong> were people using a browser. The rest were
-            programs. That’s normal for every website today, and none of them are counted anywhere else on
-            this page.{t.through && <span className={styles.muted}> Server logs counted through {shortDate(t.through)}.</span>}
-          </p>
-          <ul className={styles.legend}>
-            {TRAFFIC_SERIES.map((s) => (
-              <li key={s.key}>
-                <span className={styles.swatch} style={{ background: s.color }} aria-hidden="true" />
-                {s.label} <strong>{formatNumber(t.visitors[s.key] || 0)}</strong>
-              </li>
-            ))}
-          </ul>
+          <div className={styles.typesHead}>
+            <div className={styles.hero}>
+              <span className={styles.heroValue}>{pct(t.visitors.human || 0, total)}</span>
+              <span className={styles.heroLabel}>real people</span>
+              <span className={styles.muted}>{formatNumber(t.visitors.human || 0)} of {formatNumber(total)} unique addresses</span>
+            </div>
+            <div className={styles.typesShare}>
+              <div className={styles.shareBar} aria-hidden="true">
+                {VISIT_TYPES.filter((v) => t.visitors[v.key]).map((v) => (
+                  <span key={v.key} style={{ flexGrow: t.visitors[v.key], background: v.color }} />
+                ))}
+              </div>
+              <ul className={styles.typeLegend}>
+                {VISIT_TYPES.map((v) => (
+                  <li key={v.key} title={v.hint}>
+                    <span className={styles.swatch} style={{ background: v.color }} aria-hidden="true" />
+                    <span className={styles.typeName}>{v.label}</span>
+                    <span className={styles.num}>{formatNumber(t.visitors[v.key] || 0)}</span>
+                    <span className={`${styles.num} ${styles.muted}`}>{pct(t.visitors[v.key] || 0, total)}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+
           <div className={styles.chartHeader}>
-            <p className={styles.chartCaption}>
-              Different addresses per day. <span className={styles.muted}>Hacking attempts: programs looking for
-              WordPress or password files this site doesn’t have. Disguised bots: claim to be a browser but never
-              run the website.</span>
-            </p>
+            <span className={styles.chartLabel}>Unique addresses per day</span>
             <TableToggle shown={table} onToggle={() => setTable(!table)} />
           </div>
-          <StackedColumns buckets={daily.map((d) => d.date)} series={series} label="People and bots per day" />
-          {table && (
+          {table ? (
             <div className={styles.tableScroll}>
               <table className={styles.table}>
-                <thead><tr><th>Day</th>{TRAFFIC_SERIES.map((s) => <th key={s.key} className={styles.num}>{s.label}</th>)}</tr></thead>
+                <thead><tr><th>Day</th>{VISIT_TYPES.map((v) => <th key={v.key} className={styles.num}>{v.label}</th>)}</tr></thead>
                 <tbody>
-                  {daily.map((d) => (
-                    <tr key={d.date}><td>{shortDate(d.date)}</td>{TRAFFIC_SERIES.map((s) => <td key={s.key} className={styles.num}>{formatNumber(d[s.key])}</td>)}</tr>
+                  {t.daily.map((d) => (
+                    <tr key={d.date}><td>{shortDate(d.date)}</td>{VISIT_TYPES.map((v) => <td key={v.key} className={styles.num}>{formatNumber(d[v.key])}</td>)}</tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          ) : (
+            <StackedColumns buckets={t.daily.map((d) => d.date)} series={series} label="Unique addresses per day by visit type" />
+          )}
+
+          {t.bots.length > 0 && (
+            <div className={styles.tableScroll}>
+              <table className={`${styles.table} ${styles.spaceTop}`}>
+                <thead>
+                  <tr><th>Declared bot</th><th>Type</th><th className={styles.num}>Requests</th></tr>
+                </thead>
+                <tbody>
+                  {t.bots.map((b) => (
+                    <tr key={b.name}>
+                      <td>{b.name}<InlineBar value={b.requests} max={maxBot} /></td>
+                      <td className={styles.muted}>{BOT_GROUPS[b.group] || 'Other'}</td>
+                      <td className={styles.num}>{formatNumber(b.requests)}</td>
+                    </tr>
                   ))}
                 </tbody>
               </table>
             </div>
           )}
-          <div className={styles.twoUpInner}>
+        </>
+      )}
+    </Section>
+  );
+};
+
+const Server = ({ data, health }) => {
+  const t = data.traffic;
+  const rows = [];
+  if (health) {
+    (health.resources || []).forEach((r) => {
+      const value = r.unit === 'bytes' ? bytes(r.used) : r.unit === 'percent' ? `${Math.round(r.used)}%` : formatNumber(r.used);
+      const limit = r.limit ? (r.unit === 'bytes' ? bytes(r.limit) : r.unit === 'percent' ? '100%' : formatNumber(r.limit)) : null;
+      rows.push({ label: r.label, level: r.level, value, limit, share: r.limit ? r.used / r.limit : null });
+    });
+    if (health.uploads_bytes !== null && health.uploads_bytes !== undefined) {
+      rows.push({ label: 'Uploads', level: 'ok', value: bytes(health.uploads_bytes) });
+    }
+    if (health.certificate) {
+      const left = health.certificate.days_left;
+      rows.push({ label: 'HTTPS certificate', level: left < 7 ? 'bad' : left < 20 ? 'warn' : 'ok', value: `${left} days left` });
+    }
+    if (health.errors) {
+      rows.push({ label: 'Logged errors (24 h / 7 days)', level: health.errors.level,
+        value: `${health.errors.last_24h} / ${health.errors.last_7d}` });
+    }
+    if (health.deploys?.length) {
+      const last = health.deploys[0];
+      rows.push({ label: 'Last update', level: last.ok ? 'ok' : 'bad',
+        value: new Date(last.at).toLocaleString('en-US', { dateStyle: 'medium', timeStyle: 'short' }) });
+    }
+  }
+  if (t.all_requests) {
+    const rate = t.server_errors / t.all_requests;
+    rows.push({ label: 'Server error rate', level: rate > 0.02 ? 'bad' : rate > 0.005 ? 'warn' : 'ok',
+      value: `${(100 * rate).toFixed(2)}%`, limit: `${formatNumber(t.server_errors)} of ${formatNumber(t.all_requests)}` });
+  }
+
+  return (
+    <Section id="server" title="Server">
+      {!health && rows.length === 0 ? <p className={styles.muted}>Checking…</p> : rows.length === 0 ? <Empty>Not available</Empty> : (
+        <>
+          <div className={styles.tableScroll}>
             <table className={styles.table}>
-              <caption className={styles.caption}>Bots that say who they are</caption>
-              <thead><tr><th>Bot</th><th className={styles.num}>Requests</th></tr></thead>
               <tbody>
-                {t.bots.map((b) => (
-                  <tr key={b.name}>
-                    <td>{b.name} <span className={styles.muted}>{BOT_GROUPS[b.group] || ''}</span></td>
-                    <td className={styles.num}>{formatNumber(b.requests)}</td>
+                {rows.map((row) => (
+                  <tr key={row.label}>
+                    <td>{row.label}</td>
+                    <td className={styles.num}>
+                      {row.value}
+                      {row.limit && <span className={styles.muted}> / {row.limit}</span>}
+                    </td>
+                    <td className={`${styles.hideSmall} ${styles.meterCell}`}>
+                      {row.share !== null && row.share !== undefined && (
+                        <span className={styles.meter} aria-hidden="true">
+                          <span className={styles[`meter_${row.level}`]} style={{ width: `${Math.max(1, Math.min(100, 100 * row.share))}%` }} />
+                        </span>
+                      )}
+                    </td>
+                    <td className={styles.statusCell}><Status level={row.level} /></td>
                   </tr>
                 ))}
               </tbody>
             </table>
-            <table className={styles.table}>
-              <caption className={styles.caption}>By kind</caption>
-              <tbody>
-                {groups.map(([group, requests]) => (
-                  <tr key={group}><td>{BOT_GROUPS[group] || group}</td><td className={styles.num}>{formatNumber(requests)}</td></tr>
-                ))}
-              </tbody>
-            </table>
           </div>
+          {health?.errors?.recent?.length > 0 && (
+            <details className={styles.errorDetails}>
+              <summary>Recent errors</summary>
+              <ul>
+                {health.errors.recent.map((e) => <li key={e.at + e.message}><code>{e.at}</code> {e.message}</li>)}
+              </ul>
+            </details>
+          )}
         </>
       )}
-
-      <h4 className={styles.subheading}>Server health</h4>
-      {!health ? (
-        <p className={styles.muted}>Checking…</p>
-      ) : (
-        <Health health={health} errorRate={errorRate} requests={t.all_requests} errors={t.server_errors} />
-      )}
-    </details>
-  );
-};
-
-const Health = ({ health, errorRate, requests, errors }) => {
-  const rows = [];
-  (health.resources || []).forEach((r) => {
-    const value = r.unit === 'bytes' ? bytes(r.used) : r.unit === 'percent' ? `${Math.round(r.used)}%` : formatNumber(r.used);
-    const limit = r.limit ? (r.unit === 'bytes' ? bytes(r.limit) : r.unit === 'percent' ? '100%' : formatNumber(r.limit)) : null;
-    rows.push({ label: r.label, level: r.level, text: limit ? `${value} of ${limit}` : value });
-  });
-  if (health.uploads_bytes !== null && health.uploads_bytes !== undefined) {
-    rows.push({ label: 'Uploaded files (images, PDFs)', level: 'ok', text: bytes(health.uploads_bytes) });
-  }
-  if (health.certificate) {
-    rows.push({
-      label: 'HTTPS certificate', level: health.certificate.days_left < 7 ? 'bad' : health.certificate.days_left < 20 ? 'warn' : 'ok',
-      text: `Renews automatically; current one valid for ${health.certificate.days_left} more days`,
-    });
-  }
-  if (errorRate !== null) {
-    rows.push({
-      label: 'Server errors', level: errorRate > 0.02 ? 'bad' : errorRate > 0.005 ? 'warn' : 'ok',
-      text: `${formatNumber(errors)} of ${formatNumber(requests)} requests (${(100 * errorRate).toFixed(2)}%)`,
-    });
-  }
-  if (health.errors) {
-    rows.push({
-      label: 'Problems logged by the website', level: health.errors.level,
-      text: `${health.errors.last_24h} in the last 24 hours, ${health.errors.last_7d} in 7 days`,
-    });
-  }
-  if (health.deploys?.length) {
-    const last = health.deploys[0];
-    rows.push({
-      label: 'Last website update', level: last.ok ? 'ok' : 'bad',
-      text: `${new Date(last.at).toLocaleString('en-US', { dateStyle: 'medium', timeStyle: 'short' })} · ${last.result}`,
-    });
-  }
-
-  if (rows.length === 0) {
-    return <p className={styles.muted}>Server details aren’t available here (for example in local development).</p>;
-  }
-  return (
-    <>
-      <table className={styles.table}>
-        <tbody>
-          {rows.map((row) => (
-            <tr key={row.label}>
-              <td>{row.label}</td>
-              <td>{row.text}</td>
-              <td className={styles.statusCell}><Status level={row.level} /></td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-      {health.errors?.recent?.length > 0 && (
-        <details className={styles.errorDetails}>
-          <summary>Recent problems</summary>
-          <ul>
-            {health.errors.recent.map((e) => <li key={e.at + e.message}><code>{e.at}</code> {e.message}</li>)}
-          </ul>
-        </details>
-      )}
-      <p className={styles.footnote}>
-        From cPanel’s own usage report, checked every 10 minutes. “Watch” means getting close to a limit;
-        “Act now” means something needs fixing.
-      </p>
-    </>
+    </Section>
   );
 };
 

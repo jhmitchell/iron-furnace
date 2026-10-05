@@ -1,7 +1,7 @@
 from datetime import date, datetime, timedelta
 from types import SimpleNamespace
 
-from app.internal.stats import bots, collect, insights, logs, report, sources
+from app.internal.stats import bots, collect, logs, report, sources
 
 CHROME = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0 Safari/537.36"
 IPHONE = ("Mozilla/5.0 (iPhone; CPU iPhone OS 17_0 like Mac OS X) AppleWebKit/605.1.15 "
@@ -166,32 +166,3 @@ def test_buckets():
     assert len(report.buckets(date(2026, 9, 5), date(2026, 10, 4))) == 30
     weeks = report.buckets(date(2025, 10, 5), date(2026, 10, 4))
     assert (weeks[1] - weeks[0]).days == 7 and weeks[0].weekday() == 0
-
-
-# --- insights -------------------------------------------------------------------------------------------
-
-def base_report(visits=40, previous=38):
-    summary = {"visits": visits, "visitors": visits, "pageviews": visits * 2, "engaged_visits": 0,
-               "engaged_rate": None, "median_visit_seconds": None, "action_visits": 0, "planned_visits": 0}
-    return {"summary": summary, "previous_summary": {**summary, "visits": previous},
-            "change": {"visits": report.zscore(visits, previous)}, "range": {"days": 30},
-            "not_found": [], "pages": [], "events": [], "signs": [], "landing_pages": [], "actions": [],
-            "referrers": [], "sources": [], "devices": [], "weekdays": []}
-
-
-def test_small_changes_are_not_called_trends():
-    titles = [i["title"] for i in insights.generate(base_report(40, 30))]
-    assert any("40 visits in the last 30 days" in t for t in titles)
-    titles = [i["title"] for i in insights.generate(base_report(120, 60))]
-    assert any("more than the 30 days before" in t for t in titles)
-
-
-def test_problems_come_first():
-    r = base_report()
-    r["not_found"] = [{"path": "/old-page", "views": 4, "came_from": "facebook.com"}]
-    first = insights.generate(r)[0]
-    assert first["tone"] == "warn" and "/old-page" in first["title"]
-
-
-def test_too_few_visits():
-    assert insights.generate(base_report(4, 2))[-1]["title"].startswith("Not enough visits")

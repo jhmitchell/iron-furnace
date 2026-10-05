@@ -285,8 +285,9 @@ export const Sparkline = ({ values }) => {
   );
 };
 
-/** One horizontal bar split into parts (e.g. phone / computer / tablet). */
-export const ShareBar = ({ parts }) => {
+/** One horizontal bar split into parts (e.g. phone / computer / tablet); legend items
+    filter when `onSelect` is given. */
+export const ShareBar = ({ parts, onSelect }) => {
   const total = parts.reduce((sum, p) => sum + p.value, 0);
   if (!total) return null;
   return (
@@ -296,12 +297,17 @@ export const ShareBar = ({ parts }) => {
           <span key={p.label} style={{ flexGrow: p.value, background: p.color }} />
         ))}
       </div>
-      <ul className={styles.legend}>
+      <ul className={styles.typeLegend}>
         {parts.map((p) => (
           <li key={p.label}>
             <span className={styles.swatch} style={{ background: p.color }} aria-hidden="true" />
-            {p.label} <strong>{formatNumber(p.value)}</strong>{' '}
-            <span className={styles.muted}>({Math.round((100 * p.value) / total)}%)</span>
+            {onSelect ? (
+              <button type="button" className={`${styles.rowButton} ${styles.typeName}`} onClick={() => onSelect(p.key)}>
+                {p.label}
+              </button>
+            ) : <span className={styles.typeName}>{p.label}</span>}
+            <span className={styles.num}>{formatNumber(p.value)}</span>
+            <span className={`${styles.num} ${styles.muted}`}>{Math.round((100 * p.value) / total)}%</span>
           </li>
         ))}
       </ul>

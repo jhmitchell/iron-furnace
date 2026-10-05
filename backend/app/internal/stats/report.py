@@ -31,7 +31,6 @@ from sqlalchemy.orm import Session
 from app.internal.models.stats import StatsHit, StatsLogDaily
 from .collect import LOCAL_TZ
 from .sources import SOURCES
-from . import insights as insight_rules
 
 ENGAGED_MS = 10_000
 VISIT_GAP = timedelta(minutes=30)
@@ -318,7 +317,6 @@ def build(db: Session, start: date, end: date, filter_key: Optional[str] = None,
         "last_visit": last_visit(db),
         "traffic": traffic(db, start, end),
     }
-    report["insights"] = insight_rules.generate(report)
     return report
 
 
