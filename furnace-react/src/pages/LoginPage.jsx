@@ -6,7 +6,7 @@ import { LoginForm } from '/src/components/forms';
 import logo from '/src/assets/images/window-logo.svg';
 import styles from './LoginPage.module.css';
 
-const PAGE_TITLE = 'Admin sign in | Cornwall Iron Furnace';
+const PAGE_TITLE = 'Sign in | Cornwall Iron Furnace';
 
 const LoginPage = () => {
   const { user, loading } = useAuth();
@@ -36,8 +36,7 @@ const LoginPage = () => {
           <header className={styles.header}>
             <img src={logo} alt="" className={styles.logo} width="56" height="41" />
             <p className={styles.eyebrow}>Cornwall Iron Furnace</p>
-            <h1 id="login-heading" className={styles.title}>Admin sign in</h1>
-            <p className={styles.subtitle}>For staff and volunteers who manage the website.</p>
+            <h1 id="login-heading" className={styles.title}>Sign in</h1>
           </header>
 
           {loading ? (

@@ -1,13 +1,11 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { MdCampaign, MdSchedule, MdEvent, MdHandshake, MdGroups, MdArrowForward, MdOpenInNew } from 'react-icons/md';
+import { MdCampaign, MdSchedule, MdEvent, MdArrowForward } from 'react-icons/md';
 import { useAuth } from '/src/features/authentication';
 import { getBanner } from '/src/features/banner';
 import { getHours } from '/src/features/hours';
 import { getAllEvents } from '/src/features/events';
-import { getAllSponsors } from '/src/features/sponsors';
-import { getAllBoardMembers } from '/src/features/boardMembers';
-import { AdminPage, AdminCard, ui } from '../ui';
+import { AdminPage, ui } from '../ui';
 import { eventStart } from '../../utils/dates';
 import styles from './AdminOverview.module.css';
 
@@ -16,25 +14,29 @@ const settle = (result) => (result.status === 'fulfilled' ? { ok: true, value: r
 const eventDate = (event) => new Date(eventStart(event));
 
 const formatEventDate = (event) =>
-  eventDate(event).toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+  eventDate(event).toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' });
 
-const StatCard = ({ icon, label, value, tone, detail, to, cta }) => (
-  <Link to={to} className={styles.statCard}>
-    <div className={styles.statTop}>
-      <span className={styles.statIcon}>{icon}</span>
-      {label}
-    </div>
-    <div className={`${styles.statValue} ${tone ? styles[tone] : ''}`}>{value}</div>
-    <div className={styles.statDetail}>{detail}</div>
-    <div className={styles.statCta}>
-      {cta} <MdArrowForward />
-    </div>
-  </Link>
+/** One line of the "On the website now" panel: what it is, what it shows, and a link to change it. */
+const LiveRow = ({ label, badge, text, to, cta }) => (
+  <div className={styles.row}>
+    <dt className={styles.rowLabel}>{label}</dt>
+    <dd className={styles.rowValue}>
+      {badge}
+      {text && <span className={styles.rowText}>{text}</span>}
+    </dd>
+    <dd className={styles.rowAction}>
+      <Link to={to} className={styles.rowLink}>
+        {cta} <MdArrowForward aria-hidden="true" />
+      </Link>
+    </dd>
+  </div>
 );
 
+const Badge = ({ tone, children }) => <span className={`${ui.badge} ${ui[tone]}`}>{children}</span>;
+
 /**
- * Landing page of the admin dashboard: a greeting, an at-a-glance summary of
- * what the public site is currently showing, and shortcuts to common tasks.
+ * Landing page of the admin dashboard: shortcuts to the common tasks, then what the
+ * public site is showing right now (museum status, home page banner, next event).
  */
 const AdminOverview = () => {
   const { user } = useAuth();
@@ -44,21 +46,9 @@ const AdminOverview = () => {
     let active = true;
 
     const load = async () => {
-      const [banner, status, events, sponsors, board] = await Promise.allSettled([
-        getBanner(),
-        getHours(),
-        getAllEvents(),
-        getAllSponsors(),
-        getAllBoardMembers(),
-      ]);
+      const [banner, status, events] = await Promise.allSettled([getBanner(), getHours(), getAllEvents()]);
       if (!active) return;
-      setData({
-        banner: settle(banner),
-        status: settle(status),
-        events: settle(events),
-        sponsors: settle(sponsors),
-        board: settle(board),
-      });
+      setData({ banner: settle(banner), status: settle(status), events: settle(events) });
     };
 
     load();
@@ -68,105 +58,62 @@ const AdminOverview = () => {
   }, []);
 
   const loading = data === null;
-  const pending = { value: '…', detail: 'Loading' };
-  const failed = { value: '—', detail: 'Could not load' };
+  const pending = { text: 'Loading…' };
+  const failed = { text: 'Could not load. Refresh the page to try again.' };
 
-  const bannerStat = (() => {
-    if (loading) return pending;
-    if (!data.banner.ok) return failed;
-    const banner = data.banner.value;
-    return banner
-      ? { value: 'Live', tone: 'live', detail: banner.message }
-      : { value: 'None', detail: 'No banner is shown on the home page.' };
-  })();
-
-  const statusStat = (() => {
+  const status = (() => {
     if (loading) return pending;
     if (!data.status.ok) return failed;
     const { isOpen, message } = data.status.value;
-    return { value: isOpen ? 'Open' : 'Closed', tone: isOpen ? 'live' : 'closed', detail: message };
-  })();
-
-  const eventsStat = (() => {
-    if (loading) return pending;
-    if (!data.events.ok) return failed;
-    const now = new Date();
-    const upcoming = data.events.value
-      .filter((event) => eventDate(event) >= now)
-      .sort((a, b) => eventDate(a) - eventDate(b));
-    const next = upcoming[0];
     return {
-      value: upcoming.length,
-      detail: next ? `Next: ${formatEventDate(next)} · ${next.title}` : 'No upcoming events scheduled.',
+      badge: isOpen ? <Badge tone="badgeLive">Open</Badge> : <Badge tone="badgeClosed">Closed</Badge>,
+      text: message,
     };
   })();
 
-  const countStat = (entry, noun) => {
+  const hasBanner = !loading && data.banner.ok && Boolean(data.banner.value);
+  const banner = (() => {
     if (loading) return pending;
-    if (!entry.ok) return failed;
-    const count = entry.value.length;
-    return { value: count, detail: count === 1 ? `1 ${noun} listed on the site.` : `${count} ${noun}s listed on the site.` };
-  };
+    if (!data.banner.ok) return failed;
+    return hasBanner
+      ? { badge: <Badge tone="badgeLive">Showing</Badge>, text: data.banner.value.message }
+      : { badge: <Badge tone="badgeOff">None</Badge> };
+  })();
+
+  const nextEvent = (() => {
+    if (loading) return pending;
+    if (!data.events.ok) return failed;
+    const now = new Date();
+    const next = data.events.value
+      .filter((event) => eventDate(event) >= now)
+      .sort((a, b) => eventDate(a) - eventDate(b))[0];
+    return next
+      ? { text: `${formatEventDate(next)} · ${next.title}` }
+      : { badge: <Badge tone="badgeOff">None scheduled</Badge> };
+  })();
 
   return (
-    <AdminPage
-      title={`Welcome back, ${user?.username || 'admin'}`}
-      description="Here is what the website is showing right now. Select a card to manage that section."
-    >
-      <div className={styles.statGrid}>
-        <StatCard
-          icon={<MdCampaign />}
-          label="Home page banner"
-          to="/admin/banner"
-          cta={bannerStat.value === 'Live' ? 'Edit banner' : 'Publish a banner'}
-          {...bannerStat}
-        />
-        <StatCard
-          icon={<MdSchedule />}
-          label="Museum status"
-          to="/admin/hours"
-          cta="Manage hours"
-          {...statusStat}
-        />
-        <StatCard
-          icon={<MdEvent />}
-          label="Upcoming events"
-          to="/admin/events"
-          cta="Manage events"
-          {...eventsStat}
-        />
-        <StatCard
-          icon={<MdHandshake />}
-          label="Sponsors"
-          to="/admin/sponsors"
-          cta="Manage sponsors"
-          {...countStat(loading ? null : data.sponsors, 'sponsor')}
-        />
-        <StatCard
-          icon={<MdGroups />}
-          label="Board members"
-          to="/admin/board"
-          cta="Manage board"
-          {...countStat(loading ? null : data.board, 'board member')}
-        />
+    <AdminPage title={`Welcome back, ${user?.username || 'admin'}`}>
+      <div className={`${ui.actions} ${styles.quickActions}`}>
+        <Link to="/admin/banner" className={`${ui.button} ${ui.buttonPrimary}`}>
+          <MdCampaign aria-hidden="true" /> {hasBanner ? 'Edit the banner' : 'Publish a banner'}
+        </Link>
+        <Link to="/admin/events" className={`${ui.button} ${ui.buttonSecondary}`}>
+          <MdEvent aria-hidden="true" /> Add an event
+        </Link>
+        <Link to="/admin/hours" className={`${ui.button} ${ui.buttonSecondary}`}>
+          <MdSchedule aria-hidden="true" /> Update hours
+        </Link>
       </div>
 
-      <AdminCard title="Quick actions">
-        <div className={ui.actions}>
-          <Link to="/admin/banner" className={`${ui.button} ${ui.buttonPrimary}`}>
-            <MdCampaign /> Publish a banner
-          </Link>
-          <Link to="/admin/events" className={`${ui.button} ${ui.buttonSecondary}`}>
-            <MdEvent /> Add an event
-          </Link>
-          <Link to="/admin/hours" className={`${ui.button} ${ui.buttonSecondary}`}>
-            <MdSchedule /> Update hours
-          </Link>
-          <a href="/" target="_blank" rel="noopener noreferrer" className={`${ui.button} ${ui.buttonSecondary}`}>
-            <MdOpenInNew /> View website
-          </a>
-        </div>
-      </AdminCard>
+      <section className={ui.card} aria-labelledby="live-heading">
+        <h3 id="live-heading" className={`${ui.cardTitle} ${styles.panelTitle}`}>On the website now</h3>
+        <dl className={styles.rows} aria-busy={loading}>
+          <LiveRow label="Museum" to="/admin/hours" cta="Hours" {...status} />
+          <LiveRow label="Home page banner" to="/admin/banner" cta="Banner" {...banner} />
+          <LiveRow label="Next event" to="/admin/events" cta="Events" {...nextEvent} />
+        </dl>
+      </section>
     </AdminPage>
   );
 };
