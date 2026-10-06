@@ -1,10 +1,11 @@
 .sponsorsSection {
   position: relative;
   width: 100%;
-  background-color: var(--dark-secondary);
+  /* Darker than the sections around it (the History page's iron), so it doesn't run into the newsletter bar below */
+  background-color: #1f1f24;
   display: flex;
   justify-content: center;
-  padding: 100px 24px;
+  padding: 120px 24px 112px;
   box-sizing: border-box;
 }
 
@@ -22,48 +23,92 @@
 .contentContainer {
   position: relative;
   z-index: 1;
-  width: 1200px;
+  width: 1080px;
   max-width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
+  text-align: center;
+}
+
+.eyebrow {
+  margin-bottom: 20px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: 0.26em;
+  text-transform: uppercase;
+  color: var(--orange-accent);
 }
 
 .sectionTitle {
-  font-size: 2.5rem;
+  font-family: 'EB Garamond', 'adobe-garamond-pro', Garamond, Georgia, serif;
+  font-size: 3.1rem;
   font-weight: 500;
-  color: var(--text-off-white);
-  text-align: center;
-  margin-bottom: 10px;
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+  color: #f3ede2;
+  margin-bottom: 16px;
+  text-wrap: balance;
 }
 
 .sectionSubtitle {
-  font-size: 1.1rem;
-  color: var(--text-light-grey);
-  text-align: center;
-  max-width: 640px;
-  margin-bottom: 48px;
+  max-width: 34em;
+  font-size: 1.075rem;
+  color: rgba(255, 255, 255, 0.68);
+  text-wrap: balance;
 }
 
+/* Copper rule with a diamond in the middle */
+.ornament {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin: 44px 0 48px;
+}
+
+.ornament::before,
+.ornament::after {
+  content: '';
+  width: 88px;
+  height: 1px;
+  background: linear-gradient(90deg, rgba(191, 128, 69, 0), rgba(191, 128, 69, 0.75));
+}
+
+.ornament::after {
+  transform: scaleX(-1);
+}
+
+.ornament span {
+  width: 7px;
+  height: 7px;
+  background: var(--orange-accent);
+  transform: rotate(45deg);
+}
+
+/* The button adds 20px of its own */
 .cta {
-  margin-top: 48px;
+  margin-top: 40px;
 }
 
 @media (max-width: 768px) {
   .sponsorsSection {
-    padding: 60px 16px;
+    padding: 72px 20px 68px;
   }
 
   .sectionTitle {
-    font-size: 1.9rem;
+    font-size: 2.15rem;
   }
 
   .sectionSubtitle {
     font-size: 1rem;
-    margin-bottom: 32px;
+  }
+
+  .ornament {
+    margin: 32px 0 34px;
   }
 
   .cta {
-    margin-top: 32px;
+    margin-top: 24px;
   }
 }

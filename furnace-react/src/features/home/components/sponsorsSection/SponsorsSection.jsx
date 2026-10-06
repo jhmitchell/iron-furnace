@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
+import "@fontsource/eb-garamond/latin-500.css";
 import { Button } from "/src/components/ui";
-import { getAllSponsors, SponsorGrid } from "/src/features/sponsors";
+import { getAllSponsors, SponsorList } from "/src/features/sponsors";
 import styles from "./SponsorsSection.module.css";
 
 const SponsorsSection = () => {
@@ -20,13 +21,17 @@ const SponsorsSection = () => {
   return (
     <section className={styles.sponsorsSection} aria-labelledby="home-sponsors-title">
       <div className={styles.contentContainer}>
+        <p className={styles.eyebrow}>With gratitude</p>
         <h2 id="home-sponsors-title" className={styles.sectionTitle}>Thank You to Our Sponsors</h2>
         <p className={styles.sectionSubtitle}>
           These local businesses and friends help us preserve and share Cornwall Iron Furnace.
         </p>
-        <SponsorGrid sponsors={sponsors} />
+        <div className={styles.ornament} aria-hidden="true">
+          <span />
+        </div>
+        <SponsorList sponsors={sponsors} />
         <div className={styles.cta}>
-          <Button color="orange" text="BECOME A SPONSOR" to="/support/sponsorship" />
+          <Button color="transparent" text="BECOME A SPONSOR" to="/support/sponsorship" />
         </div>
       </div>
     </section>

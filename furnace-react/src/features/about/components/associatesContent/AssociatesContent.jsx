@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import styles from './AssociatesContent.module.css';
 import { TextLink, InfoBlock, Button } from '/src/components/ui';
 import ScrollableSection from '/src/layouts/scrollableSection/ScrollableSection';
-import { getAllSponsors, SponsorGrid } from '/src/features/sponsors';
+import { getAllSponsors, SponsorList } from '/src/features/sponsors';
 import { getAllBoardMembers } from '/src/features/boardMembers';
 
 const AssociatesContent = () => {
@@ -29,7 +29,7 @@ const AssociatesContent = () => {
 						</p>
 					</InfoBlock>
 					<InfoBlock>
-						<SponsorGrid sponsors={sponsors} className={styles.sponsorGrid} />
+						<SponsorList sponsors={sponsors} align="start" className={styles.sponsorList} />
 					</InfoBlock>
 					<InfoBlock>
 						<p>If your business is interested in becoming a corporate partner, we'd love to hear from you.</p>
