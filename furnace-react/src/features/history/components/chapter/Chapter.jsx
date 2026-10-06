@@ -4,7 +4,7 @@ import styles from './Chapter.module.css';
 
 /**
  * One written chapter of the history, on paper.
- * `numeral` is the chapter number (I, II…), `years` the span it covers.
+ * `numeral` is the chapter number (I, II…), `years` the span it covers (optional).
  */
 const Chapter = ({ id, numeral, title, years, dek, children }) => (
 	<section id={id} data-tone="paper" className={storyStyles.paper} aria-labelledby={`${id}-title`}>
@@ -15,7 +15,7 @@ const Chapter = ({ id, numeral, title, years, dek, children }) => (
 					<span>Chapter {numeral}</span>
 				</p>
 				<h2 id={`${id}-title`} className={styles.title}>{title}</h2>
-				<p className={styles.years}>{years}</p>
+				{years && <p className={styles.years}>{years}</p>}
 				{dek && <p className={styles.dek}>{dek}</p>}
 			</Reveal>
 			<div className={styles.body}>{children}</div>

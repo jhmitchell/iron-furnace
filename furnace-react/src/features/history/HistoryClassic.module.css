@@ -1,0 +1,27 @@
+/*
+ * One centred column for the whole page. This version has no timeline rail and no
+ * notes in the margin, so the story's wider frame would leave the right side empty.
+ * The width matches the story's text column.
+ */
+.column {
+	--rail-space: 0px;
+	--content: 43rem;
+}
+
+/* Some of these chapter titles are long, so they are set a little smaller than the story's */
+.column h2 {
+	font-size: clamp(2.3rem, 5vw, 3.7rem);
+}
+
+/*
+ * Paper behind the chapters as well, so no dark hairline shows where two chapters
+ * meet on a fractional pixel (the page behind them is iron).
+ */
+.chapters {
+	background-color: var(--paper);
+}
+
+/* The page's last paragraph, set larger like the story's closing words */
+.closing {
+	margin-top: clamp(40px, 6vw, 64px);
+}
