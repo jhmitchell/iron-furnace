@@ -16,4 +16,13 @@
     font-size: 1.7rem;
     font-weight: 700;
     text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);
+    text-align: center;
+}
+
+/* Phones: the long title fits the banner in two lines, clear of the screen edges */
+@media (max-width: 767px) {
+    .associatesHeroContent {
+        padding: 0 20px;
+        font-size: 1.1rem;
+    }
 }

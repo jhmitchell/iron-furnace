@@ -6,9 +6,11 @@
   color: var(--light-text);
 }
 
+/* 1300px of content, with 20px gutters so the text stays off the edges of a phone */
 .associatesPageContent {
-  max-width: 1300px;
+  max-width: 1340px;
   margin: 0 auto;
+  padding: 0 20px;
 }
 
 .associatesPageContent h3 {
