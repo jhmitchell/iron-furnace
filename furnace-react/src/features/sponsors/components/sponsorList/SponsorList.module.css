@@ -1,0 +1,67 @@
+/*
+ * Names in centred lines with a copper diamond in the gap before each one.
+ * SponsorList marks the first name on every line, and that name's diamond is hidden.
+ */
+.sponsorListContainer {
+	container-type: inline-size;
+	width: 100%;
+}
+
+.sponsorList {
+	--gap: 60px;
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	column-gap: var(--gap);
+	row-gap: 18px;
+}
+
+.sponsor {
+	position: relative;
+	font-family: 'EB Garamond', 'adobe-garamond-pro', Garamond, Georgia, serif;
+	/* Scales with the list's own width: full size on the home page, smaller in narrower columns */
+	font-size: clamp(1.3rem, 2.45cqi, 1.65rem);
+	font-weight: 500;
+	line-height: 1.25;
+	color: #ece6db;
+	text-align: center;
+}
+
+/* Out of the flow, so hiding it never moves a line break */
+.sponsor::before {
+	content: '';
+	position: absolute;
+	top: 55%;
+	left: calc(var(--gap) / -2);
+	width: 5px;
+	height: 5px;
+	background: var(--orange-accent);
+	transform: translate(-50%, -50%) rotate(45deg);
+}
+
+.sponsor[data-line-start]::before {
+	display: none;
+}
+
+.alignStart {
+	justify-content: flex-start;
+}
+
+.alignStart .sponsor {
+	text-align: left;
+}
+
+/* Phones: one name per line, no diamonds */
+@container (max-width: 560px) {
+	.sponsorList {
+		flex-direction: column;
+		row-gap: 10px;
+	}
+
+	.sponsor::before {
+		display: none;
+	}
+}
