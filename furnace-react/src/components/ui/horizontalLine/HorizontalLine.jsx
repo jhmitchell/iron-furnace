@@ -1,7 +1,7 @@
 import styles from './HorizontalLine.module.css';
 
-const HorizontalLine = () => (
-  <div className={styles.horizontalLine}></div>
+const HorizontalLine = ({ className = '' }) => (
+  <div className={`${styles.horizontalLine} ${className}`.trim()}></div>
 );
 
 export default HorizontalLine;

@@ -4,7 +4,7 @@ import styles from './LineHeader.module.css';
 const LineHeader = ({ title }) => (
 	<div className={styles.lineHeader}>
 		<h2 className={styles.headerTitle}>{title}</h2>
-		<HorizontalLine />
+		<HorizontalLine className={styles.line} />
 	</div>
 );
 

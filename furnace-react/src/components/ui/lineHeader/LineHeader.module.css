@@ -5,8 +5,14 @@
 	color: var(--orange-accent);
 }
 
+/* A long title wraps on narrow screens instead of making the page wider than the phone */
 .headerTitle {
-	white-space: nowrap;
 	margin-right: 40px;
+	text-wrap: balance;
+}
+
+/* The line takes only the room the title leaves, so short titles never wrap */
+.line {
+	flex: 1 1 0;
 }
 
