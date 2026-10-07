@@ -62,7 +62,11 @@ const HistoryStory = () => {
 
 	return (
 		<article ref={storyRef} className={styles.story}>
-			<StoryHero />
+			<StoryHero
+				title={['Forged at', 'Cornwall']}
+				subtitle="The ore, the fire, and the people behind the last intact charcoal cold-blast furnace in the Western Hemisphere, in blast from 1742 until 1883."
+				start={{ href: '#prologue', label: 'Begin the story' }}
+			/>
 			<StoryRail storyRef={storyRef} />
 
 			{/* ---------------- Prologue ---------------- */}
