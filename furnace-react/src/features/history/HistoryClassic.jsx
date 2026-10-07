@@ -32,7 +32,7 @@ const HistoryClassic = () => {
 		<article className={storyStyles.story}>
 			<div className={styles.column}>
 				<StoryHero
-					title={['Our', 'History']}
+					title={['Forged at', 'Cornwall']}
 					subtitle="Tracing the legacy of Cornwall Iron Furnace: a monument to America’s industrial past"
 					start={{ href: '#grubb', label: 'Start reading' }}
 				/>
